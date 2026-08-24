@@ -216,10 +216,6 @@ This shifts the goal:
 - k-anonymity limits identity disclosure.
 - l-diversity tries to limit attribute disclosure.
 
-::: notes
-Source basis: `628745054.pdf`, pages 3 and 5; `kanon.pptx`, slide 16.
-:::
-
 # l-diversity example: k-anonymous but not private enough
 
 | Equivalence class | Diagnosis values | 2-anonymous? | 2-diverse? |
@@ -256,10 +252,6 @@ The class is 2-diverse, but membership raises the inferred disease risk from 1% 
 | Similarity attack | Different sensitive values can be semantically close, such as related diseases |
 
 Diversity alone does not say whether the released class changed what an attacker can learn.
-
-::: notes
-Source basis: `628745054.pdf`, pages 5-6.
-:::
 
 # t-closeness focuses on information gain
 
@@ -300,10 +292,6 @@ flowchart LR
 
 If `Q` is treated as public, the privacy question becomes: how much extra does `P` reveal?
 
-::: notes
-Source basis: `628745054.pdf`, page 8.
-:::
-
 # Distance must respect semantics
 
 Simple distances can treat all values as equally different.
@@ -321,10 +309,6 @@ The **Earth Mover Distance** is the minimum work needed to move probability mass
 
 ::: {.fragment}
 Work = mass moved x ground distance
-:::
-
-::: notes
-Source basis: `628745054.pdf`, pages 11-12.
 :::
 
 # Earth Mover Distance: tiny numeric example
@@ -356,10 +340,6 @@ For salaries, age, or other ordered values, distance depends on position in the 
 
 `P1` is more concentrated at the low end, so it can leak more than `P2`.
 
-::: notes
-Source basis: `628745054.pdf`, pages 10 and 14.
-:::
-
 # A salary example separates `P1` and `P2`
 
 | Class distribution | Distance to `Q` | Interpretation |
@@ -368,10 +348,6 @@ Source basis: `628745054.pdf`, pages 10 and 14.
 | `P2 = {6k, 8k, 11k}` | 0.167 | Less leakage |
 
 The lower-distance class is closer to the population distribution.
-
-::: notes
-Source basis: `628745054.pdf`, pages 19-22.
-:::
 
 # Categorical attributes need domain knowledge
 
@@ -384,20 +360,12 @@ For diseases or occupations, we can choose:
 
 The privacy model depends on how meaning is encoded.
 
-::: notes
-Source basis: `628745054.pdf`, pages 15-17 and 23-24.
-:::
-
 # t-closeness has useful monotonic properties
 
 - If a more specific release satisfies t-closeness, a more generalized release also satisfies it.
 - If t-closeness holds for a set of attributes, it also holds for any subset of those attributes.
 
 These properties make it easier to reason about anonymization algorithms.
-
-::: notes
-Source basis: `628745054.pdf`, page 18.
-:::
 
 # But stronger privacy can cost utility
 
@@ -411,10 +379,6 @@ The adult dataset experiment compared:
 
 The reported tradeoff: l-diversity ran faster, while t-closeness improved privacy constraints at some data-quality cost.
 
-::: notes
-Source basis: `628745054.pdf`, page 26.
-:::
-
 # Privacy-aware data mining changes the algorithm
 
 Privacy-aware data mining designs the mining process around privacy constraints from the start.
@@ -425,10 +389,6 @@ That means choosing:
 - how much privacy budget each query consumes;
 - which scoring functions are least sensitive to noise;
 - when to stop, split, prune, or discretize.
-
-::: notes
-Source basis: `1835804.1835868.pdf`, pages 1-4, argues that naive use of a privacy-preserving access layer can lead to poor mining results.
-:::
 
 # A privacy layer protects data, not model quality
 
@@ -442,10 +402,6 @@ flowchart LR
 ```
 
 The interface can enforce privacy, but accuracy depends on how the algorithm spends its privacy budget.
-
-::: notes
-Source basis: `1835804.1835868.pdf`, pages 1-3, especially Figure 1 and the discussion of privacy-preserving interfaces such as PINQ.
-:::
 
 # Differential privacy changes the unit of protection
 
@@ -477,10 +433,6 @@ A query's **global sensitivity** is the largest possible change in the query ans
 | Model choice | Pick one output from many candidates | Use the exponential mechanism |
 
 The same privacy budget can produce very different utility depending on query sensitivity.
-
-::: notes
-Source basis: `1835804.1835868.pdf`, page 3, sensitivity, Laplace mechanism, and exponential mechanism.
-:::
 
 # Sensitivity examples
 
