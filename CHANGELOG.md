@@ -1,3 +1,13 @@
+## [1.0.1](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.0.0...1.0.1) (2026-08-24)
+
+### Bug Fixes
+
+* add chalkboard and transition ([bf846b6](https://github.com/w4bo/AA2627-unibo-dcai/commit/bf846b677c64feb8242fdc22fcd4dd11c6b2922b))
+
+### General maintenance
+
+* working on privacy ([6ad03f6](https://github.com/w4bo/AA2627-unibo-dcai/commit/6ad03f66dbf16f9446ba7c47852be3b55caee360))
+
 ## 1.0.0 (2026-08-05)
 
 ### Bug Fixes
