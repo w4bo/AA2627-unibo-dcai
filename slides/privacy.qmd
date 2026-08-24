@@ -4,10 +4,10 @@ subtitle: "Privacy Enhancing Technologies"
 
 # Why database privacy is hard
 
-Search logs, medical records, census extracts, and learning analytics all contain patterns that can point back to individuals.
+Search logs, medical records, census extracts, and learning analytics all contain patterns that can point back to individuals [@sweeney2002kanonymity; @jin2023survey].
 
 ::: {.fragment}
-Releasing data is useful, but replacing names with numbers rarely makes people anonymous.
+Releasing data is useful, but replacing names with numbers rarely makes people anonymous [@fung2010privacy].
 :::
 
 # The privacy problem is not only "who is this?"
@@ -44,7 +44,7 @@ Privacy models are assumptions about which attacks we are trying to limit.
 
 # Attack: record linkage
 
-Record linkage joins an anonymized table with an outside table using quasi-identifiers.
+Record linkage joins an anonymized table with an outside table using quasi-identifiers [@sweeney2002kanonymity; @fung2010privacy].
 
 | Voter registry | Released medical table |
 |---|---|
@@ -67,7 +67,7 @@ This is why query interfaces need budget accounting, noise, and access controls.
 
 # k-anonymity protects against re-identification
 
-A released table is **k-anonymous** when every combination of quasi-identifiers appears in at least `k` records.
+A released table is **k-anonymous** when every combination of quasi-identifiers appears in at least `k` records [@sweeney2002kanonymity].
 
 Equivalently, each record belongs to an equivalence class of size at least `k`.
 
@@ -144,7 +144,7 @@ Privacy is a tradeoff against data utility.
 
 # Privacy and utility pull against each other
 
-Privacy transformations reduce what an attacker can learn, but they also reduce what an analyst can use.
+Privacy transformations reduce what an attacker can learn, but they also reduce what an analyst can use [@fung2010privacy; @jin2023survey].
 
 | Privacy action | Utility consequence |
 |---|---|
@@ -153,7 +153,7 @@ Privacy transformations reduce what an attacker can learn, but they also reduce 
 | More noise | Less stable query answers |
 | Smaller privacy budget | Fewer useful interactions with the data |
 
-The practical question is not "maximum privacy"; it is the best defensible point on the privacy-utility curve.
+The practical question is not "maximum privacy"; it is the best defensible point on the privacy-utility curve [@friedman2010datamining; @jin2023survey].
 
 # k-anonymity has two classic failure modes
 
@@ -209,7 +209,7 @@ The class has diversity, yet membership itself leaks a large amount of informati
 
 # l-diversity asks for variety inside each class
 
-An equivalence class has **l-diversity** when its sensitive attribute contains at least `l` well-represented values.
+An equivalence class has **l-diversity** when its sensitive attribute contains at least `l` well-represented values [@machanavajjhala2006ldiversity].
 
 This shifts the goal:
 
@@ -260,7 +260,7 @@ Let:
 - `Q` be the sensitive-attribute distribution in the whole table.
 - `P` be the sensitive-attribute distribution inside one equivalence class.
 
-An equivalence class has **t-closeness** when the distance between `P` and `Q` is no more than threshold `t`.
+An equivalence class has **t-closeness** when the distance between `P` and `Q` is no more than threshold `t` [@li2007tcloseness].
 
 # t-closeness example: compare distributions
 
@@ -305,7 +305,7 @@ That is wrong when values have order or meaning:
 
 Think of one distribution as piles of earth and the other as holes.
 
-The **Earth Mover Distance** is the minimum work needed to move probability mass from one distribution to the other.
+The **Earth Mover Distance** is the minimum work needed to move probability mass from one distribution to the other [@li2007tcloseness].
 
 ::: {.fragment}
 Work = mass moved x ground distance
@@ -405,7 +405,7 @@ The interface can enforce privacy, but accuracy depends on how the algorithm spe
 
 # Differential privacy changes the unit of protection
 
-Differential privacy is a guarantee about a randomized algorithm, not about a released table.
+Differential privacy is a guarantee about a randomized algorithm, not about a released table [@dwork2006differential; @dwork2006calibrating].
 
 Two datasets are **neighbors** if they differ in one person's record.
 
@@ -425,7 +425,7 @@ The parameter `epsilon` controls the privacy loss: smaller `epsilon` means stron
 
 # Noise is calibrated to sensitivity
 
-A query's **global sensitivity** is the largest possible change in the query answer between any two neighboring datasets.
+A query's **global sensitivity** is the largest possible change in the query answer between any two neighboring datasets [@dwork2006calibrating].
 
 | Query idea | Sensitivity intuition | Privacy mechanism |
 |---|---|---|
@@ -560,7 +560,7 @@ Even this yes/no fact can be sensitive when the dataset describes a condition, l
 
 # The paper studies private decision trees
 
-Friedman and Schuster use decision tree induction as a case study for privacy-aware data mining.
+Friedman and Schuster use decision tree induction as a case study for privacy-aware data mining [@friedman2010datamining].
 
 Their key move is replacing a naive noisy-count version of ID3 with a differential private ID3 design:
 
@@ -609,7 +609,7 @@ Once privacy noise and privacy budgets are part of the system, algorithm design 
 | t-closeness | Excess information gain | More computation and less utility |
 | differential privacy | Influence of one person's record on outputs | Noise, budget planning, and accuracy tradeoffs |
 
-No release is "anonymous" in the abstract. It is protected against a stated attacker model.
+No release is "anonymous" in the abstract. It is protected against a stated attacker model [@sweeney2002kanonymity; @machanavajjhala2006ldiversity; @li2007tcloseness; @dwork2006differential].
 
 # Attack-to-defense map
 
@@ -623,6 +623,50 @@ No release is "anonymous" in the abstract. It is protected against a stated atta
 | Repeated queries | Average away noise | privacy budget composition |
 | Membership inference | Detect whether one record was included | differential privacy |
 
+# Case study: trajectory data publishing
+
+Trajectory data turns the general privacy problem into a harder publishing problem [@jin2023survey].
+
+A trajectory is a time-ordered sequence of locations, not a fixed row of independent attributes.
+
+It is hard to anonymize because adjacent points are correlated, a few points can distinguish a person, and locations often map to semantics such as home, workplace, hospital, or place of worship [@demontjoye2013unique; @jin2023survey].
+
+# Case study: trajectory attacks
+
+The survey groups trajectory attacks by what they infer [@jin2023survey].
+
+| Attack target | Example inference |
+|---|---|
+| Identity | Which published trajectory belongs to Alice |
+| Personal profile | Alice often visits a clinic or political venue |
+| Table membership | Alice appears in a hospital mobility dataset |
+| Social relationship | Alice and Bob repeatedly co-locate |
+
+# Case study: adapting privacy models
+
+The same privacy ideas must be specialized for movement data [@jin2023survey].
+
+| Model family | Trajectory adaptation |
+|---|---|
+| k-anonymity | Make each trajectory indistinguishable from at least `k - 1` others |
+| l-diversity / t-closeness | Protect semantic locations such as home, workplace, or clinic |
+| differential privacy | Release noisy aggregates or synthetic trajectories |
+| dummy / mix-zone methods | Obscure location traces in location-based services |
+
+# Case study: evaluating trajectory releases
+
+The survey emphasizes that privacy and utility need separate measurements [@jin2023survey].
+
+| Evaluation side | Example metric |
+|---|---|
+| Privacy | attack success ratio for record linkage |
+| Point-level utility | percentage of modified trajectory points |
+| Shape utility | diameter distribution error |
+| Trip utility | origin-destination distribution error |
+| Mining utility | preservation of frequent trajectory patterns |
+
+Different downstream tasks can prefer different anonymization models.
+
 # Takeaways
 
 1. Removing direct identifiers is only the first step.
@@ -633,3 +677,8 @@ No release is "anonymous" in the abstract. It is protected against a stated atta
 6. differential privacy limits the effect of any single person on published outputs.
 7. attacks compose across outside knowledge, repeated queries, and multiple releases.
 8. privacy-aware mining treats privacy budget as an algorithmic resource.
+
+# References
+
+::: {#refs}
+:::
