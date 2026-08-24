@@ -1,0 +1,683 @@
+---
+subtitle: "Privacy Enhancing Technologies"
+---
+
+# Why database privacy is hard
+
+Search logs, medical records, census extracts, and learning analytics all contain patterns that can point back to individuals.
+
+::: {.fragment}
+Releasing data is useful, but replacing names with numbers rarely makes people anonymous.
+:::
+
+# The privacy problem is not only "who is this?"
+
+| Disclosure type | What goes wrong | Example question |
+|---|---|---|
+| Identity disclosure | A person is linked to a record | Which row is Bob? |
+| Attribute disclosure | A sensitive fact is inferred | What disease does Bob have? |
+
+Identity disclosure often leads to attribute disclosure, but attribute disclosure can happen even when identity remains uncertain.
+
+# Identifiers come in layers
+
+| Type | Examples | Privacy role |
+|---|---|---|
+| Explicit identifiers | Name, phone number, address, SSN | Directly identify a person |
+| Quasi-identifiers | Birth date, gender, ZIP code | Identify when combined |
+| Sensitive attributes | Disease, salary, diagnosis | Values we want to protect |
+
+The hard part is that quasi-identifiers are often needed for analysis.
+
+# What can an attacker know?
+
+An attacker rarely starts from zero.
+
+| Prior knowledge | How it helps |
+|---|---|
+| Public records | Links ZIP, age, gender, address, and household facts |
+| Social media | Reveals location, job, school, health events, family |
+| Domain knowledge | Makes some sensitive values more or less plausible |
+| Other releases | Enables comparison across time or across datasets |
+
+Privacy models are assumptions about which attacks we are trying to limit.
+
+# Attack: record linkage
+
+Record linkage joins an anonymized table with an outside table using quasi-identifiers.
+
+| Voter registry | Released medical table |
+|---|---|
+| 46-year-old, female, ZIP 02138 | 46-year-old, female, ZIP 02138, diagnosis X |
+
+If the quasi-identifier combination is rare, the outside table can restore identity.
+
+# Attack: differencing queries
+
+Even aggregate answers can expose a person if the attacker can ask overlapping questions.
+
+```text
+Q1: How many students passed in the class?          41
+Q2: How many students passed excluding Alice?       40
+```
+
+The difference reveals Alice's result.
+
+This is why query interfaces need budget accounting, noise, and access controls.
+
+# k-anonymity protects against re-identification
+
+A released table is **k-anonymous** when every combination of quasi-identifiers appears in at least `k` records.
+
+Equivalently, each record belongs to an equivalence class of size at least `k`.
+
+| If `k` is... | Then each visible quasi-identifier pattern must match... |
+|---:|---|
+| 1 | only one person: no anonymity |
+| 2 | at least two people |
+| 5 | at least five people |
+
+For `k = 2`, every quasi-identifier pattern must occur at least twice.
+
+# A small release starts as `k = 1`
+
+| Name | Birth date | Gender | ZIP | Civil status | Duration | Diagnosis |
+|---|---|---|---:|---|---:|---|
+| Alice | 11.03.79 | male | 1072 | married | 1 | A |
+| Bob | 17.03.79 | male | 1276 | married | 7 | B |
+| Carla | 01.07.80 | female | 1073 | single | 2 | B |
+| Dan | 07.09.84 | female | 1077 | single | 0 | C |
+| Eli | 02.07.89 | male | 1016 | single | 2 | D |
+| Fatima | 21.09.91 | female | 1267 | complicated | 4 | E |
+| Greta | 24.12.98 | female | 1268 | complicated | 4 | A |
+
+Removing the name field is not enough.
+
+# Generalization creates anonymity sets
+
+| Birth date | Gender | ZIP | Civil status | Duration | Diagnosis |
+|---|---|---:|---|---:|---|
+| 1970s | male | 1*** | married | 1 | A |
+| 1970s | male | 1*** | married | 7 | B |
+| 1980s | * | 10** | single | 2 | B |
+| 1980s | * | 10** | single | 0 | C |
+| 1980s | * | 10** | single | 2 | D |
+| 1990s | female | 12** | complicated | 4 | E |
+| 1990s | female | 12** | complicated | 4 | A |
+
+Generalize dates, ZIPs, and categories until each quasi-identifier group has at least `k` records.
+
+# k-anonymity example: check the groups
+
+After generalization, group records by the quasi-identifiers `(Birth date, Gender, ZIP, Civil status)`.
+
+| Equivalence class | Matching records | Size | `k = 2`? |
+|---|---:|---:|---|
+| 1970s, male, 1\*\*\*, married | rows 1-2 | 2 | yes |
+| 1980s, \*, 10\*\*, single | rows 3-5 | 3 | yes |
+| 1990s, female, 12\*\*, complicated | rows 6-7 | 2 | yes |
+
+The released table is therefore 2-anonymous.
+
+# k-anonymity example: one unsafe row breaks it
+
+Suppose row 5 stayed specific:
+
+| Birth date | Gender | ZIP | Civil status | Diagnosis |
+|---|---|---:|---|---|
+| 1980s | female | 10\*\* | single | B |
+| 1980s | female | 10\*\* | single | C |
+| 02.07.89 | male | 1016 | single | D |
+
+The third row forms an equivalence class of size 1, so the table is not 2-anonymous.
+
+# Suppression is the other lever
+
+When one record prevents a table from satisfying `k`, we can suppress fields or rows.
+
+| Technique | Effect | Cost |
+|---|---|---|
+| Generalization | Keeps records, coarsens values | Less precision |
+| Suppression | Removes risky values or rows | Less coverage |
+
+Privacy is a tradeoff against data utility.
+
+# Privacy and utility pull against each other
+
+Privacy transformations reduce what an attacker can learn, but they also reduce what an analyst can use.
+
+| Privacy action | Utility consequence |
+|---|---|
+| Coarser values | Less precise models and statistics |
+| More suppression | Smaller or less representative data |
+| More noise | Less stable query answers |
+| Smaller privacy budget | Fewer useful interactions with the data |
+
+The practical question is not "maximum privacy"; it is the best defensible point on the privacy-utility curve.
+
+# k-anonymity has two classic failure modes
+
+# Homogeneity attack
+
+Everyone in an equivalence class has the same sensitive value.
+
+Knowing the class is enough to infer the value.
+
+# Background knowledge attack
+
+An attacker combines the released table with outside knowledge.
+
+The class remains anonymous, but the sensitive value becomes likely.
+
+# Attack example: background knowledge
+
+| Equivalence class | Sensitive values |
+|---|---|
+| 30s, male, 4762\*, single | heart disease, heart disease, cancer |
+
+Carl is known to be in this group.
+
+If the attacker also knows Carl has low heart-disease risk, the remaining plausible value is cancer.
+
+# Attack example: similarity
+
+An equivalence class can be diverse but still reveal a narrow semantic category.
+
+| Patient | Disease |
+|---|---|
+| 1 | gastric ulcer |
+| 2 | gastritis |
+| 3 | stomach cancer |
+
+This is 3-diverse, but all three values point to stomach-related illness.
+
+# Attack example: skewness
+
+Suppose a disease is rare globally:
+
+```text
+P(positive in whole table) = 1%
+```
+
+But in one equivalence class:
+
+```text
+P(positive in this class) = 50%
+```
+
+The class has diversity, yet membership itself leaks a large amount of information.
+
+# l-diversity asks for variety inside each class
+
+An equivalence class has **l-diversity** when its sensitive attribute contains at least `l` well-represented values.
+
+This shifts the goal:
+
+- k-anonymity limits identity disclosure.
+- l-diversity tries to limit attribute disclosure.
+
+::: notes
+Source basis: `628745054.pdf`, pages 3 and 5; `kanon.pptx`, slide 16.
+:::
+
+# l-diversity example: k-anonymous but not private enough
+
+| Equivalence class | Diagnosis values | 2-anonymous? | 2-diverse? |
+|---|---|---|---|
+| 1970s, male, 1\*\*\*, married | A, B | yes | yes |
+| 1980s, \*, 10\*\*, single | B, C, D | yes | yes |
+| 1990s, female, 12\*\*, complicated | A, A | yes | no |
+
+If Alice is known to be in the last group, k-anonymity hides which row is hers, but not the diagnosis.
+
+# l-diversity example: a skewness attack
+
+Global distribution:
+
+| Disease | Share |
+|---|---:|
+| negative | 99% |
+| positive | 1% |
+
+Equivalence class:
+
+| Disease | Share |
+|---|---:|
+| negative | 50% |
+| positive | 50% |
+
+The class is 2-diverse, but membership raises the inferred disease risk from 1% to 50%.
+
+# l-diversity still misses distribution and meaning
+
+| Attack | Why l-diversity can fail |
+|---|---|
+| Skewness attack | A class can have a very different sensitive-value distribution than the whole table |
+| Similarity attack | Different sensitive values can be semantically close, such as related diseases |
+
+Diversity alone does not say whether the released class changed what an attacker can learn.
+
+::: notes
+Source basis: `628745054.pdf`, pages 5-6.
+:::
+
+# t-closeness focuses on information gain
+
+Let:
+
+- `Q` be the sensitive-attribute distribution in the whole table.
+- `P` be the sensitive-attribute distribution inside one equivalence class.
+
+An equivalence class has **t-closeness** when the distance between `P` and `Q` is no more than threshold `t`.
+
+# t-closeness example: compare distributions
+
+Global distribution `Q`:
+
+| Diagnosis | A | B | C |
+|---|---:|---:|---:|
+| Share | 50% | 30% | 20% |
+
+Two equivalence classes:
+
+| Class | A | B | C | Max absolute gap from `Q` |
+|---|---:|---:|---:|---:|
+| `P1` | 50% | 25% | 25% | 5% |
+| `P2` | 100% | 0% | 0% | 50% |
+
+With a simple threshold `t = 10%`, `P1` is close enough; `P2` is not.
+
+# The design idea: compare class and population
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  A[Prior belief] --> B[Learn global distribution Q]
+  B --> C[Learn equivalence-class distribution P]
+  C --> D[Posterior belief]
+  B -. t-closeness limits this change .-> C
+```
+
+If `Q` is treated as public, the privacy question becomes: how much extra does `P` reveal?
+
+::: notes
+Source basis: `628745054.pdf`, page 8.
+:::
+
+# Distance must respect semantics
+
+Simple distances can treat all values as equally different.
+
+That is wrong when values have order or meaning:
+
+- Salary values near each other should be closer than distant salaries.
+- Related diseases should be closer than unrelated diseases.
+
+# Earth Mover Distance gives a usable notion of closeness
+
+Think of one distribution as piles of earth and the other as holes.
+
+The **Earth Mover Distance** is the minimum work needed to move probability mass from one distribution to the other.
+
+::: {.fragment}
+Work = mass moved x ground distance
+:::
+
+::: notes
+Source basis: `628745054.pdf`, pages 11-12.
+:::
+
+# Earth Mover Distance: tiny numeric example
+
+Let salaries be ordered as `3k, 4k, 5k`.
+
+| Distribution | 3k | 4k | 5k |
+|---|---:|---:|---:|
+| `Q` | 1/3 | 1/3 | 1/3 |
+| `P` | 0 | 2/3 | 1/3 |
+
+To transform `P` into `Q`, move `1/3` mass from `4k` to `3k`.
+
+If adjacent salary steps have distance `1/2`, then:
+
+```text
+EMD(P, Q) = mass x distance = 1/3 x 1/2 = 1/6
+```
+
+# Numerical attributes use ordered distance
+
+For salaries, age, or other ordered values, distance depends on position in the order.
+
+| Distribution | Values |
+|---|---|
+| `Q` | 3k, 4k, 5k, 6k, 7k, 8k, 9k, 10k, 11k |
+| `P1` | 3k, 4k, 5k |
+| `P2` | 6k, 8k, 11k |
+
+`P1` is more concentrated at the low end, so it can leak more than `P2`.
+
+::: notes
+Source basis: `628745054.pdf`, pages 10 and 14.
+:::
+
+# A salary example separates `P1` and `P2`
+
+| Class distribution | Distance to `Q` | Interpretation |
+|---|---:|---|
+| `P1 = {3k, 4k, 5k}` | 0.375 | More leakage |
+| `P2 = {6k, 8k, 11k}` | 0.167 | Less leakage |
+
+The lower-distance class is closer to the population distribution.
+
+::: notes
+Source basis: `628745054.pdf`, pages 19-22.
+:::
+
+# Categorical attributes need domain knowledge
+
+For diseases or occupations, we can choose:
+
+| Distance model | When it fits |
+|---|---|
+| Equal distance | Categories have no useful semantic structure |
+| Hierarchical distance | A taxonomy tells us which values are close |
+
+The privacy model depends on how meaning is encoded.
+
+::: notes
+Source basis: `628745054.pdf`, pages 15-17 and 23-24.
+:::
+
+# t-closeness has useful monotonic properties
+
+- If a more specific release satisfies t-closeness, a more generalized release also satisfies it.
+- If t-closeness holds for a set of attributes, it also holds for any subset of those attributes.
+
+These properties make it easier to reason about anonymization algorithms.
+
+::: notes
+Source basis: `628745054.pdf`, page 18.
+:::
+
+# But stronger privacy can cost utility
+
+The adult dataset experiment compared:
+
+- k-anonymity
+- entropy l-diversity
+- recursive `(c, l)` diversity
+- k-anonymity with t-closeness at `t = 0.2`
+- k-anonymity with t-closeness at `t = 0.15`
+
+The reported tradeoff: l-diversity ran faster, while t-closeness improved privacy constraints at some data-quality cost.
+
+::: notes
+Source basis: `628745054.pdf`, page 26.
+:::
+
+# Privacy-aware data mining changes the algorithm
+
+Privacy-aware data mining designs the mining process around privacy constraints from the start.
+
+That means choosing:
+
+- what queries to ask;
+- how much privacy budget each query consumes;
+- which scoring functions are least sensitive to noise;
+- when to stop, split, prune, or discretize.
+
+::: notes
+Source basis: `1835804.1835868.pdf`, pages 1-4, argues that naive use of a privacy-preserving access layer can lead to poor mining results.
+:::
+
+# A privacy layer protects data, not model quality
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  A[Raw data] --> B[Privacy-preserving interface]
+  B --> C[Noisy counts, sums, averages]
+  C --> D[Data mining algorithm]
+  D --> E[Model]
+```
+
+The interface can enforce privacy, but accuracy depends on how the algorithm spends its privacy budget.
+
+::: notes
+Source basis: `1835804.1835868.pdf`, pages 1-3, especially Figure 1 and the discussion of privacy-preserving interfaces such as PINQ.
+:::
+
+# Differential privacy changes the unit of protection
+
+Differential privacy is a guarantee about a randomized algorithm, not about a released table.
+
+Two datasets are **neighbors** if they differ in one person's record.
+
+An algorithm `M` is `epsilon`-differentially private if, for every possible output set `S`:
+
+$$\Pr[M(D) \in S] \leq e^{\epsilon} \cdot \Pr[M(D') \in S]$$
+
+where `D` and `D'` are neighboring datasets.
+
+Informally:
+
+```text
+Result with Alice in the data ~= result without Alice in the data
+```
+
+The parameter `epsilon` controls the privacy loss: smaller `epsilon` means stronger privacy and more noise.
+
+# Noise is calibrated to sensitivity
+
+A query's **global sensitivity** is the largest possible change in the query answer between any two neighboring datasets.
+
+| Query idea | Sensitivity intuition | Privacy mechanism |
+|---|---|---|
+| Count | One person can change the count by at most 1 | Add Laplace noise scaled to `1 / epsilon` |
+| Model choice | Pick one output from many candidates | Use the exponential mechanism |
+
+The same privacy budget can produce very different utility depending on query sensitivity.
+
+::: notes
+Source basis: `1835804.1835868.pdf`, page 3, sensitivity, Laplace mechanism, and exponential mechanism.
+:::
+
+# Sensitivity examples
+
+Assume a dataset of students and one student's record can be added or removed.
+
+| Query | Bound needed | Sensitivity |
+|---|---|---:|
+| Number of students | none | 1 |
+| Number of students who passed | none | 1 |
+| Sum of ages | age in `[18, 80]` | 80 |
+| Average age | dataset size at least 100, age in `[18, 80]` | at most 0.8 |
+
+Sensitivity depends on the query and on any declared bounds.
+
+# Differential privacy numeric example: noisy count
+
+Question: "How many students passed?"
+
+True answer:
+
+```text
+count = 120
+```
+
+For a count query, sensitivity is `1`. With `epsilon = 0.5`, Laplace noise scale is:
+
+```text
+scale = sensitivity / epsilon = 1 / 0.5 = 2
+```
+
+A private answer might be:
+
+```text
+120 + Laplace(scale = 2) = 123.1
+```
+
+# Differential privacy numeric example: privacy loss
+
+The probability ratio is bounded by `exp(epsilon)`.
+
+| `epsilon` | `exp(epsilon)` | Meaning |
+|---:|---:|---|
+| 0.1 | 1.105 | Very similar output probabilities |
+| 0.5 | 1.649 | More distinguishability allowed |
+| 1.0 | 2.718 | Weaker privacy |
+
+Smaller `epsilon` gives stronger privacy, but requires larger noise for the same query.
+
+# Differential privacy numeric example: noisy sum
+
+Question: "What is the total age?"
+
+If ages are clipped to `[18, 80]`, one person can change the sum by at most `80`.
+
+With `epsilon = 0.5`:
+
+```text
+scale = sensitivity / epsilon = 80 / 0.5 = 160
+```
+
+This is why bounded counts are easier to answer accurately than high-sensitivity sums.
+
+# Privacy budgets make repeated mining measurable
+
+Differential privacy composes: multiple private queries accumulate privacy loss.
+
+Example budget accounting:
+
+| Query | Epsilon spent |
+|---|---:|
+| Count records | 0.10 |
+| Count positives | 0.20 |
+| Choose split attribute | 0.30 |
+| Label leaves | 0.40 |
+| Total privacy loss | 1.00 |
+
+# Sequential queries
+
+Costs add up.
+
+Spend too much budget and access stops.
+
+# Disjoint partitions
+
+Costs can be accounted separately.
+
+This is useful when tree nodes contain disjoint records.
+
+# Attack: repeated noisy queries
+
+Noise helps only if the attacker cannot average it away.
+
+If the same count query can be asked many times:
+
+```text
+119.1, 122.4, 118.7, 120.2, 119.6, ...
+```
+
+the average moves back toward the true answer.
+
+Differential privacy handles this by charging each query to the privacy budget.
+
+# Attack: composition across releases
+
+Separate releases can be harmless alone but revealing together.
+
+| Release 1 | Release 2 | Risk |
+|---|---|---|
+| 2-anonymous medical table | 2-anonymous employment table | Intersection may isolate one person |
+| Noisy counts for 2025 | Noisy counts for 2026 | Difference may expose who changed status |
+
+Privacy must be tracked across releases, not only inside one file.
+
+# Attack: membership inference
+
+Membership inference asks whether a specific person was in the training data.
+
+Example:
+
+```text
+Was Alice's hospital record used to train this risk model?
+```
+
+Even this yes/no fact can be sensitive when the dataset describes a condition, location, or behavior.
+
+# The paper studies private decision trees
+
+Friedman and Schuster use decision tree induction as a case study for privacy-aware data mining.
+
+Their key move is replacing a naive noisy-count version of ID3 with a differential private ID3 design:
+
+- use noisy counts for leaf labels;
+- use the exponential mechanism to choose split attributes;
+- compare split criteria by sensitivity;
+- extend the approach toward C4.5 with pruning and continuous attributes.
+
+# The split criterion matters under privacy
+
+| Criterion | Paper's privacy-aware lesson |
+|---|---|
+| Information gain | Useful normally, but more sensitive to noise |
+| Gini | Often more robust than information gain |
+| Max scorer | Least sensitive in their analysis, often strong with small samples |
+| Gain ratio | Hard to bound usefully, so problematic for the exponential mechanism |
+
+With differential privacy, the "best" mining heuristic can change.
+
+# The experiments show a three-way tradeoff
+
+The paper evaluates synthetic data and the UCI Adult census dataset.
+
+| Dimension | Observed effect |
+|---|---|
+| More samples | Noise matters less |
+| Larger privacy budget | Accuracy improves |
+| Lower-sensitivity criteria | Better use of the same budget |
+
+The improved private algorithms could match the naive approach with far fewer learning samples.
+
+# Paper summary: the main idea
+
+The paper's core claim is simple and important:
+
+> Differential privacy is not just a wrapper around ordinary data mining.
+
+Once privacy noise and privacy budgets are part of the system, algorithm design must change. The miner should prefer operations with low sensitivity, spend budget deliberately, and treat accuracy, privacy, and dataset size as a Pareto tradeoff.
+
+# Choosing a privacy criterion is a modeling decision
+
+| Criterion | Protects mainly against | Key limitation |
+|---|---|---|
+| k-anonymity | Re-identification | Attribute disclosure |
+| l-diversity | Homogeneous sensitive values | Skewness and semantic similarity |
+| t-closeness | Excess information gain | More computation and less utility |
+| differential privacy | Influence of one person's record on outputs | Noise, budget planning, and accuracy tradeoffs |
+
+No release is "anonymous" in the abstract. It is protected against a stated attacker model.
+
+# Attack-to-defense map
+
+| Attack | Main idea | Better response |
+|---|---|---|
+| Record linkage | Join quasi-identifiers with outside data | k-anonymity, stronger generalization |
+| Homogeneity | All class members share a sensitive value | l-diversity |
+| Skewness | Class distribution differs from population | t-closeness |
+| Similarity | Diverse values have same meaning | semantic distance, t-closeness |
+| Differencing | Compare overlapping query answers | differential privacy, query auditing |
+| Repeated queries | Average away noise | privacy budget composition |
+| Membership inference | Detect whether one record was included | differential privacy |
+
+# Takeaways
+
+1. Removing direct identifiers is only the first step.
+2. Quasi-identifiers create re-identification risk through combinations.
+3. k-anonymity builds groups, but groups can still reveal sensitive values.
+4. l-diversity adds variety, but not distributional closeness.
+5. t-closeness limits what an equivalence class reveals beyond the whole table.
+6. differential privacy limits the effect of any single person on published outputs.
+7. attacks compose across outside knowledge, repeated queries, and multiple releases.
+8. privacy-aware mining treats privacy budget as an algorithmic resource.
