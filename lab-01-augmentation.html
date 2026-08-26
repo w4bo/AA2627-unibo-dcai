@@ -348,7 +348,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h2>8. How SMOTE works</h2>
 <p>SMOTE creates new minority-class observations instead of duplicating existing ones <span class="citation" data-cites="chawla2002smote">(<a href="#/references" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</p>
 <p>For a minority point <code>x_i</code>, it selects a nearby minority point <code>x_j</code> and creates:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb6-1"><a href="" aria-label="1"></a>x_new = x_i + lambda * (x_j - x_i)</span></code></pre></div>
+<p><span class="math inline">\(x_{new} = x_i + \lambda * (x_j - x_i)\)</span></p>
 <p>The intuition is simple: fill sparse minority regions. The risk is also simple: interpolation may create impossible records.</p>
 </section>
 <section id="other-algorithms" class="slide level2">
@@ -382,13 +382,13 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>The same rule applies to cross-validation: resampling must happen <strong>inside each training fold</strong>, not once globally before cross-validation.</li>
 <li>This is why we use <code>imblearn.pipeline.Pipeline</code> whenever the pipeline contains a sampler.</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb7-1"><a href="" aria-label="1"></a><span class="ex">pip</span> install imbalanced-learn</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb6-1"><a href="" aria-label="1"></a><span class="ex">pip</span> install imbalanced-learn</span></code></pre></div>
 </section>
 <section id="create-a-deliberately-imbalanced-dataset" class="slide level2">
 <h2>11. Create a deliberately imbalanced dataset</h2>
 <p>We will use a synthetic binary classification dataset so the notebook is reproducible without external data downloads.</p>
 <p>Think of <code>y=1</code> as a rare high-risk event, such as fraud, churn, default, or failure.</p>
-<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:25.003063Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:25.002530Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:25.018647Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:25.017744Z&quot;}}" data-execution_count="3">
+<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:29.233278Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:29.232965Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:29.247943Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:29.247167Z&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -444,7 +444,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="majority-class-baseline" class="slide level2">
 <h2>Majority-class baseline</h2>
 <p>A classifier that always predicts the majority class can look strong by accuracy alone. But it has zero recall for the minority class.</p>
-<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:25.122324Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:25.122118Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:25.138948Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:25.138021Z&quot;}}" data-execution_count="5">
+<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:29.338738Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:29.338565Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:29.353097Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:29.352273Z&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <style scoped="">
@@ -513,22 +513,22 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="baseline-pipeline" class="slide level2">
 <h2>14. Baseline pipeline</h2>
 <p>A conventional <code>sklearn.pipeline.Pipeline</code> is sufficient when all steps are transformers and estimators.</p>
-<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:25.944450Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:25.944215Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:25.964050Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:25.963217Z&quot;}}" data-execution_count="8">
+<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:29.970558Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:29.970354Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:29.988665Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:29.987853Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># Standardize numeric features before logistic regression.</span></span>
-<span id="cb8-2"><a href="" aria-label="2"></a>numeric_features <span class="op">=</span> X.columns.tolist()</span>
-<span id="cb8-3"><a href="" aria-label="3"></a>preprocessor <span class="op">=</span> ColumnTransformer(</span>
-<span id="cb8-4"><a href="" aria-label="4"></a>    transformers<span class="op">=</span>[(<span class="st">"num"</span>, StandardScaler(), numeric_features)],</span>
-<span id="cb8-5"><a href="" aria-label="5"></a>    remainder<span class="op">=</span><span class="st">"drop"</span>,</span>
-<span id="cb8-6"><a href="" aria-label="6"></a>)</span>
-<span id="cb8-7"><a href="" aria-label="7"></a>baseline_pipeline <span class="op">=</span> Pipeline(</span>
-<span id="cb8-8"><a href="" aria-label="8"></a>    steps<span class="op">=</span>[</span>
-<span id="cb8-9"><a href="" aria-label="9"></a>        (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb8-10"><a href="" aria-label="10"></a>        (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>, random_state<span class="op">=</span>RANDOM_STATE)),</span>
-<span id="cb8-11"><a href="" aria-label="11"></a>    ]</span>
-<span id="cb8-12"><a href="" aria-label="12"></a>)</span>
-<span id="cb8-13"><a href="" aria-label="13"></a>baseline_pipeline</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># Standardize numeric features before logistic regression.</span></span>
+<span id="cb7-2"><a href="" aria-label="2"></a>numeric_features <span class="op">=</span> X.columns.tolist()</span>
+<span id="cb7-3"><a href="" aria-label="3"></a>preprocessor <span class="op">=</span> ColumnTransformer(</span>
+<span id="cb7-4"><a href="" aria-label="4"></a>    transformers<span class="op">=</span>[(<span class="st">"num"</span>, StandardScaler(), numeric_features)],</span>
+<span id="cb7-5"><a href="" aria-label="5"></a>    remainder<span class="op">=</span><span class="st">"drop"</span>,</span>
+<span id="cb7-6"><a href="" aria-label="6"></a>)</span>
+<span id="cb7-7"><a href="" aria-label="7"></a>baseline_pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb7-8"><a href="" aria-label="8"></a>    steps<span class="op">=</span>[</span>
+<span id="cb7-9"><a href="" aria-label="9"></a>        (<span class="st">"preprocessing"</span>, preprocessor),</span>
+<span id="cb7-10"><a href="" aria-label="10"></a>        (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>, random_state<span class="op">=</span>RANDOM_STATE)),</span>
+<span id="cb7-11"><a href="" aria-label="11"></a>    ]</span>
+<span id="cb7-12"><a href="" aria-label="12"></a>)</span>
+<span id="cb7-13"><a href="" aria-label="13"></a>baseline_pipeline</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <style>#sk-container-id-1 {
@@ -1733,22 +1733,22 @@ forceTheme('sk-container-id-1');</script>
 <li>Borderline-SMOTE.</li>
 </ol>
 <p>All samplers are placed after preprocessing and before the classifier, so they are fitted only on the current training fold.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>pipelines <span class="op">=</span> {</span>
-<span id="cb9-2"><a href="" aria-label="2"></a>    <span class="st">"No treatment"</span>: Pipeline(</span>
-<span id="cb9-3"><a href="" aria-label="3"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"classifier"</span>, logistic_regression())]</span>
-<span id="cb9-4"><a href="" aria-label="4"></a>    ),</span>
-<span id="cb9-5"><a href="" aria-label="5"></a>    <span class="st">"Class weight"</span>: Pipeline(</span>
-<span id="cb9-6"><a href="" aria-label="6"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"classifier"</span>, logistic_regression(class_weight<span class="op">=</span><span class="st">"balanced"</span>))]</span>
-<span id="cb9-7"><a href="" aria-label="7"></a>    ),</span>
-<span id="cb9-8"><a href="" aria-label="8"></a>    <span class="st">"Random undersampling"</span>: ImbPipeline(</span>
-<span id="cb9-9"><a href="" aria-label="9"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"sampler"</span>, RandomUnderSampler(random_state<span class="op">=</span>RANDOM_STATE)), (<span class="st">"classifier"</span>, logistic_regression())]</span>
-<span id="cb9-10"><a href="" aria-label="10"></a>    ), <span class="co"># ...</span></span>
-<span id="cb9-11"><a href="" aria-label="11"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>pipelines <span class="op">=</span> {</span>
+<span id="cb8-2"><a href="" aria-label="2"></a>    <span class="st">"No treatment"</span>: Pipeline(</span>
+<span id="cb8-3"><a href="" aria-label="3"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"classifier"</span>, logistic_regression())]</span>
+<span id="cb8-4"><a href="" aria-label="4"></a>    ),</span>
+<span id="cb8-5"><a href="" aria-label="5"></a>    <span class="st">"Class weight"</span>: Pipeline(</span>
+<span id="cb8-6"><a href="" aria-label="6"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"classifier"</span>, logistic_regression(class_weight<span class="op">=</span><span class="st">"balanced"</span>))]</span>
+<span id="cb8-7"><a href="" aria-label="7"></a>    ),</span>
+<span id="cb8-8"><a href="" aria-label="8"></a>    <span class="st">"Random undersampling"</span>: ImbPipeline(</span>
+<span id="cb8-9"><a href="" aria-label="9"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"sampler"</span>, RandomUnderSampler(random_state<span class="op">=</span>RANDOM_STATE)), (<span class="st">"classifier"</span>, logistic_regression())]</span>
+<span id="cb8-10"><a href="" aria-label="10"></a>    ), <span class="co"># ...</span></span>
+<span id="cb8-11"><a href="" aria-label="11"></a>}</span></code></pre></div>
 </section>
 <section id="stratified-cross-validation" class="slide level2">
 <h2>16. Stratified cross-validation</h2>
 <p>Loops over stratified folds. This makes it explicit that every pipeline is cloned, fitted on the training fold, and evaluated on the untouched validation fold.</p>
-<div id="5ec6d60e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:25.974657Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:25.974485Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:27.069058Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:27.068305Z&quot;}}" data-execution_count="10">
+<div id="5ec6d60e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:29.998663Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:29.998484Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:30.971460Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:30.970295Z&quot;}}" data-execution_count="10">
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <style scoped="">
@@ -1859,7 +1859,7 @@ forceTheme('sk-container-id-1');</script>
 </ul>
 
 </blockquote>
-<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:27.073038Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:27.072821Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:27.093144Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:27.092061Z&quot;}}" data-execution_count="11">
+<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:30.973703Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:30.973473Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:30.989610Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:30.989032Z&quot;}}" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
@@ -2023,7 +2023,7 @@ forceTheme('sk-container-id-1');</script>
 <ul>
 <li>Threshold tuning should be evaluated with validation data, business constraints, and the metric that matches the real decision problem.</li>
 </ul>
-<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:27.682217Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:27.682021Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:27.763929Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:27.762998Z&quot;}}" data-execution_count="14">
+<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:31.467770Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:31.467584Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:31.537068Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:31.536157Z&quot;}}" data-execution_count="14">
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <style scoped="">
@@ -2132,7 +2132,7 @@ forceTheme('sk-container-id-1');</script>
 <h2>21. Choose a threshold for high-cost false negatives</h2>
 <p>Suppose a false negative costs 10 times as much as a false positive.</p>
 <p>This is a simple teaching cost model, not a universal decision rule. In a real application, you would estimate costs with domain experts and validate the downstream effects.</p>
-<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:27.912569Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:27.912389Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:33.408709Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:33.407766Z&quot;}}" data-execution_count="16">
+<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:31.627155Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:31.626959Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:36.266438Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:36.265559Z&quot;}}" data-execution_count="16">
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <style scoped="">
@@ -2255,7 +2255,7 @@ forceTheme('sk-container-id-1');</script>
 <li>The <strong>wrong</strong> structure applies SMOTE before cross-validation. The validation folds are no longer clean because the synthetic data was produced using information from the full dataset.</li>
 <li>The <strong>right</strong> structure places SMOTE inside an <code>imblearn</code> pipeline, so SMOTE is fitted only on each training fold.</li>
 </ul>
-<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:33.410908Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:33.410679Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:33.657825Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:33.657040Z&quot;}}" data-execution_count="17">
+<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:36.268695Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:36.268466Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:36.491166Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:36.490777Z&quot;}}" data-execution_count="17">
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
@@ -2326,6 +2326,7 @@ forceTheme('sk-container-id-1');</script>
 </section>
 <section id="student-challenge" class="slide level2">
 <h2>24. Student challenge</h2>
+<p>Dataset: Credit Card Fraud Detection on Kaggle.</p>
 <p>Choose a pipeline for a high-cost false-negative scenario.</p>
 <ol type="1">
 <li>Define the cost of a false negative.</li>
@@ -2334,10 +2335,6 @@ forceTheme('sk-container-id-1');</script>
 <li>Tune the classification threshold.</li>
 <li>Defend the final choice with evidence.</li>
 </ol>
-<p>Challenge datasets</p>
-<ul>
-<li>Credit Card Fraud Detection on Kaggle.</li>
-</ul>
 </section>
 <section id="references" class="title-slide slide level1 smaller scrollable">
 <h1>References</h1>

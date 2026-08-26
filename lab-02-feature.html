@@ -9,7 +9,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
-  <title>From Domain Features to Automated Feature Selection</title>
+  <title>Data-Centric AI (Module II)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -203,7 +203,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">From Domain Features to Automated Feature Selection</h1>
+  <h1 class="title">Data-Centric AI (Module II)</h1>
+  <p class="subtitle">From Domain Features to Automated Feature Selection</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -212,11 +213,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div>
-
-</section>
-<section>
-<section id="from-domain-features-to-automated-feature-selection" class="title-slide slide level1 center">
-<h1>From Domain Features to Automated Feature Selection</h1>
 
 </section>
 <section id="learning-outcomes" class="slide level2">
@@ -247,34 +243,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="flight-delay-prediction" class="slide level2">
 <h2>2. Flight delay prediction</h2>
 <p>The synthetic dataset predicts whether a flight arrives at least 15 minutes late.</p>
-<p>The key modeling question is operational: when will the prediction be made?</p>
-</section>
-<section id="prediction-time-matters" class="slide level2">
-<h2>Prediction time matters</h2>
-<ul>
-<li>Ticket sale: route, carrier, season, schedule.</li>
-<li>Morning of travel: forecasts and known schedule pressure.</li>
-<li>Gate before departure: current weather and inbound status.</li>
-<li>After departure: actual delay may be known, but this is a different task.</li>
-</ul>
-</section>
-<section id="leakage-boundary" class="slide level2">
-<h2>Leakage boundary</h2>
-<p>This notebook assumes prediction shortly before scheduled departure.</p>
-<p>The raw table includes <code>actual_departure</code> and <code>actual_arrival</code> only for discussion. The default pipeline drops them because they are future information.</p>
-</section>
-<section id="setup" class="slide level2">
-<h2>3. Setup</h2>
-<p>The setup cell imports modeling, preprocessing, feature selection, and interpretation utilities used throughout the lab.</p>
-</section>
-<section id="create-a-raw-mixed-type-dataset" class="slide level2">
-<h2>4. Create a raw mixed-type dataset</h2>
-<p>The dataset is generated inside the notebook so that the experiment is reproducible and does not depend on an external download. It contains numerical, categorical, scheduled date/time attributes, and actual date/time attributes.</p>
-<p>The target is intentionally noisy: feature selection is more realistic when there is signal, redundancy, and noise at the same time.</p>
-<p><code>actual_departure</code> and <code>actual_arrival</code> are included as a teaching device. For a pre-departure delay prediction model, they should be dropped because they are not available when the prediction is made.</p>
-<p>Students should read this generator as a data story: some variables are available before departure, while others are future information.</p>
-<div id="b2bb99bd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:42.063145Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:42.062824Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:42.103984Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:42.102933Z&quot;}}" data-execution_count="2">
-<div class="cell-output cell-output-display">
+<div id="750a7c46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:43.781855Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:43.781565Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:43.794095Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:43.793467Z&quot;}}" data-execution_count="3">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>X.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -370,56 +344,86 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>2025-08-27 19:31:38.859671472</td>
 <td>2025-08-27 22:19:35.809267008</td>
 </tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>2025-06-10 18:00:00</td>
-<td>CTY</td>
-<td>BOS</td>
-<td>ATL</td>
-<td>B738</td>
-<td>142.555741</td>
-<td>986.259763</td>
-<td>25</td>
-<td>17.411655</td>
-<td>0.790055</td>
-<td>10.633787</td>
-<td>1743.370893</td>
-<td>-0.513913</td>
-<td>0.117556</td>
-<td>2025-06-10 17:53:59.845314576</td>
-<td>2025-06-10 20:14:52.468692869</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>2025-06-08 11:20:00</td>
-<td>ECO</td>
-<td>SEA</td>
-<td>PHX</td>
-<td>A321</td>
-<td>128.776935</td>
-<td>451.881879</td>
-<td>11</td>
-<td>14.600191</td>
-<td>2.124780</td>
-<td>12.191026</td>
-<td>4936.313916</td>
-<td>-0.509590</td>
-<td>-0.570861</td>
-<td>2025-06-08 11:19:59.457814812</td>
-<td>2025-06-08 13:26:38.713510159</td>
-</tr>
 </tbody>
 </table>
 
 </div>
 </div>
-<div class="cell-output cell-output-stdout">
+</div>
+<div id="4540b3a7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:43.796184Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:43.795999Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:43.800278Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:43.799576Z&quot;}}" data-execution_count="4">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>y.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>0    0
+1    0
+2    0
+Name: arrival_delay_15min, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="data-understanding" class="slide level2">
+<h2>Data understanding</h2>
+<div id="e2fd1889" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:43.802271Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:43.802088Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:43.806904Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:43.806201Z&quot;}}" data-execution_count="5">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>y.value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"class_share"</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>arrival_delay_15min
 0    0.710286
 1    0.289714
 Name: class_share, dtype: float64</code></pre>
 </div>
 </div>
+</section>
+<section id="data-understanding-1" class="slide level2">
+<h2>Data understanding</h2>
+<div id="24e266bb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:43.808674Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:43.808484Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:43.817849Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:43.816832Z&quot;}}" data-execution_count="6">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>X.info()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 3500 entries, 0 to 3499
+Data columns (total 16 columns):
+ #   Column                       Non-Null Count  Dtype         
+---  ------                       --------------  -----         
+ 0   scheduled_departure          3500 non-null   datetime64[us]
+ 1   carrier                      3500 non-null   str           
+ 2   origin                       3500 non-null   str           
+ 3   destination                  3500 non-null   str           
+ 4   aircraft_type                3500 non-null   str           
+ 5   scheduled_duration_min       3500 non-null   float64       
+ 6   distance_km                  3500 non-null   float64       
+ 7   prev_hour_origin_departures  3500 non-null   int64         
+ 8   weather_wind_kmh             3500 non-null   float64       
+ 9   weather_precip_mm            3500 non-null   float64       
+ 10  visibility_km                3500 non-null   float64       
+ 11  baggage_load_kg              3500 non-null   float64       
+ 12  noise_random_1               3500 non-null   float64       
+ 13  noise_random_2               3500 non-null   float64       
+ 14  actual_departure             3500 non-null   datetime64[ns]
+ 15  actual_arrival               3500 non-null   datetime64[ns]
+dtypes: datetime64[ns](2), datetime64[us](1), float64(8), int64(1), str(4)
+memory usage: 437.6 KB</code></pre>
+</div>
+</div>
+</section>
+<section id="the-key-modeling-question-is-operational-when-will-the-prediction-be-made" class="slide level2">
+<h2>The key modeling question is operational: when will the prediction be made?</h2>
+</section>
+<section id="prediction-time-matters" class="slide level2">
+<h2>Prediction time matters</h2>
+<ul>
+<li><em>Ticket sale</em>: route, carrier, season, schedule.</li>
+<li><em>Morning of travel</em>: forecasts and known schedule pressure.</li>
+<li><em>Gate before departure</em>: current weather and inbound status.</li>
+<li><em>After departure</em>: actual delay may be inferred.</li>
+<li><em>After landing</em>: actual delay is known.</li>
+</ul>
 </section>
 <section id="manual-feature-engineering" class="slide level2">
 <h2>5. Manual feature engineering</h2>
@@ -431,14 +435,98 @@ Name: class_share, dtype: float64</code></pre>
 <li><code>precip_x_evening_peak</code>: an interaction between bad weather and an operationally busy period.</li>
 <li><code>low_visibility</code>: a nonlinear threshold feature.</li>
 </ul>
-<p>Each of these encodes a hypothesis. For example, evening flights may accumulate delays from earlier flights, and precipitation may be worse during peak operating hours.</p>
-<p>The transformer also has an <code>include_actual_times</code> option. It is disabled by default because actual departure and arrival times are not known before departure. Turn it on only to demonstrate leakage.</p>
-<p>This transformer is the main teaching object. It turns domain assumptions into reproducible columns that can live safely inside a pipeline.</p>
-<p><strong>Dataframe schema for feature discussion</strong></p>
+<p>Each of these encodes a hypothesis.</p>
+<ul>
+<li>For example, evening flights may accumulate delays from earlier flights, and precipitation may be worse during peak operating hours.</li>
+<li>The transformer also has an <code>include_actual_times</code> option. It is disabled by default because actual departure and arrival times are not known before departure. Turn it on only to demonstrate leakage.</li>
+</ul>
+</section>
+<section id="data-understanding-and-visualization" class="slide level2">
+<h2>Data understanding and visualization</h2>
+<div id="ac27e51d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:43.828214Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:43.828030Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:43.946937Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:43.946109Z&quot;}}" data-execution_count="8">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="" aria-label="2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-3"><a href="" aria-label="3"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb8-4"><a href="" aria-label="4"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-5"><a href="" aria-label="5"></a></span>
+<span id="cb8-6"><a href="" aria-label="6"></a><span class="kw">def</span> check_correlations(X, y):</span>
+<span id="cb8-7"><a href="" aria-label="7"></a>    <span class="co"># Combine engineered X and target y</span></span>
+<span id="cb8-8"><a href="" aria-label="8"></a>    df_corr <span class="op">=</span> pd.concat(</span>
+<span id="cb8-9"><a href="" aria-label="9"></a>        [</span>
+<span id="cb8-10"><a href="" aria-label="10"></a>            FlightFeatureEngineer(</span>
+<span id="cb8-11"><a href="" aria-label="11"></a>                add_manual_features<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb8-12"><a href="" aria-label="12"></a>                include_actual_times<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb8-13"><a href="" aria-label="13"></a>                drop_datetime<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb8-14"><a href="" aria-label="14"></a>            ).transform(X),</span>
+<span id="cb8-15"><a href="" aria-label="15"></a>            y,</span>
+<span id="cb8-16"><a href="" aria-label="16"></a>        ],</span>
+<span id="cb8-17"><a href="" aria-label="17"></a>        axis<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb8-18"><a href="" aria-label="18"></a>    ).copy()</span>
+<span id="cb8-19"><a href="" aria-label="19"></a></span>
+<span id="cb8-20"><a href="" aria-label="20"></a>    <span class="co"># Convert datetime columns to Unix timestamps in seconds</span></span>
+<span id="cb8-21"><a href="" aria-label="21"></a>    <span class="cf">for</span> col <span class="kw">in</span> df_corr.select_dtypes(include<span class="op">=</span>[<span class="st">"datetime"</span>, <span class="st">"datetime64"</span>]).columns:</span>
+<span id="cb8-22"><a href="" aria-label="22"></a>        df_corr[col] <span class="op">=</span> df_corr[col].astype(<span class="st">"int64"</span>) <span class="op">//</span> <span class="dv">10</span><span class="op">**</span><span class="dv">9</span></span>
+<span id="cb8-23"><a href="" aria-label="23"></a></span>
+<span id="cb8-24"><a href="" aria-label="24"></a>    <span class="co"># Compute correlation matrix</span></span>
+<span id="cb8-25"><a href="" aria-label="25"></a>    corr <span class="op">=</span> df_corr.corr(numeric_only<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-26"><a href="" aria-label="26"></a></span>
+<span id="cb8-27"><a href="" aria-label="27"></a>    <span class="co"># Ignore identity correlations</span></span>
+<span id="cb8-28"><a href="" aria-label="28"></a>    non_identity <span class="op">=</span> <span class="op">~</span>np.eye(<span class="bu">len</span>(corr), dtype<span class="op">=</span><span class="bu">bool</span>)</span>
+<span id="cb8-29"><a href="" aria-label="29"></a></span>
+<span id="cb8-30"><a href="" aria-label="30"></a>    <span class="co"># Keep variables with at least one non-identity |correlation| &gt; 0.3</span></span>
+<span id="cb8-31"><a href="" aria-label="31"></a>    keep <span class="op">=</span> (corr.<span class="bu">abs</span>().gt(<span class="fl">0.3</span>) <span class="op">&amp;</span> non_identity).<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-32"><a href="" aria-label="32"></a></span>
+<span id="cb8-33"><a href="" aria-label="33"></a>    <span class="co"># Always retain the y column(s)</span></span>
+<span id="cb8-34"><a href="" aria-label="34"></a>    y_columns <span class="op">=</span> [y.name] <span class="cf">if</span> <span class="bu">isinstance</span>(y, pd.Series) <span class="cf">else</span> <span class="bu">list</span>(y.columns)</span>
+<span id="cb8-35"><a href="" aria-label="35"></a>    keep.loc[corr.index.intersection(y_columns)] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb8-36"><a href="" aria-label="36"></a></span>
+<span id="cb8-37"><a href="" aria-label="37"></a>    filtered_corr <span class="op">=</span> corr.loc[keep, keep]</span>
+<span id="cb8-38"><a href="" aria-label="38"></a></span>
+<span id="cb8-39"><a href="" aria-label="39"></a>    <span class="co"># Plot filtered correlation matrix</span></span>
+<span id="cb8-40"><a href="" aria-label="40"></a>    <span class="cf">if</span> filtered_corr.empty:</span>
+<span id="cb8-41"><a href="" aria-label="41"></a>        <span class="bu">print</span>(<span class="st">"No non-identity correlations with |correlation| &gt; 0.3."</span>)</span>
+<span id="cb8-42"><a href="" aria-label="42"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-43"><a href="" aria-label="43"></a>        plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">9</span>))</span>
+<span id="cb8-44"><a href="" aria-label="44"></a>        sns.heatmap(</span>
+<span id="cb8-45"><a href="" aria-label="45"></a>            filtered_corr,</span>
+<span id="cb8-46"><a href="" aria-label="46"></a>            annot<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb8-47"><a href="" aria-label="47"></a>            fmt<span class="op">=</span><span class="st">".2f"</span>,</span>
+<span id="cb8-48"><a href="" aria-label="48"></a>            cmap<span class="op">=</span><span class="st">"coolwarm"</span>,</span>
+<span id="cb8-49"><a href="" aria-label="49"></a>            vmin<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb8-50"><a href="" aria-label="50"></a>            vmax<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb8-51"><a href="" aria-label="51"></a>            linewidths<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb8-52"><a href="" aria-label="52"></a>        )</span>
+<span id="cb8-53"><a href="" aria-label="53"></a>        plt.title(<span class="st">"Variables with at least one |correlation| &gt; 0.3"</span>)</span>
+<span id="cb8-54"><a href="" aria-label="54"></a>        plt.tight_layout()</span>
+<span id="cb8-55"><a href="" aria-label="55"></a>        plt.show()</span></code></pre></div>
+</details>
+</div>
+<div id="bd353dd5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:43.948935Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:43.948737Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:44.466139Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:44.465145Z&quot;}}" data-execution_count="9">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>check_correlations(FlightFeatureEngineer( add_manual_features<span class="op">=</span><span class="va">True</span>, include_actual_times<span class="op">=</span><span class="va">False</span>, drop_datetime<span class="op">=</span><span class="va">False</span>,).transform(X), y)</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-02-feature_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
+<section id="data-understanding-and-visualization-1" class="slide level2">
+<h2>Data understanding and visualization</h2>
+<div id="a3a8c98c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:44.468017Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:44.467827Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:45.141307Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:45.140400Z&quot;}}" data-execution_count="10">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>check_correlations(FlightFeatureEngineer( add_manual_features<span class="op">=</span><span class="va">True</span>, include_actual_times<span class="op">=</span><span class="va">True</span>, drop_datetime<span class="op">=</span><span class="va">False</span>,).transform(X), y)</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-02-feature_files/figure-revealjs/cell-11-output-1.png" class="r-stretch"></section>
+<section id="schema-for-feature-discussion" class="slide level2">
+<h2>Schema for feature discussion</h2>
 <p>Before fitting models, inspect the raw and engineered schema. The goal is not only to know the data types, but to decide which columns are available at prediction time and which ones would leak future information.</p>
 <p>Use the schema table to ask: can this column exist at prediction time, and did we create it manually or from future data?</p>
-<div id="4f0645cc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:42.113894Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:42.113722Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:42.141241Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:42.140264Z&quot;}}" data-execution_count="4">
-<div class="cell-output cell-output-display">
+<div id="55e78e14" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:45.143600Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:45.143402Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:45.159217Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:45.158530Z&quot;}}" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -476,7 +564,7 @@ Name: class_share, dtype: float64</code></pre>
 <td>raw input</td>
 <td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
@@ -484,9 +572,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>str</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
@@ -494,9 +582,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>str</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
@@ -504,9 +592,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>str</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
@@ -514,9 +602,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>str</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">5</th>
@@ -524,9 +612,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>float64</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">6</th>
@@ -534,9 +622,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>float64</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">7</th>
@@ -544,9 +632,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>int64</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">8</th>
@@ -554,9 +642,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>float64</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">9</th>
@@ -564,9 +652,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>float64</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">10</th>
@@ -574,9 +662,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>float64</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">11</th>
@@ -584,9 +672,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>float64</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">12</th>
@@ -594,9 +682,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>float64</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">13</th>
@@ -604,9 +692,9 @@ Name: class_share, dtype: float64</code></pre>
 <td>float64</td>
 <td>raw</td>
 <td>raw input</td>
-<td>known before scheduled departure in this example</td>
+<td>known before departure</td>
 <td>candidate</td>
-<td>low if measured before prediction</td>
+<td>low</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">14</th>
@@ -628,154 +716,10 @@ Name: class_share, dtype: float64</code></pre>
 <td>drop</td>
 <td>high</td>
 </tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">16</th>
-<td>departure_hour</td>
-<td>int32</td>
-<td>engineered</td>
-<td>manual/domain</td>
-<td>known before scheduled departure in this example</td>
-<td>candidate</td>
-<td>low if measured before prediction</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">17</th>
-<td>day_of_week</td>
-<td>int32</td>
-<td>engineered</td>
-<td>manual/domain</td>
-<td>known before scheduled departure in this example</td>
-<td>candidate</td>
-<td>low if measured before prediction</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">18</th>
-<td>month</td>
-<td>int32</td>
-<td>engineered</td>
-<td>manual/domain</td>
-<td>known before scheduled departure in this example</td>
-<td>candidate</td>
-<td>low if measured before prediction</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">19</th>
-<td>actual_departure_hour</td>
-<td>int32</td>
-<td>engineered</td>
-<td>actual-time leakage</td>
-<td>known only after departure</td>
-<td>drop</td>
-<td>high</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">20</th>
-<td>actual_arrival_hour</td>
-<td>int32</td>
-<td>engineered</td>
-<td>actual-time leakage</td>
-<td>known only after arrival</td>
-<td>drop</td>
-<td>high</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">21</th>
-<td>actual_departure_delay_min</td>
-<td>float64</td>
-<td>engineered</td>
-<td>actual-time leakage</td>
-<td>known only after departure</td>
-<td>drop</td>
-<td>high</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">22</th>
-<td>actual_arrival_delay_min</td>
-<td>float64</td>
-<td>engineered</td>
-<td>actual-time leakage</td>
-<td>known only after arrival; directly related to ...</td>
-<td>drop</td>
-<td>high</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">23</th>
-<td>actual_elapsed_min</td>
-<td>float64</td>
-<td>engineered</td>
-<td>actual-time leakage</td>
-<td>known only after arrival</td>
-<td>drop</td>
-<td>high</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">24</th>
-<td>is_weekend</td>
-<td>int64</td>
-<td>engineered</td>
-<td>manual/domain</td>
-<td>known before scheduled departure in this example</td>
-<td>candidate</td>
-<td>low if measured before prediction</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">25</th>
-<td>is_evening_peak</td>
-<td>int64</td>
-<td>engineered</td>
-<td>manual/domain</td>
-<td>known before scheduled departure in this example</td>
-<td>candidate</td>
-<td>low if measured before prediction</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">26</th>
-<td>km_per_minute</td>
-<td>float64</td>
-<td>engineered</td>
-<td>manual/domain</td>
-<td>known before scheduled departure in this example</td>
-<td>candidate</td>
-<td>low if measured before prediction</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">27</th>
-<td>congestion_per_gate_proxy</td>
-<td>float64</td>
-<td>engineered</td>
-<td>manual/domain</td>
-<td>known before scheduled departure in this example</td>
-<td>candidate</td>
-<td>low if measured before prediction</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">28</th>
-<td>precip_x_evening_peak</td>
-<td>float64</td>
-<td>engineered</td>
-<td>manual/domain</td>
-<td>known before scheduled departure in this example</td>
-<td>candidate</td>
-<td>low if measured before prediction</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">29</th>
-<td>low_visibility</td>
-<td>int64</td>
-<td>engineered</td>
-<td>manual/domain</td>
-<td>known before scheduled departure in this example</td>
-<td>candidate</td>
-<td>low if measured before prediction</td>
-</tr>
 </tbody>
 </table>
 
 </div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Safe engineered dataframe shape: (5, 22)
-With actual-time features shape: (5, 27)</code></pre>
 </div>
 </div>
 </section>
@@ -794,28 +738,28 @@ With actual-time features shape: (5, 27)</code></pre>
 <p>Filter methods are usually faster. Wrapper methods can capture model-specific usefulness, but they are more computationally expensive.</p>
 <p>Important: selection is inside the pipeline. During cross-validation, the selector is fitted only on each training fold.</p>
 <p>Selection is part of model fitting. Keeping it inside the pipeline prevents validation-fold information from guiding the selected features.</p>
-<div id="1c8f5df5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:42.150397Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:42.150200Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:42.154108Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:42.153263Z&quot;}}" data-execution_count="6">
+<div id="cf6ae757" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:45.167993Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:45.167835Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:32:45.171244Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:32:45.170555Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="co"># Configure one filter selector and two wrapper selectors for comparison.</span></span>
-<span id="cb3-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SequentialFeatureSelector</span>
-<span id="cb3-3"><a href="" aria-label="3"></a></span>
-<span id="cb3-4"><a href="" aria-label="4"></a>filter_selector <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>mutual_info_reproducible, k<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb3-5"><a href="" aria-label="5"></a></span>
-<span id="cb3-6"><a href="" aria-label="6"></a>wrapper_selector <span class="op">=</span> SequentialFeatureSelector(</span>
-<span id="cb3-7"><a href="" aria-label="7"></a>    estimator<span class="op">=</span>make_logistic(max_iter<span class="op">=</span><span class="dv">800</span>),</span>
-<span id="cb3-8"><a href="" aria-label="8"></a>    n_features_to_select<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb3-9"><a href="" aria-label="9"></a>    direction<span class="op">=</span><span class="st">"forward"</span>,</span>
-<span id="cb3-10"><a href="" aria-label="10"></a>    scoring<span class="op">=</span><span class="st">"roc_auc"</span>,</span>
-<span id="cb3-11"><a href="" aria-label="11"></a>    cv<span class="op">=</span><span class="dv">3</span>,</span>
-<span id="cb3-12"><a href="" aria-label="12"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
-<span id="cb3-13"><a href="" aria-label="13"></a>)</span>
-<span id="cb3-14"><a href="" aria-label="14"></a></span>
-<span id="cb3-15"><a href="" aria-label="15"></a>rfe_selector <span class="op">=</span> RFE(</span>
-<span id="cb3-16"><a href="" aria-label="16"></a>    estimator<span class="op">=</span>make_logistic(max_iter<span class="op">=</span><span class="dv">800</span>),</span>
-<span id="cb3-17"><a href="" aria-label="17"></a>    n_features_to_select<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb3-18"><a href="" aria-label="18"></a>    step<span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb3-19"><a href="" aria-label="19"></a>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Configure one filter selector and two wrapper selectors for comparison.</span></span>
+<span id="cb11-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SequentialFeatureSelector</span>
+<span id="cb11-3"><a href="" aria-label="3"></a></span>
+<span id="cb11-4"><a href="" aria-label="4"></a>filter_selector <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>mutual_info_reproducible, k<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb11-5"><a href="" aria-label="5"></a></span>
+<span id="cb11-6"><a href="" aria-label="6"></a>wrapper_selector <span class="op">=</span> SequentialFeatureSelector(</span>
+<span id="cb11-7"><a href="" aria-label="7"></a>    estimator<span class="op">=</span>make_logistic(max_iter<span class="op">=</span><span class="dv">800</span>),</span>
+<span id="cb11-8"><a href="" aria-label="8"></a>    n_features_to_select<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb11-9"><a href="" aria-label="9"></a>    direction<span class="op">=</span><span class="st">"forward"</span>,</span>
+<span id="cb11-10"><a href="" aria-label="10"></a>    scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>,</span>
+<span id="cb11-11"><a href="" aria-label="11"></a>    cv<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb11-12"><a href="" aria-label="12"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb11-13"><a href="" aria-label="13"></a>)</span>
+<span id="cb11-14"><a href="" aria-label="14"></a></span>
+<span id="cb11-15"><a href="" aria-label="15"></a>rfe_selector <span class="op">=</span> RFE(</span>
+<span id="cb11-16"><a href="" aria-label="16"></a>    estimator<span class="op">=</span>make_logistic(max_iter<span class="op">=</span><span class="dv">800</span>),</span>
+<span id="cb11-17"><a href="" aria-label="17"></a>    n_features_to_select<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb11-18"><a href="" aria-label="18"></a>    step<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb11-19"><a href="" aria-label="19"></a>)</span></code></pre></div>
 </details>
 </div>
 </section>
@@ -823,8 +767,8 @@ With actual-time features shape: (5, 27)</code></pre>
 <h2>8. Compare raw, engineered, and selected feature sets</h2>
 <p>We measure predictive performance, number of selected features, and training time. We also keep the fitted estimators from cross-validation so we can inspect selection stability.</p>
 <p>The experiment table compares predictive value, selected feature count, and runtime rather than optimizing only one number.</p>
-<div id="cc2c47bc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:42.155963Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:42.155790Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:13:14.435461Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:13:14.434438Z&quot;}}" data-execution_count="7">
-<div class="cell-output cell-output-display">
+<div id="1d1caf82" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:32:45.173099Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:32:45.172951Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:33:14.834318Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:33:14.833447Z&quot;}}" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -845,9 +789,8 @@ With actual-time features shape: (5, 27)</code></pre>
 <tr class="header" style="text-align: right;">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">experiment</th>
-<th data-quarto-table-cell-role="th">roc_auc_mean</th>
-<th data-quarto-table-cell-role="th">roc_auc_std</th>
 <th data-quarto-table-cell-role="th">balanced_accuracy_mean</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_std</th>
 <th data-quarto-table-cell-role="th">f1_mean</th>
 <th data-quarto-table-cell-role="th">features_mean</th>
 <th data-quarto-table-cell-role="th">features_std</th>
@@ -856,70 +799,64 @@ With actual-time features shape: (5, 27)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">5</th>
-<td>manual + RFE</td>
-<td>0.723758</td>
-<td>0.024067</td>
-<td>0.663422</td>
-<td>0.531696</td>
-<td>20.0</td>
-<td>0.0</td>
-<td>0.218775</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>wrapper selection</td>
-<td>0.723272</td>
-<td>0.024183</td>
-<td>0.664992</td>
-<td>0.533567</td>
-<td>20.0</td>
-<td>0.0</td>
-<td>27.737416</td>
-</tr>
-<tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
 <td>raw features</td>
-<td>0.722416</td>
-<td>0.025821</td>
 <td>0.663987</td>
+<td>0.018400</td>
 <td>0.532392</td>
 <td>34.0</td>
 <td>0.0</td>
-<td>2.440468</td>
+<td>2.114142</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>manual features</td>
-<td>0.722033</td>
-<td>0.025731</td>
-<td>0.663736</td>
-<td>0.531912</td>
-<td>40.0</td>
-<td>0.0</td>
-<td>0.170937</td>
-</tr>
-<tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
 <td>manual + filter selection</td>
-<td>0.713346</td>
-<td>0.034579</td>
 <td>0.663819</td>
+<td>0.028676</td>
 <td>0.531587</td>
 <td>20.0</td>
 <td>0.0</td>
-<td>0.914380</td>
+<td>0.799796</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>manual features</td>
+<td>0.663736</td>
+<td>0.019865</td>
+<td>0.531912</td>
+<td>40.0</td>
+<td>0.0</td>
+<td>0.155019</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>manual + RFE</td>
+<td>0.663422</td>
+<td>0.016417</td>
+<td>0.531696</td>
+<td>20.0</td>
+<td>0.0</td>
+<td>0.170537</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>wrapper selection</td>
+<td>0.658847</td>
+<td>0.018524</td>
+<td>0.526310</td>
+<td>20.0</td>
+<td>0.0</td>
+<td>25.721692</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">2</th>
 <td>filter selection</td>
-<td>0.709231</td>
-<td>0.026079</td>
 <td>0.650180</td>
+<td>0.015573</td>
 <td>0.515650</td>
 <td>20.0</td>
 <td>0.0</td>
-<td>0.774509</td>
+<td>0.681235</td>
 </tr>
 </tbody>
 </table>
@@ -940,26 +877,25 @@ With actual-time features shape: (5, 27)</code></pre>
 </ul>
 <p>The next cell intentionally compares a leakage-safe pipeline with a pipeline that uses actual-time-derived features. If the second pipeline looks much better, that is a warning sign, not a success.</p>
 <p>The leakage comparison should look suspiciously strong when actual-time information is included.</p>
-<div id="3b187e50" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:13:14.437326Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:13:14.437123Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:13:14.788854Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:13:14.787929Z&quot;}}" data-execution_count="8">
+<div id="25be004a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:33:14.836245Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:33:14.836061Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:33:15.097494Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:33:15.096409Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="co"># Demonstrate how future information can inflate validation metrics.</span></span>
-<span id="cb4-2"><a href="" aria-label="2"></a>leakage_demo <span class="op">=</span> {</span>
-<span id="cb4-3"><a href="" aria-label="3"></a>    <span class="st">"safe pre-departure features"</span>: make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb4-4"><a href="" aria-label="4"></a>    <span class="st">"DO NOT USE: actual-time features"</span>: make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>, include_actual_times<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb4-5"><a href="" aria-label="5"></a>}</span>
-<span id="cb4-6"><a href="" aria-label="6"></a></span>
-<span id="cb4-7"><a href="" aria-label="7"></a>leakage_rows <span class="op">=</span> []</span>
-<span id="cb4-8"><a href="" aria-label="8"></a><span class="cf">for</span> name, estimator <span class="kw">in</span> leakage_demo.items():</span>
-<span id="cb4-9"><a href="" aria-label="9"></a>    result <span class="op">=</span> cross_validate(estimator, X, y, cv<span class="op">=</span>cv, scoring<span class="op">=</span>scoring, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
-<span id="cb4-10"><a href="" aria-label="10"></a>    leakage_rows.append({</span>
-<span id="cb4-11"><a href="" aria-label="11"></a>        <span class="st">"experiment"</span>: name,</span>
-<span id="cb4-12"><a href="" aria-label="12"></a>        <span class="st">"roc_auc_mean"</span>: result[<span class="st">"test_roc_auc"</span>].mean(),</span>
-<span id="cb4-13"><a href="" aria-label="13"></a>        <span class="st">"balanced_accuracy_mean"</span>: result[<span class="st">"test_balanced_accuracy"</span>].mean(),</span>
-<span id="cb4-14"><a href="" aria-label="14"></a>        <span class="st">"f1_mean"</span>: result[<span class="st">"test_f1"</span>].mean(),</span>
-<span id="cb4-15"><a href="" aria-label="15"></a>    })</span>
-<span id="cb4-16"><a href="" aria-label="16"></a></span>
-<span id="cb4-17"><a href="" aria-label="17"></a>display(pd.DataFrame(leakage_rows))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="co"># Demonstrate how future information can inflate validation metrics.</span></span>
+<span id="cb12-2"><a href="" aria-label="2"></a>leakage_demo <span class="op">=</span> {</span>
+<span id="cb12-3"><a href="" aria-label="3"></a>    <span class="st">"safe pre-departure features"</span>: make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb12-4"><a href="" aria-label="4"></a>    <span class="st">"DO NOT USE: actual-time features"</span>: make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>, include_actual_times<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb12-5"><a href="" aria-label="5"></a>}</span>
+<span id="cb12-6"><a href="" aria-label="6"></a></span>
+<span id="cb12-7"><a href="" aria-label="7"></a>leakage_rows <span class="op">=</span> []</span>
+<span id="cb12-8"><a href="" aria-label="8"></a><span class="cf">for</span> name, estimator <span class="kw">in</span> leakage_demo.items():</span>
+<span id="cb12-9"><a href="" aria-label="9"></a>    result <span class="op">=</span> cross_validate(estimator, X, y, cv<span class="op">=</span>cv, scoring<span class="op">=</span>scoring, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb12-10"><a href="" aria-label="10"></a>    leakage_rows.append({</span>
+<span id="cb12-11"><a href="" aria-label="11"></a>        <span class="st">"experiment"</span>: name,</span>
+<span id="cb12-12"><a href="" aria-label="12"></a>        <span class="st">"balanced_accuracy_mean"</span>: result[<span class="st">"test_balanced_accuracy"</span>].mean(),</span>
+<span id="cb12-13"><a href="" aria-label="13"></a>        <span class="st">"f1_mean"</span>: result[<span class="st">"test_f1"</span>].mean(),</span>
+<span id="cb12-14"><a href="" aria-label="14"></a>    })</span>
+<span id="cb12-15"><a href="" aria-label="15"></a></span>
+<span id="cb12-16"><a href="" aria-label="16"></a>display(pd.DataFrame(leakage_rows))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -982,7 +918,6 @@ With actual-time features shape: (5, 27)</code></pre>
 <tr class="header" style="text-align: right;">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">experiment</th>
-<th data-quarto-table-cell-role="th">roc_auc_mean</th>
 <th data-quarto-table-cell-role="th">balanced_accuracy_mean</th>
 <th data-quarto-table-cell-role="th">f1_mean</th>
 </tr>
@@ -991,14 +926,12 @@ With actual-time features shape: (5, 27)</code></pre>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
 <td>safe pre-departure features</td>
-<td>0.722033</td>
 <td>0.663736</td>
 <td>0.531912</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
 <td>DO NOT USE: actual-time features</td>
-<td>0.996345</td>
 <td>0.964664</td>
 <td>0.948049</td>
 </tr>
@@ -1013,7 +946,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <h2>10. Selection stability across folds</h2>
 <p>A selector is more trustworthy when it keeps similar features across folds. Instability does not always mean the selector is wrong: correlated features may be interchangeable. But instability should make us cautious when interpreting selected variables as domain truth.</p>
 <p>Stability is an interpretation check: selected features that change across folds should be discussed cautiously.</p>
-<div id="b374c710" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:13:14.790874Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:13:14.790691Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:13:14.805504Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:13:14.804605Z&quot;}}" data-execution_count="9">
+<div id="3ac6723e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:33:15.099345Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:33:15.099165Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:33:15.112762Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:33:15.112048Z&quot;}}" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1049,7 +982,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
 <td>wrapper selection</td>
-<td>0.704717</td>
+<td>0.491867</td>
 <td>[aircraft_type_A321, aircraft_type_B738, aircr...</td>
 </tr>
 <tr class="odd">
@@ -1073,9 +1006,9 @@ With actual-time features shape: (5, 27)</code></pre>
 </section>
 <section id="performance-versus-number-of-features" class="slide level2">
 <h2>11. Performance versus number of features</h2>
-<p>A useful visualization is a performance-versus-number-of-features curve. Here we vary <code>k</code> for <code>SelectKBest</code>. A good choice is not necessarily the highest possible score: we may prefer a smaller model when the performance loss is negligible.</p>
+<p>A useful visualization is a performance-versus-number-of-features curve. Here we vary <code>k</code> for <code>SelectKBest</code>. A good choice is not necessarily the highest possible balanced accuracy: we may prefer a smaller model when the performance loss is negligible.</p>
 <p>This curve helps students look for diminishing returns as more features are selected.</p>
-<div id="66b40007" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:13:14.807465Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:13:14.807137Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:13:20.174188Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:13:20.173215Z&quot;}}" data-execution_count="10">
+<div id="84cc14ab" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:33:15.114909Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:33:15.114721Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:33:19.894458Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:33:19.893526Z&quot;}}" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1097,46 +1030,46 @@ With actual-time features shape: (5, 27)</code></pre>
 <tr class="header" style="text-align: right;">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">k</th>
-<th data-quarto-table-cell-role="th">roc_auc_mean</th>
-<th data-quarto-table-cell-role="th">roc_auc_std</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_mean</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_std</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
 <td>5</td>
-<td>0.677968</td>
-<td>0.031408</td>
+<td>0.627403</td>
+<td>0.021024</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
 <td>10</td>
-<td>0.686049</td>
-<td>0.037902</td>
+<td>0.635198</td>
+<td>0.024745</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
 <td>15</td>
-<td>0.703544</td>
-<td>0.038463</td>
+<td>0.654321</td>
+<td>0.035097</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
 <td>20</td>
-<td>0.713346</td>
-<td>0.034579</td>
+<td>0.663819</td>
+<td>0.028676</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
 <td>30</td>
-<td>0.715975</td>
-<td>0.026950</td>
+<td>0.658858</td>
+<td>0.023292</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">5</th>
 <td>40</td>
-<td>0.722033</td>
-<td>0.025731</td>
+<td>0.663736</td>
+<td>0.019865</td>
 </tr>
 </tbody>
 </table>
@@ -1145,15 +1078,14 @@ With actual-time features shape: (5, 27)</code></pre>
 </div>
 
 </div>
-<img data-src="lab-02-feature_files/figure-revealjs/cell-11-output-2.png" class="r-stretch"></section>
+<img data-src="lab-02-feature_files/figure-revealjs/cell-18-output-2.png" class="r-stretch"></section>
 <section id="interpretability-check" class="slide level2">
 <h2>12. Interpretability check</h2>
 <p>After choosing a pipeline, fit it once on a training split and inspect which features are selected. This final inspection is for interpretation, not for deciding the reported cross-validation score.</p>
 <p>Fit once on a holdout split only after cross-validation has motivated a candidate pipeline.</p>
-<div id="de19250b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:13:20.176471Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:13:20.176253Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:13:20.530608Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:13:20.529631Z&quot;}}" data-execution_count="11">
+<div id="a174013c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:33:19.896294Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:33:19.896078Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:33:20.208792Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:33:20.207750Z&quot;}}" data-execution_count="18">
 <div class="cell-output cell-output-stdout">
-<pre><code>Holdout ROC AUC: 0.682
-Holdout balanced accuracy: 0.611</code></pre>
+<pre><code>Holdout balanced accuracy: 0.611</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1267,7 +1199,7 @@ Holdout balanced accuracy: 0.611</code></pre>
 </div>
 <p>Optional: permutation importance estimates how much the fitted pipeline depends on each raw input column. This is different from selected one-hot or engineered features, but it is useful for discussing model behavior at the original data level.</p>
 <p>Permutation importance answers a different question from feature selection: which raw inputs the fitted pipeline relies on most.</p>
-<div id="f3c0cf1e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:13:20.532477Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:13:20.532296Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:13:21.327145Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:13:21.326181Z&quot;}}" data-execution_count="12">
+<div id="d2eb70f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:33:20.210636Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:33:20.210420Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:33:20.873940Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:33:20.873193Z&quot;}}" data-execution_count="19">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1297,74 +1229,74 @@ Holdout balanced accuracy: 0.611</code></pre>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">8</th>
 <td>weather_wind_kmh</td>
-<td>0.083391</td>
-<td>0.014529</td>
+<td>0.046703</td>
+<td>0.017847</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">10</th>
 <td>visibility_km</td>
-<td>0.028849</td>
-<td>0.004805</td>
+<td>0.016205</td>
+<td>0.009807</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">7</th>
-<td>prev_hour_origin_departures</td>
-<td>0.023003</td>
-<td>0.006008</td>
-</tr>
-<tr class="even">
 <th data-quarto-table-cell-role="th">9</th>
 <td>weather_precip_mm</td>
-<td>0.021076</td>
-<td>0.005170</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>scheduled_departure</td>
-<td>0.016188</td>
-<td>0.007632</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>carrier</td>
-<td>0.012423</td>
-<td>0.007162</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">5</th>
-<td>scheduled_duration_min</td>
-<td>0.002510</td>
-<td>0.003982</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">2</th>
-<td>origin</td>
-<td>0.001696</td>
-<td>0.001114</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">3</th>
-<td>destination</td>
-<td>0.001172</td>
-<td>0.001689</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">14</th>
-<td>actual_departure</td>
-<td>0.000000</td>
-<td>0.000000</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">15</th>
-<td>actual_arrival</td>
-<td>0.000000</td>
-<td>0.000000</td>
+<td>0.002760</td>
+<td>0.007388</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">12</th>
 <td>noise_random_1</td>
 <td>0.000000</td>
 <td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">14</th>
+<td>actual_departure</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">15</th>
+<td>actual_arrival</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>prev_hour_origin_departures</td>
+<td>-0.001196</td>
+<td>0.007639</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>baggage_load_kg</td>
+<td>-0.001423</td>
+<td>0.002013</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>distance_km</td>
+<td>-0.002482</td>
+<td>0.003777</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>origin</td>
+<td>-0.003068</td>
+<td>0.002374</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>carrier</td>
+<td>-0.005024</td>
+<td>0.010081</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>destination</td>
+<td>-0.005721</td>
+<td>0.003305</td>
 </tr>
 </tbody>
 </table>
@@ -1393,23 +1325,23 @@ Holdout balanced accuracy: 0.611</code></pre>
 </ul>
 <p>Be careful with historical aggregates. If you compute route delay rate using the whole dataset before cross-validation, you leak validation-fold labels into the training features. To use target-based aggregates safely, implement them as a transformer fitted inside the pipeline.</p>
 <p>The challenge asks students to connect feature ideas to evidence, not just to add columns.</p>
-<div id="b7f43726" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:13:21.329038Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:13:21.328837Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:13:21.337185Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:13:21.336239Z&quot;}}" data-execution_count="13">
+<div id="ef7bd345" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T16:33:20.875865Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T16:33:20.875686Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T16:33:20.883148Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T16:33:20.882247Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="co"># Use this table to record feature hypotheses and evidence during the challenge.</span></span>
-<span id="cb6-2"><a href="" aria-label="2"></a><span class="co"># Challenge workspace</span></span>
-<span id="cb6-3"><a href="" aria-label="3"></a><span class="co"># 1. Extend FlightFeatureEngineer with your own features.</span></span>
-<span id="cb6-4"><a href="" aria-label="4"></a><span class="co"># 2. Re-run the experiments table.</span></span>
-<span id="cb6-5"><a href="" aria-label="5"></a><span class="co"># 3. Explain whether each feature was useful, stable, selected, and leakage-safe.</span></span>
-<span id="cb6-6"><a href="" aria-label="6"></a></span>
-<span id="cb6-7"><a href="" aria-label="7"></a>student_notes <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb6-8"><a href="" aria-label="8"></a>    <span class="st">"feature"</span>: [<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>],</span>
-<span id="cb6-9"><a href="" aria-label="9"></a>    <span class="st">"hypothesis"</span>: [<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>],</span>
-<span id="cb6-10"><a href="" aria-label="10"></a>    <span class="st">"cv_improvement"</span>: [<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>],</span>
-<span id="cb6-11"><a href="" aria-label="11"></a>    <span class="st">"kept_by_selection"</span>: [<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>],</span>
-<span id="cb6-12"><a href="" aria-label="12"></a>    <span class="st">"leakage_risk"</span>: [<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>],</span>
-<span id="cb6-13"><a href="" aria-label="13"></a>})</span>
-<span id="cb6-14"><a href="" aria-label="14"></a>display(student_notes)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="co"># Use this table to record feature hypotheses and evidence during the challenge.</span></span>
+<span id="cb14-2"><a href="" aria-label="2"></a><span class="co"># Challenge workspace</span></span>
+<span id="cb14-3"><a href="" aria-label="3"></a><span class="co"># 1. Extend FlightFeatureEngineer with your own features.</span></span>
+<span id="cb14-4"><a href="" aria-label="4"></a><span class="co"># 2. Re-run the experiments table.</span></span>
+<span id="cb14-5"><a href="" aria-label="5"></a><span class="co"># 3. Explain whether each feature was useful, stable, selected, and leakage-safe.</span></span>
+<span id="cb14-6"><a href="" aria-label="6"></a></span>
+<span id="cb14-7"><a href="" aria-label="7"></a>student_notes <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb14-8"><a href="" aria-label="8"></a>    <span class="st">"feature"</span>: [<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>],</span>
+<span id="cb14-9"><a href="" aria-label="9"></a>    <span class="st">"hypothesis"</span>: [<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>],</span>
+<span id="cb14-10"><a href="" aria-label="10"></a>    <span class="st">"cv_improvement"</span>: [<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>],</span>
+<span id="cb14-11"><a href="" aria-label="11"></a>    <span class="st">"kept_by_selection"</span>: [<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>],</span>
+<span id="cb14-12"><a href="" aria-label="12"></a>    <span class="st">"leakage_risk"</span>: [<span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>],</span>
+<span id="cb14-13"><a href="" aria-label="13"></a>})</span>
+<span id="cb14-14"><a href="" aria-label="14"></a>display(student_notes)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1475,7 +1407,7 @@ Holdout balanced accuracy: 0.611</code></pre>
 <p>Feature engineering is a way to encode assumptions about how the world works. Feature selection is a way to control complexity once we have many candidate features.</p>
 <p>Both steps are part of model training. To obtain an honest estimate of performance, fit engineering steps that learn from data, preprocessing, and feature selection inside cross-validation, not before it.</p>
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
