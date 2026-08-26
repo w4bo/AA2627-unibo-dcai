@@ -250,7 +250,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="setup" class="slide level2">
 <h2>1. Setup</h2>
 <p>If you run this lab in Google Colab or a minimal Python environment, run the following cell first.</p>
-<div id="bea6cc26" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="1">
+<div id="904eb67b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">import</span> importlib.util</span>
@@ -265,7 +265,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <span id="cb1-10"><a href="" aria-label="10"></a>    subprocess.check_call([sys.executable, <span class="st">"-m"</span>, <span class="st">"pip"</span>, <span class="st">"install"</span>, <span class="st">"-q"</span>, <span class="op">*</span>pip_names])</span></code></pre></div>
 </details>
 </div>
-<div id="f0bc5d12" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="2">
+<div id="aea1ba69" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="im">import</span> math</span>
@@ -301,7 +301,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>mixed numerical and categorical features, as in many operational datasets.</li>
 </ul>
 <p>The fallback dataset preserves the same teaching structure when internet access is unavailable.</p>
-<div id="575ecc00" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="3">
+<div id="ac8526ea" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="co"># Normalize column names so later code works with both OpenML and fallback data.</span></span>
@@ -528,7 +528,7 @@ Name: income_share, dtype: float64</code></pre>
 <p>The same raw column can play different privacy roles in different settings.</p>
 <p>In this lab, <code>income</code> is treated as sensitive because attribute disclosure would reveal a private economic fact. The demographic variables are treated as quasi-identifiers because an attacker may know them from public records, social media, or context.</p>
 <p>This choice is deliberately debatable. A good privacy analysis should always state it explicitly.</p>
-<div id="77bc4312" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="4">
+<div id="72f5cbb4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>base_qi <span class="op">=</span> [<span class="st">"age"</span>, <span class="st">"education_num"</span>, <span class="st">"marital_status"</span>, <span class="st">"race"</span>, <span class="st">"sex"</span>, <span class="st">"native_country"</span>]</span>
@@ -626,7 +626,7 @@ Name: income_share, dtype: float64</code></pre>
 <section id="a-linkage-risk-baseline" class="slide level2">
 <h2>4. A Linkage Risk Baseline</h2>
 <p>The smallest equivalence class is the dataset’s k-anonymity level for the chosen quasi-identifiers.</p>
-<div id="8ee5acb5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="5">
+<div id="4bef92f3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># Equivalence classes are groups sharing the same quasi-identifier values.</span></span>
@@ -678,7 +678,7 @@ dtype: float64</code></pre>
 <li>detailed marital categories become <code>Married</code> or <code>Not married</code>.</li>
 </ul>
 <p>The analyst keeps a usable table, but loses fine-grained distinctions.</p>
-<div id="79fd741b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="6">
+<div id="f4e82975" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="co"># Coarsen country values so rare countries are less identifying.</span></span>
@@ -820,7 +820,7 @@ dtype: float64</code></pre>
 <section id="search-for-a-k-anonymous-release" class="slide level2">
 <h2>6. Search for a k-Anonymous Release</h2>
 <p>This simple search is not an optimal anonymization algorithm. It is a transparent lab exercise that shows how stronger generalization increases anonymity and decreases detail.</p>
-<div id="dcc5b458" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="7">
+<div id="2e88d382" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Try several anonymization policies and compare their privacy metrics.</span></span>
@@ -1019,7 +1019,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="baf5298c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="8">
+<div id="16d16246" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>target_k <span class="op">=</span> <span class="dv">5</span></span>
@@ -1086,7 +1086,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="83010dd0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="9">
+<div id="41c7c91d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>chosen_params <span class="op">=</span> chosen.iloc[<span class="dv">0</span>][[<span class="st">"age_width"</span>, <span class="st">"education_width"</span>, <span class="st">"country"</span>, <span class="st">"marital"</span>]].to_dict()</span>
@@ -1121,7 +1121,7 @@ dtype: float64</code></pre>
 <section id="row-suppression" class="slide level2">
 <h2>7. Row Suppression</h2>
 <p>Suppression removes records that still belong to small equivalence classes. This can achieve a target <code>k</code>, but it changes the population being analyzed.</p>
-<div id="9245bd07" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="10">
+<div id="07f0db07" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a><span class="co"># Drop records whose equivalence class remains smaller than the target k.</span></span>
@@ -1163,7 +1163,7 @@ dtype: float64</code></pre>
 <p>k-anonymity asks: <em>how many people look the same?</em><br>
 l-diversity asks: <em>do those people have different sensitive values?</em></p>
 <p>A group can be safely large and still unsafe if all records in that group have the same income label.</p>
-<div id="54865b43" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="11">
+<div id="db36e423" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># Count how many distinct sensitive values appear in each equivalence class.</span></span>
@@ -1188,7 +1188,7 @@ share_groups_l_lt_2    0.309
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="aa61708f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="12">
+<div id="14766df4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>bad_l_groups <span class="op">=</span> (</span>
@@ -1362,7 +1362,7 @@ dtype: float64</code></pre>
 <h3 id="what-t-closeness-adds">What t-closeness adds</h3>
 <p>l-diversity can miss skewness. A group may contain both income values, yet still have a much higher <code>&gt;50K</code> rate than the full dataset.</p>
 <p>t-closeness asks whether each group’s sensitive-value distribution is close to the global sensitive-value distribution.</p>
-<div id="87a371ed" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="13">
+<div id="ca9feae0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="co"># For binary income, total variation distance is an absolute gap in positive rates.</span></span>
@@ -1573,7 +1573,7 @@ dtype: float64</code></pre>
 <li>preserving ranking or segmentation quality.</li>
 </ul>
 <p>A privacy technique should be evaluated against the analysis the released data is meant to support.</p>
-<div id="1142f30c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="14">
+<div id="82b73b36" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="kw">def</span> make_model_frame(data, feature_cols, target_col):</span>
@@ -1694,7 +1694,7 @@ dtype: float64</code></pre>
 <h3 id="interpreting-model-utility">Interpreting model utility</h3>
 <p>If anonymization improves privacy but destroys balanced accuracy or F1, the release may no longer support the intended mining task.</p>
 <p>If performance stays similar, the removed detail may have been unnecessary for this task, even if it would matter for another analysis.</p>
-<div id="a145754a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="15">
+<div id="4102d258" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>privacy_utility <span class="op">=</span> pd.DataFrame(</span>
@@ -1785,7 +1785,7 @@ dtype: float64</code></pre>
 <h3 id="microdata-release-versus-query-release">Microdata release versus query release</h3>
 <p>k-anonymity, l-diversity, and t-closeness usually transform and publish records.</p>
 <p>Differential privacy is often used differently: the raw records stay hidden, and users receive noisy query answers or synthetic outputs. The guarantee is attached to the randomized mechanism that produces the output.</p>
-<div id="c285f65e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="16">
+<div id="883a17fe" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a><span class="co"># Add Laplace noise calibrated to global sensitivity and epsilon.</span></span>
@@ -1882,7 +1882,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="c0aa7969" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="17">
+<div id="e5bafb10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
@@ -1914,7 +1914,7 @@ dtype: float64</code></pre>
 <section id="sensitivity-count-sum-and-mean" class="slide level2">
 <h2>12. Sensitivity: Count, Sum, and Mean</h2>
 <p>Sensitivity depends on the query. For a bounded sum of <code>hours_per_week</code>, one record can change the sum by at most the upper bound. For a mean, we also need a minimum dataset size.</p>
-<div id="79ff3470" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="18">
+<div id="7a3456b9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>hours <span class="op">=</span> df[<span class="st">"hours_per_week"</span>].astype(<span class="bu">float</span>).clip(<span class="dv">0</span>, <span class="dv">80</span>)</span>
@@ -1981,7 +1981,7 @@ dtype: float64</code></pre>
 <h3 id="why-bounds-matter">Why bounds matter</h3>
 <p>Differential privacy needs a worst-case bound on one person’s contribution.</p>
 <p>Without clipping <code>hours_per_week</code> to <code>[0, 80]</code>, a single impossible or erroneous value could make the sum’s sensitivity unbounded or too large to answer accurately.</p>
-<div id="a2802a0d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="19">
+<div id="234001d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>epsilon <span class="op">=</span> <span class="fl">0.5</span></span>
@@ -2070,7 +2070,7 @@ dtype: float64</code></pre>
 <h3 id="why-budget-accounting-matters">Why budget accounting matters</h3>
 <p>If every query releases a little information, many queries can release a lot.</p>
 <p>The privacy budget makes this cumulative loss explicit. A system can then stop answering queries, lower accuracy, or require a new governance decision when the budget is exhausted.</p>
-<div id="ca1b1cf9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="20">
+<div id="0fcde4ad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>budget_plan <span class="op">=</span> pd.DataFrame(</span>
@@ -2150,7 +2150,7 @@ dtype: float64</code></pre>
 <h3 id="budget-design-question">Budget design question</h3>
 <p>The budget plan is a design artifact.</p>
 <p>Before running a private analysis, decide which outputs matter most and reserve more budget for them. Spending budget on exploratory queries leaves less for the final release.</p>
-<div id="1d96bb2e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="21">
+<div id="ddd68a17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
@@ -2192,7 +2192,7 @@ dtype: float64</code></pre>
 <li>Explain what attack remains possible.</li>
 <li>Explain what information the analyst loses.</li>
 </ul>
-<div id="e15e3feb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="22">
+<div id="a66c9528" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a><span class="co"># Challenge workspace.</span></span>
