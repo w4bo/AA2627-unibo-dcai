@@ -273,7 +273,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The target is intentionally noisy: feature selection is more realistic when there is signal, redundancy, and noise at the same time.</p>
 <p><code>actual_departure</code> and <code>actual_arrival</code> are included as a teaching device. For a pre-departure delay prediction model, they should be dropped because they are not available when the prediction is made.</p>
 <p>Students should read this generator as a data story: some variables are available before departure, while others are future information.</p>
-<div id="8864b1e6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:42.205528Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:42.205194Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:42.247801Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:42.246780Z&quot;}}" data-execution_count="2">
+<div id="f33e64a5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:19:02.644764Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:19:02.644421Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:19:02.685753Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:19:02.684693Z&quot;}}" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -437,7 +437,7 @@ Name: class_share, dtype: float64</code></pre>
 <p><strong>Dataframe schema for feature discussion</strong></p>
 <p>Before fitting models, inspect the raw and engineered schema. The goal is not only to know the data types, but to decide which columns are available at prediction time and which ones would leak future information.</p>
 <p>Use the schema table to ask: can this column exist at prediction time, and did we create it manually or from future data?</p>
-<div id="66a26909" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:42.258279Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:42.258104Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:42.286123Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:42.285324Z&quot;}}" data-execution_count="4">
+<div id="614738a0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:19:02.695975Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:19:02.695803Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:19:02.723248Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:19:02.722300Z&quot;}}" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -794,7 +794,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <p>Filter methods are usually faster. Wrapper methods can capture model-specific usefulness, but they are more computationally expensive.</p>
 <p>Important: selection is inside the pipeline. During cross-validation, the selector is fitted only on each training fold.</p>
 <p>Selection is part of model fitting. Keeping it inside the pipeline prevents validation-fold information from guiding the selected features.</p>
-<div id="12dc8dba" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:42.295470Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:42.295125Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:42.299022Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:42.298149Z&quot;}}" data-execution_count="6">
+<div id="a48c9a30" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:19:02.732673Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:19:02.732452Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:19:02.736124Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:19:02.735214Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="co"># Configure one filter selector and two wrapper selectors for comparison.</span></span>
@@ -823,7 +823,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <h2>8. Compare raw, engineered, and selected feature sets</h2>
 <p>We measure predictive performance, number of selected features, and training time. We also keep the fitted estimators from cross-validation so we can inspect selection stability.</p>
 <p>The experiment table compares predictive value, selected feature count, and runtime rather than optimizing only one number.</p>
-<div id="a2535611" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:42.300767Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:42.300580Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:54:15.046734Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:54:15.045666Z&quot;}}" data-execution_count="7">
+<div id="0666d299" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:19:02.737895Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:19:02.737720Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:19:35.716216Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:19:35.715242Z&quot;}}" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -864,7 +864,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <td>0.531696</td>
 <td>20.0</td>
 <td>0.0</td>
-<td>0.214768</td>
+<td>0.215064</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
@@ -875,7 +875,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <td>0.533567</td>
 <td>20.0</td>
 <td>0.0</td>
-<td>28.191323</td>
+<td>28.392934</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
@@ -886,7 +886,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <td>0.532392</td>
 <td>34.0</td>
 <td>0.0</td>
-<td>2.433636</td>
+<td>2.470719</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
@@ -897,7 +897,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <td>0.531912</td>
 <td>40.0</td>
 <td>0.0</td>
-<td>0.176753</td>
+<td>0.166361</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
@@ -908,7 +908,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <td>0.531587</td>
 <td>20.0</td>
 <td>0.0</td>
-<td>0.925266</td>
+<td>0.933005</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">2</th>
@@ -919,7 +919,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <td>0.515650</td>
 <td>20.0</td>
 <td>0.0</td>
-<td>0.781695</td>
+<td>0.778062</td>
 </tr>
 </tbody>
 </table>
@@ -940,7 +940,7 @@ With actual-time features shape: (5, 27)</code></pre>
 </ul>
 <p>The next cell intentionally compares a leakage-safe pipeline with a pipeline that uses actual-time-derived features. If the second pipeline looks much better, that is a warning sign, not a success.</p>
 <p>The leakage comparison should look suspiciously strong when actual-time information is included.</p>
-<div id="2ca64858" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:54:15.048663Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:54:15.048474Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:54:15.406333Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:54:15.405283Z&quot;}}" data-execution_count="8">
+<div id="e1ff68fc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:19:35.718277Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:19:35.718092Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:19:36.098413Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:19:36.097648Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="co"># Demonstrate how future information can inflate validation metrics.</span></span>
@@ -1013,7 +1013,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <h2>10. Selection stability across folds</h2>
 <p>A selector is more trustworthy when it keeps similar features across folds. Instability does not always mean the selector is wrong: correlated features may be interchangeable. But instability should make us cautious when interpreting selected variables as domain truth.</p>
 <p>Stability is an interpretation check: selected features that change across folds should be discussed cautiously.</p>
-<div id="a8a6e119" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:54:15.408213Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:54:15.408033Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:54:15.423384Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:54:15.422529Z&quot;}}" data-execution_count="9">
+<div id="9487e5aa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:19:36.100857Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:19:36.100670Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:19:36.115826Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:19:36.114907Z&quot;}}" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1075,7 +1075,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <h2>11. Performance versus number of features</h2>
 <p>A useful visualization is a performance-versus-number-of-features curve. Here we vary <code>k</code> for <code>SelectKBest</code>. A good choice is not necessarily the highest possible score: we may prefer a smaller model when the performance loss is negligible.</p>
 <p>This curve helps students look for diminishing returns as more features are selected.</p>
-<div id="3fa440c5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:54:15.425224Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:54:15.425045Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:54:20.876919Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:54:20.875932Z&quot;}}" data-execution_count="10">
+<div id="5b207e37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:19:36.117783Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:19:36.117599Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:19:41.569920Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:19:41.568932Z&quot;}}" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1150,7 +1150,7 @@ With actual-time features shape: (5, 27)</code></pre>
 <h2>12. Interpretability check</h2>
 <p>After choosing a pipeline, fit it once on a training split and inspect which features are selected. This final inspection is for interpretation, not for deciding the reported cross-validation score.</p>
 <p>Fit once on a holdout split only after cross-validation has motivated a candidate pipeline.</p>
-<div id="70be742c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:54:20.878986Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:54:20.878763Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:54:21.240307Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:54:21.239450Z&quot;}}" data-execution_count="11">
+<div id="6e9fa97a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:19:41.571882Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:19:41.571702Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:19:41.928829Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:19:41.927983Z&quot;}}" data-execution_count="11">
 <div class="cell-output cell-output-stdout">
 <pre><code>Holdout ROC AUC: 0.682
 Holdout balanced accuracy: 0.611</code></pre>
@@ -1267,7 +1267,7 @@ Holdout balanced accuracy: 0.611</code></pre>
 </div>
 <p>Optional: permutation importance estimates how much the fitted pipeline depends on each raw input column. This is different from selected one-hot or engineered features, but it is useful for discussing model behavior at the original data level.</p>
 <p>Permutation importance answers a different question from feature selection: which raw inputs the fitted pipeline relies on most.</p>
-<div id="e1847a63" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:54:21.242375Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:54:21.242198Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:54:22.061623Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:54:22.060656Z&quot;}}" data-execution_count="12">
+<div id="dbaf6177" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:19:41.931116Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:19:41.930912Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:19:42.745652Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:19:42.744670Z&quot;}}" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1393,7 +1393,7 @@ Holdout balanced accuracy: 0.611</code></pre>
 </ul>
 <p>Be careful with historical aggregates. If you compute route delay rate using the whole dataset before cross-validation, you leak validation-fold labels into the training features. To use target-based aggregates safely, implement them as a transformer fitted inside the pipeline.</p>
 <p>The challenge asks students to connect feature ideas to evidence, not just to add columns.</p>
-<div id="eab86169" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:54:22.063813Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:54:22.063594Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:54:22.071652Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:54:22.070710Z&quot;}}" data-execution_count="13">
+<div id="b49b9507" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:19:42.747729Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:19:42.747466Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:19:42.756194Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:19:42.755317Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="co"># Use this table to record feature hypotheses and evidence during the challenge.</span></span>

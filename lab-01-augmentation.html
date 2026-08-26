@@ -350,20 +350,20 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="how-smote-works" class="slide level2">
 <h2>8. How SMOTE works</h2>
-<p>SMOTE creates new minority-class observations instead of duplicating existing ones <span class="citation" data-cites="chawla2002smote">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</p>
+<p>SMOTE creates new minority-class observations instead of duplicating existing ones <span class="citation" data-cites="chawla2002smote">(<a href="#/references" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</p>
 <p>For a minority point <code>x_i</code>, it selects a nearby minority point <code>x_j</code> and creates:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb6-1"><a href="" aria-label="1"></a>x_new = x_i + lambda * (x_j - x_i)</span></code></pre></div>
 <p>The intuition is simple: fill sparse minority regions. The risk is also simple: interpolation may create impossible records.</p>
 </section>
 <section id="borderline-smote" class="slide level2">
 <h2>Borderline-SMOTE</h2>
-<p>Borderline-SMOTE focuses on minority observations near the class boundary <span class="citation" data-cites="han2005borderline">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Han et al. 2005</a>)</span>.</p>
+<p>Borderline-SMOTE focuses on minority observations near the class boundary <span class="citation" data-cites="han2005borderline">(<a href="#/references" role="doc-biblioref" onclick="">Han et al. 2005</a>)</span>.</p>
 <p>These are the points a classifier is most likely to confuse with the majority class.</p>
 <p>This can help boundary recall, but noisy or mislabeled boundary points can be reinforced.</p>
 </section>
 <section id="smote-nc" class="slide level2">
 <h2>SMOTE-NC</h2>
-<p>SMOTE-NC handles mixed numerical and categorical data <span class="citation" data-cites="chawla2002smote">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</p>
+<p>SMOTE-NC handles mixed numerical and categorical data <span class="citation" data-cites="chawla2002smote">(<a href="#/references" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</p>
 <ul>
 <li>Numerical columns are interpolated.</li>
 <li>Categorical columns are chosen from neighboring minority examples.</li>
@@ -372,7 +372,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="adasyn" class="slide level2">
 <h2>ADASYN</h2>
-<p>ADASYN estimates local difficulty from nearest neighbors <span class="citation" data-cites="he2008adasyn">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">He et al. 2008</a>)</span>.</p>
+<p>ADASYN estimates local difficulty from nearest neighbors <span class="citation" data-cites="he2008adasyn">(<a href="#/references" role="doc-biblioref" onclick="">He et al. 2008</a>)</span>.</p>
 <p>Minority observations surrounded by many majority observations receive larger sampling weights.</p>
 <p>The method shifts attention toward hard minority regions, which can be useful or risky depending on label noise and class overlap.</p>
 </section>
@@ -388,24 +388,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>If <code>imbalanced-learn</code> is missing in your environment, install it first with:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb7-1"><a href="" aria-label="1"></a><span class="ex">pip</span> install imbalanced-learn</span></code></pre></div>
 </section>
-<section id="code-colab-dependency-setup" class="slide level2">
-<h2>Code: Colab dependency setup</h2>
-<p>Run this cell first in Google Colab. It installs <code>imbalanced-learn</code> only when it is missing.</p>
-<p>This setup cell keeps the notebook portable: local environments that already have the package skip installation, while Colab installs the missing dependency.</p>
-</section>
-<section id="code-imports-and-settings" class="slide level2">
-<h2>Code: Imports and settings</h2>
-<p>The imports separate standard <code>sklearn</code> pipeline pieces from <code>imblearn</code> samplers, which is important because samplers need the <code>imblearn</code> pipeline implementation.</p>
-</section>
 <section id="create-a-deliberately-imbalanced-dataset" class="slide level2">
 <h2>11. Create a deliberately imbalanced dataset</h2>
 <p>We will use a synthetic binary classification dataset so the notebook is reproducible without external data downloads.</p>
 <p>Think of <code>y=1</code> as a rare high-risk event, such as fraud, churn, default, or failure.</p>
-</section>
-<section id="code-generate-the-dataset" class="slide level2">
-<h2>Code: Generate the dataset</h2>
-<p>The class weights make the positive class rare but not impossible, so students can observe both false negatives and false positives in later metrics.</p>
-<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:24.806841Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:24.806496Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:24.823472Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:24.822466Z&quot;}}" data-execution_count="3">
+<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:45.264261Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:45.263935Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:45.279662Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:45.278852Z&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -452,20 +439,16 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div>
-</section>
-<section id="code-plot-class-balance" class="slide level2">
-<h2>Code: Plot class balance</h2>
 <p>Start with the base rate. Every later metric should be interpreted relative to this imbalance.</p>
 
 <img data-src="lab-01-augmentation_files/figure-revealjs/cell-5-output-1.png" class="r-stretch"></section>
 <section id="why-accuracy-fails" class="slide level2">
-<h2>12. Why accuracy fails</h2>
-<p>A classifier that always predicts the majority class can look strong by accuracy alone. But it has zero recall for the minority class.</p>
+<h2>12. Why accuracy fails?</h2>
 </section>
-<section id="code-majority-class-baseline" class="slide level2">
-<h2>Code: Majority-class baseline</h2>
-<p>This deliberately weak baseline is useful because it exposes why accuracy alone is not a sufficient objective.</p>
-<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:24.936332Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:24.936146Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:24.953249Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:24.952313Z&quot;}}" data-execution_count="5">
+<section id="majority-class-baseline" class="slide level2">
+<h2>Majority-class baseline</h2>
+<p>A classifier that always predicts the majority class can look strong by accuracy alone. But it has zero recall for the minority class.</p>
+<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:45.388527Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:45.388280Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:45.405997Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:45.405102Z&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <style scoped="">
@@ -511,94 +494,46 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h2>13. Visual intuition</h2>
 <p>Before full pipelines, inspect resampling on a small 2D dataset.</p>
 <p>The goal is not the best model. The goal is to see how the training set changes.</p>
-</section>
-<section id="what-the-resamplers-change" class="slide level2">
-<h2>What the resamplers change</h2>
 <ul>
-<li>Undersampling removes majority rows.</li>
-<li>Oversampling duplicates minority rows.</li>
-<li>SMOTE interpolates between minority neighbors.</li>
-<li>Borderline-SMOTE focuses near the class boundary.</li>
-<li>ADASYN focuses on locally difficult minority regions.</li>
+<li><em>Undersampling</em> removes majority rows.</li>
+<li><em>Oversampling</em> duplicates minority rows.</li>
+<li><em>SMOTE</em> interpolates between minority neighbors.</li>
+<li><em>Borderline-SMOTE</em> focuses near the class boundary.</li>
+<li><em>ADASYN</em> focuses on locally difficult minority regions.</li>
 </ul>
-<p>Class weighting is not plotted because it changes the objective, not the rows.</p>
 </section>
 <section id="code-build-a-2d-imbalanced-dataset" class="slide level2">
 <h2>Code: Build a 2D imbalanced dataset</h2>
-<p>The 2D dataset is only for visualization. The full experiment later uses all features and cross-validation.</p>
-<div id="451b19b6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:24.955220Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:24.955035Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:24.963544Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:24.962713Z&quot;}}" data-execution_count="6">
-<div class="cell-output cell-output-display" data-execution_count="6">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">count</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">minority_class</th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>311</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>39</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</section>
-<section id="code-plot-resampling-effects-in-feature-space" class="slide level2">
-<h2>Code: Plot resampling effects in feature space</h2>
-<p>Each panel shows the training data after one resampling strategy. The validation data is not involved in this illustration.</p>
-
-<img data-src="lab-01-augmentation_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
-<section id="reading-the-visual-comparison" class="slide level2">
-<h2>Reading the visual comparison</h2>
-<p>The plots show why these techniques are not interchangeable.</p>
+<img data-src="lab-01-augmentation_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"><p>The plots show why these techniques are not interchangeable.</p>
 <ul>
-<li>Random oversampling increases the minority count by repeating existing observations, so the red crosses sit directly on top of known minority points.</li>
-<li>SMOTE fills line segments between nearby minority points. This can smooth sparse minority regions, but it assumes that interpolation produces valid records.</li>
-<li>Borderline-SMOTE tries to synthesize near the frontier between classes. It is useful when boundary recall matters, but it can be sensitive to overlap and label noise.</li>
-<li>ADASYN places more synthetic examples in locally difficult regions. Compared with SMOTE, it often concentrates more strongly near areas where the majority class surrounds the minority class.</li>
+<li>Random <em>oversampling</em> increases the minority count by repeating existing observations, so the red crosses sit directly on top of known points.</li>
+<li><em>SMOTE</em> fills segments between nearby minority points. This smooths sparse minority regions, but assumes that interpolation produces valid records.</li>
+<li><em>Borderline-SMOTE</em> tries to synthesize near the frontier between classes. It is useful when boundary recall matters, but it can be sensitive to overlap and label noise.</li>
+<li><em>ADASYN</em> places more synthetic examples in locally difficult regions. Compared with SMOTE, it often concentrates more strongly near areas where the majority class surrounds the minority class.</li>
 </ul>
 <p>The visual lesson carries over to tabular data: synthetic rows are helpful only if the generated feature combinations are plausible for the domain.</p>
 </section>
 <section id="baseline-pipeline" class="slide level2">
 <h2>14. Baseline pipeline</h2>
 <p>A conventional <code>sklearn.pipeline.Pipeline</code> is sufficient when all steps are transformers and estimators.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>Pipeline([</span>
-<span id="cb8-2"><a href="" aria-label="2"></a>    (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb8-3"><a href="" aria-label="3"></a>    (<span class="st">"classifier"</span>, LogisticRegression())</span>
-<span id="cb8-4"><a href="" aria-label="4"></a>])</span></code></pre></div>
-<p>When we add a sampler such as SMOTE, random oversampling, or undersampling, we switch to <code>imblearn.pipeline.Pipeline</code>.</p>
-</section>
-<section id="code-build-the-baseline-pipeline" class="slide level2">
-<h2>Code: Build the baseline pipeline</h2>
-<p>The baseline establishes the ordinary preprocessing-and-classifier structure before samplers are introduced.</p>
-<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:25.778310Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:25.778099Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:25.798554Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:25.797582Z&quot;}}" data-execution_count="8">
+<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:46.220273Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:46.220090Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:46.239957Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:46.238992Z&quot;}}" data-execution_count="8">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># Standardize numeric features before logistic regression.</span></span>
+<span id="cb8-2"><a href="" aria-label="2"></a>numeric_features <span class="op">=</span> X.columns.tolist()</span>
+<span id="cb8-3"><a href="" aria-label="3"></a>preprocessor <span class="op">=</span> ColumnTransformer(</span>
+<span id="cb8-4"><a href="" aria-label="4"></a>    transformers<span class="op">=</span>[(<span class="st">"num"</span>, StandardScaler(), numeric_features)],</span>
+<span id="cb8-5"><a href="" aria-label="5"></a>    remainder<span class="op">=</span><span class="st">"drop"</span>,</span>
+<span id="cb8-6"><a href="" aria-label="6"></a>)</span>
+<span id="cb8-7"><a href="" aria-label="7"></a>baseline_pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb8-8"><a href="" aria-label="8"></a>    steps<span class="op">=</span>[</span>
+<span id="cb8-9"><a href="" aria-label="9"></a>        (<span class="st">"preprocessing"</span>, preprocessor),</span>
+<span id="cb8-10"><a href="" aria-label="10"></a>        (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>, random_state<span class="op">=</span>RANDOM_STATE)),</span>
+<span id="cb8-11"><a href="" aria-label="11"></a>    ]</span>
+<span id="cb8-12"><a href="" aria-label="12"></a>)</span>
+<span id="cb8-13"><a href="" aria-label="13"></a>baseline_pipeline</span></code></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
@@ -1791,9 +1726,9 @@ forceTheme('sk-container-id-1');</script>
 </section>
 <section id="candidate-pipelines" class="slide level2">
 <h2>15. Candidate pipelines</h2>
-<p>We compare seven strategies:</p>
+<p>We compare seven strategies (When we add a sampler such as SMOTE, random oversampling, or undersampling, we switch to <code>imblearn.pipeline.Pipeline</code>):</p>
 <ol type="1">
-<li>No imbalance treatment.</li>
+<li>No imbalance treatment (baseline pipeline).</li>
 <li><code>class_weight="balanced"</code>.</li>
 <li>Random undersampling.</li>
 <li>Random oversampling.</li>
@@ -1802,21 +1737,17 @@ forceTheme('sk-container-id-1');</script>
 <li>Borderline-SMOTE.</li>
 </ol>
 <p>All samplers are placed after preprocessing and before the classifier, so they are fitted only on the current training fold.</p>
-</section>
-<section id="code-define-candidate-pipelines" class="slide level2">
-<h2>Code: Define candidate pipelines</h2>
-<p>The sampler position is the key idea: preprocessing first, resampling second, classifier last.</p>
-<div id="631d78d9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:25.800447Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:25.800248Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:25.807205Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:25.806344Z&quot;}}" data-execution_count="9">
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>['No treatment',
- 'Class weight',
- 'Random undersampling',
- 'Random oversampling',
- 'SMOTE',
- 'ADASYN',
- 'Borderline-SMOTE']</code></pre>
-</div>
-</div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>pipelines <span class="op">=</span> {</span>
+<span id="cb9-2"><a href="" aria-label="2"></a>    <span class="st">"No treatment"</span>: Pipeline(</span>
+<span id="cb9-3"><a href="" aria-label="3"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"classifier"</span>, logistic_regression())]</span>
+<span id="cb9-4"><a href="" aria-label="4"></a>    ),</span>
+<span id="cb9-5"><a href="" aria-label="5"></a>    <span class="st">"Class weight"</span>: Pipeline(</span>
+<span id="cb9-6"><a href="" aria-label="6"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"classifier"</span>, logistic_regression(class_weight<span class="op">=</span><span class="st">"balanced"</span>))]</span>
+<span id="cb9-7"><a href="" aria-label="7"></a>    ),</span>
+<span id="cb9-8"><a href="" aria-label="8"></a>    <span class="st">"Random undersampling"</span>: ImbPipeline(</span>
+<span id="cb9-9"><a href="" aria-label="9"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"sampler"</span>, RandomUnderSampler(random_state<span class="op">=</span>RANDOM_STATE)), (<span class="st">"classifier"</span>, logistic_regression())]</span>
+<span id="cb9-10"><a href="" aria-label="10"></a>    ),</span>
+<span id="cb9-11"><a href="" aria-label="11"></a>}</span></code></pre></div>
 </section>
 <section id="stratified-cross-validation" class="slide level2">
 <h2>16. Stratified cross-validation</h2>
@@ -1829,11 +1760,17 @@ forceTheme('sk-container-id-1');</script>
 <section id="comparison-table" class="slide level2">
 <h2>17. Comparison table</h2>
 <p>The table reports mean cross-validation performance and fold-to-fold variability.</p>
-</section>
-<section id="code-summarize-average-performance" class="slide level2">
-<h2>Code: Summarize average performance</h2>
-<p>Compare recall and specificity together. Higher minority recall often comes with more majority false positives.</p>
-<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:26.930173Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:26.929968Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:26.948153Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:26.947425Z&quot;}}" data-execution_count="11">
+<blockquote>
+
+<ul>
+<li><strong>Precision</strong>: among predicted positives, how many were actually positive?</li>
+<li><strong>Recall</strong> or sensitivity: among actual positives, how many did we find?</li>
+<li><strong>Specificity</strong>: among actual negatives, how many did we correctly reject?</li>
+<li><strong>F1 score</strong>: harmonic mean of precision and recall.</li>
+</ul>
+
+</blockquote>
+<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:47.371787Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:47.371569Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:47.390049Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:47.389155Z&quot;}}" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
@@ -1945,7 +1882,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-inspect-fold-variability" class="slide level2">
 <h2>Code: Inspect fold variability</h2>
 <p>Fold variability helps distinguish a consistently useful method from a lucky average.</p>
-<div id="e33d948d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:26.950580Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:26.950376Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:26.964969Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:26.964234Z&quot;}}" data-execution_count="12">
+<div id="e33d948d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:47.392900Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:47.392688Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:47.407863Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:47.406665Z&quot;}}" data-execution_count="12">
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 <style scoped="">
@@ -2046,19 +1983,12 @@ forceTheme('sk-container-id-1');</script>
 <section id="confusion-matrices" class="slide level2">
 <h2>18. Confusion matrices</h2>
 <p>Here we use out-of-fold predictions. Each observation is predicted by a model that did not train on it.</p>
-</section>
-<section id="code-plot-confusion-matrices" class="slide level2">
-<h2>Code: Plot confusion matrices</h2>
-<p>Confusion matrices convert abstract metric changes into counts of mistakes.</p>
 
 <img data-src="lab-01-augmentation_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
 <section id="precision-recall-curves" class="slide level2">
 <h2>19. Precision-recall curves</h2>
 <p>A precision-recall curve shows how precision and recall change as we vary the classification threshold.</p>
 <p>Most probabilistic classifiers first produce a positive-class score, then convert it into a label with a threshold.</p>
-</section>
-<section id="reading-precision-recall-curves" class="slide level2">
-<h2>Reading precision-recall curves</h2>
 <ul>
 <li>Lower thresholds predict more positives: recall usually rises and precision often falls.</li>
 <li>Higher thresholds predict fewer positives: precision may rise and recall often falls.</li>
@@ -2084,7 +2014,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-evaluate-thresholds" class="slide level2">
 <h2>Code: Evaluate thresholds</h2>
 <p>Thresholds turn probabilities into decisions. This table lets students choose a decision rule for a stated cost.</p>
-<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:27.560348Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:27.560168Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:27.739825Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:27.739042Z&quot;}}" data-execution_count="15">
+<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:47.993994Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:47.993821Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:48.170802Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:48.169941Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># Recompute metrics over a grid of decision thresholds for one selected method.</span></span>
@@ -2309,7 +2239,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-minimize-threshold-sensitive-cost" class="slide level2">
 <h2>Code: Minimize threshold-sensitive cost</h2>
 <p>The cost model is intentionally simple; its purpose is to connect metrics to operational consequences.</p>
-<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:27.858159Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:27.857941Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:33.496033Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:33.495179Z&quot;}}" data-execution_count="17">
+<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:48.312079Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:48.311903Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:53.811472Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:53.810466Z&quot;}}" data-execution_count="17">
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
@@ -2434,7 +2364,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-show-a-leakage-pattern" class="slide level2">
 <h2>Code: Show a leakage pattern</h2>
 <p>This cell is intentionally unsafe first, then safe. Keep both results visible for the leakage discussion.</p>
-<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:33.497988Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:33.497769Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:33.746062Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:33.745452Z&quot;}}" data-execution_count="18">
+<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:53.813545Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:53.813298Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:54.064815Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:54.063219Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Contrast an intentionally leaky workflow with the leakage-safe pipeline workflow.</span></span>
@@ -2553,18 +2483,8 @@ forceTheme('sk-container-id-1');</script>
 </ul>
 <p>Avoid optimizing only accuracy. Pick a metric that matches the scenario.</p>
 </section>
-<section id="references-for-imbalance-methods" class="slide level2">
-<h2>References for imbalance methods</h2>
-<p>The BibTeX entries for the citation keys below are available in <code>refs/refs.bib</code>.</p>
-<ul>
-<li>SMOTE and SMOTE-NC: Chawla et al. <span class="citation" data-cites="chawla2002smote">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</li>
-<li>Borderline-SMOTE: Han, Wang, and Mao <span class="citation" data-cites="han2005borderline">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Han et al. 2005</a>)</span>.</li>
-<li>ADASYN: He et al. <span class="citation" data-cites="he2008adasyn">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">He et al. 2008</a>)</span>.</li>
-</ul>
-</section>
-<section id="important-takeaway" class="slide level2 smaller scrollable">
-<h2>Important takeaway</h2>
-<p><strong>Resampling is part of model training, so it belongs inside the pipeline and inside cross-validation.</strong></p>
+<section id="references" class="title-slide slide level1 smaller scrollable">
+<h1>References</h1>
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-chawla2002smote" class="csl-entry" role="listitem">
