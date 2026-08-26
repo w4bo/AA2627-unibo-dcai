@@ -247,10 +247,75 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Compare random oversampling, undersampling, SMOTE, ADASYN, and class weighting.</li>
 <li>Place resampling correctly inside a cross-validation pipeline.</li>
 <li>Select appropriate metrics and decision thresholds.</li>
+<li>Build <code>sklearn</code> pipelines and optimize their hyper-parameters.</li>
 </ul>
 </section>
+<section id="why-pipelines-matter" class="slide level2">
+<h2>1. Why pipelines matter</h2>
+<p>A machine-learning model is rarely just a classifier. A real workflow often includes missing-value handling, scaling, categorical encoding, feature selection, resampling, and then the final estimator.</p>
+<p><code>sklearn.pipeline.Pipeline</code> packages these steps into one object with a single <code>fit</code>, <code>predict</code>, and <code>predict_proba</code> interface.</p>
+<p>This matters because every preprocessing step must be learned only from the training data. A pipeline makes that discipline automatic during train/test splits and cross-validation.</p>
+</section>
+<section id="a-basic-sklearn-pipeline" class="slide level2">
+<h2>2. A basic sklearn pipeline</h2>
+<p>A typical pipeline chains transformers and a final estimator:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-3"><a href="" aria-label="3"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb1-4"><a href="" aria-label="4"></a></span>
+<span id="cb1-5"><a href="" aria-label="5"></a>pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb1-6"><a href="" aria-label="6"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb1-7"><a href="" aria-label="7"></a>    (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>)),</span>
+<span id="cb1-8"><a href="" aria-label="8"></a>])</span>
+<span id="cb1-9"><a href="" aria-label="9"></a></span>
+<span id="cb1-10"><a href="" aria-label="10"></a>pipeline.fit(X_train, y_train)</span>
+<span id="cb1-11"><a href="" aria-label="11"></a>pipeline.predict(X_test)</span></code></pre></div>
+<p>The important point is that <code>StandardScaler</code> is fitted on <code>X_train</code> only. The test set is transformed using the training-set scaling parameters.</p>
+</section>
+<section id="pipelines-expose-hyper-parameters" class="slide level2">
+<h2>3. Pipelines expose hyper-parameters</h2>
+<p>Pipeline parameters are addressed with the pattern:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb2-1"><a href="" aria-label="1"></a>step_name__parameter_name</span></code></pre></div>
+<p>For example, if the classifier step is named <code>classifier</code>, then the logistic-regression regularization strength is <code>classifier__C</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>param_grid <span class="op">=</span> {</span>
+<span id="cb3-2"><a href="" aria-label="2"></a>    <span class="st">"classifier__C"</span>: [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>],</span>
+<span id="cb3-3"><a href="" aria-label="3"></a>    <span class="st">"classifier__class_weight"</span>: [<span class="va">None</span>, <span class="st">"balanced"</span>],</span>
+<span id="cb3-4"><a href="" aria-label="4"></a>}</span></code></pre></div>
+<p>This lets us tune preprocessing choices and model choices together, while keeping the evaluation leakage-safe.</p>
+</section>
+<section id="hyper-parameter-optimization-with-cross-validation" class="slide level2">
+<h2>4. Hyper-parameter optimization with cross-validation</h2>
+<p><code>GridSearchCV</code> trains and evaluates many pipeline configurations using cross-validation. Each fold fits preprocessing and the classifier only on the training part of that fold.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV, StratifiedKFold</span>
+<span id="cb4-2"><a href="" aria-label="2"></a></span>
+<span id="cb4-3"><a href="" aria-label="3"></a>cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb4-4"><a href="" aria-label="4"></a></span>
+<span id="cb4-5"><a href="" aria-label="5"></a>search <span class="op">=</span> GridSearchCV(</span>
+<span id="cb4-6"><a href="" aria-label="6"></a>    estimator<span class="op">=</span>pipeline,</span>
+<span id="cb4-7"><a href="" aria-label="7"></a>    param_grid<span class="op">=</span>param_grid,</span>
+<span id="cb4-8"><a href="" aria-label="8"></a>    scoring<span class="op">=</span><span class="st">"f1"</span>,</span>
+<span id="cb4-9"><a href="" aria-label="9"></a>    cv<span class="op">=</span>cv,</span>
+<span id="cb4-10"><a href="" aria-label="10"></a>)</span>
+<span id="cb4-11"><a href="" aria-label="11"></a></span>
+<span id="cb4-12"><a href="" aria-label="12"></a>search.fit(X_train, y_train)</span>
+<span id="cb4-13"><a href="" aria-label="13"></a>search.best_params_</span></code></pre></div>
+<p>For imbalanced classification, the scoring function should match the task. Accuracy is often the wrong objective; recall, F1, F-beta, average precision, or a custom cost function may be more appropriate.</p>
+</section>
+<section id="pipelines-with-resampling-need-imblearn" class="slide level2">
+<h2>5. Pipelines with resampling need imblearn</h2>
+<p><code>sklearn.pipeline.Pipeline</code> is designed for transformers and estimators. Resamplers such as SMOTE change both <code>X</code> and <code>y</code>, so they need <code>imblearn.pipeline.Pipeline</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="im">from</span> imblearn.pipeline <span class="im">import</span> Pipeline <span class="im">as</span> ImbPipeline</span>
+<span id="cb5-2"><a href="" aria-label="2"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
+<span id="cb5-3"><a href="" aria-label="3"></a></span>
+<span id="cb5-4"><a href="" aria-label="4"></a>pipeline <span class="op">=</span> ImbPipeline([</span>
+<span id="cb5-5"><a href="" aria-label="5"></a>    (<span class="st">"preprocessing"</span>, preprocessor),</span>
+<span id="cb5-6"><a href="" aria-label="6"></a>    (<span class="st">"sampler"</span>, SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)),</span>
+<span id="cb5-7"><a href="" aria-label="7"></a>    (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>)),</span>
+<span id="cb5-8"><a href="" aria-label="8"></a>])</span></code></pre></div>
+<p>The central rule of this lab follows from this: resampling is part of training, so it must happen inside the pipeline and inside each cross-validation fold.</p>
+</section>
 <section id="the-imbalanced-classification-problem" class="slide level2">
-<h2>1. The imbalanced classification problem</h2>
+<h2>6. The imbalanced classification problem</h2>
 <p>Many important binary classification problems have one class that is much rarer than the other: fraud detection, medical diagnosis, safety incidents, customer churn, credit default, and equipment failures.</p>
 <p>We call the frequent class the <strong>majority class</strong> and the rare class the <strong>minority class</strong>. In this notebook the minority class is the positive class: <code>1</code>.</p>
 <p>When classes are imbalanced, <strong>accuracy can be misleading</strong>. If only 5% of customers churn, a classifier that always predicts “no churn” reaches 95% accuracy while finding no churners at all.</p>
@@ -264,155 +329,87 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 <section id="methods-for-handling-imbalance" class="slide level2">
-<h2>2. Methods for handling imbalance</h2>
+<h2>7. Methods for handling imbalance</h2>
 <p>Common strategies include:</p>
 <ul>
-<li><strong>No imbalance treatment</strong>: train the model directly and evaluate carefully.</li>
-<li><strong>Class-weighted learning</strong>: make errors on the minority class more expensive during optimization.</li>
-<li><strong>Random undersampling</strong>: remove majority-class examples from the training data.</li>
-<li><strong>Random oversampling</strong>: duplicate minority-class examples in the training data.</li>
-<li><strong>SMOTE</strong>: create synthetic minority examples by interpolating between minority neighbors in feature space.</li>
-<li><strong>ADASYN</strong>: create more synthetic minority examples in regions where the minority class is harder to learn.</li>
-<li><strong>Borderline-SMOTE</strong>: focus synthetic examples near the decision boundary.</li>
-<li><strong>SMOTE-NC</strong>: a SMOTE variant for data with both numerical and categorical features.</li>
+<li><strong>No treatment</strong>: train directly and evaluate carefully.</li>
+<li><strong>Class weights</strong>: make minority-class errors more expensive.</li>
+<li><strong>Undersampling</strong>: remove majority examples.</li>
+<li><strong>Oversampling</strong>: duplicate minority examples.</li>
+<li><strong>SMOTE and variants</strong>: synthesize minority examples.</li>
 </ul>
-<p><strong>Data augmentation versus SMOTE</strong></p>
-<p>Data augmentation usually means applying domain-specific transformations that preserve labels: rotating an image, adding sensor noise, cropping audio, perturbing text, or simulating realistic operating conditions.</p>
-<p>SMOTE is different. It creates synthetic rows by interpolation in feature space. ADASYN follows a related idea, but adapts the number of generated samples to local difficulty: minority observations surrounded by many majority-class neighbors receive more synthetic examples.</p>
-<p>These methods can help a classifier see a denser minority region, but synthetic samples may be unrealistic when features are constrained, categorical, causal, temporal, or strongly dependent in nonlinear ways.</p>
-<p><strong>ADASYN: explanation, usage, and testing</strong></p>
-<p><strong>ADASYN</strong> stands for Adaptive Synthetic Sampling. Like SMOTE, it creates synthetic minority-class examples using nearest neighbors. Unlike regular SMOTE, it does not distribute synthetic examples evenly across the minority class. It generates more examples around minority observations that are harder to learn, usually because they are surrounded by many majority-class neighbors.</p>
-<p>Use ADASYN when the minority class is not only rare, but also unevenly represented: some minority regions are easy and well separated, while others are close to the majority class. It can improve recall in difficult regions, but it may also amplify noise or outliers if the hard examples are mislabeled or anomalous.</p>
-<p>Testing ADASYN should follow the same leakage-safe rule as SMOTE:</p>
-<ul>
-<li>Put <code>ADASYN</code> inside an <code>imblearn.pipeline.Pipeline</code>.</li>
-<li>Fit it only on training folds during stratified cross-validation.</li>
-<li>Compare it against no treatment, class weighting, random resampling, and SMOTE.</li>
-<li>Inspect precision, recall, F1, confusion matrices, precision-recall curves, and threshold-sensitive costs.</li>
-<li>Check fold variability: a method that wins on average but is unstable may be risky in deployment.</li>
-</ul>
+<p>Use this slide as the menu of interventions. The rest of the lab asks which intervention changes errors in the desired direction.</p>
 </section>
-<section id="how-smote-variants-and-adasyn-work" class="slide level2">
-<h2>3. How SMOTE variants and ADASYN work</h2>
-<p><strong>SMOTE</strong></p>
-<p>SMOTE, the Synthetic Minority Over-sampling Technique, was introduced by Chawla et al. <span class="citation" data-cites="chawla2002smote">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>. It creates new minority-class observations instead of simply duplicating existing ones. For a minority observation <code>x_i</code>, SMOTE finds its <code>k</code> nearest minority-class neighbors, randomly selects one neighbor <code>x_j</code>, and creates a synthetic point along the line segment between them:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>x_new = x_i + lambda * (x_j - x_i), where lambda is sampled from [0, 1]</span></code></pre></div>
-<p>Intuition: SMOTE fills sparse minority regions in feature space. Main risk: interpolation may create unrealistic records when tabular variables have constraints, categories, strong nonlinear dependencies, or causal relationships.</p>
-<p><strong>Borderline-SMOTE</strong></p>
-<p>Borderline-SMOTE was proposed by Han, Wang, and Mao <span class="citation" data-cites="han2005borderline">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Han et al. 2005</a>)</span>. It starts from the observation that not all minority examples are equally useful for resampling. Minority examples deep inside a safe minority region are already easy; examples near the boundary are more informative.</p>
-<p>The method first looks at each minority observation and its nearest neighbors from the full dataset. If most nearby points are majority-class observations, the minority point is considered close to the decision boundary. Borderline-SMOTE then generates synthetic examples mainly from these boundary or danger points.</p>
-<p>Intuition: focus synthetic data where the classifier is most likely to confuse the classes. Main risk: if boundary points are noisy or mislabeled, the method can reinforce noise.</p>
-<p><strong>SMOTE-NC</strong></p>
-<p>SMOTE-NC, for nominal and continuous features, is also described by Chawla et al. <span class="citation" data-cites="chawla2002smote">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>. Plain SMOTE assumes continuous features; applying it after one-hot encoding can create fractional category indicators such as <code>0.35</code> for a category. SMOTE-NC avoids this by treating numerical and categorical columns differently.</p>
-<p>For numerical features, it interpolates as in SMOTE. For categorical features, it assigns a category using the categories observed among the selected minority example and its nearest neighbors, typically by majority vote. Its distance calculation also accounts for categorical mismatches rather than treating categories as ordinary continuous numbers.</p>
-<p>Intuition: keep interpolation for numeric columns while preserving valid category labels. Main risk: generated category combinations can still be implausible if the categorical variables have domain constraints.</p>
-<p><strong>ADASYN</strong></p>
-<p>ADASYN, Adaptive Synthetic Sampling, was introduced by He et al. <span class="citation" data-cites="he2008adasyn">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">He et al. 2008</a>)</span>. Like SMOTE, it creates synthetic minority samples by interpolation. The difference is how it decides where to generate them. ADASYN estimates the local learning difficulty of each minority observation by checking how many majority-class observations appear among its nearest neighbors. Minority examples surrounded by many majority neighbors receive larger sampling weights.</p>
-<p>Intuition: adaptively shift attention toward difficult minority regions and reduce the bias caused by class imbalance. Main risk: difficult regions may include outliers, overlap, or label noise, so ADASYN can sometimes generate many samples in exactly the least reliable part of the data.</p>
+<section id="data-augmentation-versus-smote" class="slide level2">
+<h2>Data augmentation versus SMOTE</h2>
+<p>Data augmentation applies domain-specific label-preserving transformations: image rotations, sensor noise, audio crops, text perturbations, or simulated operating conditions.</p>
+<p>SMOTE is narrower. It creates tabular rows by interpolation in feature space.</p>
+<p>The important question is whether the generated record could exist in the real data-generating process.</p>
+</section>
+<section id="adasyn-in-practice" class="slide level2">
+<h2>ADASYN in practice</h2>
+<p>ADASYN creates more synthetic minority examples around locally difficult observations: minority points surrounded by many majority neighbors.</p>
+<p>This can improve recall in hard regions, but it can also amplify mislabeled points or outliers.</p>
+<p>Test it inside an <code>imblearn</code> pipeline, using stratified cross-validation, precision, recall, F1, confusion matrices, and threshold-sensitive cost.</p>
+</section>
+<section id="how-smote-works" class="slide level2">
+<h2>8. How SMOTE works</h2>
+<p>SMOTE creates new minority-class observations instead of duplicating existing ones <span class="citation" data-cites="chawla2002smote">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</p>
+<p>For a minority point <code>x_i</code>, it selects a nearby minority point <code>x_j</code> and creates:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb6-1"><a href="" aria-label="1"></a>x_new = x_i + lambda * (x_j - x_i)</span></code></pre></div>
+<p>The intuition is simple: fill sparse minority regions. The risk is also simple: interpolation may create impossible records.</p>
+</section>
+<section id="borderline-smote" class="slide level2">
+<h2>Borderline-SMOTE</h2>
+<p>Borderline-SMOTE focuses on minority observations near the class boundary <span class="citation" data-cites="han2005borderline">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Han et al. 2005</a>)</span>.</p>
+<p>These are the points a classifier is most likely to confuse with the majority class.</p>
+<p>This can help boundary recall, but noisy or mislabeled boundary points can be reinforced.</p>
+</section>
+<section id="smote-nc" class="slide level2">
+<h2>SMOTE-NC</h2>
+<p>SMOTE-NC handles mixed numerical and categorical data <span class="citation" data-cites="chawla2002smote">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</p>
+<ul>
+<li>Numerical columns are interpolated.</li>
+<li>Categorical columns are chosen from neighboring minority examples.</li>
+</ul>
+<p>It avoids fractional one-hot categories, but it still cannot guarantee every generated category combination is realistic.</p>
+</section>
+<section id="adasyn" class="slide level2">
+<h2>ADASYN</h2>
+<p>ADASYN estimates local difficulty from nearest neighbors <span class="citation" data-cites="he2008adasyn">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">He et al. 2008</a>)</span>.</p>
+<p>Minority observations surrounded by many majority observations receive larger sampling weights.</p>
+<p>The method shifts attention toward hard minority regions, which can be useful or risky depending on label noise and class overlap.</p>
 </section>
 <section id="leakage-warning" class="slide level2">
-<h2>4. Leakage warning</h2>
+<h2>9. Leakage warning</h2>
 <p>Resampling is part of model training. It must be learned from the training data only.</p>
 <p>Do <strong>not</strong> apply SMOTE or oversampling before splitting the data. If synthetic points are created before a train/test split, information from validation or test observations can leak into the training set through nearest-neighbor interpolation or duplicated examples.</p>
 <p>The same rule applies to cross-validation: resampling must happen <strong>inside each training fold</strong>, not once globally before cross-validation.</p>
 <p>This is why we use <code>imblearn.pipeline.Pipeline</code> whenever the pipeline contains a sampler.</p>
 </section>
 <section id="setup" class="slide level2">
-<h2>5. Setup</h2>
+<h2>10. Setup</h2>
 <p>If <code>imbalanced-learn</code> is missing in your environment, install it first with:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb2-1"><a href="" aria-label="1"></a><span class="ex">pip</span> install imbalanced-learn</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb7-1"><a href="" aria-label="1"></a><span class="ex">pip</span> install imbalanced-learn</span></code></pre></div>
 </section>
 <section id="code-colab-dependency-setup" class="slide level2">
 <h2>Code: Colab dependency setup</h2>
 <p>Run this cell first in Google Colab. It installs <code>imbalanced-learn</code> only when it is missing.</p>
 <p>This setup cell keeps the notebook portable: local environments that already have the package skip installation, while Colab installs the missing dependency.</p>
-<div id="14c3d351" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:29.200611Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:29.200322Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:31.059395Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:31.058410Z&quot;}}" data-execution_count="1">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="co"># Install the sampler library only when the runtime does not already provide it.</span></span>
-<span id="cb3-2"><a href="" aria-label="2"></a><span class="im">import</span> importlib.util</span>
-<span id="cb3-3"><a href="" aria-label="3"></a><span class="im">import</span> subprocess</span>
-<span id="cb3-4"><a href="" aria-label="4"></a><span class="im">import</span> sys</span>
-<span id="cb3-5"><a href="" aria-label="5"></a></span>
-<span id="cb3-6"><a href="" aria-label="6"></a><span class="cf">if</span> importlib.util.find_spec(<span class="st">"imblearn"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb3-7"><a href="" aria-label="7"></a>    subprocess.check_call([sys.executable, <span class="st">"-m"</span>, <span class="st">"pip"</span>, <span class="st">"install"</span>, <span class="st">"-q"</span>, <span class="st">"imbalanced-learn"</span>])</span></code></pre></div>
-</details>
-</div>
 </section>
 <section id="code-imports-and-settings" class="slide level2">
 <h2>Code: Imports and settings</h2>
 <p>The imports separate standard <code>sklearn</code> pipeline pieces from <code>imblearn</code> samplers, which is important because samplers need the <code>imblearn</code> pipeline implementation.</p>
-<div id="80287433" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:31.061771Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:31.061372Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:36.231754Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:36.230687Z&quot;}}" data-execution_count="2">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="co"># Keep one seed so every plot and cross-validation split is reproducible in class.</span></span>
-<span id="cb4-2"><a href="" aria-label="2"></a><span class="im">import</span> warnings</span>
-<span id="cb4-3"><a href="" aria-label="3"></a></span>
-<span id="cb4-4"><a href="" aria-label="4"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb4-5"><a href="" aria-label="5"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-6"><a href="" aria-label="6"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb4-7"><a href="" aria-label="7"></a></span>
-<span id="cb4-8"><a href="" aria-label="8"></a><span class="im">from</span> sklearn.base <span class="im">import</span> clone</span>
-<span id="cb4-9"><a href="" aria-label="9"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
-<span id="cb4-10"><a href="" aria-label="10"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
-<span id="cb4-11"><a href="" aria-label="11"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb4-12"><a href="" aria-label="12"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (</span>
-<span id="cb4-13"><a href="" aria-label="13"></a>    ConfusionMatrixDisplay,</span>
-<span id="cb4-14"><a href="" aria-label="14"></a>    PrecisionRecallDisplay,</span>
-<span id="cb4-15"><a href="" aria-label="15"></a>    confusion_matrix,</span>
-<span id="cb4-16"><a href="" aria-label="16"></a>    f1_score,</span>
-<span id="cb4-17"><a href="" aria-label="17"></a>    precision_recall_curve,</span>
-<span id="cb4-18"><a href="" aria-label="18"></a>    accuracy_score,</span>
-<span id="cb4-19"><a href="" aria-label="19"></a>    precision_score,</span>
-<span id="cb4-20"><a href="" aria-label="20"></a>    recall_score,</span>
-<span id="cb4-21"><a href="" aria-label="21"></a>)</span>
-<span id="cb4-22"><a href="" aria-label="22"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> StratifiedKFold, train_test_split</span>
-<span id="cb4-23"><a href="" aria-label="23"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb4-24"><a href="" aria-label="24"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb4-25"><a href="" aria-label="25"></a></span>
-<span id="cb4-26"><a href="" aria-label="26"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> ADASYN, BorderlineSMOTE, RandomOverSampler, SMOTE</span>
-<span id="cb4-27"><a href="" aria-label="27"></a><span class="im">from</span> imblearn.pipeline <span class="im">import</span> Pipeline <span class="im">as</span> ImbPipeline</span>
-<span id="cb4-28"><a href="" aria-label="28"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> RandomUnderSampler</span>
-<span id="cb4-29"><a href="" aria-label="29"></a></span>
-<span id="cb4-30"><a href="" aria-label="30"></a>warnings.filterwarnings(<span class="st">"ignore"</span>, category<span class="op">=</span><span class="pp">FutureWarning</span>)</span>
-<span id="cb4-31"><a href="" aria-label="31"></a>RANDOM_STATE <span class="op">=</span> <span class="dv">42</span></span>
-<span id="cb4-32"><a href="" aria-label="32"></a>plt.style.use(<span class="st">"seaborn-v0_8-whitegrid"</span>)</span></code></pre></div>
-</details>
-</div>
 </section>
 <section id="create-a-deliberately-imbalanced-dataset" class="slide level2">
-<h2>6. Create a deliberately imbalanced dataset</h2>
+<h2>11. Create a deliberately imbalanced dataset</h2>
 <p>We will use a synthetic binary classification dataset so the notebook is reproducible without external data downloads.</p>
 <p>Think of <code>y=1</code> as a rare high-risk event, such as fraud, churn, default, or failure.</p>
 </section>
 <section id="code-generate-the-dataset" class="slide level2">
 <h2>Code: Generate the dataset</h2>
 <p>The class weights make the positive class rare but not impossible, so students can observe both false negatives and false positives in later metrics.</p>
-<div id="14c00486" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:36.234075Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:36.233707Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:36.251748Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:36.250763Z&quot;}}" data-execution_count="3">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="co"># Build a controlled rare-event problem with about 6% positive examples.</span></span>
-<span id="cb5-2"><a href="" aria-label="2"></a>X_array, y_array <span class="op">=</span> make_classification(</span>
-<span id="cb5-3"><a href="" aria-label="3"></a>    n_samples<span class="op">=</span><span class="dv">5000</span>,</span>
-<span id="cb5-4"><a href="" aria-label="4"></a>    n_features<span class="op">=</span><span class="dv">12</span>,</span>
-<span id="cb5-5"><a href="" aria-label="5"></a>    n_informative<span class="op">=</span><span class="dv">5</span>,</span>
-<span id="cb5-6"><a href="" aria-label="6"></a>    n_redundant<span class="op">=</span><span class="dv">3</span>,</span>
-<span id="cb5-7"><a href="" aria-label="7"></a>    n_clusters_per_class<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb5-8"><a href="" aria-label="8"></a>    weights<span class="op">=</span>[<span class="fl">0.94</span>, <span class="fl">0.06</span>],</span>
-<span id="cb5-9"><a href="" aria-label="9"></a>    class_sep<span class="op">=</span><span class="fl">0.9</span>,</span>
-<span id="cb5-10"><a href="" aria-label="10"></a>    flip_y<span class="op">=</span><span class="fl">0.02</span>,</span>
-<span id="cb5-11"><a href="" aria-label="11"></a>    random_state<span class="op">=</span>RANDOM_STATE,</span>
-<span id="cb5-12"><a href="" aria-label="12"></a>)</span>
-<span id="cb5-13"><a href="" aria-label="13"></a></span>
-<span id="cb5-14"><a href="" aria-label="14"></a>feature_names <span class="op">=</span> [<span class="ss">f"feature_</span><span class="sc">{</span>i<span class="sc">:02d}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(X_array.shape[<span class="dv">1</span>])]</span>
-<span id="cb5-15"><a href="" aria-label="15"></a>X <span class="op">=</span> pd.DataFrame(X_array, columns<span class="op">=</span>feature_names)</span>
-<span id="cb5-16"><a href="" aria-label="16"></a>y <span class="op">=</span> pd.Series(y_array, name<span class="op">=</span><span class="st">"high_risk"</span>)</span>
-<span id="cb5-17"><a href="" aria-label="17"></a></span>
-<span id="cb5-18"><a href="" aria-label="18"></a>class_counts <span class="op">=</span> y.value_counts().sort_index()</span>
-<span id="cb5-19"><a href="" aria-label="19"></a>class_rates <span class="op">=</span> y.value_counts(normalize<span class="op">=</span><span class="va">True</span>).sort_index()</span>
-<span id="cb5-20"><a href="" aria-label="20"></a></span>
-<span id="cb5-21"><a href="" aria-label="21"></a>pd.DataFrame({<span class="st">"count"</span>: class_counts, <span class="st">"rate"</span>: class_rates.<span class="bu">round</span>(<span class="dv">3</span>)})</span></code></pre></div>
-</details>
+<div id="679b435e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:16.137903Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:16.137587Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:16.153486Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:16.152513Z&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -463,43 +460,16 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="code-plot-class-balance" class="slide level2">
 <h2>Code: Plot class balance</h2>
 <p>Start with the base rate. Every later metric should be interpreted relative to this imbalance.</p>
-<div id="0141b032" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:36.253847Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:36.253608Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:36.367954Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:36.367017Z&quot;}}" data-execution_count="4">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="co"># Visualize the base rate before discussing any model metrics.</span></span>
-<span id="cb6-2"><a href="" aria-label="2"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
-<span id="cb6-3"><a href="" aria-label="3"></a>class_counts.plot(kind<span class="op">=</span><span class="st">"bar"</span>, ax<span class="op">=</span>ax, color<span class="op">=</span>[<span class="st">"#4C78A8"</span>, <span class="st">"#F58518"</span>])</span>
-<span id="cb6-4"><a href="" aria-label="4"></a>ax.set_title(<span class="st">"Class distribution"</span>)</span>
-<span id="cb6-5"><a href="" aria-label="5"></a>ax.set_xlabel(<span class="st">"Class"</span>)</span>
-<span id="cb6-6"><a href="" aria-label="6"></a>ax.set_ylabel(<span class="st">"Number of observations"</span>)</span>
-<span id="cb6-7"><a href="" aria-label="7"></a>ax.set_xticklabels([<span class="st">"0: majority"</span>, <span class="st">"1: minority"</span>], rotation<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb6-8"><a href="" aria-label="8"></a>plt.show()</span></code></pre></div>
-</details>
 
-</div>
 <img data-src="lab-01-augmentation_files/figure-revealjs/cell-5-output-1.png" class="r-stretch"></section>
 <section id="why-accuracy-fails" class="slide level2">
-<h2>7. Why accuracy fails</h2>
+<h2>12. Why accuracy fails</h2>
 <p>A classifier that always predicts the majority class can look strong by accuracy alone. But it has zero recall for the minority class.</p>
 </section>
 <section id="code-majority-class-baseline" class="slide level2">
 <h2>Code: Majority-class baseline</h2>
 <p>This deliberately weak baseline is useful because it exposes why accuracy alone is not a sufficient objective.</p>
-<div id="260fea3f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:36.370315Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:36.370117Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:36.387633Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:36.386720Z&quot;}}" data-execution_count="5">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># Predicting only the majority class gives high accuracy but no minority recall.</span></span>
-<span id="cb7-2"><a href="" aria-label="2"></a>always_majority <span class="op">=</span> np.zeros_like(y)</span>
-<span id="cb7-3"><a href="" aria-label="3"></a></span>
-<span id="cb7-4"><a href="" aria-label="4"></a>accuracy <span class="op">=</span> (always_majority <span class="op">==</span> y).mean()</span>
-<span id="cb7-5"><a href="" aria-label="5"></a>precision <span class="op">=</span> precision_score(y, always_majority, zero_division<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-6"><a href="" aria-label="6"></a>recall <span class="op">=</span> recall_score(y, always_majority, zero_division<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-7"><a href="" aria-label="7"></a>f1 <span class="op">=</span> f1_score(y, always_majority, zero_division<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-8"><a href="" aria-label="8"></a></span>
-<span id="cb7-9"><a href="" aria-label="9"></a>pd.DataFrame(</span>
-<span id="cb7-10"><a href="" aria-label="10"></a>    [{<span class="st">"accuracy"</span>: accuracy, <span class="st">"precision"</span>: precision, <span class="st">"recall"</span>: recall, <span class="st">"f1"</span>: f1}]</span>
-<span id="cb7-11"><a href="" aria-label="11"></a>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
-</details>
+<div id="c09b7eab" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:16.260608Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:16.260414Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:16.277322Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:16.276465Z&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <style scoped="">
@@ -541,43 +511,26 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </section>
-<section id="visual-intuition-what-resampling-changes" class="slide level2">
-<h2>8. Visual intuition: what resampling changes</h2>
-<p>Before using resampling inside full pipelines, let us inspect what each technique does on a small 2D imbalanced dataset.</p>
-<p>The goal is not to build the best model on two features. The goal is to see how the training set changes.</p>
+<section id="visual-intuition" class="slide level2">
+<h2>13. Visual intuition</h2>
+<p>Before full pipelines, inspect resampling on a small 2D dataset.</p>
+<p>The goal is not the best model. The goal is to see how the training set changes.</p>
+</section>
+<section id="what-the-resamplers-change" class="slide level2">
+<h2>What the resamplers change</h2>
 <ul>
-<li><strong>Random undersampling</strong> removes majority-class observations. It can make training faster and rebalance the data, but it may throw away useful information.</li>
-<li><strong>Random oversampling</strong> duplicates minority-class observations. It balances the class counts, but it does not create new minority geometry.</li>
-<li><strong>SMOTE</strong> interpolates between minority-class neighbors, spreading synthetic samples through minority regions.</li>
-<li><strong>Borderline-SMOTE</strong> focuses on minority observations near the class boundary, where mistakes are more likely.</li>
-<li><strong>ADASYN</strong> adapts to local difficulty, generating more synthetic examples where minority observations are surrounded by majority-class neighbors.</li>
+<li>Undersampling removes majority rows.</li>
+<li>Oversampling duplicates minority rows.</li>
+<li>SMOTE interpolates between minority neighbors.</li>
+<li>Borderline-SMOTE focuses near the class boundary.</li>
+<li>ADASYN focuses on locally difficult minority regions.</li>
 </ul>
-<p>Class weighting is not shown in these plots because it does not create, duplicate, or remove rows. It changes the learning objective of the classifier.</p>
+<p>Class weighting is not plotted because it changes the objective, not the rows.</p>
 </section>
 <section id="code-build-a-2d-imbalanced-dataset" class="slide level2">
 <h2>Code: Build a 2D imbalanced dataset</h2>
 <p>The 2D dataset is only for visualization. The full experiment later uses all features and cross-validation.</p>
-<div id="c6be1418" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:36.389664Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:36.389451Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:36.397543Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:36.396661Z&quot;}}" data-execution_count="6">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># Create a small two-feature dataset so synthetic samples can be plotted directly.</span></span>
-<span id="cb8-2"><a href="" aria-label="2"></a>X_2d_array, y_2d_array <span class="op">=</span> make_classification(</span>
-<span id="cb8-3"><a href="" aria-label="3"></a>    n_samples<span class="op">=</span><span class="dv">350</span>,</span>
-<span id="cb8-4"><a href="" aria-label="4"></a>    n_features<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb8-5"><a href="" aria-label="5"></a>    n_informative<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb8-6"><a href="" aria-label="6"></a>    n_redundant<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb8-7"><a href="" aria-label="7"></a>    n_clusters_per_class<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb8-8"><a href="" aria-label="8"></a>    weights<span class="op">=</span>[<span class="fl">0.9</span>, <span class="fl">0.1</span>],</span>
-<span id="cb8-9"><a href="" aria-label="9"></a>    class_sep<span class="op">=</span><span class="fl">0.85</span>,</span>
-<span id="cb8-10"><a href="" aria-label="10"></a>    flip_y<span class="op">=</span><span class="fl">0.03</span>,</span>
-<span id="cb8-11"><a href="" aria-label="11"></a>    random_state<span class="op">=</span>RANDOM_STATE,</span>
-<span id="cb8-12"><a href="" aria-label="12"></a>)</span>
-<span id="cb8-13"><a href="" aria-label="13"></a></span>
-<span id="cb8-14"><a href="" aria-label="14"></a>X_2d <span class="op">=</span> pd.DataFrame(X_2d_array, columns<span class="op">=</span>[<span class="st">"x1"</span>, <span class="st">"x2"</span>])</span>
-<span id="cb8-15"><a href="" aria-label="15"></a>y_2d <span class="op">=</span> pd.Series(y_2d_array, name<span class="op">=</span><span class="st">"minority_class"</span>)</span>
-<span id="cb8-16"><a href="" aria-label="16"></a></span>
-<span id="cb8-17"><a href="" aria-label="17"></a>pd.DataFrame({<span class="st">"count"</span>: y_2d.value_counts().sort_index()})</span></code></pre></div>
-</details>
+<div id="bad1c05c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:16.279220Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:16.279010Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:16.286953Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:16.286132Z&quot;}}" data-execution_count="6">
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 <style scoped="">
@@ -624,86 +577,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="code-plot-resampling-effects-in-feature-space" class="slide level2">
 <h2>Code: Plot resampling effects in feature space</h2>
 <p>Each panel shows the training data after one resampling strategy. The validation data is not involved in this illustration.</p>
-<div id="855ccbdb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:36.399845Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:36.399396Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:37.244762Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:37.243962Z&quot;}}" data-execution_count="7">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="co"># Apply each sampler to the same toy data and plot the resulting training geometry.</span></span>
-<span id="cb9-2"><a href="" aria-label="2"></a>toy_samplers <span class="op">=</span> {</span>
-<span id="cb9-3"><a href="" aria-label="3"></a>    <span class="st">"Original data"</span>: <span class="va">None</span>,</span>
-<span id="cb9-4"><a href="" aria-label="4"></a>    <span class="st">"Random undersampling"</span>: RandomUnderSampler(random_state<span class="op">=</span>RANDOM_STATE),</span>
-<span id="cb9-5"><a href="" aria-label="5"></a>    <span class="st">"Random oversampling"</span>: RandomOverSampler(random_state<span class="op">=</span>RANDOM_STATE),</span>
-<span id="cb9-6"><a href="" aria-label="6"></a>    <span class="st">"SMOTE"</span>: SMOTE(random_state<span class="op">=</span>RANDOM_STATE, k_neighbors<span class="op">=</span><span class="dv">5</span>),</span>
-<span id="cb9-7"><a href="" aria-label="7"></a>    <span class="st">"Borderline-SMOTE"</span>: BorderlineSMOTE(random_state<span class="op">=</span>RANDOM_STATE, k_neighbors<span class="op">=</span><span class="dv">5</span>),</span>
-<span id="cb9-8"><a href="" aria-label="8"></a>    <span class="st">"ADASYN"</span>: ADASYN(random_state<span class="op">=</span>RANDOM_STATE, n_neighbors<span class="op">=</span><span class="dv">5</span>),</span>
-<span id="cb9-9"><a href="" aria-label="9"></a>}</span>
-<span id="cb9-10"><a href="" aria-label="10"></a></span>
-<span id="cb9-11"><a href="" aria-label="11"></a></span>
-<span id="cb9-12"><a href="" aria-label="12"></a><span class="kw">def</span> apply_sampler_for_plot(sampler, X, y):</span>
-<span id="cb9-13"><a href="" aria-label="13"></a>    <span class="cf">if</span> sampler <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb9-14"><a href="" aria-label="14"></a>        X_resampled <span class="op">=</span> X.copy()</span>
-<span id="cb9-15"><a href="" aria-label="15"></a>        y_resampled <span class="op">=</span> y.copy()</span>
-<span id="cb9-16"><a href="" aria-label="16"></a>    <span class="cf">else</span>:</span>
-<span id="cb9-17"><a href="" aria-label="17"></a>        X_values, y_values <span class="op">=</span> sampler.fit_resample(X, y)</span>
-<span id="cb9-18"><a href="" aria-label="18"></a>        X_resampled <span class="op">=</span> pd.DataFrame(X_values, columns<span class="op">=</span>X.columns)</span>
-<span id="cb9-19"><a href="" aria-label="19"></a>        y_resampled <span class="op">=</span> pd.Series(y_values, name<span class="op">=</span>y.name)</span>
-<span id="cb9-20"><a href="" aria-label="20"></a></span>
-<span id="cb9-21"><a href="" aria-label="21"></a>    original_mask <span class="op">=</span> np.arange(<span class="bu">len</span>(X_resampled)) <span class="op">&lt;</span> <span class="bu">len</span>(X)</span>
-<span id="cb9-22"><a href="" aria-label="22"></a>    <span class="cf">return</span> X_resampled, y_resampled, original_mask</span>
-<span id="cb9-23"><a href="" aria-label="23"></a></span>
-<span id="cb9-24"><a href="" aria-label="24"></a></span>
-<span id="cb9-25"><a href="" aria-label="25"></a><span class="kw">def</span> plot_resampled_dataset(ax, title, X_resampled, y_resampled, original_mask):</span>
-<span id="cb9-26"><a href="" aria-label="26"></a>    majority <span class="op">=</span> y_resampled <span class="op">==</span> <span class="dv">0</span></span>
-<span id="cb9-27"><a href="" aria-label="27"></a>    minority <span class="op">=</span> y_resampled <span class="op">==</span> <span class="dv">1</span></span>
-<span id="cb9-28"><a href="" aria-label="28"></a>    synthetic <span class="op">=</span> <span class="op">~</span>original_mask</span>
-<span id="cb9-29"><a href="" aria-label="29"></a></span>
-<span id="cb9-30"><a href="" aria-label="30"></a>    ax.scatter(</span>
-<span id="cb9-31"><a href="" aria-label="31"></a>        X_resampled.loc[majority, <span class="st">"x1"</span>],</span>
-<span id="cb9-32"><a href="" aria-label="32"></a>        X_resampled.loc[majority, <span class="st">"x2"</span>],</span>
-<span id="cb9-33"><a href="" aria-label="33"></a>        s<span class="op">=</span><span class="dv">22</span>,</span>
-<span id="cb9-34"><a href="" aria-label="34"></a>        alpha<span class="op">=</span><span class="fl">0.35</span>,</span>
-<span id="cb9-35"><a href="" aria-label="35"></a>        label<span class="op">=</span><span class="st">"majority"</span>,</span>
-<span id="cb9-36"><a href="" aria-label="36"></a>        color<span class="op">=</span><span class="st">"#4C78A8"</span>,</span>
-<span id="cb9-37"><a href="" aria-label="37"></a>    )</span>
-<span id="cb9-38"><a href="" aria-label="38"></a>    ax.scatter(</span>
-<span id="cb9-39"><a href="" aria-label="39"></a>        X_resampled.loc[minority <span class="op">&amp;</span> original_mask, <span class="st">"x1"</span>],</span>
-<span id="cb9-40"><a href="" aria-label="40"></a>        X_resampled.loc[minority <span class="op">&amp;</span> original_mask, <span class="st">"x2"</span>],</span>
-<span id="cb9-41"><a href="" aria-label="41"></a>        s<span class="op">=</span><span class="dv">32</span>,</span>
-<span id="cb9-42"><a href="" aria-label="42"></a>        alpha<span class="op">=</span><span class="fl">0.85</span>,</span>
-<span id="cb9-43"><a href="" aria-label="43"></a>        label<span class="op">=</span><span class="st">"original minority"</span>,</span>
-<span id="cb9-44"><a href="" aria-label="44"></a>        color<span class="op">=</span><span class="st">"#F58518"</span>,</span>
-<span id="cb9-45"><a href="" aria-label="45"></a>        edgecolor<span class="op">=</span><span class="st">"black"</span>,</span>
-<span id="cb9-46"><a href="" aria-label="46"></a>        linewidth<span class="op">=</span><span class="fl">0.3</span>,</span>
-<span id="cb9-47"><a href="" aria-label="47"></a>    )</span>
-<span id="cb9-48"><a href="" aria-label="48"></a>    ax.scatter(</span>
-<span id="cb9-49"><a href="" aria-label="49"></a>        X_resampled.loc[synthetic, <span class="st">"x1"</span>],</span>
-<span id="cb9-50"><a href="" aria-label="50"></a>        X_resampled.loc[synthetic, <span class="st">"x2"</span>],</span>
-<span id="cb9-51"><a href="" aria-label="51"></a>        s<span class="op">=</span><span class="dv">38</span>,</span>
-<span id="cb9-52"><a href="" aria-label="52"></a>        alpha<span class="op">=</span><span class="fl">0.85</span>,</span>
-<span id="cb9-53"><a href="" aria-label="53"></a>        label<span class="op">=</span><span class="st">"new or duplicated"</span>,</span>
-<span id="cb9-54"><a href="" aria-label="54"></a>        color<span class="op">=</span><span class="st">"#E45756"</span>,</span>
-<span id="cb9-55"><a href="" aria-label="55"></a>        marker<span class="op">=</span><span class="st">"x"</span>,</span>
-<span id="cb9-56"><a href="" aria-label="56"></a>    )</span>
-<span id="cb9-57"><a href="" aria-label="57"></a></span>
-<span id="cb9-58"><a href="" aria-label="58"></a>    counts <span class="op">=</span> y_resampled.value_counts().sort_index()</span>
-<span id="cb9-59"><a href="" aria-label="59"></a>    ax.set_title(<span class="ss">f"</span><span class="sc">{</span>title<span class="sc">}</span><span class="ch">\n</span><span class="ss">class 0: </span><span class="sc">{</span>counts<span class="sc">.</span>get(<span class="dv">0</span>, <span class="dv">0</span>)<span class="sc">}</span><span class="ss">, class 1: </span><span class="sc">{</span>counts<span class="sc">.</span>get(<span class="dv">1</span>, <span class="dv">0</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-60"><a href="" aria-label="60"></a>    ax.set_xlabel(<span class="st">"x1"</span>)</span>
-<span id="cb9-61"><a href="" aria-label="61"></a>    ax.set_ylabel(<span class="st">"x2"</span>)</span>
-<span id="cb9-62"><a href="" aria-label="62"></a></span>
-<span id="cb9-63"><a href="" aria-label="63"></a></span>
-<span id="cb9-64"><a href="" aria-label="64"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-65"><a href="" aria-label="65"></a></span>
-<span id="cb9-66"><a href="" aria-label="66"></a><span class="cf">for</span> ax, (name, sampler) <span class="kw">in</span> <span class="bu">zip</span>(axes.ravel(), toy_samplers.items()):</span>
-<span id="cb9-67"><a href="" aria-label="67"></a>    X_resampled, y_resampled, original_mask <span class="op">=</span> apply_sampler_for_plot(sampler, X_2d, y_2d)</span>
-<span id="cb9-68"><a href="" aria-label="68"></a>    plot_resampled_dataset(ax, name, X_resampled, y_resampled, original_mask)</span>
-<span id="cb9-69"><a href="" aria-label="69"></a></span>
-<span id="cb9-70"><a href="" aria-label="70"></a>handles, labels <span class="op">=</span> axes[<span class="dv">0</span>, <span class="dv">0</span>].get_legend_handles_labels()</span>
-<span id="cb9-71"><a href="" aria-label="71"></a>fig.legend(handles, labels, loc<span class="op">=</span><span class="st">"lower center"</span>, ncol<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb9-72"><a href="" aria-label="72"></a>fig.suptitle(<span class="st">"How resampling changes a 2D training set"</span>, y<span class="op">=</span><span class="fl">1.02</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb9-73"><a href="" aria-label="73"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="dv">1</span>, <span class="dv">1</span>])</span>
-<span id="cb9-74"><a href="" aria-label="74"></a>plt.show()</span></code></pre></div>
-</details>
 
-</div>
 <img data-src="lab-01-augmentation_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
 <section id="reading-the-visual-comparison" class="slide level2">
 <h2>Reading the visual comparison</h2>
@@ -717,37 +591,18 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The visual lesson carries over to tabular data: synthetic rows are helpful only if the generated feature combinations are plausible for the domain.</p>
 </section>
 <section id="baseline-pipeline" class="slide level2">
-<h2>9. Baseline pipeline</h2>
+<h2>14. Baseline pipeline</h2>
 <p>A conventional <code>sklearn.pipeline.Pipeline</code> is sufficient when all steps are transformers and estimators.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>Pipeline([</span>
-<span id="cb10-2"><a href="" aria-label="2"></a>    (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb10-3"><a href="" aria-label="3"></a>    (<span class="st">"classifier"</span>, LogisticRegression())</span>
-<span id="cb10-4"><a href="" aria-label="4"></a>])</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>Pipeline([</span>
+<span id="cb8-2"><a href="" aria-label="2"></a>    (<span class="st">"preprocessing"</span>, preprocessor),</span>
+<span id="cb8-3"><a href="" aria-label="3"></a>    (<span class="st">"classifier"</span>, LogisticRegression())</span>
+<span id="cb8-4"><a href="" aria-label="4"></a>])</span></code></pre></div>
 <p>When we add a sampler such as SMOTE, random oversampling, or undersampling, we switch to <code>imblearn.pipeline.Pipeline</code>.</p>
 </section>
 <section id="code-build-the-baseline-pipeline" class="slide level2">
 <h2>Code: Build the baseline pipeline</h2>
 <p>The baseline establishes the ordinary preprocessing-and-classifier structure before samplers are introduced.</p>
-<div id="582e5011" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:37.247262Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:37.247037Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:37.268327Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:37.267468Z&quot;}}" data-execution_count="8">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Standardize numeric features before logistic regression.</span></span>
-<span id="cb11-2"><a href="" aria-label="2"></a>numeric_features <span class="op">=</span> X.columns.tolist()</span>
-<span id="cb11-3"><a href="" aria-label="3"></a></span>
-<span id="cb11-4"><a href="" aria-label="4"></a>preprocessor <span class="op">=</span> ColumnTransformer(</span>
-<span id="cb11-5"><a href="" aria-label="5"></a>    transformers<span class="op">=</span>[(<span class="st">"num"</span>, StandardScaler(), numeric_features)],</span>
-<span id="cb11-6"><a href="" aria-label="6"></a>    remainder<span class="op">=</span><span class="st">"drop"</span>,</span>
-<span id="cb11-7"><a href="" aria-label="7"></a>)</span>
-<span id="cb11-8"><a href="" aria-label="8"></a></span>
-<span id="cb11-9"><a href="" aria-label="9"></a>baseline_pipeline <span class="op">=</span> Pipeline(</span>
-<span id="cb11-10"><a href="" aria-label="10"></a>    steps<span class="op">=</span>[</span>
-<span id="cb11-11"><a href="" aria-label="11"></a>        (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb11-12"><a href="" aria-label="12"></a>        (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>, random_state<span class="op">=</span>RANDOM_STATE)),</span>
-<span id="cb11-13"><a href="" aria-label="13"></a>    ]</span>
-<span id="cb11-14"><a href="" aria-label="14"></a>)</span>
-<span id="cb11-15"><a href="" aria-label="15"></a></span>
-<span id="cb11-16"><a href="" aria-label="16"></a>baseline_pipeline</span></code></pre></div>
-</details>
+<div id="4ac62ce5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:17.068199Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:17.067962Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:17.088799Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:17.087530Z&quot;}}" data-execution_count="8">
 <div class="cell-output cell-output-display" data-execution_count="8">
 <style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
@@ -1939,7 +1794,7 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 <section id="candidate-pipelines" class="slide level2">
-<h2>10. Candidate pipelines</h2>
+<h2>15. Candidate pipelines</h2>
 <p>We compare seven strategies:</p>
 <ol type="1">
 <li>No imbalance treatment.</li>
@@ -1955,67 +1810,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-define-candidate-pipelines" class="slide level2">
 <h2>Code: Define candidate pipelines</h2>
 <p>The sampler position is the key idea: preprocessing first, resampling second, classifier last.</p>
-<div id="275acd96" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:37.270633Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:37.270410Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:37.277743Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:37.276898Z&quot;}}" data-execution_count="9">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="co"># Compare ordinary sklearn pipelines with imblearn pipelines that can contain samplers.</span></span>
-<span id="cb12-2"><a href="" aria-label="2"></a><span class="kw">def</span> logistic_regression(class_weight<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb12-3"><a href="" aria-label="3"></a>    <span class="cf">return</span> LogisticRegression(</span>
-<span id="cb12-4"><a href="" aria-label="4"></a>        max_iter<span class="op">=</span><span class="dv">2000</span>,</span>
-<span id="cb12-5"><a href="" aria-label="5"></a>        class_weight<span class="op">=</span>class_weight,</span>
-<span id="cb12-6"><a href="" aria-label="6"></a>        random_state<span class="op">=</span>RANDOM_STATE,</span>
-<span id="cb12-7"><a href="" aria-label="7"></a>    )</span>
-<span id="cb12-8"><a href="" aria-label="8"></a></span>
-<span id="cb12-9"><a href="" aria-label="9"></a></span>
-<span id="cb12-10"><a href="" aria-label="10"></a>pipelines <span class="op">=</span> {</span>
-<span id="cb12-11"><a href="" aria-label="11"></a>    <span class="st">"No treatment"</span>: Pipeline(</span>
-<span id="cb12-12"><a href="" aria-label="12"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"classifier"</span>, logistic_regression())]</span>
-<span id="cb12-13"><a href="" aria-label="13"></a>    ),</span>
-<span id="cb12-14"><a href="" aria-label="14"></a>    <span class="st">"Class weight"</span>: Pipeline(</span>
-<span id="cb12-15"><a href="" aria-label="15"></a>        [</span>
-<span id="cb12-16"><a href="" aria-label="16"></a>            (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb12-17"><a href="" aria-label="17"></a>            (<span class="st">"classifier"</span>, logistic_regression(class_weight<span class="op">=</span><span class="st">"balanced"</span>)),</span>
-<span id="cb12-18"><a href="" aria-label="18"></a>        ]</span>
-<span id="cb12-19"><a href="" aria-label="19"></a>    ),</span>
-<span id="cb12-20"><a href="" aria-label="20"></a>    <span class="st">"Random undersampling"</span>: ImbPipeline(</span>
-<span id="cb12-21"><a href="" aria-label="21"></a>        [</span>
-<span id="cb12-22"><a href="" aria-label="22"></a>            (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb12-23"><a href="" aria-label="23"></a>            (<span class="st">"sampler"</span>, RandomUnderSampler(random_state<span class="op">=</span>RANDOM_STATE)),</span>
-<span id="cb12-24"><a href="" aria-label="24"></a>            (<span class="st">"classifier"</span>, logistic_regression()),</span>
-<span id="cb12-25"><a href="" aria-label="25"></a>        ]</span>
-<span id="cb12-26"><a href="" aria-label="26"></a>    ),</span>
-<span id="cb12-27"><a href="" aria-label="27"></a>    <span class="st">"Random oversampling"</span>: ImbPipeline(</span>
-<span id="cb12-28"><a href="" aria-label="28"></a>        [</span>
-<span id="cb12-29"><a href="" aria-label="29"></a>            (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb12-30"><a href="" aria-label="30"></a>            (<span class="st">"sampler"</span>, RandomOverSampler(random_state<span class="op">=</span>RANDOM_STATE)),</span>
-<span id="cb12-31"><a href="" aria-label="31"></a>            (<span class="st">"classifier"</span>, logistic_regression()),</span>
-<span id="cb12-32"><a href="" aria-label="32"></a>        ]</span>
-<span id="cb12-33"><a href="" aria-label="33"></a>    ),</span>
-<span id="cb12-34"><a href="" aria-label="34"></a>    <span class="st">"SMOTE"</span>: ImbPipeline(</span>
-<span id="cb12-35"><a href="" aria-label="35"></a>        [</span>
-<span id="cb12-36"><a href="" aria-label="36"></a>            (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb12-37"><a href="" aria-label="37"></a>            (<span class="st">"sampler"</span>, SMOTE(random_state<span class="op">=</span>RANDOM_STATE, k_neighbors<span class="op">=</span><span class="dv">5</span>)),</span>
-<span id="cb12-38"><a href="" aria-label="38"></a>            (<span class="st">"classifier"</span>, logistic_regression()),</span>
-<span id="cb12-39"><a href="" aria-label="39"></a>        ]</span>
-<span id="cb12-40"><a href="" aria-label="40"></a>    ),</span>
-<span id="cb12-41"><a href="" aria-label="41"></a>    <span class="st">"ADASYN"</span>: ImbPipeline(</span>
-<span id="cb12-42"><a href="" aria-label="42"></a>        [</span>
-<span id="cb12-43"><a href="" aria-label="43"></a>            (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb12-44"><a href="" aria-label="44"></a>            (<span class="st">"sampler"</span>, ADASYN(random_state<span class="op">=</span>RANDOM_STATE, n_neighbors<span class="op">=</span><span class="dv">5</span>)),</span>
-<span id="cb12-45"><a href="" aria-label="45"></a>            (<span class="st">"classifier"</span>, logistic_regression()),</span>
-<span id="cb12-46"><a href="" aria-label="46"></a>        ]</span>
-<span id="cb12-47"><a href="" aria-label="47"></a>    ),</span>
-<span id="cb12-48"><a href="" aria-label="48"></a>    <span class="st">"Borderline-SMOTE"</span>: ImbPipeline(</span>
-<span id="cb12-49"><a href="" aria-label="49"></a>        [</span>
-<span id="cb12-50"><a href="" aria-label="50"></a>            (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb12-51"><a href="" aria-label="51"></a>            (<span class="st">"sampler"</span>, BorderlineSMOTE(random_state<span class="op">=</span>RANDOM_STATE, k_neighbors<span class="op">=</span><span class="dv">5</span>)),</span>
-<span id="cb12-52"><a href="" aria-label="52"></a>            (<span class="st">"classifier"</span>, logistic_regression()),</span>
-<span id="cb12-53"><a href="" aria-label="53"></a>        ]</span>
-<span id="cb12-54"><a href="" aria-label="54"></a>    ),</span>
-<span id="cb12-55"><a href="" aria-label="55"></a>}</span>
-<span id="cb12-56"><a href="" aria-label="56"></a></span>
-<span id="cb12-57"><a href="" aria-label="57"></a><span class="bu">list</span>(pipelines)</span></code></pre></div>
-</details>
+<div id="3d6a968d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:17.092965Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:17.092448Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:17.100033Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:17.099110Z&quot;}}" data-execution_count="9">
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>['No treatment',
  'Class weight',
@@ -2028,90 +1823,21 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 <section id="stratified-cross-validation" class="slide level2">
-<h2>11. Stratified cross-validation</h2>
+<h2>16. Stratified cross-validation</h2>
 <p>The helper below manually loops over stratified folds. This makes it explicit that every pipeline is cloned, fitted on the training fold, and evaluated on the untouched validation fold.</p>
 </section>
 <section id="code-run-stratified-cross-validation" class="slide level2">
 <h2>Code: Run stratified cross-validation</h2>
 <p>The explicit loop makes leakage checks visible: every fold gets a fresh clone of the pipeline.</p>
-<div id="4091142b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:37.279860Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:37.279667Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:38.457371Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:38.456571Z&quot;}}" data-execution_count="10">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="co"># Fit a fresh pipeline in each fold so preprocessing and sampling never see validation rows.</span></span>
-<span id="cb14-2"><a href="" aria-label="2"></a><span class="kw">def</span> specificity_score(y_true, y_pred):</span>
-<span id="cb14-3"><a href="" aria-label="3"></a>    tn, fp, fn, tp <span class="op">=</span> confusion_matrix(y_true, y_pred, labels<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>]).ravel()</span>
-<span id="cb14-4"><a href="" aria-label="4"></a>    <span class="cf">return</span> tn <span class="op">/</span> (tn <span class="op">+</span> fp) <span class="cf">if</span> (tn <span class="op">+</span> fp) <span class="cf">else</span> np.nan</span>
-<span id="cb14-5"><a href="" aria-label="5"></a></span>
-<span id="cb14-6"><a href="" aria-label="6"></a></span>
-<span id="cb14-7"><a href="" aria-label="7"></a><span class="kw">def</span> evaluate_pipeline(name, pipeline, X, y, cv, threshold<span class="op">=</span><span class="fl">0.5</span>):</span>
-<span id="cb14-8"><a href="" aria-label="8"></a>    fold_rows <span class="op">=</span> []</span>
-<span id="cb14-9"><a href="" aria-label="9"></a>    out_of_fold_scores <span class="op">=</span> pd.Series(index<span class="op">=</span>y.index, dtype<span class="op">=</span><span class="bu">float</span>)</span>
-<span id="cb14-10"><a href="" aria-label="10"></a></span>
-<span id="cb14-11"><a href="" aria-label="11"></a>    <span class="cf">for</span> fold, (train_idx, valid_idx) <span class="kw">in</span> <span class="bu">enumerate</span>(cv.split(X, y), start<span class="op">=</span><span class="dv">1</span>):</span>
-<span id="cb14-12"><a href="" aria-label="12"></a>        model <span class="op">=</span> clone(pipeline)</span>
-<span id="cb14-13"><a href="" aria-label="13"></a>        X_train, X_valid <span class="op">=</span> X.iloc[train_idx], X.iloc[valid_idx]</span>
-<span id="cb14-14"><a href="" aria-label="14"></a>        y_train, y_valid <span class="op">=</span> y.iloc[train_idx], y.iloc[valid_idx]</span>
-<span id="cb14-15"><a href="" aria-label="15"></a></span>
-<span id="cb14-16"><a href="" aria-label="16"></a>        model.fit(X_train, y_train)</span>
-<span id="cb14-17"><a href="" aria-label="17"></a>        y_score <span class="op">=</span> model.predict_proba(X_valid)[:, <span class="dv">1</span>]</span>
-<span id="cb14-18"><a href="" aria-label="18"></a>        y_pred <span class="op">=</span> (y_score <span class="op">&gt;=</span> threshold).astype(<span class="bu">int</span>)</span>
-<span id="cb14-19"><a href="" aria-label="19"></a>        out_of_fold_scores.iloc[valid_idx] <span class="op">=</span> y_score</span>
-<span id="cb14-20"><a href="" aria-label="20"></a></span>
-<span id="cb14-21"><a href="" aria-label="21"></a>        fold_rows.append(</span>
-<span id="cb14-22"><a href="" aria-label="22"></a>            {</span>
-<span id="cb14-23"><a href="" aria-label="23"></a>                <span class="st">"method"</span>: name,</span>
-<span id="cb14-24"><a href="" aria-label="24"></a>                <span class="st">"fold"</span>: fold,</span>
-<span id="cb14-25"><a href="" aria-label="25"></a>                <span class="st">"accuracy"</span>: accuracy_score(y_valid, y_pred),</span>
-<span id="cb14-26"><a href="" aria-label="26"></a>                <span class="st">"precision"</span>: precision_score(y_valid, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb14-27"><a href="" aria-label="27"></a>                <span class="st">"recall"</span>: recall_score(y_valid, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb14-28"><a href="" aria-label="28"></a>                <span class="st">"specificity"</span>: specificity_score(y_valid, y_pred),</span>
-<span id="cb14-29"><a href="" aria-label="29"></a>                <span class="st">"f1"</span>: f1_score(y_valid, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb14-30"><a href="" aria-label="30"></a>            }</span>
-<span id="cb14-31"><a href="" aria-label="31"></a>        )</span>
-<span id="cb14-32"><a href="" aria-label="32"></a></span>
-<span id="cb14-33"><a href="" aria-label="33"></a>    <span class="cf">return</span> pd.DataFrame(fold_rows), out_of_fold_scores</span>
-<span id="cb14-34"><a href="" aria-label="34"></a></span>
-<span id="cb14-35"><a href="" aria-label="35"></a></span>
-<span id="cb14-36"><a href="" aria-label="36"></a>cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
-<span id="cb14-37"><a href="" aria-label="37"></a></span>
-<span id="cb14-38"><a href="" aria-label="38"></a>fold_results <span class="op">=</span> []</span>
-<span id="cb14-39"><a href="" aria-label="39"></a>oof_scores <span class="op">=</span> {}</span>
-<span id="cb14-40"><a href="" aria-label="40"></a></span>
-<span id="cb14-41"><a href="" aria-label="41"></a><span class="cf">for</span> name, pipeline <span class="kw">in</span> pipelines.items():</span>
-<span id="cb14-42"><a href="" aria-label="42"></a>    fold_df, scores <span class="op">=</span> evaluate_pipeline(name, pipeline, X, y, cv)</span>
-<span id="cb14-43"><a href="" aria-label="43"></a>    fold_results.append(fold_df)</span>
-<span id="cb14-44"><a href="" aria-label="44"></a>    oof_scores[name] <span class="op">=</span> scores</span>
-<span id="cb14-45"><a href="" aria-label="45"></a></span>
-<span id="cb14-46"><a href="" aria-label="46"></a>fold_results <span class="op">=</span> pd.concat(fold_results, ignore_index<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
-</details>
-</div>
 </section>
 <section id="comparison-table" class="slide level2">
-<h2>12. Comparison table</h2>
+<h2>17. Comparison table</h2>
 <p>The table reports mean cross-validation performance and fold-to-fold variability.</p>
 </section>
 <section id="code-summarize-average-performance" class="slide level2">
 <h2>Code: Summarize average performance</h2>
 <p>Compare recall and specificity together. Higher minority recall often comes with more majority false positives.</p>
-<div id="4b6ba6d3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:38.460711Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:38.460456Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:38.480541Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:38.479236Z&quot;}}" data-execution_count="11">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="co"># Average fold-level metrics to compare strategies at the default 0.5 threshold.</span></span>
-<span id="cb15-2"><a href="" aria-label="2"></a>summary <span class="op">=</span> (</span>
-<span id="cb15-3"><a href="" aria-label="3"></a>    fold_results.groupby(<span class="st">"method"</span>)</span>
-<span id="cb15-4"><a href="" aria-label="4"></a>    .agg(</span>
-<span id="cb15-5"><a href="" aria-label="5"></a>        Accuracy<span class="op">=</span>(<span class="st">"accuracy"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb15-6"><a href="" aria-label="6"></a>        Precision<span class="op">=</span>(<span class="st">"precision"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb15-7"><a href="" aria-label="7"></a>        Recall<span class="op">=</span>(<span class="st">"recall"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb15-8"><a href="" aria-label="8"></a>        Specificity<span class="op">=</span>(<span class="st">"specificity"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb15-9"><a href="" aria-label="9"></a>        F1<span class="op">=</span>(<span class="st">"f1"</span>, <span class="st">"mean"</span>),</span>
-<span id="cb15-10"><a href="" aria-label="10"></a>        F1_std<span class="op">=</span>(<span class="st">"f1"</span>, <span class="st">"std"</span>),</span>
-<span id="cb15-11"><a href="" aria-label="11"></a>    )</span>
-<span id="cb15-12"><a href="" aria-label="12"></a>    .sort_values(<span class="st">"F1"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb15-13"><a href="" aria-label="13"></a>)</span>
-<span id="cb15-14"><a href="" aria-label="14"></a></span>
-<span id="cb15-15"><a href="" aria-label="15"></a>summary.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
-</details>
+<div id="50e2b4da" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:18.200603Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:18.200394Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:18.220760Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:18.219587Z&quot;}}" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
@@ -2223,12 +1949,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-inspect-fold-variability" class="slide level2">
 <h2>Code: Inspect fold variability</h2>
 <p>Fold variability helps distinguish a consistently useful method from a lucky average.</p>
-<div id="92c506e6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:38.482878Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:38.482659Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:38.499194Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:38.497888Z&quot;}}" data-execution_count="12">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a><span class="co"># Inspect per-fold F1 to spot methods whose average hides instability.</span></span>
-<span id="cb16-2"><a href="" aria-label="2"></a>fold_results.pivot(index<span class="op">=</span><span class="st">"fold"</span>, columns<span class="op">=</span><span class="st">"method"</span>, values<span class="op">=</span><span class="st">"f1"</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
-</details>
+<div id="e17eca7f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:18.222942Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:18.222741Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:18.237374Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:18.236657Z&quot;}}" data-execution_count="12">
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 <style scoped="">
@@ -2327,80 +2048,34 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 <section id="confusion-matrices" class="slide level2">
-<h2>13. Confusion matrices</h2>
+<h2>18. Confusion matrices</h2>
 <p>Here we use out-of-fold predictions. Each observation is predicted by a model that did not train on it.</p>
 </section>
 <section id="code-plot-confusion-matrices" class="slide level2">
 <h2>Code: Plot confusion matrices</h2>
 <p>Confusion matrices convert abstract metric changes into counts of mistakes.</p>
-<div id="8083e37b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:38.501328Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:38.501110Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:38.904878Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:38.903909Z&quot;}}" data-execution_count="13">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="co"># Convert out-of-fold probabilities into labels before drawing confusion matrices.</span></span>
-<span id="cb17-2"><a href="" aria-label="2"></a>n_methods <span class="op">=</span> <span class="bu">len</span>(oof_scores)</span>
-<span id="cb17-3"><a href="" aria-label="3"></a>n_cols <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb17-4"><a href="" aria-label="4"></a>n_rows <span class="op">=</span> <span class="bu">int</span>(np.ceil(n_methods <span class="op">/</span> n_cols))</span>
-<span id="cb17-5"><a href="" aria-label="5"></a>fig, axes <span class="op">=</span> plt.subplots(n_rows, n_cols, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="fl">3.5</span> <span class="op">*</span> n_rows))</span>
-<span id="cb17-6"><a href="" aria-label="6"></a>axes <span class="op">=</span> np.asarray(axes).ravel()</span>
-<span id="cb17-7"><a href="" aria-label="7"></a></span>
-<span id="cb17-8"><a href="" aria-label="8"></a><span class="cf">for</span> ax <span class="kw">in</span> axes[n_methods:]:</span>
-<span id="cb17-9"><a href="" aria-label="9"></a>    ax.axis(<span class="st">"off"</span>)</span>
-<span id="cb17-10"><a href="" aria-label="10"></a></span>
-<span id="cb17-11"><a href="" aria-label="11"></a><span class="cf">for</span> ax, (name, scores) <span class="kw">in</span> <span class="bu">zip</span>(axes, oof_scores.items()):</span>
-<span id="cb17-12"><a href="" aria-label="12"></a>    y_pred <span class="op">=</span> (scores <span class="op">&gt;=</span> <span class="fl">0.5</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb17-13"><a href="" aria-label="13"></a>    ConfusionMatrixDisplay.from_predictions(</span>
-<span id="cb17-14"><a href="" aria-label="14"></a>        y,</span>
-<span id="cb17-15"><a href="" aria-label="15"></a>        y_pred,</span>
-<span id="cb17-16"><a href="" aria-label="16"></a>        labels<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>],</span>
-<span id="cb17-17"><a href="" aria-label="17"></a>        display_labels<span class="op">=</span>[<span class="st">"majority"</span>, <span class="st">"minority"</span>],</span>
-<span id="cb17-18"><a href="" aria-label="18"></a>        cmap<span class="op">=</span><span class="st">"Blues"</span>,</span>
-<span id="cb17-19"><a href="" aria-label="19"></a>        colorbar<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb17-20"><a href="" aria-label="20"></a>        ax<span class="op">=</span>ax,</span>
-<span id="cb17-21"><a href="" aria-label="21"></a>    )</span>
-<span id="cb17-22"><a href="" aria-label="22"></a>    ax.set_title(name)</span>
-<span id="cb17-23"><a href="" aria-label="23"></a></span>
-<span id="cb17-24"><a href="" aria-label="24"></a>plt.tight_layout()</span>
-<span id="cb17-25"><a href="" aria-label="25"></a>plt.show()</span></code></pre></div>
-</details>
 
-</div>
 <img data-src="lab-01-augmentation_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
 <section id="precision-recall-curves" class="slide level2">
-<h2>14. Precision-recall curves</h2>
-<p>A precision-recall curve shows how <strong>precision</strong> and <strong>recall</strong> change as we vary the classification threshold.</p>
-<p>Most probabilistic classifiers first produce a score such as:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb18-1"><a href="" aria-label="1"></a>estimated probability of the positive class = P(y = 1 | x)</span></code></pre></div>
-<p>To turn that score into a class label, we choose a threshold. With the default threshold <code>0.5</code>, observations with score at least <code>0.5</code> are predicted as positive and the rest as negative.</p>
-<p>The precision-recall curve evaluates many possible thresholds:</p>
+<h2>19. Precision-recall curves</h2>
+<p>A precision-recall curve shows how precision and recall change as we vary the classification threshold.</p>
+<p>Most probabilistic classifiers first produce a positive-class score, then convert it into a label with a threshold.</p>
+</section>
+<section id="reading-precision-recall-curves" class="slide level2">
+<h2>Reading precision-recall curves</h2>
 <ul>
-<li>Moving the threshold <strong>down</strong> predicts more positives. Recall usually increases because we catch more true positives, but precision often decreases because we also include more false positives.</li>
-<li>Moving the threshold <strong>up</strong> predicts fewer positives. Precision may increase because we are more selective, but recall often decreases because we miss more true positives.</li>
+<li>Lower thresholds predict more positives: recall usually rises and precision often falls.</li>
+<li>Higher thresholds predict fewer positives: precision may rise and recall often falls.</li>
 </ul>
-<p>For imbalanced data, precision-recall curves are often more informative than ROC curves because they focus directly on performance for the rare positive class. The horizontal baseline is the positive-class rate: a useful model should usually operate above that line.</p>
+<p>For imbalanced data, these curves focus directly on the rare positive class. The horizontal baseline is the positive-class rate.</p>
 </section>
 <section id="code-plot-precision-recall-curves" class="slide level2">
 <h2>Code: Plot precision-recall curves</h2>
 <p>These curves use out-of-fold scores, so every score comes from a model that did not train on that row.</p>
-<div id="28d7d1b9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:38.907073Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:38.906831Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:39.158229Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:39.157225Z&quot;}}" data-execution_count="14">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># Plot precision-recall curves from validation-only scores for each method.</span></span>
-<span id="cb19-2"><a href="" aria-label="2"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
-<span id="cb19-3"><a href="" aria-label="3"></a></span>
-<span id="cb19-4"><a href="" aria-label="4"></a><span class="cf">for</span> name, scores <span class="kw">in</span> oof_scores.items():</span>
-<span id="cb19-5"><a href="" aria-label="5"></a>    PrecisionRecallDisplay.from_predictions(y, scores, name<span class="op">=</span>name, ax<span class="op">=</span>ax)</span>
-<span id="cb19-6"><a href="" aria-label="6"></a></span>
-<span id="cb19-7"><a href="" aria-label="7"></a>positive_rate <span class="op">=</span> y.mean()</span>
-<span id="cb19-8"><a href="" aria-label="8"></a>ax.axhline(positive_rate, color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="dv">1</span>, label<span class="op">=</span><span class="st">"positive rate"</span>)</span>
-<span id="cb19-9"><a href="" aria-label="9"></a>ax.set_title(<span class="st">"Out-of-fold precision-recall curves"</span>)</span>
-<span id="cb19-10"><a href="" aria-label="10"></a>ax.legend(loc<span class="op">=</span><span class="st">"best"</span>)</span>
-<span id="cb19-11"><a href="" aria-label="11"></a>plt.show()</span></code></pre></div>
-</details>
 
-</div>
 <img data-src="lab-01-augmentation_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"></section>
 <section id="threshold-adjustment" class="slide level2">
-<h2>15. Threshold adjustment</h2>
+<h2>20. Threshold adjustment</h2>
 <p><code>predict</code> usually applies a threshold of <code>0.5</code>. That threshold is not sacred: it is a decision rule, not a property of the model.</p>
 <p>Changing the threshold changes the confusion matrix:</p>
 <ul>
@@ -2413,30 +2088,30 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-evaluate-thresholds" class="slide level2">
 <h2>Code: Evaluate thresholds</h2>
 <p>Thresholds turn probabilities into decisions. This table lets students choose a decision rule for a stated cost.</p>
-<div id="cfbd5b3d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:39.160136Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:39.159941Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:39.343405Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:39.342533Z&quot;}}" data-execution_count="15">
+<div id="762dc73d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:18.863545Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:18.863350Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:19.042924Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:19.041944Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="co"># Recompute metrics over a grid of decision thresholds for one selected method.</span></span>
-<span id="cb20-2"><a href="" aria-label="2"></a><span class="kw">def</span> metrics_at_thresholds(y_true, y_score, thresholds):</span>
-<span id="cb20-3"><a href="" aria-label="3"></a>    rows <span class="op">=</span> []</span>
-<span id="cb20-4"><a href="" aria-label="4"></a>    <span class="cf">for</span> threshold <span class="kw">in</span> thresholds:</span>
-<span id="cb20-5"><a href="" aria-label="5"></a>        y_pred <span class="op">=</span> (y_score <span class="op">&gt;=</span> threshold).astype(<span class="bu">int</span>)</span>
-<span id="cb20-6"><a href="" aria-label="6"></a>        rows.append(</span>
-<span id="cb20-7"><a href="" aria-label="7"></a>            {</span>
-<span id="cb20-8"><a href="" aria-label="8"></a>                <span class="st">"threshold"</span>: threshold,</span>
-<span id="cb20-9"><a href="" aria-label="9"></a>                <span class="st">"precision"</span>: precision_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb20-10"><a href="" aria-label="10"></a>                <span class="st">"recall"</span>: recall_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb20-11"><a href="" aria-label="11"></a>                <span class="st">"specificity"</span>: specificity_score(y_true, y_pred),</span>
-<span id="cb20-12"><a href="" aria-label="12"></a>                <span class="st">"f1"</span>: f1_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb20-13"><a href="" aria-label="13"></a>            }</span>
-<span id="cb20-14"><a href="" aria-label="14"></a>        )</span>
-<span id="cb20-15"><a href="" aria-label="15"></a>    <span class="cf">return</span> pd.DataFrame(rows)</span>
-<span id="cb20-16"><a href="" aria-label="16"></a></span>
-<span id="cb20-17"><a href="" aria-label="17"></a></span>
-<span id="cb20-18"><a href="" aria-label="18"></a>selected_method <span class="op">=</span> <span class="st">"ADASYN"</span></span>
-<span id="cb20-19"><a href="" aria-label="19"></a>threshold_grid <span class="op">=</span> np.linspace(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="dv">19</span>)</span>
-<span id="cb20-20"><a href="" aria-label="20"></a>threshold_results <span class="op">=</span> metrics_at_thresholds(y, oof_scores[selected_method], threshold_grid)</span>
-<span id="cb20-21"><a href="" aria-label="21"></a>threshold_results.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># Recompute metrics over a grid of decision thresholds for one selected method.</span></span>
+<span id="cb10-2"><a href="" aria-label="2"></a><span class="kw">def</span> metrics_at_thresholds(y_true, y_score, thresholds):</span>
+<span id="cb10-3"><a href="" aria-label="3"></a>    rows <span class="op">=</span> []</span>
+<span id="cb10-4"><a href="" aria-label="4"></a>    <span class="cf">for</span> threshold <span class="kw">in</span> thresholds:</span>
+<span id="cb10-5"><a href="" aria-label="5"></a>        y_pred <span class="op">=</span> (y_score <span class="op">&gt;=</span> threshold).astype(<span class="bu">int</span>)</span>
+<span id="cb10-6"><a href="" aria-label="6"></a>        rows.append(</span>
+<span id="cb10-7"><a href="" aria-label="7"></a>            {</span>
+<span id="cb10-8"><a href="" aria-label="8"></a>                <span class="st">"threshold"</span>: threshold,</span>
+<span id="cb10-9"><a href="" aria-label="9"></a>                <span class="st">"precision"</span>: precision_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb10-10"><a href="" aria-label="10"></a>                <span class="st">"recall"</span>: recall_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb10-11"><a href="" aria-label="11"></a>                <span class="st">"specificity"</span>: specificity_score(y_true, y_pred),</span>
+<span id="cb10-12"><a href="" aria-label="12"></a>                <span class="st">"f1"</span>: f1_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb10-13"><a href="" aria-label="13"></a>            }</span>
+<span id="cb10-14"><a href="" aria-label="14"></a>        )</span>
+<span id="cb10-15"><a href="" aria-label="15"></a>    <span class="cf">return</span> pd.DataFrame(rows)</span>
+<span id="cb10-16"><a href="" aria-label="16"></a></span>
+<span id="cb10-17"><a href="" aria-label="17"></a></span>
+<span id="cb10-18"><a href="" aria-label="18"></a>selected_method <span class="op">=</span> <span class="st">"ADASYN"</span></span>
+<span id="cb10-19"><a href="" aria-label="19"></a>threshold_grid <span class="op">=</span> np.linspace(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="dv">19</span>)</span>
+<span id="cb10-20"><a href="" aria-label="20"></a>threshold_results <span class="op">=</span> metrics_at_thresholds(y, oof_scores[selected_method], threshold_grid)</span>
+<span id="cb10-21"><a href="" aria-label="21"></a>threshold_results.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div>
@@ -2628,62 +2303,17 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-plot-the-threshold-trade-off" class="slide level2">
 <h2>Code: Plot the threshold trade-off</h2>
 <p>The plot makes the precision-recall trade-off easier to discuss than the table alone.</p>
-<div id="a94850a1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:39.345553Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:39.345313Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:39.451251Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:39.450301Z&quot;}}" data-execution_count="16">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a><span class="co"># Plot the metric trade-off created by moving the classification threshold.</span></span>
-<span id="cb21-2"><a href="" aria-label="2"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
-<span id="cb21-3"><a href="" aria-label="3"></a>ax.plot(threshold_results[<span class="st">"threshold"</span>], threshold_results[<span class="st">"precision"</span>], marker<span class="op">=</span><span class="st">"o"</span>, label<span class="op">=</span><span class="st">"precision"</span>)</span>
-<span id="cb21-4"><a href="" aria-label="4"></a>ax.plot(threshold_results[<span class="st">"threshold"</span>], threshold_results[<span class="st">"recall"</span>], marker<span class="op">=</span><span class="st">"o"</span>, label<span class="op">=</span><span class="st">"recall"</span>)</span>
-<span id="cb21-5"><a href="" aria-label="5"></a>ax.plot(threshold_results[<span class="st">"threshold"</span>], threshold_results[<span class="st">"f1"</span>], marker<span class="op">=</span><span class="st">"o"</span>, label<span class="op">=</span><span class="st">"f1"</span>)</span>
-<span id="cb21-6"><a href="" aria-label="6"></a>ax.set_title(<span class="ss">f"Threshold trade-off for </span><span class="sc">{</span>selected_method<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb21-7"><a href="" aria-label="7"></a>ax.set_xlabel(<span class="st">"Decision threshold"</span>)</span>
-<span id="cb21-8"><a href="" aria-label="8"></a>ax.set_ylabel(<span class="st">"Score"</span>)</span>
-<span id="cb21-9"><a href="" aria-label="9"></a>ax.set_ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb21-10"><a href="" aria-label="10"></a>ax.legend()</span>
-<span id="cb21-11"><a href="" aria-label="11"></a>plt.show()</span></code></pre></div>
-</details>
 
-</div>
 <img data-src="lab-01-augmentation_files/figure-revealjs/cell-17-output-1.png" class="r-stretch"></section>
 <section id="choose-a-threshold-for-high-cost-false-negatives" class="slide level2">
-<h2>16. Choose a threshold for high-cost false negatives</h2>
+<h2>21. Choose a threshold for high-cost false negatives</h2>
 <p>Suppose a false negative costs 10 times as much as a false positive.</p>
 <p>This is a simple teaching cost model, not a universal decision rule. In a real application, you would estimate costs with domain experts and validate the downstream effects.</p>
 </section>
 <section id="code-minimize-threshold-sensitive-cost" class="slide level2">
 <h2>Code: Minimize threshold-sensitive cost</h2>
 <p>The cost model is intentionally simple; its purpose is to connect metrics to operational consequences.</p>
-<div id="d24be7ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:39.453364Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:39.453158Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:45.253762Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:45.252737Z&quot;}}" data-execution_count="17">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="co"># Search thresholds with a simple cost function where false negatives are expensive.</span></span>
-<span id="cb22-2"><a href="" aria-label="2"></a><span class="kw">def</span> cost_at_threshold(y_true, y_score, threshold, false_positive_cost<span class="op">=</span><span class="dv">1</span>, false_negative_cost<span class="op">=</span><span class="dv">10</span>):</span>
-<span id="cb22-3"><a href="" aria-label="3"></a>    y_pred <span class="op">=</span> (y_score <span class="op">&gt;=</span> threshold).astype(<span class="bu">int</span>)</span>
-<span id="cb22-4"><a href="" aria-label="4"></a>    tn, fp, fn, tp <span class="op">=</span> confusion_matrix(y_true, y_pred, labels<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>]).ravel()</span>
-<span id="cb22-5"><a href="" aria-label="5"></a>    total_cost <span class="op">=</span> fp <span class="op">*</span> false_positive_cost <span class="op">+</span> fn <span class="op">*</span> false_negative_cost</span>
-<span id="cb22-6"><a href="" aria-label="6"></a>    <span class="cf">return</span> {</span>
-<span id="cb22-7"><a href="" aria-label="7"></a>        <span class="st">"threshold"</span>: threshold,</span>
-<span id="cb22-8"><a href="" aria-label="8"></a>        <span class="st">"false_positives"</span>: fp,</span>
-<span id="cb22-9"><a href="" aria-label="9"></a>        <span class="st">"false_negatives"</span>: fn,</span>
-<span id="cb22-10"><a href="" aria-label="10"></a>        <span class="st">"total_cost"</span>: total_cost,</span>
-<span id="cb22-11"><a href="" aria-label="11"></a>        <span class="st">"precision"</span>: precision_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb22-12"><a href="" aria-label="12"></a>        <span class="st">"recall"</span>: recall_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb22-13"><a href="" aria-label="13"></a>        <span class="st">"f1"</span>: f1_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb22-14"><a href="" aria-label="14"></a>    }</span>
-<span id="cb22-15"><a href="" aria-label="15"></a></span>
-<span id="cb22-16"><a href="" aria-label="16"></a></span>
-<span id="cb22-17"><a href="" aria-label="17"></a>cost_rows <span class="op">=</span> []</span>
-<span id="cb22-18"><a href="" aria-label="18"></a><span class="cf">for</span> method, scores <span class="kw">in</span> oof_scores.items():</span>
-<span id="cb22-19"><a href="" aria-label="19"></a>    <span class="cf">for</span> threshold <span class="kw">in</span> np.linspace(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="dv">91</span>):</span>
-<span id="cb22-20"><a href="" aria-label="20"></a>        row <span class="op">=</span> cost_at_threshold(y, scores, threshold)</span>
-<span id="cb22-21"><a href="" aria-label="21"></a>        row[<span class="st">"method"</span>] <span class="op">=</span> method</span>
-<span id="cb22-22"><a href="" aria-label="22"></a>        cost_rows.append(row)</span>
-<span id="cb22-23"><a href="" aria-label="23"></a></span>
-<span id="cb22-24"><a href="" aria-label="24"></a>cost_results <span class="op">=</span> pd.DataFrame(cost_rows)</span>
-<span id="cb22-25"><a href="" aria-label="25"></a>best_by_method <span class="op">=</span> cost_results.loc[cost_results.groupby(<span class="st">"method"</span>)[<span class="st">"total_cost"</span>].idxmin()]</span>
-<span id="cb22-26"><a href="" aria-label="26"></a>best_by_method.sort_values(<span class="st">"total_cost"</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
-</details>
+<div id="58832695" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:19.147179Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:19.146953Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:24.668273Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:24.667265Z&quot;}}" data-execution_count="17">
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
@@ -2800,7 +2430,7 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 <section id="leakage-demonstration" class="slide level2">
-<h2>17. Leakage demonstration</h2>
+<h2>22. Leakage demonstration</h2>
 <p>The following example shows the wrong and right structure.</p>
 <p>The <strong>wrong</strong> structure applies SMOTE before cross-validation. The validation folds are no longer clean because the synthetic data was produced using information from the full dataset.</p>
 <p>The <strong>right</strong> structure places SMOTE inside an <code>imblearn</code> pipeline, so SMOTE is fitted only on each training fold.</p>
@@ -2808,32 +2438,32 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-show-a-leakage-pattern" class="slide level2">
 <h2>Code: Show a leakage pattern</h2>
 <p>This cell is intentionally unsafe first, then safe. Keep both results visible for the leakage discussion.</p>
-<div id="bf08e7f8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:25:45.255903Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:25:45.255705Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:25:45.519788Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:25:45.519067Z&quot;}}" data-execution_count="18">
+<div id="b87a6be0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:24.670205Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:24.670000Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:24.920408Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:24.919626Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="co"># Contrast an intentionally leaky workflow with the leakage-safe pipeline workflow.</span></span>
-<span id="cb23-2"><a href="" aria-label="2"></a><span class="co"># Wrong pattern for teaching purposes only: do not use this as an evaluation design.</span></span>
-<span id="cb23-3"><a href="" aria-label="3"></a>X_scaled <span class="op">=</span> preprocessor.fit_transform(X)</span>
-<span id="cb23-4"><a href="" aria-label="4"></a>X_leaky, y_leaky <span class="op">=</span> SMOTE(random_state<span class="op">=</span>RANDOM_STATE).fit_resample(X_scaled, y)</span>
-<span id="cb23-5"><a href="" aria-label="5"></a></span>
-<span id="cb23-6"><a href="" aria-label="6"></a>leaky_pipeline <span class="op">=</span> Pipeline(</span>
-<span id="cb23-7"><a href="" aria-label="7"></a>    [(<span class="st">"classifier"</span>, logistic_regression())]</span>
-<span id="cb23-8"><a href="" aria-label="8"></a>)</span>
-<span id="cb23-9"><a href="" aria-label="9"></a></span>
-<span id="cb23-10"><a href="" aria-label="10"></a>leaky_fold_results, _ <span class="op">=</span> evaluate_pipeline(</span>
-<span id="cb23-11"><a href="" aria-label="11"></a>    <span class="st">"Leaky SMOTE before CV"</span>,</span>
-<span id="cb23-12"><a href="" aria-label="12"></a>    leaky_pipeline,</span>
-<span id="cb23-13"><a href="" aria-label="13"></a>    pd.DataFrame(X_leaky),</span>
-<span id="cb23-14"><a href="" aria-label="14"></a>    pd.Series(y_leaky),</span>
-<span id="cb23-15"><a href="" aria-label="15"></a>    cv,</span>
-<span id="cb23-16"><a href="" aria-label="16"></a>)</span>
-<span id="cb23-17"><a href="" aria-label="17"></a></span>
-<span id="cb23-18"><a href="" aria-label="18"></a>right_fold_results, _ <span class="op">=</span> evaluate_pipeline(<span class="st">"SMOTE inside CV"</span>, pipelines[<span class="st">"SMOTE"</span>], X, y, cv)</span>
-<span id="cb23-19"><a href="" aria-label="19"></a></span>
-<span id="cb23-20"><a href="" aria-label="20"></a>pd.concat([leaky_fold_results, right_fold_results])<span class="op">\</span></span>
-<span id="cb23-21"><a href="" aria-label="21"></a>    .groupby(<span class="st">"method"</span>)[[<span class="st">"accuracy"</span>, <span class="st">"precision"</span>, <span class="st">"recall"</span>, <span class="st">"specificity"</span>, <span class="st">"f1"</span>]]<span class="op">\</span></span>
-<span id="cb23-22"><a href="" aria-label="22"></a>    .mean()<span class="op">\</span></span>
-<span id="cb23-23"><a href="" aria-label="23"></a>    .<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Contrast an intentionally leaky workflow with the leakage-safe pipeline workflow.</span></span>
+<span id="cb11-2"><a href="" aria-label="2"></a><span class="co"># Wrong pattern for teaching purposes only: do not use this as an evaluation design.</span></span>
+<span id="cb11-3"><a href="" aria-label="3"></a>X_scaled <span class="op">=</span> preprocessor.fit_transform(X)</span>
+<span id="cb11-4"><a href="" aria-label="4"></a>X_leaky, y_leaky <span class="op">=</span> SMOTE(random_state<span class="op">=</span>RANDOM_STATE).fit_resample(X_scaled, y)</span>
+<span id="cb11-5"><a href="" aria-label="5"></a></span>
+<span id="cb11-6"><a href="" aria-label="6"></a>leaky_pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb11-7"><a href="" aria-label="7"></a>    [(<span class="st">"classifier"</span>, logistic_regression())]</span>
+<span id="cb11-8"><a href="" aria-label="8"></a>)</span>
+<span id="cb11-9"><a href="" aria-label="9"></a></span>
+<span id="cb11-10"><a href="" aria-label="10"></a>leaky_fold_results, _ <span class="op">=</span> evaluate_pipeline(</span>
+<span id="cb11-11"><a href="" aria-label="11"></a>    <span class="st">"Leaky SMOTE before CV"</span>,</span>
+<span id="cb11-12"><a href="" aria-label="12"></a>    leaky_pipeline,</span>
+<span id="cb11-13"><a href="" aria-label="13"></a>    pd.DataFrame(X_leaky),</span>
+<span id="cb11-14"><a href="" aria-label="14"></a>    pd.Series(y_leaky),</span>
+<span id="cb11-15"><a href="" aria-label="15"></a>    cv,</span>
+<span id="cb11-16"><a href="" aria-label="16"></a>)</span>
+<span id="cb11-17"><a href="" aria-label="17"></a></span>
+<span id="cb11-18"><a href="" aria-label="18"></a>right_fold_results, _ <span class="op">=</span> evaluate_pipeline(<span class="st">"SMOTE inside CV"</span>, pipelines[<span class="st">"SMOTE"</span>], X, y, cv)</span>
+<span id="cb11-19"><a href="" aria-label="19"></a></span>
+<span id="cb11-20"><a href="" aria-label="20"></a>pd.concat([leaky_fold_results, right_fold_results])<span class="op">\</span></span>
+<span id="cb11-21"><a href="" aria-label="21"></a>    .groupby(<span class="st">"method"</span>)[[<span class="st">"accuracy"</span>, <span class="st">"precision"</span>, <span class="st">"recall"</span>, <span class="st">"specificity"</span>, <span class="st">"f1"</span>]]<span class="op">\</span></span>
+<span id="cb11-22"><a href="" aria-label="22"></a>    .mean()<span class="op">\</span></span>
+<span id="cb11-23"><a href="" aria-label="23"></a>    .<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div>
@@ -2895,41 +2525,37 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 <section id="smote-nc-for-mixed-tabular-data" class="slide level2">
-<h2>18. SMOTE-NC for mixed tabular data</h2>
-<p><code>SMOTENC</code> is useful when a dataset mixes numerical and categorical predictors. It implements the SMOTE-NC idea from Chawla et al. <span class="citation" data-cites="chawla2002smote">(<a href="#/important-takeaway" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>: interpolate numerical columns, but choose categorical values from neighboring minority examples instead of interpolating category codes.</p>
-<p>The categorical feature indices must refer to the feature matrix seen by the sampler. This detail matters when preprocessing changes the column order. In many pipelines, it is safer to apply <code>SMOTENC</code> before one-hot encoding, or to use a preprocessing design that keeps categorical columns identifiable at the sampler step.</p>
-<p>A typical approach is:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTENC</span>
-<span id="cb24-2"><a href="" aria-label="2"></a></span>
-<span id="cb24-3"><a href="" aria-label="3"></a>pipeline <span class="op">=</span> ImbPipeline([</span>
-<span id="cb24-4"><a href="" aria-label="4"></a>    (<span class="st">"preprocessing"</span>, preprocessor_that_keeps_categorical_columns_encoded_as_categories),</span>
-<span id="cb24-5"><a href="" aria-label="5"></a>    (<span class="st">"sampler"</span>, SMOTENC(categorical_features<span class="op">=</span>[...], random_state<span class="op">=</span><span class="dv">42</span>)),</span>
-<span id="cb24-6"><a href="" aria-label="6"></a>    (<span class="st">"classifier"</span>, classifier),</span>
-<span id="cb24-7"><a href="" aria-label="7"></a>])</span></code></pre></div>
-<p>Be careful with one-hot encoding before plain SMOTE: interpolation can produce fractional category indicators. <code>SMOTENC</code> is designed to avoid that issue, but it still cannot guarantee that every generated row is realistic for the application domain.</p>
+<h2>23. SMOTE-NC for mixed tabular data</h2>
+<p><code>SMOTENC</code> is useful when predictors mix numerical and categorical columns.</p>
+<p>The categorical feature indices must refer to the matrix seen by the sampler, so preprocessing order matters.</p>
+</section>
+<section id="smote-nc-pipeline-note" class="slide level2">
+<h2>SMOTE-NC pipeline note</h2>
+<p>A common design is to apply <code>SMOTENC</code> before one-hot encoding, or to use preprocessing that keeps categorical columns identifiable at the sampler step.</p>
+<p>Be careful with plain SMOTE after one-hot encoding: interpolation can produce fractional category indicators.</p>
 </section>
 <section id="student-challenge" class="slide level2">
-<h2>19. Student challenge</h2>
+<h2>24. Student challenge</h2>
 <p>Choose a pipeline for a high-cost false-negative scenario.</p>
-<p>Your task:</p>
 <ol type="1">
-<li>Define the business or social cost of a false negative.</li>
+<li>Define the cost of a false negative.</li>
 <li>Select a primary metric.</li>
 <li>Compare at least three imbalance strategies.</li>
 <li>Tune the classification threshold.</li>
-<li>Defend your final choice using evidence from the tables and plots above.</li>
+<li>Defend the final choice with evidence.</li>
 </ol>
-<p>Suggested framing: in a fraud-screening system, a false negative means a fraudulent transaction is accepted; a false positive means a legitimate transaction is manually reviewed.</p>
-<p><strong>Suitable public datasets</strong></p>
-<p>You may use one of these public datasets, or propose another dataset with a clear minority class and a meaningful error-cost story:</p>
+</section>
+<section id="challenge-datasets" class="slide level2">
+<h2>Challenge datasets</h2>
+<p>Good options include:</p>
 <ul>
-<li><a href="https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud">Credit Card Fraud Detection on Kaggle</a>: real anonymized European card transactions, with fraud as a very rare positive class. This is the strongest fit for a high-cost false-negative discussion.</li>
-<li><a href="https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients">Default of Credit Card Clients on UCI</a>: credit default prediction with customer billing and repayment history. Good for discussing financial risk, class weighting, and threshold choice.</li>
-<li><a href="https://archive.ics.uci.edu/dataset/222/bank+marketing">Bank Marketing on UCI</a>: predict whether a client subscribes to a term deposit. Useful for a moderate imbalance setting where false positives and false negatives have different campaign costs.</li>
-<li><a href="https://archive.ics.uci.edu/dataset/27/credit+approval">Credit Approval on UCI</a>: credit-card application classification with mixed categorical and continuous attributes. Good for discussing SMOTE-NC and preprocessing choices.</li>
-<li><a href="https://www.kaggle.com/datasets/blastchar/telco-customer-churn">Telco Customer Churn on Kaggle</a>: customer churn prediction with categorical and numerical features. Good for retention-cost scenarios and threshold tuning.</li>
+<li>Credit Card Fraud Detection on Kaggle.</li>
+<li>Default of Credit Card Clients on UCI.</li>
+<li>Bank Marketing on UCI.</li>
+<li>Credit Approval on UCI.</li>
+<li>Telco Customer Churn on Kaggle.</li>
 </ul>
-<p>For the challenge, avoid optimizing only accuracy. Pick a metric such as recall, F1, F-beta, average precision, or expected cost, then explain why it matches the scenario.</p>
+<p>Avoid optimizing only accuracy. Pick a metric that matches the scenario.</p>
 </section>
 <section id="references-for-imbalance-methods" class="slide level2">
 <h2>References for imbalance methods</h2>
