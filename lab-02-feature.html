@@ -258,7 +258,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="setup" class="slide level2">
 <h2>3. Setup</h2>
-<div id="2db2c56f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:03:35.270017Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:03:35.269815Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:03:36.731566Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:03:36.730588Z&quot;}}" data-execution_count="1">
+<div id="66c379ae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:15:26.630143Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:15:26.629888Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:15:28.129241Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:15:28.128282Z&quot;}}" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">import</span> time</span>
@@ -288,7 +288,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The dataset is generated inside the notebook so that the experiment is reproducible and does not depend on an external download. It contains numerical, categorical, scheduled date/time attributes, and actual date/time attributes.</p>
 <p>The target is intentionally noisy: feature selection is more realistic when there is signal, redundancy, and noise at the same time.</p>
 <p><code>actual_departure</code> and <code>actual_arrival</code> are included as a teaching device. For a pre-departure delay prediction model, they should be dropped because they are not available when the prediction is made.</p>
-<div id="69fcdc21" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:03:36.734211Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:03:36.733879Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:03:36.775185Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:03:36.774364Z&quot;}}" data-execution_count="2">
+<div id="771cbc7a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:15:28.132002Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:15:28.131647Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:15:28.173247Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:15:28.172398Z&quot;}}" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="kw">def</span> make_flight_delay_data(n_samples<span class="op">=</span><span class="dv">3500</span>, random_state<span class="op">=</span>RANDOM_STATE):</span>
@@ -516,7 +516,7 @@ Name: class_share, dtype: float64</code></pre>
 </ul>
 <p>Each of these encodes a hypothesis. For example, evening flights may accumulate delays from earlier flights, and precipitation may be worse during peak operating hours.</p>
 <p>The transformer also has an <code>include_actual_times</code> option. It is disabled by default because actual departure and arrival times are not known before departure. Turn it on only to demonstrate leakage.</p>
-<div id="62fca7e1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:03:36.777492Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:03:36.777300Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:03:36.783764Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:03:36.782911Z&quot;}}" data-execution_count="3">
+<div id="8f2ae2fb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:15:28.175349Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:15:28.175169Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:15:28.182104Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:15:28.181165Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="kw">class</span> FlightFeatureEngineer(BaseEstimator, TransformerMixin):</span>
@@ -565,7 +565,7 @@ Name: class_share, dtype: float64</code></pre>
 <section id="baseline-preprocessing-pipeline" class="slide level2">
 <h2>6. Baseline preprocessing pipeline</h2>
 <p><code>ColumnTransformer</code> lets us apply different preprocessing to numerical and categorical columns after feature engineering. The selectors below infer column groups from the transformed dataframe, so the same pipeline works with and without the manual features.</p>
-<div id="21ba5c5d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:03:36.785731Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:03:36.785534Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:03:36.791064Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:03:36.790303Z&quot;}}" data-execution_count="4">
+<div id="5eb468e0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:15:28.183863Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:15:28.183653Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:15:28.189254Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:15:28.188489Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="kw">def</span> numeric_columns(X):</span>
@@ -620,7 +620,7 @@ Name: class_share, dtype: float64</code></pre>
 </ul>
 <p>Filter methods are usually faster. Wrapper methods can capture model-specific usefulness, but they are more computationally expensive.</p>
 <p>Important: selection is inside the pipeline. During cross-validation, the selector is fitted only on each training fold.</p>
-<div id="8fa5c79f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:03:36.793183Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:03:36.792958Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:03:36.796642Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:03:36.795818Z&quot;}}" data-execution_count="5">
+<div id="1bc7cf6b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:15:28.191297Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:15:28.191127Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:15:28.194904Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:15:28.194020Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SequentialFeatureSelector</span>
@@ -647,7 +647,7 @@ Name: class_share, dtype: float64</code></pre>
 <section id="compare-raw-engineered-and-selected-feature-sets" class="slide level2">
 <h2>8. Compare raw, engineered, and selected feature sets</h2>
 <p>We measure predictive performance, number of selected features, and training time. We also keep the fitted estimators from cross-validation so we can inspect selection stability.</p>
-<div id="5913665c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:03:36.798656Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:03:36.798483Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:04:09.858508Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:04:09.857559Z&quot;}}" data-execution_count="6">
+<div id="c7f79089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:15:28.196696Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:15:28.196496Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:16:01.709796Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:16:01.708675Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
@@ -740,7 +740,7 @@ Name: class_share, dtype: float64</code></pre>
 <td>0.531696</td>
 <td>20.0</td>
 <td>0.0</td>
-<td>0.225470</td>
+<td>0.226901</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
@@ -751,7 +751,7 @@ Name: class_share, dtype: float64</code></pre>
 <td>0.533567</td>
 <td>20.0</td>
 <td>0.0</td>
-<td>28.456567</td>
+<td>28.794473</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
@@ -762,7 +762,7 @@ Name: class_share, dtype: float64</code></pre>
 <td>0.532392</td>
 <td>34.0</td>
 <td>0.0</td>
-<td>2.466004</td>
+<td>2.546322</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
@@ -773,7 +773,7 @@ Name: class_share, dtype: float64</code></pre>
 <td>0.531912</td>
 <td>40.0</td>
 <td>0.0</td>
-<td>0.168199</td>
+<td>0.193271</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
@@ -784,7 +784,7 @@ Name: class_share, dtype: float64</code></pre>
 <td>0.531587</td>
 <td>20.0</td>
 <td>0.0</td>
-<td>0.937328</td>
+<td>0.927446</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">2</th>
@@ -795,7 +795,7 @@ Name: class_share, dtype: float64</code></pre>
 <td>0.515650</td>
 <td>20.0</td>
 <td>0.0</td>
-<td>0.783519</td>
+<td>0.801625</td>
 </tr>
 </tbody>
 </table>
@@ -815,7 +815,7 @@ Name: class_share, dtype: float64</code></pre>
 <li>Drop engineered features derived from actual times, such as actual departure delay, actual arrival delay, or actual elapsed time.</li>
 </ul>
 <p>The next cell intentionally compares a leakage-safe pipeline with a pipeline that uses actual-time-derived features. If the second pipeline looks much better, that is a warning sign, not a success.</p>
-<div id="c1a04a13" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:04:09.860522Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:04:09.860308Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:04:10.237521Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:04:10.236580Z&quot;}}" data-execution_count="7">
+<div id="c1b2ce63" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:16:01.711804Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:16:01.711587Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:16:02.075103Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:16:02.074032Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>leakage_demo <span class="op">=</span> {</span>
@@ -886,7 +886,7 @@ Name: class_share, dtype: float64</code></pre>
 <section id="selection-stability-across-folds" class="slide level2">
 <h2>10. Selection stability across folds</h2>
 <p>A selector is more trustworthy when it keeps similar features across folds. Instability does not always mean the selector is wrong: correlated features may be interchangeable. But instability should make us cautious when interpreting selected variables as domain truth.</p>
-<div id="d15bd40b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:04:10.239537Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:04:10.239334Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:04:10.255267Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:04:10.254348Z&quot;}}" data-execution_count="8">
+<div id="b159049d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:16:02.077115Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:16:02.076925Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:16:02.092660Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:16:02.091712Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="kw">def</span> selected_feature_names(fitted_pipeline):</span>
@@ -981,7 +981,7 @@ Name: class_share, dtype: float64</code></pre>
 <section id="performance-versus-number-of-features" class="slide level2">
 <h2>11. Performance versus number of features</h2>
 <p>A useful visualization is a performance-versus-number-of-features curve. Here we vary <code>k</code> for <code>SelectKBest</code>. A good choice is not necessarily the highest possible score: we may prefer a smaller model when the performance loss is negligible.</p>
-<div id="a522ce4b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:04:10.257207Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:04:10.256991Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:04:15.660659Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:04:15.659673Z&quot;}}" data-execution_count="9">
+<div id="d2a03701" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:16:02.094588Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:16:02.094385Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:16:07.493060Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:16:07.492084Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>k_values <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>]</span>
@@ -1083,7 +1083,7 @@ Name: class_share, dtype: float64</code></pre>
 <section id="interpretability-check" class="slide level2">
 <h2>12. Interpretability check</h2>
 <p>After choosing a pipeline, fit it once on a training split and inspect which features are selected. This final inspection is for interpretation, not for deciding the reported cross-validation score.</p>
-<div id="b8f71a8a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:04:15.662548Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:04:15.662366Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:04:16.060595Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:04:16.059604Z&quot;}}" data-execution_count="10">
+<div id="9984d70a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:16:07.495065Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:16:07.494863Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:16:07.882094Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:16:07.881124Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
@@ -1219,7 +1219,7 @@ Holdout balanced accuracy: 0.611</code></pre>
 </div>
 </div>
 <p>Optional: permutation importance estimates how much the fitted pipeline depends on each raw input column. This is different from selected one-hot or engineered features, but it is useful for discussing model behavior at the original data level.</p>
-<div id="608fb4aa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:04:16.062528Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:04:16.062341Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:04:16.890790Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:04:16.889788Z&quot;}}" data-execution_count="11">
+<div id="f1d15b97" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:16:07.884027Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:16:07.883846Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:16:08.735961Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:16:08.734966Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>importance <span class="op">=</span> permutation_importance(</span>
@@ -1366,7 +1366,7 @@ Holdout balanced accuracy: 0.611</code></pre>
 <li>Carrier-by-origin interaction categories.</li>
 </ul>
 <p>Be careful with historical aggregates. If you compute route delay rate using the whole dataset before cross-validation, you leak validation-fold labels into the training features. To use target-based aggregates safely, implement them as a transformer fitted inside the pipeline.</p>
-<div id="bedee0ae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:04:16.892814Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:04:16.892595Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:04:16.900852Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:04:16.899933Z&quot;}}" data-execution_count="12">
+<div id="d546932d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:16:08.738046Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:16:08.737825Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:16:08.747956Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:16:08.747103Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="co"># Challenge workspace</span></span>
