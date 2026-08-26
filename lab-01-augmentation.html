@@ -338,15 +338,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="data-augmentation-versus-smote" class="slide level2">
 <h2>Data augmentation versus SMOTE</h2>
-<p>Data augmentation applies domain-specific label-preserving transformations: image rotations, sensor noise, audio crops, text perturbations, or simulated operating conditions.</p>
-<p>SMOTE is narrower. It creates tabular rows by interpolation in feature space.</p>
-<p>The important question is whether the generated record could exist in the real data-generating process.</p>
-</section>
-<section id="adasyn-in-practice" class="slide level2">
-<h2>ADASYN in practice</h2>
-<p>ADASYN creates more synthetic minority examples around locally difficult observations: minority points surrounded by many majority neighbors.</p>
-<p>This can improve recall in hard regions, but it can also amplify mislabeled points or outliers.</p>
-<p>Test it inside an <code>imblearn</code> pipeline, using stratified cross-validation, precision, recall, F1, confusion matrices, and threshold-sensitive cost.</p>
+<p><em>Data augmentation</em> applies domain-specific label-preserving transformations: image rotations, sensor noise, audio crops, text perturbations, or simulated operating conditions.</p>
+<p><em>SMOTE</em> is narrower. It creates tabular rows by interpolation in feature space.</p>
+<ul>
+<li>The important question is whether the generated record could exist in the real data-generating process.</li>
+</ul>
 </section>
 <section id="how-smote-works" class="slide level2">
 <h2>8. How SMOTE works</h2>
@@ -373,26 +369,30 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="adasyn" class="slide level2">
 <h2>ADASYN</h2>
 <p>ADASYN estimates local difficulty from nearest neighbors <span class="citation" data-cites="he2008adasyn">(<a href="#/references" role="doc-biblioref" onclick="">He et al. 2008</a>)</span>.</p>
-<p>Minority observations surrounded by many majority observations receive larger sampling weights.</p>
-<p>The method shifts attention toward hard minority regions, which can be useful or risky depending on label noise and class overlap.</p>
+<ul>
+<li>Minority observations surrounded by many majority observations receive larger sampling weights.</li>
+<li>The method shifts attention toward hard minority regions, which can be useful or risky depending on label noise and class overlap.</li>
+</ul>
+<p>ADASYN creates more synthetic minority examples around locally difficult observations: minority points surrounded by many majority neighbors.</p>
+<ul>
+<li>This can improve recall in hard regions, but it can also amplify mislabeled points or outliers.</li>
+</ul>
 </section>
 <section id="leakage-warning" class="slide level2">
 <h2>9. Leakage warning</h2>
 <p>Resampling is part of model training. It must be learned from the training data only.</p>
-<p>Do <strong>not</strong> apply SMOTE or oversampling before splitting the data. If synthetic points are created before a train/test split, information from validation or test observations can leak into the training set through nearest-neighbor interpolation or duplicated examples.</p>
-<p>The same rule applies to cross-validation: resampling must happen <strong>inside each training fold</strong>, not once globally before cross-validation.</p>
-<p>This is why we use <code>imblearn.pipeline.Pipeline</code> whenever the pipeline contains a sampler.</p>
-</section>
-<section id="setup" class="slide level2">
-<h2>10. Setup</h2>
-<p>If <code>imbalanced-learn</code> is missing in your environment, install it first with:</p>
+<ul>
+<li>Do <strong>not</strong> apply SMOTE or oversampling before splitting the data. If synthetic points are created before a train/test split, information from validation or test observations can leak into the training set through nearest-neighbor interpolation or duplicated examples.</li>
+<li>The same rule applies to cross-validation: resampling must happen <strong>inside each training fold</strong>, not once globally before cross-validation.</li>
+<li>This is why we use <code>imblearn.pipeline.Pipeline</code> whenever the pipeline contains a sampler.</li>
+</ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb7-1"><a href="" aria-label="1"></a><span class="ex">pip</span> install imbalanced-learn</span></code></pre></div>
 </section>
 <section id="create-a-deliberately-imbalanced-dataset" class="slide level2">
 <h2>11. Create a deliberately imbalanced dataset</h2>
 <p>We will use a synthetic binary classification dataset so the notebook is reproducible without external data downloads.</p>
 <p>Think of <code>y=1</code> as a rare high-risk event, such as fraud, churn, default, or failure.</p>
-<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:45.264261Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:45.263935Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:45.279662Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:45.278852Z&quot;}}" data-execution_count="3">
+<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:20.221888Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:20.221595Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:20.237490Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:20.236536Z&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -448,7 +448,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="majority-class-baseline" class="slide level2">
 <h2>Majority-class baseline</h2>
 <p>A classifier that always predicts the majority class can look strong by accuracy alone. But it has zero recall for the minority class.</p>
-<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:45.388527Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:45.388280Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:45.405997Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:45.405102Z&quot;}}" data-execution_count="5">
+<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:20.341312Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:20.341080Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:20.357326Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:20.356516Z&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <style scoped="">
@@ -517,7 +517,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="baseline-pipeline" class="slide level2">
 <h2>14. Baseline pipeline</h2>
 <p>A conventional <code>sklearn.pipeline.Pipeline</code> is sufficient when all steps are transformers and estimators.</p>
-<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:46.220273Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:46.220090Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:46.239957Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:46.238992Z&quot;}}" data-execution_count="8">
+<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:21.163547Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:21.163353Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:21.184532Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:21.183570Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># Standardize numeric features before logistic regression.</span></span>
@@ -1746,16 +1746,109 @@ forceTheme('sk-container-id-1');</script>
 <span id="cb9-7"><a href="" aria-label="7"></a>    ),</span>
 <span id="cb9-8"><a href="" aria-label="8"></a>    <span class="st">"Random undersampling"</span>: ImbPipeline(</span>
 <span id="cb9-9"><a href="" aria-label="9"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"sampler"</span>, RandomUnderSampler(random_state<span class="op">=</span>RANDOM_STATE)), (<span class="st">"classifier"</span>, logistic_regression())]</span>
-<span id="cb9-10"><a href="" aria-label="10"></a>    ),</span>
+<span id="cb9-10"><a href="" aria-label="10"></a>    ), <span class="co"># ...</span></span>
 <span id="cb9-11"><a href="" aria-label="11"></a>}</span></code></pre></div>
 </section>
 <section id="stratified-cross-validation" class="slide level2">
 <h2>16. Stratified cross-validation</h2>
-<p>The helper below manually loops over stratified folds. This makes it explicit that every pipeline is cloned, fitted on the training fold, and evaluated on the untouched validation fold.</p>
-</section>
-<section id="code-run-stratified-cross-validation" class="slide level2">
-<h2>Code: Run stratified cross-validation</h2>
-<p>The explicit loop makes leakage checks visible: every fold gets a fresh clone of the pipeline.</p>
+<p>Loops over stratified folds. This makes it explicit that every pipeline is cloned, fitted on the training fold, and evaluated on the untouched validation fold.</p>
+<div id="5ec6d60e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:21.194308Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:21.194111Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:22.278741Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:22.278145Z&quot;}}" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th">method</th>
+<th data-quarto-table-cell-role="th">ADASYN</th>
+<th data-quarto-table-cell-role="th">Borderline-SMOTE</th>
+<th data-quarto-table-cell-role="th">Class weight</th>
+<th data-quarto-table-cell-role="th">No treatment</th>
+<th data-quarto-table-cell-role="th">Random oversampling</th>
+<th data-quarto-table-cell-role="th">Random undersampling</th>
+<th data-quarto-table-cell-role="th">SMOTE</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">fold</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>0.258</td>
+<td>0.287</td>
+<td>0.247</td>
+<td>0.080</td>
+<td>0.245</td>
+<td>0.257</td>
+<td>0.253</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>0.272</td>
+<td>0.296</td>
+<td>0.259</td>
+<td>0.135</td>
+<td>0.259</td>
+<td>0.249</td>
+<td>0.268</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>0.285</td>
+<td>0.295</td>
+<td>0.280</td>
+<td>0.028</td>
+<td>0.281</td>
+<td>0.275</td>
+<td>0.285</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>0.278</td>
+<td>0.307</td>
+<td>0.285</td>
+<td>0.107</td>
+<td>0.280</td>
+<td>0.266</td>
+<td>0.290</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>0.305</td>
+<td>0.330</td>
+<td>0.302</td>
+<td>0.104</td>
+<td>0.303</td>
+<td>0.292</td>
+<td>0.308</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 <section id="comparison-table" class="slide level2">
 <h2>17. Comparison table</h2>
@@ -1770,7 +1863,7 @@ forceTheme('sk-container-id-1');</script>
 </ul>
 
 </blockquote>
-<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:47.371787Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:47.371569Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:47.390049Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:47.389155Z&quot;}}" data-execution_count="11">
+<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:22.282340Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:22.282100Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:22.301092Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:22.300545Z&quot;}}" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
@@ -1879,167 +1972,63 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </div>
 </section>
-<section id="code-inspect-fold-variability" class="slide level2">
-<h2>Code: Inspect fold variability</h2>
-<p>Fold variability helps distinguish a consistently useful method from a lucky average.</p>
-<div id="e33d948d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:47.392900Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:47.392688Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:47.407863Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:47.406665Z&quot;}}" data-execution_count="12">
-<div class="cell-output cell-output-display" data-execution_count="12">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th">method</th>
-<th data-quarto-table-cell-role="th">ADASYN</th>
-<th data-quarto-table-cell-role="th">Borderline-SMOTE</th>
-<th data-quarto-table-cell-role="th">Class weight</th>
-<th data-quarto-table-cell-role="th">No treatment</th>
-<th data-quarto-table-cell-role="th">Random oversampling</th>
-<th data-quarto-table-cell-role="th">Random undersampling</th>
-<th data-quarto-table-cell-role="th">SMOTE</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">fold</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">1</th>
-<td>0.258</td>
-<td>0.287</td>
-<td>0.247</td>
-<td>0.080</td>
-<td>0.245</td>
-<td>0.257</td>
-<td>0.253</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">2</th>
-<td>0.272</td>
-<td>0.296</td>
-<td>0.259</td>
-<td>0.135</td>
-<td>0.259</td>
-<td>0.249</td>
-<td>0.268</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">3</th>
-<td>0.285</td>
-<td>0.295</td>
-<td>0.280</td>
-<td>0.028</td>
-<td>0.281</td>
-<td>0.275</td>
-<td>0.285</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">4</th>
-<td>0.278</td>
-<td>0.307</td>
-<td>0.285</td>
-<td>0.107</td>
-<td>0.280</td>
-<td>0.266</td>
-<td>0.290</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">5</th>
-<td>0.305</td>
-<td>0.330</td>
-<td>0.302</td>
-<td>0.104</td>
-<td>0.303</td>
-<td>0.292</td>
-<td>0.308</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</section>
 <section id="confusion-matrices" class="slide level2">
 <h2>18. Confusion matrices</h2>
 <p>Here we use out-of-fold predictions. Each observation is predicted by a model that did not train on it.</p>
 
-<img data-src="lab-01-augmentation_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-augmentation_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"></section>
 <section id="precision-recall-curves" class="slide level2">
 <h2>19. Precision-recall curves</h2>
-<p>A precision-recall curve shows how precision and recall change as we vary the classification threshold.</p>
-<p>Most probabilistic classifiers first produce a positive-class score, then convert it into a label with a threshold.</p>
+<div class="columns">
+<div class="column" style="width:70%;">
+<p>The precision-recall curve shows the tradeoff between precision and recall (high precision -&gt; low false positive rate, high recall -&gt; low false negative rate)</p>
 <ul>
-<li>Lower thresholds predict more positives: recall usually rises and precision often falls.</li>
-<li>Higher thresholds predict fewer positives: precision may rise and recall often falls.</li>
+<li>A system with high recall but low precision returns many results, but most of its predicted labels are incorrect.</li>
+<li>A system with high precision but low recall is just the opposite, returning very few results, but most of its predicted labels are correct</li>
 </ul>
-<p>For imbalanced data, these curves focus directly on the rare positive class. The horizontal baseline is the positive-class rate.</p>
+<p>Precision (<span class="math inline">\(P=\frac{TP}{TP + FP}\)</span>) may not decrease with recall (<span class="math inline">\(R=\frac{TP}{TP + FN}\)</span>)</p>
+<ul>
+<li>Lowering the threshold of a classifier may increase the denominator, by increasing the number of results returned.</li>
+<li>If the threshold was previously set too high, the new results may all be true positives, which will increase precision.</li>
+<li>If the previous threshold was about right or too low, further lowering the threshold will introduce FP, decreasing precision.</li>
+</ul>
+<p>Recall does not depend on the classifier threshold.</p>
+<ul>
+<li>Lowering the classifier threshold may increase recall, by increasing the number of true positive results, but it is also possible that lowering the threshold may leave recall unchanged, while the precision fluctuates.</li>
+</ul>
+</div><div class="column" style="width:30%;">
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/PrecisionrecallDogExample.svg/500px-PrecisionrecallDogExample.svg.png?utm_source=en.wikipedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail"></p>
+</div></div>
 </section>
-<section id="code-plot-precision-recall-curves" class="slide level2">
-<h2>Code: Plot precision-recall curves</h2>
-<p>These curves use out-of-fold scores, so every score comes from a model that did not train on that row.</p>
+<section id="precision-recall-curves-1" class="slide level2">
+<h2>Precision-recall curves</h2>
+<p>A precision-recall curve shows how precision and recall change as we <em>vary the classification threshold</em> for binary classification.</p>
+<ul>
+<li>Most probabilistic classifiers first produce a positive-class score, then convert it into a label with a threshold.</li>
+<li><em>Lower thresholds</em> predict more positives: <em>recall usually rises</em> and <em>precision often falls</em>.</li>
+<li><em>Higher thresholds</em> predict fewer positives: <em>precision may rise</em> and <em>recall often falls</em>.</li>
+<li>The horizontal baseline is the positive-class rate.</li>
+</ul>
+<p>Average precision (<span class="math inline">\(AP=\sum_n (R_n - R_{n-1}) P_n\)</span>) summarizes such a plot as the weighted mean of precisions achieved at each threshold</p>
 
-<img data-src="lab-01-augmentation_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-augmentation_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
 <section id="threshold-adjustment" class="slide level2">
 <h2>20. Threshold adjustment</h2>
 <p><code>predict</code> usually applies a threshold of <code>0.5</code>. That threshold is not sacred: it is a decision rule, not a property of the model.</p>
-<p>Changing the threshold changes the confusion matrix:</p>
 <ul>
-<li>A <strong>lower threshold</strong> produces more positive predictions. This usually reduces false negatives and increases recall, but it can increase false positives and lower precision.</li>
-<li>A <strong>higher threshold</strong> produces fewer positive predictions. This can reduce false positives and improve precision, but it can increase false negatives and lower recall.</li>
+<li>A <strong>lower threshold</strong> produces more positive predictions. This usually reduces FN and increases recall, but it can increase FP and lower precision.</li>
+<li>A <strong>higher threshold</strong> produces fewer positive predictions. This can reduce FP and improve precision, but it can increase FN and lower recall.</li>
 </ul>
-<p>In a high-cost false-negative scenario, such as fraud detection, medical screening, safety monitoring, or loan-default risk, we may prefer a lower threshold. The model will raise more alarms, but it misses fewer rare positive cases.</p>
-<p>The right threshold depends on the operational cost of each error type. That is why threshold tuning should be evaluated with validation data, business constraints, and the metric that matches the real decision problem.</p>
-</section>
-<section id="code-evaluate-thresholds" class="slide level2">
-<h2>Code: Evaluate thresholds</h2>
-<p>Thresholds turn probabilities into decisions. This table lets students choose a decision rule for a stated cost.</p>
-<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:47.993994Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:47.993821Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:48.170802Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:48.169941Z&quot;}}" data-execution_count="15">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># Recompute metrics over a grid of decision thresholds for one selected method.</span></span>
-<span id="cb10-2"><a href="" aria-label="2"></a><span class="kw">def</span> metrics_at_thresholds(y_true, y_score, thresholds):</span>
-<span id="cb10-3"><a href="" aria-label="3"></a>    rows <span class="op">=</span> []</span>
-<span id="cb10-4"><a href="" aria-label="4"></a>    <span class="cf">for</span> threshold <span class="kw">in</span> thresholds:</span>
-<span id="cb10-5"><a href="" aria-label="5"></a>        y_pred <span class="op">=</span> (y_score <span class="op">&gt;=</span> threshold).astype(<span class="bu">int</span>)</span>
-<span id="cb10-6"><a href="" aria-label="6"></a>        rows.append(</span>
-<span id="cb10-7"><a href="" aria-label="7"></a>            {</span>
-<span id="cb10-8"><a href="" aria-label="8"></a>                <span class="st">"threshold"</span>: threshold,</span>
-<span id="cb10-9"><a href="" aria-label="9"></a>                <span class="st">"precision"</span>: precision_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb10-10"><a href="" aria-label="10"></a>                <span class="st">"recall"</span>: recall_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb10-11"><a href="" aria-label="11"></a>                <span class="st">"specificity"</span>: specificity_score(y_true, y_pred),</span>
-<span id="cb10-12"><a href="" aria-label="12"></a>                <span class="st">"f1"</span>: f1_score(y_true, y_pred, zero_division<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb10-13"><a href="" aria-label="13"></a>            }</span>
-<span id="cb10-14"><a href="" aria-label="14"></a>        )</span>
-<span id="cb10-15"><a href="" aria-label="15"></a>    <span class="cf">return</span> pd.DataFrame(rows)</span>
-<span id="cb10-16"><a href="" aria-label="16"></a></span>
-<span id="cb10-17"><a href="" aria-label="17"></a></span>
-<span id="cb10-18"><a href="" aria-label="18"></a>selected_method <span class="op">=</span> <span class="st">"ADASYN"</span></span>
-<span id="cb10-19"><a href="" aria-label="19"></a>threshold_grid <span class="op">=</span> np.linspace(<span class="fl">0.05</span>, <span class="fl">0.95</span>, <span class="dv">19</span>)</span>
-<span id="cb10-20"><a href="" aria-label="20"></a>threshold_results <span class="op">=</span> metrics_at_thresholds(y, oof_scores[selected_method], threshold_grid)</span>
-<span id="cb10-21"><a href="" aria-label="21"></a>threshold_results.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<p>In a high-cost false-negative scenario, such as fraud detection, medical screening, safety monitoring, or loan-default risk, we may prefer a lower threshold.</p>
+<ul>
+<li>The model will raise more alarms, but it misses fewer rare positive cases.</li>
+</ul>
+<p>The right threshold depends on the operational cost of each error type.</p>
+<ul>
+<li>Threshold tuning should be evaluated with validation data, business constraints, and the metric that matches the real decision problem.</li>
+</ul>
+<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:22.882776Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:22.882573Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:22.963875Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:22.962958Z&quot;}}" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2069,155 +2058,67 @@ forceTheme('sk-container-id-1');</script>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>0.05</td>
-<td>0.073</td>
-<td>0.988</td>
-<td>0.075</td>
-<td>0.136</td>
+<td>0.000</td>
+<td>0.068</td>
+<td>1.000</td>
+<td>0.000</td>
+<td>0.128</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
-<td>0.10</td>
-<td>0.079</td>
-<td>0.982</td>
-<td>0.153</td>
-<td>0.145</td>
+<td>0.143</td>
+<td>0.084</td>
+<td>0.974</td>
+<td>0.221</td>
+<td>0.155</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
-<td>0.15</td>
-<td>0.085</td>
-<td>0.968</td>
-<td>0.231</td>
-<td>0.156</td>
+<td>0.286</td>
+<td>0.107</td>
+<td>0.912</td>
+<td>0.440</td>
+<td>0.191</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
-<td>0.20</td>
-<td>0.092</td>
-<td>0.950</td>
-<td>0.310</td>
-<td>0.167</td>
+<td>0.429</td>
+<td>0.140</td>
+<td>0.801</td>
+<td>0.637</td>
+<td>0.238</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
-<td>0.25</td>
-<td>0.100</td>
-<td>0.930</td>
-<td>0.387</td>
-<td>0.181</td>
+<td>0.571</td>
+<td>0.203</td>
+<td>0.667</td>
+<td>0.807</td>
+<td>0.311</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">5</th>
-<td>0.30</td>
-<td>0.110</td>
-<td>0.906</td>
-<td>0.460</td>
-<td>0.196</td>
+<td>0.714</td>
+<td>0.277</td>
+<td>0.444</td>
+<td>0.915</td>
+<td>0.341</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">6</th>
-<td>0.35</td>
-<td>0.121</td>
-<td>0.877</td>
-<td>0.530</td>
-<td>0.212</td>
+<td>0.857</td>
+<td>0.354</td>
+<td>0.170</td>
+<td>0.977</td>
+<td>0.229</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">7</th>
-<td>0.40</td>
-<td>0.133</td>
-<td>0.839</td>
-<td>0.598</td>
-<td>0.229</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">8</th>
-<td>0.45</td>
-<td>0.148</td>
-<td>0.792</td>
-<td>0.664</td>
-<td>0.249</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">9</th>
-<td>0.50</td>
-<td>0.171</td>
-<td>0.757</td>
-<td>0.730</td>
-<td>0.279</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">10</th>
-<td>0.55</td>
-<td>0.195</td>
-<td>0.705</td>
-<td>0.787</td>
-<td>0.306</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">11</th>
-<td>0.60</td>
-<td>0.214</td>
-<td>0.629</td>
-<td>0.830</td>
-<td>0.319</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">12</th>
-<td>0.65</td>
-<td>0.239</td>
-<td>0.550</td>
-<td>0.871</td>
-<td>0.333</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">13</th>
-<td>0.70</td>
-<td>0.262</td>
-<td>0.456</td>
-<td>0.906</td>
-<td>0.333</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">14</th>
-<td>0.75</td>
-<td>0.286</td>
-<td>0.368</td>
-<td>0.932</td>
-<td>0.322</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">15</th>
-<td>0.80</td>
-<td>0.321</td>
-<td>0.287</td>
-<td>0.956</td>
-<td>0.303</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">16</th>
-<td>0.85</td>
-<td>0.337</td>
-<td>0.181</td>
-<td>0.974</td>
-<td>0.236</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">17</th>
-<td>0.90</td>
-<td>0.318</td>
-<td>0.079</td>
-<td>0.988</td>
-<td>0.126</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">18</th>
-<td>0.95</td>
-<td>0.320</td>
-<td>0.023</td>
-<td>0.996</td>
-<td>0.044</td>
+<td>1.000</td>
+<td>0.000</td>
+<td>0.000</td>
+<td>1.000</td>
+<td>0.000</td>
 </tr>
 </tbody>
 </table>
@@ -2230,17 +2131,13 @@ forceTheme('sk-container-id-1');</script>
 <h2>Code: Plot the threshold trade-off</h2>
 <p>The plot makes the precision-recall trade-off easier to discuss than the table alone.</p>
 
-<img data-src="lab-01-augmentation_files/figure-revealjs/cell-17-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-augmentation_files/figure-revealjs/cell-16-output-1.png" class="r-stretch"></section>
 <section id="choose-a-threshold-for-high-cost-false-negatives" class="slide level2">
 <h2>21. Choose a threshold for high-cost false negatives</h2>
 <p>Suppose a false negative costs 10 times as much as a false positive.</p>
 <p>This is a simple teaching cost model, not a universal decision rule. In a real application, you would estimate costs with domain experts and validate the downstream effects.</p>
-</section>
-<section id="code-minimize-threshold-sensitive-cost" class="slide level2">
-<h2>Code: Minimize threshold-sensitive cost</h2>
-<p>The cost model is intentionally simple; its purpose is to connect metrics to operational consequences.</p>
-<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:48.312079Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:48.311903Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:53.811472Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:53.810466Z&quot;}}" data-execution_count="17">
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:23.102372Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:23.102171Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:28.516070Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:28.515174Z&quot;}}" data-execution_count="16">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2358,40 +2255,12 @@ forceTheme('sk-container-id-1');</script>
 <section id="leakage-demonstration" class="slide level2">
 <h2>22. Leakage demonstration</h2>
 <p>The following example shows the wrong and right structure.</p>
-<p>The <strong>wrong</strong> structure applies SMOTE before cross-validation. The validation folds are no longer clean because the synthetic data was produced using information from the full dataset.</p>
-<p>The <strong>right</strong> structure places SMOTE inside an <code>imblearn</code> pipeline, so SMOTE is fitted only on each training fold.</p>
-</section>
-<section id="code-show-a-leakage-pattern" class="slide level2">
-<h2>Code: Show a leakage pattern</h2>
-<p>This cell is intentionally unsafe first, then safe. Keep both results visible for the leakage discussion.</p>
-<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:18:53.813545Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:18:53.813298Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:18:54.064815Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:18:54.063219Z&quot;}}" data-execution_count="18">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Contrast an intentionally leaky workflow with the leakage-safe pipeline workflow.</span></span>
-<span id="cb11-2"><a href="" aria-label="2"></a><span class="co"># Wrong pattern for teaching purposes only: do not use this as an evaluation design.</span></span>
-<span id="cb11-3"><a href="" aria-label="3"></a>X_scaled <span class="op">=</span> preprocessor.fit_transform(X)</span>
-<span id="cb11-4"><a href="" aria-label="4"></a>X_leaky, y_leaky <span class="op">=</span> SMOTE(random_state<span class="op">=</span>RANDOM_STATE).fit_resample(X_scaled, y)</span>
-<span id="cb11-5"><a href="" aria-label="5"></a></span>
-<span id="cb11-6"><a href="" aria-label="6"></a>leaky_pipeline <span class="op">=</span> Pipeline(</span>
-<span id="cb11-7"><a href="" aria-label="7"></a>    [(<span class="st">"classifier"</span>, logistic_regression())]</span>
-<span id="cb11-8"><a href="" aria-label="8"></a>)</span>
-<span id="cb11-9"><a href="" aria-label="9"></a></span>
-<span id="cb11-10"><a href="" aria-label="10"></a>leaky_fold_results, _ <span class="op">=</span> evaluate_pipeline(</span>
-<span id="cb11-11"><a href="" aria-label="11"></a>    <span class="st">"Leaky SMOTE before CV"</span>,</span>
-<span id="cb11-12"><a href="" aria-label="12"></a>    leaky_pipeline,</span>
-<span id="cb11-13"><a href="" aria-label="13"></a>    pd.DataFrame(X_leaky),</span>
-<span id="cb11-14"><a href="" aria-label="14"></a>    pd.Series(y_leaky),</span>
-<span id="cb11-15"><a href="" aria-label="15"></a>    cv,</span>
-<span id="cb11-16"><a href="" aria-label="16"></a>)</span>
-<span id="cb11-17"><a href="" aria-label="17"></a></span>
-<span id="cb11-18"><a href="" aria-label="18"></a>right_fold_results, _ <span class="op">=</span> evaluate_pipeline(<span class="st">"SMOTE inside CV"</span>, pipelines[<span class="st">"SMOTE"</span>], X, y, cv)</span>
-<span id="cb11-19"><a href="" aria-label="19"></a></span>
-<span id="cb11-20"><a href="" aria-label="20"></a>pd.concat([leaky_fold_results, right_fold_results])<span class="op">\</span></span>
-<span id="cb11-21"><a href="" aria-label="21"></a>    .groupby(<span class="st">"method"</span>)[[<span class="st">"accuracy"</span>, <span class="st">"precision"</span>, <span class="st">"recall"</span>, <span class="st">"specificity"</span>, <span class="st">"f1"</span>]]<span class="op">\</span></span>
-<span id="cb11-22"><a href="" aria-label="22"></a>    .mean()<span class="op">\</span></span>
-<span id="cb11-23"><a href="" aria-label="23"></a>    .<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="18">
+<ul>
+<li>The <strong>wrong</strong> structure applies SMOTE before cross-validation. The validation folds are no longer clean because the synthetic data was produced using information from the full dataset.</li>
+<li>The <strong>right</strong> structure places SMOTE inside an <code>imblearn</code> pipeline, so SMOTE is fitted only on each training fold.</li>
+</ul>
+<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:28.518003Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:28.517811Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:28.763751Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:28.763271Z&quot;}}" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2453,12 +2322,11 @@ forceTheme('sk-container-id-1');</script>
 <section id="smote-nc-for-mixed-tabular-data" class="slide level2">
 <h2>23. SMOTE-NC for mixed tabular data</h2>
 <p><code>SMOTENC</code> is useful when predictors mix numerical and categorical columns.</p>
-<p>The categorical feature indices must refer to the matrix seen by the sampler, so preprocessing order matters.</p>
-</section>
-<section id="smote-nc-pipeline-note" class="slide level2">
-<h2>SMOTE-NC pipeline note</h2>
-<p>A common design is to apply <code>SMOTENC</code> before one-hot encoding, or to use preprocessing that keeps categorical columns identifiable at the sampler step.</p>
-<p>Be careful with plain SMOTE after one-hot encoding: interpolation can produce fractional category indicators.</p>
+<ul>
+<li>The categorical feature indices must refer to the matrix seen by the sampler, so preprocessing order matters.</li>
+<li>A common design is to apply <code>SMOTENC</code> before one-hot encoding, or to use preprocessing that keeps categorical columns identifiable at the sampler step.</li>
+<li>Be careful with plain SMOTE after one-hot encoding: interpolation can produce fractional category indicators.</li>
+</ul>
 </section>
 <section id="student-challenge" class="slide level2">
 <h2>24. Student challenge</h2>
@@ -2470,18 +2338,10 @@ forceTheme('sk-container-id-1');</script>
 <li>Tune the classification threshold.</li>
 <li>Defend the final choice with evidence.</li>
 </ol>
-</section>
-<section id="challenge-datasets" class="slide level2">
-<h2>Challenge datasets</h2>
-<p>Good options include:</p>
+<p>Challenge datasets</p>
 <ul>
 <li>Credit Card Fraud Detection on Kaggle.</li>
-<li>Default of Credit Card Clients on UCI.</li>
-<li>Bank Marketing on UCI.</li>
-<li>Credit Approval on UCI.</li>
-<li>Telco Customer Churn on Kaggle.</li>
 </ul>
-<p>Avoid optimizing only accuracy. Pick a metric that matches the scenario.</p>
 </section>
 <section id="references" class="title-slide slide level1 smaller scrollable">
 <h1>References</h1>
