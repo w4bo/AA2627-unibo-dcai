@@ -250,49 +250,53 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="setup" class="slide level2">
 <h2>1. Setup</h2>
 <p>If you run this lab in Google Colab or a minimal Python environment, run the following cell first.</p>
-<div id="904eb67b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="1">
+<p>The first setup cell installs only missing packages, so the notebook works in both prepared labs and minimal Colab sessions.</p>
+<div id="7ceef132" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">import</span> importlib.util</span>
-<span id="cb1-2"><a href="" aria-label="2"></a><span class="im">import</span> subprocess</span>
-<span id="cb1-3"><a href="" aria-label="3"></a><span class="im">import</span> sys</span>
-<span id="cb1-4"><a href="" aria-label="4"></a></span>
-<span id="cb1-5"><a href="" aria-label="5"></a>required_packages <span class="op">=</span> [<span class="st">"matplotlib"</span>, <span class="st">"numpy"</span>, <span class="st">"pandas"</span>, <span class="st">"sklearn"</span>]</span>
-<span id="cb1-6"><a href="" aria-label="6"></a>missing_packages <span class="op">=</span> [pkg <span class="cf">for</span> pkg <span class="kw">in</span> required_packages <span class="cf">if</span> importlib.util.find_spec(pkg) <span class="kw">is</span> <span class="va">None</span>]</span>
-<span id="cb1-7"><a href="" aria-label="7"></a></span>
-<span id="cb1-8"><a href="" aria-label="8"></a><span class="cf">if</span> missing_packages:</span>
-<span id="cb1-9"><a href="" aria-label="9"></a>    pip_names <span class="op">=</span> [<span class="st">"scikit-learn"</span> <span class="cf">if</span> pkg <span class="op">==</span> <span class="st">"sklearn"</span> <span class="cf">else</span> pkg <span class="cf">for</span> pkg <span class="kw">in</span> missing_packages]</span>
-<span id="cb1-10"><a href="" aria-label="10"></a>    subprocess.check_call([sys.executable, <span class="st">"-m"</span>, <span class="st">"pip"</span>, <span class="st">"install"</span>, <span class="st">"-q"</span>, <span class="op">*</span>pip_names])</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="co"># Install only the packages missing from the current runtime.</span></span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="im">import</span> importlib.util</span>
+<span id="cb1-3"><a href="" aria-label="3"></a><span class="im">import</span> subprocess</span>
+<span id="cb1-4"><a href="" aria-label="4"></a><span class="im">import</span> sys</span>
+<span id="cb1-5"><a href="" aria-label="5"></a></span>
+<span id="cb1-6"><a href="" aria-label="6"></a>required_packages <span class="op">=</span> [<span class="st">"matplotlib"</span>, <span class="st">"numpy"</span>, <span class="st">"pandas"</span>, <span class="st">"sklearn"</span>]</span>
+<span id="cb1-7"><a href="" aria-label="7"></a>missing_packages <span class="op">=</span> [pkg <span class="cf">for</span> pkg <span class="kw">in</span> required_packages <span class="cf">if</span> importlib.util.find_spec(pkg) <span class="kw">is</span> <span class="va">None</span>]</span>
+<span id="cb1-8"><a href="" aria-label="8"></a></span>
+<span id="cb1-9"><a href="" aria-label="9"></a><span class="cf">if</span> missing_packages:</span>
+<span id="cb1-10"><a href="" aria-label="10"></a>    pip_names <span class="op">=</span> [<span class="st">"scikit-learn"</span> <span class="cf">if</span> pkg <span class="op">==</span> <span class="st">"sklearn"</span> <span class="cf">else</span> pkg <span class="cf">for</span> pkg <span class="kw">in</span> missing_packages]</span>
+<span id="cb1-11"><a href="" aria-label="11"></a>    subprocess.check_call([sys.executable, <span class="st">"-m"</span>, <span class="st">"pip"</span>, <span class="st">"install"</span>, <span class="st">"-q"</span>, <span class="op">*</span>pip_names])</span></code></pre></div>
 </details>
 </div>
-<div id="aea1ba69" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="2">
+<div id="0635b172" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="im">import</span> math</span>
-<span id="cb2-2"><a href="" aria-label="2"></a><span class="im">import</span> warnings</span>
-<span id="cb2-3"><a href="" aria-label="3"></a></span>
-<span id="cb2-4"><a href="" aria-label="4"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-5"><a href="" aria-label="5"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-6"><a href="" aria-label="6"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-7"><a href="" aria-label="7"></a></span>
-<span id="cb2-8"><a href="" aria-label="8"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
-<span id="cb2-9"><a href="" aria-label="9"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_openml</span>
-<span id="cb2-10"><a href="" aria-label="10"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb2-11"><a href="" aria-label="11"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, balanced_accuracy_score, f1_score</span>
-<span id="cb2-12"><a href="" aria-label="12"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb2-13"><a href="" aria-label="13"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb2-14"><a href="" aria-label="14"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder, StandardScaler</span>
-<span id="cb2-15"><a href="" aria-label="15"></a></span>
-<span id="cb2-16"><a href="" aria-label="16"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
-<span id="cb2-17"><a href="" aria-label="17"></a>RANDOM_STATE <span class="op">=</span> <span class="dv">42</span></span>
-<span id="cb2-18"><a href="" aria-label="18"></a>rng <span class="op">=</span> np.random.default_rng(RANDOM_STATE)</span>
-<span id="cb2-19"><a href="" aria-label="19"></a>plt.style.use(<span class="st">"seaborn-v0_8-whitegrid"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="co"># Import data, modeling, and plotting tools used across the privacy lab.</span></span>
+<span id="cb2-2"><a href="" aria-label="2"></a><span class="im">import</span> math</span>
+<span id="cb2-3"><a href="" aria-label="3"></a><span class="im">import</span> warnings</span>
+<span id="cb2-4"><a href="" aria-label="4"></a></span>
+<span id="cb2-5"><a href="" aria-label="5"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-6"><a href="" aria-label="6"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-7"><a href="" aria-label="7"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-8"><a href="" aria-label="8"></a></span>
+<span id="cb2-9"><a href="" aria-label="9"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
+<span id="cb2-10"><a href="" aria-label="10"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_openml</span>
+<span id="cb2-11"><a href="" aria-label="11"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb2-12"><a href="" aria-label="12"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, balanced_accuracy_score, f1_score</span>
+<span id="cb2-13"><a href="" aria-label="13"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb2-14"><a href="" aria-label="14"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb2-15"><a href="" aria-label="15"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder, StandardScaler</span>
+<span id="cb2-16"><a href="" aria-label="16"></a></span>
+<span id="cb2-17"><a href="" aria-label="17"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
+<span id="cb2-18"><a href="" aria-label="18"></a>RANDOM_STATE <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb2-19"><a href="" aria-label="19"></a>rng <span class="op">=</span> np.random.default_rng(RANDOM_STATE)</span>
+<span id="cb2-20"><a href="" aria-label="20"></a>plt.style.use(<span class="st">"seaborn-v0_8-whitegrid"</span>)</span></code></pre></div>
 </details>
 </div>
 </section>
 <section id="load-adult-or-create-a-fallback" class="slide level2">
 <h2>2. Load Adult or Create a Fallback</h2>
-<h3 id="why-adult">Why Adult?</h3>
+<p>The loading section is designed to be resilient: OpenML is preferred, but the fallback preserves the same privacy concepts offline.</p>
+<p><strong>Why Adult?</strong></p>
 <p>Adult is useful for this lab because it has the ingredients of a privacy-preserving data publishing problem:</p>
 <ul>
 <li>demographic attributes that can act as quasi-identifiers;</li>
@@ -301,77 +305,78 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>mixed numerical and categorical features, as in many operational datasets.</li>
 </ul>
 <p>The fallback dataset preserves the same teaching structure when internet access is unavailable.</p>
-<div id="ac8526ea" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="3">
+<div id="9bcd1d6b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="co"># Normalize column names so later code works with both OpenML and fallback data.</span></span>
-<span id="cb3-2"><a href="" aria-label="2"></a><span class="kw">def</span> normalize_columns(df):</span>
-<span id="cb3-3"><a href="" aria-label="3"></a>    df <span class="op">=</span> df.copy()</span>
-<span id="cb3-4"><a href="" aria-label="4"></a>    df.columns <span class="op">=</span> [c.strip().lower().replace(<span class="st">"-"</span>, <span class="st">"_"</span>) <span class="cf">for</span> c <span class="kw">in</span> df.columns]</span>
-<span id="cb3-5"><a href="" aria-label="5"></a>    <span class="cf">return</span> df</span>
-<span id="cb3-6"><a href="" aria-label="6"></a></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="co"># Load Adult when available; otherwise create a synthetic table with the same teaching roles.</span></span>
+<span id="cb3-2"><a href="" aria-label="2"></a><span class="co"># Normalize column names so later code works with both OpenML and fallback data.</span></span>
+<span id="cb3-3"><a href="" aria-label="3"></a><span class="kw">def</span> normalize_columns(df):</span>
+<span id="cb3-4"><a href="" aria-label="4"></a>    df <span class="op">=</span> df.copy()</span>
+<span id="cb3-5"><a href="" aria-label="5"></a>    df.columns <span class="op">=</span> [c.strip().lower().replace(<span class="st">"-"</span>, <span class="st">"_"</span>) <span class="cf">for</span> c <span class="kw">in</span> df.columns]</span>
+<span id="cb3-6"><a href="" aria-label="6"></a>    <span class="cf">return</span> df</span>
 <span id="cb3-7"><a href="" aria-label="7"></a></span>
-<span id="cb3-8"><a href="" aria-label="8"></a><span class="kw">def</span> make_synthetic_adult(n<span class="op">=</span><span class="dv">8000</span>, random_state<span class="op">=</span>RANDOM_STATE):</span>
-<span id="cb3-9"><a href="" aria-label="9"></a>    rng <span class="op">=</span> np.random.default_rng(random_state)</span>
-<span id="cb3-10"><a href="" aria-label="10"></a>    age <span class="op">=</span> rng.integers(<span class="dv">18</span>, <span class="dv">75</span>, n)</span>
-<span id="cb3-11"><a href="" aria-label="11"></a>    education_num <span class="op">=</span> rng.choice(np.arange(<span class="dv">1</span>, <span class="dv">17</span>), n, p<span class="op">=</span>np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">12</span>, <span class="dv">5</span>]) <span class="op">/</span> <span class="dv">100</span>)</span>
-<span id="cb3-12"><a href="" aria-label="12"></a>    hours_per_week <span class="op">=</span> np.clip(rng.normal(<span class="dv">40</span>, <span class="dv">12</span>, n).<span class="bu">round</span>(), <span class="dv">1</span>, <span class="dv">80</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb3-13"><a href="" aria-label="13"></a>    sex <span class="op">=</span> rng.choice([<span class="st">"Female"</span>, <span class="st">"Male"</span>], n, p<span class="op">=</span>[<span class="fl">0.48</span>, <span class="fl">0.52</span>])</span>
-<span id="cb3-14"><a href="" aria-label="14"></a>    race <span class="op">=</span> rng.choice([<span class="st">"White"</span>, <span class="st">"Black"</span>, <span class="st">"Asian-Pac-Islander"</span>, <span class="st">"Amer-Indian-Eskimo"</span>, <span class="st">"Other"</span>], n, p<span class="op">=</span>[<span class="fl">0.78</span>, <span class="fl">0.10</span>, <span class="fl">0.07</span>, <span class="fl">0.02</span>, <span class="fl">0.03</span>])</span>
-<span id="cb3-15"><a href="" aria-label="15"></a>    marital_status <span class="op">=</span> rng.choice([<span class="st">"Never-married"</span>, <span class="st">"Married-civ-spouse"</span>, <span class="st">"Divorced"</span>, <span class="st">"Separated"</span>, <span class="st">"Widowed"</span>], n, p<span class="op">=</span>[<span class="fl">0.34</span>, <span class="fl">0.44</span>, <span class="fl">0.12</span>, <span class="fl">0.06</span>, <span class="fl">0.04</span>])</span>
-<span id="cb3-16"><a href="" aria-label="16"></a>    workclass <span class="op">=</span> rng.choice([<span class="st">"Private"</span>, <span class="st">"Self-emp"</span>, <span class="st">"Government"</span>, <span class="st">"Without-pay"</span>], n, p<span class="op">=</span>[<span class="fl">0.74</span>, <span class="fl">0.10</span>, <span class="fl">0.15</span>, <span class="fl">0.01</span>])</span>
-<span id="cb3-17"><a href="" aria-label="17"></a>    occupation <span class="op">=</span> rng.choice([<span class="st">"Sales"</span>, <span class="st">"Craft-repair"</span>, <span class="st">"Exec-managerial"</span>, <span class="st">"Prof-specialty"</span>, <span class="st">"Service"</span>, <span class="st">"Admin-clerical"</span>], n)</span>
-<span id="cb3-18"><a href="" aria-label="18"></a>    native_country <span class="op">=</span> rng.choice([<span class="st">"United-States"</span>, <span class="st">"Mexico"</span>, <span class="st">"Philippines"</span>, <span class="st">"Germany"</span>, <span class="st">"Canada"</span>, <span class="st">"Other"</span>], n, p<span class="op">=</span>[<span class="fl">0.84</span>, <span class="fl">0.05</span>, <span class="fl">0.03</span>, <span class="fl">0.02</span>, <span class="fl">0.02</span>, <span class="fl">0.04</span>])</span>
-<span id="cb3-19"><a href="" aria-label="19"></a></span>
-<span id="cb3-20"><a href="" aria-label="20"></a>    logit <span class="op">=</span> (</span>
-<span id="cb3-21"><a href="" aria-label="21"></a>        <span class="op">-</span><span class="fl">5.0</span></span>
-<span id="cb3-22"><a href="" aria-label="22"></a>        <span class="op">+</span> <span class="fl">0.045</span> <span class="op">*</span> age</span>
-<span id="cb3-23"><a href="" aria-label="23"></a>        <span class="op">+</span> <span class="fl">0.28</span> <span class="op">*</span> education_num</span>
-<span id="cb3-24"><a href="" aria-label="24"></a>        <span class="op">+</span> <span class="fl">0.025</span> <span class="op">*</span> hours_per_week</span>
-<span id="cb3-25"><a href="" aria-label="25"></a>        <span class="op">+</span> <span class="fl">0.85</span> <span class="op">*</span> (marital_status <span class="op">==</span> <span class="st">"Married-civ-spouse"</span>)</span>
-<span id="cb3-26"><a href="" aria-label="26"></a>        <span class="op">+</span> <span class="fl">0.45</span> <span class="op">*</span> np.isin(occupation, [<span class="st">"Exec-managerial"</span>, <span class="st">"Prof-specialty"</span>])</span>
-<span id="cb3-27"><a href="" aria-label="27"></a>        <span class="op">+</span> <span class="fl">0.25</span> <span class="op">*</span> (sex <span class="op">==</span> <span class="st">"Male"</span>)</span>
-<span id="cb3-28"><a href="" aria-label="28"></a>    )</span>
-<span id="cb3-29"><a href="" aria-label="29"></a>    p_high_income <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>logit))</span>
-<span id="cb3-30"><a href="" aria-label="30"></a>    income <span class="op">=</span> np.where(rng.binomial(<span class="dv">1</span>, p_high_income), <span class="st">"&gt;50K"</span>, <span class="st">"&lt;=50K"</span>)</span>
-<span id="cb3-31"><a href="" aria-label="31"></a></span>
-<span id="cb3-32"><a href="" aria-label="32"></a>    <span class="cf">return</span> pd.DataFrame(</span>
-<span id="cb3-33"><a href="" aria-label="33"></a>        {</span>
-<span id="cb3-34"><a href="" aria-label="34"></a>            <span class="st">"age"</span>: age,</span>
-<span id="cb3-35"><a href="" aria-label="35"></a>            <span class="st">"workclass"</span>: workclass,</span>
-<span id="cb3-36"><a href="" aria-label="36"></a>            <span class="st">"education_num"</span>: education_num,</span>
-<span id="cb3-37"><a href="" aria-label="37"></a>            <span class="st">"marital_status"</span>: marital_status,</span>
-<span id="cb3-38"><a href="" aria-label="38"></a>            <span class="st">"occupation"</span>: occupation,</span>
-<span id="cb3-39"><a href="" aria-label="39"></a>            <span class="st">"race"</span>: race,</span>
-<span id="cb3-40"><a href="" aria-label="40"></a>            <span class="st">"sex"</span>: sex,</span>
-<span id="cb3-41"><a href="" aria-label="41"></a>            <span class="st">"hours_per_week"</span>: hours_per_week,</span>
-<span id="cb3-42"><a href="" aria-label="42"></a>            <span class="st">"native_country"</span>: native_country,</span>
-<span id="cb3-43"><a href="" aria-label="43"></a>            <span class="st">"income"</span>: income,</span>
-<span id="cb3-44"><a href="" aria-label="44"></a>        }</span>
-<span id="cb3-45"><a href="" aria-label="45"></a>    )</span>
-<span id="cb3-46"><a href="" aria-label="46"></a></span>
+<span id="cb3-8"><a href="" aria-label="8"></a></span>
+<span id="cb3-9"><a href="" aria-label="9"></a><span class="kw">def</span> make_synthetic_adult(n<span class="op">=</span><span class="dv">8000</span>, random_state<span class="op">=</span>RANDOM_STATE):</span>
+<span id="cb3-10"><a href="" aria-label="10"></a>    rng <span class="op">=</span> np.random.default_rng(random_state)</span>
+<span id="cb3-11"><a href="" aria-label="11"></a>    age <span class="op">=</span> rng.integers(<span class="dv">18</span>, <span class="dv">75</span>, n)</span>
+<span id="cb3-12"><a href="" aria-label="12"></a>    education_num <span class="op">=</span> rng.choice(np.arange(<span class="dv">1</span>, <span class="dv">17</span>), n, p<span class="op">=</span>np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">12</span>, <span class="dv">5</span>]) <span class="op">/</span> <span class="dv">100</span>)</span>
+<span id="cb3-13"><a href="" aria-label="13"></a>    hours_per_week <span class="op">=</span> np.clip(rng.normal(<span class="dv">40</span>, <span class="dv">12</span>, n).<span class="bu">round</span>(), <span class="dv">1</span>, <span class="dv">80</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb3-14"><a href="" aria-label="14"></a>    sex <span class="op">=</span> rng.choice([<span class="st">"Female"</span>, <span class="st">"Male"</span>], n, p<span class="op">=</span>[<span class="fl">0.48</span>, <span class="fl">0.52</span>])</span>
+<span id="cb3-15"><a href="" aria-label="15"></a>    race <span class="op">=</span> rng.choice([<span class="st">"White"</span>, <span class="st">"Black"</span>, <span class="st">"Asian-Pac-Islander"</span>, <span class="st">"Amer-Indian-Eskimo"</span>, <span class="st">"Other"</span>], n, p<span class="op">=</span>[<span class="fl">0.78</span>, <span class="fl">0.10</span>, <span class="fl">0.07</span>, <span class="fl">0.02</span>, <span class="fl">0.03</span>])</span>
+<span id="cb3-16"><a href="" aria-label="16"></a>    marital_status <span class="op">=</span> rng.choice([<span class="st">"Never-married"</span>, <span class="st">"Married-civ-spouse"</span>, <span class="st">"Divorced"</span>, <span class="st">"Separated"</span>, <span class="st">"Widowed"</span>], n, p<span class="op">=</span>[<span class="fl">0.34</span>, <span class="fl">0.44</span>, <span class="fl">0.12</span>, <span class="fl">0.06</span>, <span class="fl">0.04</span>])</span>
+<span id="cb3-17"><a href="" aria-label="17"></a>    workclass <span class="op">=</span> rng.choice([<span class="st">"Private"</span>, <span class="st">"Self-emp"</span>, <span class="st">"Government"</span>, <span class="st">"Without-pay"</span>], n, p<span class="op">=</span>[<span class="fl">0.74</span>, <span class="fl">0.10</span>, <span class="fl">0.15</span>, <span class="fl">0.01</span>])</span>
+<span id="cb3-18"><a href="" aria-label="18"></a>    occupation <span class="op">=</span> rng.choice([<span class="st">"Sales"</span>, <span class="st">"Craft-repair"</span>, <span class="st">"Exec-managerial"</span>, <span class="st">"Prof-specialty"</span>, <span class="st">"Service"</span>, <span class="st">"Admin-clerical"</span>], n)</span>
+<span id="cb3-19"><a href="" aria-label="19"></a>    native_country <span class="op">=</span> rng.choice([<span class="st">"United-States"</span>, <span class="st">"Mexico"</span>, <span class="st">"Philippines"</span>, <span class="st">"Germany"</span>, <span class="st">"Canada"</span>, <span class="st">"Other"</span>], n, p<span class="op">=</span>[<span class="fl">0.84</span>, <span class="fl">0.05</span>, <span class="fl">0.03</span>, <span class="fl">0.02</span>, <span class="fl">0.02</span>, <span class="fl">0.04</span>])</span>
+<span id="cb3-20"><a href="" aria-label="20"></a></span>
+<span id="cb3-21"><a href="" aria-label="21"></a>    logit <span class="op">=</span> (</span>
+<span id="cb3-22"><a href="" aria-label="22"></a>        <span class="op">-</span><span class="fl">5.0</span></span>
+<span id="cb3-23"><a href="" aria-label="23"></a>        <span class="op">+</span> <span class="fl">0.045</span> <span class="op">*</span> age</span>
+<span id="cb3-24"><a href="" aria-label="24"></a>        <span class="op">+</span> <span class="fl">0.28</span> <span class="op">*</span> education_num</span>
+<span id="cb3-25"><a href="" aria-label="25"></a>        <span class="op">+</span> <span class="fl">0.025</span> <span class="op">*</span> hours_per_week</span>
+<span id="cb3-26"><a href="" aria-label="26"></a>        <span class="op">+</span> <span class="fl">0.85</span> <span class="op">*</span> (marital_status <span class="op">==</span> <span class="st">"Married-civ-spouse"</span>)</span>
+<span id="cb3-27"><a href="" aria-label="27"></a>        <span class="op">+</span> <span class="fl">0.45</span> <span class="op">*</span> np.isin(occupation, [<span class="st">"Exec-managerial"</span>, <span class="st">"Prof-specialty"</span>])</span>
+<span id="cb3-28"><a href="" aria-label="28"></a>        <span class="op">+</span> <span class="fl">0.25</span> <span class="op">*</span> (sex <span class="op">==</span> <span class="st">"Male"</span>)</span>
+<span id="cb3-29"><a href="" aria-label="29"></a>    )</span>
+<span id="cb3-30"><a href="" aria-label="30"></a>    p_high_income <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>logit))</span>
+<span id="cb3-31"><a href="" aria-label="31"></a>    income <span class="op">=</span> np.where(rng.binomial(<span class="dv">1</span>, p_high_income), <span class="st">"&gt;50K"</span>, <span class="st">"&lt;=50K"</span>)</span>
+<span id="cb3-32"><a href="" aria-label="32"></a></span>
+<span id="cb3-33"><a href="" aria-label="33"></a>    <span class="cf">return</span> pd.DataFrame(</span>
+<span id="cb3-34"><a href="" aria-label="34"></a>        {</span>
+<span id="cb3-35"><a href="" aria-label="35"></a>            <span class="st">"age"</span>: age,</span>
+<span id="cb3-36"><a href="" aria-label="36"></a>            <span class="st">"workclass"</span>: workclass,</span>
+<span id="cb3-37"><a href="" aria-label="37"></a>            <span class="st">"education_num"</span>: education_num,</span>
+<span id="cb3-38"><a href="" aria-label="38"></a>            <span class="st">"marital_status"</span>: marital_status,</span>
+<span id="cb3-39"><a href="" aria-label="39"></a>            <span class="st">"occupation"</span>: occupation,</span>
+<span id="cb3-40"><a href="" aria-label="40"></a>            <span class="st">"race"</span>: race,</span>
+<span id="cb3-41"><a href="" aria-label="41"></a>            <span class="st">"sex"</span>: sex,</span>
+<span id="cb3-42"><a href="" aria-label="42"></a>            <span class="st">"hours_per_week"</span>: hours_per_week,</span>
+<span id="cb3-43"><a href="" aria-label="43"></a>            <span class="st">"native_country"</span>: native_country,</span>
+<span id="cb3-44"><a href="" aria-label="44"></a>            <span class="st">"income"</span>: income,</span>
+<span id="cb3-45"><a href="" aria-label="45"></a>        }</span>
+<span id="cb3-46"><a href="" aria-label="46"></a>    )</span>
 <span id="cb3-47"><a href="" aria-label="47"></a></span>
-<span id="cb3-48"><a href="" aria-label="48"></a><span class="kw">def</span> load_adult_sample(n<span class="op">=</span><span class="dv">8000</span>):</span>
-<span id="cb3-49"><a href="" aria-label="49"></a>    <span class="cf">try</span>:</span>
-<span id="cb3-50"><a href="" aria-label="50"></a>        adult <span class="op">=</span> fetch_openml(<span class="st">"adult"</span>, version<span class="op">=</span><span class="dv">2</span>, as_frame<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-51"><a href="" aria-label="51"></a>        df <span class="op">=</span> normalize_columns(adult.frame)</span>
-<span id="cb3-52"><a href="" aria-label="52"></a>        target_name <span class="op">=</span> adult.target.name.lower().replace(<span class="st">"-"</span>, <span class="st">"_"</span>)</span>
-<span id="cb3-53"><a href="" aria-label="53"></a>        <span class="cf">if</span> <span class="st">"class"</span> <span class="kw">in</span> df.columns <span class="kw">and</span> <span class="st">"income"</span> <span class="kw">not</span> <span class="kw">in</span> df.columns:</span>
-<span id="cb3-54"><a href="" aria-label="54"></a>            df <span class="op">=</span> df.rename(columns<span class="op">=</span>{<span class="st">"class"</span>: <span class="st">"income"</span>})</span>
-<span id="cb3-55"><a href="" aria-label="55"></a>        <span class="cf">elif</span> target_name <span class="kw">in</span> df.columns <span class="kw">and</span> target_name <span class="op">!=</span> <span class="st">"income"</span>:</span>
-<span id="cb3-56"><a href="" aria-label="56"></a>            df <span class="op">=</span> df.rename(columns<span class="op">=</span>{target_name: <span class="st">"income"</span>})</span>
-<span id="cb3-57"><a href="" aria-label="57"></a>        df <span class="op">=</span> df.replace(<span class="st">"?"</span>, np.nan).dropna()</span>
-<span id="cb3-58"><a href="" aria-label="58"></a>        df[<span class="st">"income"</span>] <span class="op">=</span> df[<span class="st">"income"</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.replace(<span class="st">"."</span>, <span class="st">""</span>, regex<span class="op">=</span><span class="va">False</span>).<span class="bu">str</span>.strip()</span>
-<span id="cb3-59"><a href="" aria-label="59"></a>        <span class="cf">return</span> df.sample(n<span class="op">=</span><span class="bu">min</span>(n, <span class="bu">len</span>(df)), random_state<span class="op">=</span>RANDOM_STATE).reset_index(drop<span class="op">=</span><span class="va">True</span>), <span class="st">"OpenML Adult"</span></span>
-<span id="cb3-60"><a href="" aria-label="60"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> exc:</span>
-<span id="cb3-61"><a href="" aria-label="61"></a>        <span class="bu">print</span>(<span class="ss">f"Using synthetic fallback because Adult could not be downloaded: </span><span class="sc">{</span>exc<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-62"><a href="" aria-label="62"></a>        <span class="cf">return</span> make_synthetic_adult(n<span class="op">=</span>n), <span class="st">"Synthetic Adult-like fallback"</span></span>
-<span id="cb3-63"><a href="" aria-label="63"></a></span>
+<span id="cb3-48"><a href="" aria-label="48"></a></span>
+<span id="cb3-49"><a href="" aria-label="49"></a><span class="kw">def</span> load_adult_sample(n<span class="op">=</span><span class="dv">8000</span>):</span>
+<span id="cb3-50"><a href="" aria-label="50"></a>    <span class="cf">try</span>:</span>
+<span id="cb3-51"><a href="" aria-label="51"></a>        adult <span class="op">=</span> fetch_openml(<span class="st">"adult"</span>, version<span class="op">=</span><span class="dv">2</span>, as_frame<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-52"><a href="" aria-label="52"></a>        df <span class="op">=</span> normalize_columns(adult.frame)</span>
+<span id="cb3-53"><a href="" aria-label="53"></a>        target_name <span class="op">=</span> adult.target.name.lower().replace(<span class="st">"-"</span>, <span class="st">"_"</span>)</span>
+<span id="cb3-54"><a href="" aria-label="54"></a>        <span class="cf">if</span> <span class="st">"class"</span> <span class="kw">in</span> df.columns <span class="kw">and</span> <span class="st">"income"</span> <span class="kw">not</span> <span class="kw">in</span> df.columns:</span>
+<span id="cb3-55"><a href="" aria-label="55"></a>            df <span class="op">=</span> df.rename(columns<span class="op">=</span>{<span class="st">"class"</span>: <span class="st">"income"</span>})</span>
+<span id="cb3-56"><a href="" aria-label="56"></a>        <span class="cf">elif</span> target_name <span class="kw">in</span> df.columns <span class="kw">and</span> target_name <span class="op">!=</span> <span class="st">"income"</span>:</span>
+<span id="cb3-57"><a href="" aria-label="57"></a>            df <span class="op">=</span> df.rename(columns<span class="op">=</span>{target_name: <span class="st">"income"</span>})</span>
+<span id="cb3-58"><a href="" aria-label="58"></a>        df <span class="op">=</span> df.replace(<span class="st">"?"</span>, np.nan).dropna()</span>
+<span id="cb3-59"><a href="" aria-label="59"></a>        df[<span class="st">"income"</span>] <span class="op">=</span> df[<span class="st">"income"</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.replace(<span class="st">"."</span>, <span class="st">""</span>, regex<span class="op">=</span><span class="va">False</span>).<span class="bu">str</span>.strip()</span>
+<span id="cb3-60"><a href="" aria-label="60"></a>        <span class="cf">return</span> df.sample(n<span class="op">=</span><span class="bu">min</span>(n, <span class="bu">len</span>(df)), random_state<span class="op">=</span>RANDOM_STATE).reset_index(drop<span class="op">=</span><span class="va">True</span>), <span class="st">"OpenML Adult"</span></span>
+<span id="cb3-61"><a href="" aria-label="61"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> exc:</span>
+<span id="cb3-62"><a href="" aria-label="62"></a>        <span class="bu">print</span>(<span class="ss">f"Using synthetic fallback because Adult could not be downloaded: </span><span class="sc">{</span>exc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-63"><a href="" aria-label="63"></a>        <span class="cf">return</span> make_synthetic_adult(n<span class="op">=</span>n), <span class="st">"Synthetic Adult-like fallback"</span></span>
 <span id="cb3-64"><a href="" aria-label="64"></a></span>
-<span id="cb3-65"><a href="" aria-label="65"></a>df, data_source <span class="op">=</span> load_adult_sample()</span>
-<span id="cb3-66"><a href="" aria-label="66"></a><span class="bu">print</span>(data_source)</span>
-<span id="cb3-67"><a href="" aria-label="67"></a>display(df.head())</span>
-<span id="cb3-68"><a href="" aria-label="68"></a>display(df[<span class="st">"income"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"income_share"</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+<span id="cb3-65"><a href="" aria-label="65"></a></span>
+<span id="cb3-66"><a href="" aria-label="66"></a>df, data_source <span class="op">=</span> load_adult_sample()</span>
+<span id="cb3-67"><a href="" aria-label="67"></a><span class="bu">print</span>(data_source)</span>
+<span id="cb3-68"><a href="" aria-label="68"></a>display(df.head())</span>
+<span id="cb3-69"><a href="" aria-label="69"></a>display(df[<span class="st">"income"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"income_share"</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>OpenML Adult</code></pre>
@@ -524,17 +529,19 @@ Name: income_share, dtype: float64</code></pre>
 <li>Quasi-identifiers are demographic attributes that can help link a record to a person.</li>
 <li>The sensitive attribute is <code>income</code>, because the released table may reveal whether a person earns <code>&gt;50K</code>.</li>
 </ul>
-<h3 id="modeling-choice">Modeling choice</h3>
+<p>This role assignment is the privacy model for the lab. Different assumptions would change the risk analysis.</p>
+<p><strong>Modeling choice</strong></p>
 <p>The same raw column can play different privacy roles in different settings.</p>
 <p>In this lab, <code>income</code> is treated as sensitive because attribute disclosure would reveal a private economic fact. The demographic variables are treated as quasi-identifiers because an attacker may know them from public records, social media, or context.</p>
 <p>This choice is deliberately debatable. A good privacy analysis should always state it explicitly.</p>
-<div id="72f5cbb4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="4">
+<div id="74b52f77" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>base_qi <span class="op">=</span> [<span class="st">"age"</span>, <span class="st">"education_num"</span>, <span class="st">"marital_status"</span>, <span class="st">"race"</span>, <span class="st">"sex"</span>, <span class="st">"native_country"</span>]</span>
-<span id="cb6-2"><a href="" aria-label="2"></a>sensitive <span class="op">=</span> <span class="st">"income"</span></span>
-<span id="cb6-3"><a href="" aria-label="3"></a></span>
-<span id="cb6-4"><a href="" aria-label="4"></a>df[base_qi <span class="op">+</span> [sensitive]].head()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="co"># Declare the quasi-identifiers and sensitive attribute that define the threat model.</span></span>
+<span id="cb6-2"><a href="" aria-label="2"></a>base_qi <span class="op">=</span> [<span class="st">"age"</span>, <span class="st">"education_num"</span>, <span class="st">"marital_status"</span>, <span class="st">"race"</span>, <span class="st">"sex"</span>, <span class="st">"native_country"</span>]</span>
+<span id="cb6-3"><a href="" aria-label="3"></a>sensitive <span class="op">=</span> <span class="st">"income"</span></span>
+<span id="cb6-4"><a href="" aria-label="4"></a></span>
+<span id="cb6-5"><a href="" aria-label="5"></a>df[base_qi <span class="op">+</span> [sensitive]].head()</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
@@ -626,31 +633,33 @@ Name: income_share, dtype: float64</code></pre>
 <section id="a-linkage-risk-baseline" class="slide level2">
 <h2>4. A Linkage Risk Baseline</h2>
 <p>The smallest equivalence class is the dataset’s k-anonymity level for the chosen quasi-identifiers.</p>
-<div id="4bef92f3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="5">
+<p>The baseline risk report quantifies how exposed the raw table is before any privacy transformation.</p>
+<div id="795daa5f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># Equivalence classes are groups sharing the same quasi-identifier values.</span></span>
-<span id="cb7-2"><a href="" aria-label="2"></a><span class="kw">def</span> equivalence_class_sizes(data, qi_cols):</span>
-<span id="cb7-3"><a href="" aria-label="3"></a>    <span class="cf">return</span> data.groupby(qi_cols, dropna<span class="op">=</span><span class="va">False</span>).size().rename(<span class="st">"equivalence_class_size"</span>)</span>
-<span id="cb7-4"><a href="" aria-label="4"></a></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># Summarize linkage risk through equivalence-class sizes.</span></span>
+<span id="cb7-2"><a href="" aria-label="2"></a><span class="co"># Equivalence classes are groups sharing the same quasi-identifier values.</span></span>
+<span id="cb7-3"><a href="" aria-label="3"></a><span class="kw">def</span> equivalence_class_sizes(data, qi_cols):</span>
+<span id="cb7-4"><a href="" aria-label="4"></a>    <span class="cf">return</span> data.groupby(qi_cols, dropna<span class="op">=</span><span class="va">False</span>).size().rename(<span class="st">"equivalence_class_size"</span>)</span>
 <span id="cb7-5"><a href="" aria-label="5"></a></span>
-<span id="cb7-6"><a href="" aria-label="6"></a><span class="kw">def</span> risk_report(data, qi_cols):</span>
-<span id="cb7-7"><a href="" aria-label="7"></a>    sizes <span class="op">=</span> equivalence_class_sizes(data, qi_cols)</span>
-<span id="cb7-8"><a href="" aria-label="8"></a>    row_sizes <span class="op">=</span> data.merge(sizes.reset_index(), on<span class="op">=</span>qi_cols, how<span class="op">=</span><span class="st">"left"</span>)[<span class="st">"equivalence_class_size"</span>]</span>
-<span id="cb7-9"><a href="" aria-label="9"></a>    <span class="cf">return</span> pd.Series(</span>
-<span id="cb7-10"><a href="" aria-label="10"></a>        {</span>
-<span id="cb7-11"><a href="" aria-label="11"></a>            <span class="st">"records"</span>: <span class="bu">len</span>(data),</span>
-<span id="cb7-12"><a href="" aria-label="12"></a>            <span class="st">"equivalence_classes"</span>: <span class="bu">len</span>(sizes),</span>
-<span id="cb7-13"><a href="" aria-label="13"></a>            <span class="st">"k_min"</span>: <span class="bu">int</span>(sizes.<span class="bu">min</span>()),</span>
-<span id="cb7-14"><a href="" aria-label="14"></a>            <span class="st">"share_unique"</span>: <span class="bu">float</span>((row_sizes <span class="op">==</span> <span class="dv">1</span>).mean()),</span>
-<span id="cb7-15"><a href="" aria-label="15"></a>            <span class="st">"share_in_classes_lt_5"</span>: <span class="bu">float</span>((row_sizes <span class="op">&lt;</span> <span class="dv">5</span>).mean()),</span>
-<span id="cb7-16"><a href="" aria-label="16"></a>            <span class="st">"median_class_size"</span>: <span class="bu">float</span>(row_sizes.median()),</span>
-<span id="cb7-17"><a href="" aria-label="17"></a>        }</span>
-<span id="cb7-18"><a href="" aria-label="18"></a>    )</span>
-<span id="cb7-19"><a href="" aria-label="19"></a></span>
+<span id="cb7-6"><a href="" aria-label="6"></a></span>
+<span id="cb7-7"><a href="" aria-label="7"></a><span class="kw">def</span> risk_report(data, qi_cols):</span>
+<span id="cb7-8"><a href="" aria-label="8"></a>    sizes <span class="op">=</span> equivalence_class_sizes(data, qi_cols)</span>
+<span id="cb7-9"><a href="" aria-label="9"></a>    row_sizes <span class="op">=</span> data.merge(sizes.reset_index(), on<span class="op">=</span>qi_cols, how<span class="op">=</span><span class="st">"left"</span>)[<span class="st">"equivalence_class_size"</span>]</span>
+<span id="cb7-10"><a href="" aria-label="10"></a>    <span class="cf">return</span> pd.Series(</span>
+<span id="cb7-11"><a href="" aria-label="11"></a>        {</span>
+<span id="cb7-12"><a href="" aria-label="12"></a>            <span class="st">"records"</span>: <span class="bu">len</span>(data),</span>
+<span id="cb7-13"><a href="" aria-label="13"></a>            <span class="st">"equivalence_classes"</span>: <span class="bu">len</span>(sizes),</span>
+<span id="cb7-14"><a href="" aria-label="14"></a>            <span class="st">"k_min"</span>: <span class="bu">int</span>(sizes.<span class="bu">min</span>()),</span>
+<span id="cb7-15"><a href="" aria-label="15"></a>            <span class="st">"share_unique"</span>: <span class="bu">float</span>((row_sizes <span class="op">==</span> <span class="dv">1</span>).mean()),</span>
+<span id="cb7-16"><a href="" aria-label="16"></a>            <span class="st">"share_in_classes_lt_5"</span>: <span class="bu">float</span>((row_sizes <span class="op">&lt;</span> <span class="dv">5</span>).mean()),</span>
+<span id="cb7-17"><a href="" aria-label="17"></a>            <span class="st">"median_class_size"</span>: <span class="bu">float</span>(row_sizes.median()),</span>
+<span id="cb7-18"><a href="" aria-label="18"></a>        }</span>
+<span id="cb7-19"><a href="" aria-label="19"></a>    )</span>
 <span id="cb7-20"><a href="" aria-label="20"></a></span>
-<span id="cb7-21"><a href="" aria-label="21"></a>baseline_risk <span class="op">=</span> risk_report(df, base_qi)</span>
-<span id="cb7-22"><a href="" aria-label="22"></a>baseline_risk.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<span id="cb7-21"><a href="" aria-label="21"></a></span>
+<span id="cb7-22"><a href="" aria-label="22"></a>baseline_risk <span class="op">=</span> risk_report(df, base_qi)</span>
+<span id="cb7-23"><a href="" aria-label="23"></a>baseline_risk.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>records                  8000.000
@@ -662,13 +671,14 @@ median_class_size           4.000
 dtype: float64</code></pre>
 </div>
 </div>
-<h3 id="exercise">Exercise</h3>
+<p><strong>Exercise</strong></p>
 <p>Interpret <code>share_unique</code>. If an attacker knows a person’s exact values for the selected quasi-identifiers, what does this number mean?</p>
 </section>
 <section id="generalization" class="slide level2">
 <h2>5. Generalization</h2>
 <p>Generalization replaces precise values with coarser values. Here we use age bins, education bins, broad marital status, and broad country groups.</p>
-<h3 id="what-generalization-does">What generalization does</h3>
+<p>Generalization is the first privacy knob: wider bins usually improve anonymity while removing detail.</p>
+<p><strong>What generalization does</strong></p>
 <p>Generalization trades precision for larger anonymity sets.</p>
 <p>Examples:</p>
 <ul>
@@ -678,48 +688,49 @@ dtype: float64</code></pre>
 <li>detailed marital categories become <code>Married</code> or <code>Not married</code>.</li>
 </ul>
 <p>The analyst keeps a usable table, but loses fine-grained distinctions.</p>
-<div id="f4e82975" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="6">
+<div id="589f070a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="co"># Coarsen country values so rare countries are less identifying.</span></span>
-<span id="cb9-2"><a href="" aria-label="2"></a><span class="kw">def</span> country_region(value):</span>
-<span id="cb9-3"><a href="" aria-label="3"></a>    value <span class="op">=</span> <span class="bu">str</span>(value)</span>
-<span id="cb9-4"><a href="" aria-label="4"></a>    <span class="cf">if</span> value <span class="op">==</span> <span class="st">"United-States"</span>:</span>
-<span id="cb9-5"><a href="" aria-label="5"></a>        <span class="cf">return</span> <span class="st">"US"</span></span>
-<span id="cb9-6"><a href="" aria-label="6"></a>    <span class="cf">if</span> value <span class="kw">in</span> {<span class="st">"Canada"</span>, <span class="st">"Mexico"</span>}:</span>
-<span id="cb9-7"><a href="" aria-label="7"></a>        <span class="cf">return</span> <span class="st">"North America other"</span></span>
-<span id="cb9-8"><a href="" aria-label="8"></a>    <span class="cf">if</span> value <span class="kw">in</span> {<span class="st">"England"</span>, <span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Italy"</span>, <span class="st">"Portugal"</span>, <span class="st">"Poland"</span>, <span class="st">"Greece"</span>, <span class="st">"Ireland"</span>, <span class="st">"Scotland"</span>, <span class="st">"Hungary"</span>, <span class="st">"Yugoslavia"</span>, <span class="st">"Holand-Netherlands"</span>}:</span>
-<span id="cb9-9"><a href="" aria-label="9"></a>        <span class="cf">return</span> <span class="st">"Europe"</span></span>
-<span id="cb9-10"><a href="" aria-label="10"></a>    <span class="cf">if</span> value <span class="kw">in</span> {<span class="st">"China"</span>, <span class="st">"Japan"</span>, <span class="st">"India"</span>, <span class="st">"Iran"</span>, <span class="st">"Philippines"</span>, <span class="st">"Vietnam"</span>, <span class="st">"Taiwan"</span>, <span class="st">"Thailand"</span>, <span class="st">"Cambodia"</span>, <span class="st">"Laos"</span>, <span class="st">"Hong"</span>, <span class="st">"South"</span>}:</span>
-<span id="cb9-11"><a href="" aria-label="11"></a>        <span class="cf">return</span> <span class="st">"Asia"</span></span>
-<span id="cb9-12"><a href="" aria-label="12"></a>    <span class="cf">if</span> value <span class="kw">in</span> {<span class="st">"Cuba"</span>, <span class="st">"Jamaica"</span>, <span class="st">"Haiti"</span>, <span class="st">"Dominican-Republic"</span>, <span class="st">"Puerto-Rico"</span>, <span class="st">"Columbia"</span>, <span class="st">"Ecuador"</span>, <span class="st">"El-Salvador"</span>, <span class="st">"Guatemala"</span>, <span class="st">"Honduras"</span>, <span class="st">"Nicaragua"</span>, <span class="st">"Peru"</span>, <span class="st">"Trinadad&amp;Tobago"</span>}:</span>
-<span id="cb9-13"><a href="" aria-label="13"></a>        <span class="cf">return</span> <span class="st">"Latin America / Caribbean"</span></span>
-<span id="cb9-14"><a href="" aria-label="14"></a>    <span class="cf">return</span> <span class="st">"Other"</span></span>
-<span id="cb9-15"><a href="" aria-label="15"></a></span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="co"># Coarsen quasi-identifiers to make individual records harder to distinguish.</span></span>
+<span id="cb9-2"><a href="" aria-label="2"></a><span class="co"># Coarsen country values so rare countries are less identifying.</span></span>
+<span id="cb9-3"><a href="" aria-label="3"></a><span class="kw">def</span> country_region(value):</span>
+<span id="cb9-4"><a href="" aria-label="4"></a>    value <span class="op">=</span> <span class="bu">str</span>(value)</span>
+<span id="cb9-5"><a href="" aria-label="5"></a>    <span class="cf">if</span> value <span class="op">==</span> <span class="st">"United-States"</span>:</span>
+<span id="cb9-6"><a href="" aria-label="6"></a>        <span class="cf">return</span> <span class="st">"US"</span></span>
+<span id="cb9-7"><a href="" aria-label="7"></a>    <span class="cf">if</span> value <span class="kw">in</span> {<span class="st">"Canada"</span>, <span class="st">"Mexico"</span>}:</span>
+<span id="cb9-8"><a href="" aria-label="8"></a>        <span class="cf">return</span> <span class="st">"North America other"</span></span>
+<span id="cb9-9"><a href="" aria-label="9"></a>    <span class="cf">if</span> value <span class="kw">in</span> {<span class="st">"England"</span>, <span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Italy"</span>, <span class="st">"Portugal"</span>, <span class="st">"Poland"</span>, <span class="st">"Greece"</span>, <span class="st">"Ireland"</span>, <span class="st">"Scotland"</span>, <span class="st">"Hungary"</span>, <span class="st">"Yugoslavia"</span>, <span class="st">"Holand-Netherlands"</span>}:</span>
+<span id="cb9-10"><a href="" aria-label="10"></a>        <span class="cf">return</span> <span class="st">"Europe"</span></span>
+<span id="cb9-11"><a href="" aria-label="11"></a>    <span class="cf">if</span> value <span class="kw">in</span> {<span class="st">"China"</span>, <span class="st">"Japan"</span>, <span class="st">"India"</span>, <span class="st">"Iran"</span>, <span class="st">"Philippines"</span>, <span class="st">"Vietnam"</span>, <span class="st">"Taiwan"</span>, <span class="st">"Thailand"</span>, <span class="st">"Cambodia"</span>, <span class="st">"Laos"</span>, <span class="st">"Hong"</span>, <span class="st">"South"</span>}:</span>
+<span id="cb9-12"><a href="" aria-label="12"></a>        <span class="cf">return</span> <span class="st">"Asia"</span></span>
+<span id="cb9-13"><a href="" aria-label="13"></a>    <span class="cf">if</span> value <span class="kw">in</span> {<span class="st">"Cuba"</span>, <span class="st">"Jamaica"</span>, <span class="st">"Haiti"</span>, <span class="st">"Dominican-Republic"</span>, <span class="st">"Puerto-Rico"</span>, <span class="st">"Columbia"</span>, <span class="st">"Ecuador"</span>, <span class="st">"El-Salvador"</span>, <span class="st">"Guatemala"</span>, <span class="st">"Honduras"</span>, <span class="st">"Nicaragua"</span>, <span class="st">"Peru"</span>, <span class="st">"Trinadad&amp;Tobago"</span>}:</span>
+<span id="cb9-14"><a href="" aria-label="14"></a>        <span class="cf">return</span> <span class="st">"Latin America / Caribbean"</span></span>
+<span id="cb9-15"><a href="" aria-label="15"></a>    <span class="cf">return</span> <span class="st">"Other"</span></span>
 <span id="cb9-16"><a href="" aria-label="16"></a></span>
-<span id="cb9-17"><a href="" aria-label="17"></a><span class="kw">def</span> generalize_adult(data, age_width<span class="op">=</span><span class="dv">10</span>, education_width<span class="op">=</span><span class="dv">4</span>, country<span class="op">=</span><span class="st">"region"</span>, marital<span class="op">=</span><span class="st">"broad"</span>):</span>
-<span id="cb9-18"><a href="" aria-label="18"></a>    out <span class="op">=</span> data.copy()</span>
-<span id="cb9-19"><a href="" aria-label="19"></a>    age_floor <span class="op">=</span> (out[<span class="st">"age"</span>].astype(<span class="bu">int</span>) <span class="op">//</span> age_width) <span class="op">*</span> age_width</span>
-<span id="cb9-20"><a href="" aria-label="20"></a>    out[<span class="st">"age_gen"</span>] <span class="op">=</span> age_floor.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"-"</span> <span class="op">+</span> (age_floor <span class="op">+</span> age_width <span class="op">-</span> <span class="dv">1</span>).astype(<span class="bu">str</span>)</span>
-<span id="cb9-21"><a href="" aria-label="21"></a></span>
-<span id="cb9-22"><a href="" aria-label="22"></a>    edu_floor <span class="op">=</span> ((out[<span class="st">"education_num"</span>].astype(<span class="bu">int</span>) <span class="op">-</span> <span class="dv">1</span>) <span class="op">//</span> education_width) <span class="op">*</span> education_width <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb9-23"><a href="" aria-label="23"></a>    out[<span class="st">"education_gen"</span>] <span class="op">=</span> edu_floor.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"-"</span> <span class="op">+</span> np.minimum(edu_floor <span class="op">+</span> education_width <span class="op">-</span> <span class="dv">1</span>, <span class="dv">16</span>).astype(<span class="bu">str</span>)</span>
-<span id="cb9-24"><a href="" aria-label="24"></a></span>
-<span id="cb9-25"><a href="" aria-label="25"></a>    <span class="cf">if</span> marital <span class="op">==</span> <span class="st">"broad"</span>:</span>
-<span id="cb9-26"><a href="" aria-label="26"></a>        out[<span class="st">"marital_gen"</span>] <span class="op">=</span> np.where(out[<span class="st">"marital_status"</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.startswith(<span class="st">"Married"</span>), <span class="st">"Married"</span>, <span class="st">"Not married"</span>)</span>
-<span id="cb9-27"><a href="" aria-label="27"></a>    <span class="cf">else</span>:</span>
-<span id="cb9-28"><a href="" aria-label="28"></a>        out[<span class="st">"marital_gen"</span>] <span class="op">=</span> out[<span class="st">"marital_status"</span>].astype(<span class="bu">str</span>)</span>
-<span id="cb9-29"><a href="" aria-label="29"></a></span>
-<span id="cb9-30"><a href="" aria-label="30"></a>    out[<span class="st">"race_gen"</span>] <span class="op">=</span> out[<span class="st">"race"</span>].astype(<span class="bu">str</span>)</span>
-<span id="cb9-31"><a href="" aria-label="31"></a>    out[<span class="st">"sex_gen"</span>] <span class="op">=</span> out[<span class="st">"sex"</span>].astype(<span class="bu">str</span>)</span>
-<span id="cb9-32"><a href="" aria-label="32"></a>    out[<span class="st">"country_gen"</span>] <span class="op">=</span> out[<span class="st">"native_country"</span>].<span class="bu">map</span>(country_region) <span class="cf">if</span> country <span class="op">==</span> <span class="st">"region"</span> <span class="cf">else</span> out[<span class="st">"native_country"</span>].astype(<span class="bu">str</span>)</span>
-<span id="cb9-33"><a href="" aria-label="33"></a>    <span class="cf">return</span> out</span>
-<span id="cb9-34"><a href="" aria-label="34"></a></span>
+<span id="cb9-17"><a href="" aria-label="17"></a></span>
+<span id="cb9-18"><a href="" aria-label="18"></a><span class="kw">def</span> generalize_adult(data, age_width<span class="op">=</span><span class="dv">10</span>, education_width<span class="op">=</span><span class="dv">4</span>, country<span class="op">=</span><span class="st">"region"</span>, marital<span class="op">=</span><span class="st">"broad"</span>):</span>
+<span id="cb9-19"><a href="" aria-label="19"></a>    out <span class="op">=</span> data.copy()</span>
+<span id="cb9-20"><a href="" aria-label="20"></a>    age_floor <span class="op">=</span> (out[<span class="st">"age"</span>].astype(<span class="bu">int</span>) <span class="op">//</span> age_width) <span class="op">*</span> age_width</span>
+<span id="cb9-21"><a href="" aria-label="21"></a>    out[<span class="st">"age_gen"</span>] <span class="op">=</span> age_floor.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"-"</span> <span class="op">+</span> (age_floor <span class="op">+</span> age_width <span class="op">-</span> <span class="dv">1</span>).astype(<span class="bu">str</span>)</span>
+<span id="cb9-22"><a href="" aria-label="22"></a></span>
+<span id="cb9-23"><a href="" aria-label="23"></a>    edu_floor <span class="op">=</span> ((out[<span class="st">"education_num"</span>].astype(<span class="bu">int</span>) <span class="op">-</span> <span class="dv">1</span>) <span class="op">//</span> education_width) <span class="op">*</span> education_width <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb9-24"><a href="" aria-label="24"></a>    out[<span class="st">"education_gen"</span>] <span class="op">=</span> edu_floor.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"-"</span> <span class="op">+</span> np.minimum(edu_floor <span class="op">+</span> education_width <span class="op">-</span> <span class="dv">1</span>, <span class="dv">16</span>).astype(<span class="bu">str</span>)</span>
+<span id="cb9-25"><a href="" aria-label="25"></a></span>
+<span id="cb9-26"><a href="" aria-label="26"></a>    <span class="cf">if</span> marital <span class="op">==</span> <span class="st">"broad"</span>:</span>
+<span id="cb9-27"><a href="" aria-label="27"></a>        out[<span class="st">"marital_gen"</span>] <span class="op">=</span> np.where(out[<span class="st">"marital_status"</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>.startswith(<span class="st">"Married"</span>), <span class="st">"Married"</span>, <span class="st">"Not married"</span>)</span>
+<span id="cb9-28"><a href="" aria-label="28"></a>    <span class="cf">else</span>:</span>
+<span id="cb9-29"><a href="" aria-label="29"></a>        out[<span class="st">"marital_gen"</span>] <span class="op">=</span> out[<span class="st">"marital_status"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb9-30"><a href="" aria-label="30"></a></span>
+<span id="cb9-31"><a href="" aria-label="31"></a>    out[<span class="st">"race_gen"</span>] <span class="op">=</span> out[<span class="st">"race"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb9-32"><a href="" aria-label="32"></a>    out[<span class="st">"sex_gen"</span>] <span class="op">=</span> out[<span class="st">"sex"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb9-33"><a href="" aria-label="33"></a>    out[<span class="st">"country_gen"</span>] <span class="op">=</span> out[<span class="st">"native_country"</span>].<span class="bu">map</span>(country_region) <span class="cf">if</span> country <span class="op">==</span> <span class="st">"region"</span> <span class="cf">else</span> out[<span class="st">"native_country"</span>].astype(<span class="bu">str</span>)</span>
+<span id="cb9-34"><a href="" aria-label="34"></a>    <span class="cf">return</span> out</span>
 <span id="cb9-35"><a href="" aria-label="35"></a></span>
-<span id="cb9-36"><a href="" aria-label="36"></a>gen_qi <span class="op">=</span> [<span class="st">"age_gen"</span>, <span class="st">"education_gen"</span>, <span class="st">"marital_gen"</span>, <span class="st">"race_gen"</span>, <span class="st">"sex_gen"</span>, <span class="st">"country_gen"</span>]</span>
-<span id="cb9-37"><a href="" aria-label="37"></a>release <span class="op">=</span> generalize_adult(df, age_width<span class="op">=</span><span class="dv">10</span>, education_width<span class="op">=</span><span class="dv">4</span>, country<span class="op">=</span><span class="st">"region"</span>, marital<span class="op">=</span><span class="st">"broad"</span>)</span>
-<span id="cb9-38"><a href="" aria-label="38"></a>display(release[gen_qi <span class="op">+</span> [sensitive]].head())</span>
-<span id="cb9-39"><a href="" aria-label="39"></a>display(risk_report(release, gen_qi).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+<span id="cb9-36"><a href="" aria-label="36"></a></span>
+<span id="cb9-37"><a href="" aria-label="37"></a>gen_qi <span class="op">=</span> [<span class="st">"age_gen"</span>, <span class="st">"education_gen"</span>, <span class="st">"marital_gen"</span>, <span class="st">"race_gen"</span>, <span class="st">"sex_gen"</span>, <span class="st">"country_gen"</span>]</span>
+<span id="cb9-38"><a href="" aria-label="38"></a>release <span class="op">=</span> generalize_adult(df, age_width<span class="op">=</span><span class="dv">10</span>, education_width<span class="op">=</span><span class="dv">4</span>, country<span class="op">=</span><span class="st">"region"</span>, marital<span class="op">=</span><span class="st">"broad"</span>)</span>
+<span id="cb9-39"><a href="" aria-label="39"></a>display(release[gen_qi <span class="op">+</span> [sensitive]].head())</span>
+<span id="cb9-40"><a href="" aria-label="40"></a>display(risk_report(release, gen_qi).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -820,35 +831,37 @@ dtype: float64</code></pre>
 <section id="search-for-a-k-anonymous-release" class="slide level2">
 <h2>6. Search for a k-Anonymous Release</h2>
 <p>This simple search is not an optimal anonymization algorithm. It is a transparent lab exercise that shows how stronger generalization increases anonymity and decreases detail.</p>
-<div id="2e88d382" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="7">
+<p>The search is transparent rather than optimal, so students can see how each generalization setting changes the metrics.</p>
+<div id="096257b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Try several anonymization policies and compare their privacy metrics.</span></span>
-<span id="cb11-2"><a href="" aria-label="2"></a>settings <span class="op">=</span> []</span>
-<span id="cb11-3"><a href="" aria-label="3"></a><span class="cf">for</span> age_width <span class="kw">in</span> [<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>]:</span>
-<span id="cb11-4"><a href="" aria-label="4"></a>    <span class="cf">for</span> education_width <span class="kw">in</span> [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>]:</span>
-<span id="cb11-5"><a href="" aria-label="5"></a>        <span class="cf">for</span> country <span class="kw">in</span> [<span class="st">"exact"</span>, <span class="st">"region"</span>]:</span>
-<span id="cb11-6"><a href="" aria-label="6"></a>            <span class="cf">for</span> marital <span class="kw">in</span> [<span class="st">"exact"</span>, <span class="st">"broad"</span>]:</span>
-<span id="cb11-7"><a href="" aria-label="7"></a>                candidate <span class="op">=</span> generalize_adult(</span>
-<span id="cb11-8"><a href="" aria-label="8"></a>                    df,</span>
-<span id="cb11-9"><a href="" aria-label="9"></a>                    age_width<span class="op">=</span>age_width,</span>
-<span id="cb11-10"><a href="" aria-label="10"></a>                    education_width<span class="op">=</span>education_width,</span>
-<span id="cb11-11"><a href="" aria-label="11"></a>                    country<span class="op">=</span>country,</span>
-<span id="cb11-12"><a href="" aria-label="12"></a>                    marital<span class="op">=</span>marital,</span>
-<span id="cb11-13"><a href="" aria-label="13"></a>                )</span>
-<span id="cb11-14"><a href="" aria-label="14"></a>                report <span class="op">=</span> risk_report(candidate, gen_qi)</span>
-<span id="cb11-15"><a href="" aria-label="15"></a>                settings.append(</span>
-<span id="cb11-16"><a href="" aria-label="16"></a>                    {</span>
-<span id="cb11-17"><a href="" aria-label="17"></a>                        <span class="st">"age_width"</span>: age_width,</span>
-<span id="cb11-18"><a href="" aria-label="18"></a>                        <span class="st">"education_width"</span>: education_width,</span>
-<span id="cb11-19"><a href="" aria-label="19"></a>                        <span class="st">"country"</span>: country,</span>
-<span id="cb11-20"><a href="" aria-label="20"></a>                        <span class="st">"marital"</span>: marital,</span>
-<span id="cb11-21"><a href="" aria-label="21"></a>                        <span class="op">**</span>report.to_dict(),</span>
-<span id="cb11-22"><a href="" aria-label="22"></a>                    }</span>
-<span id="cb11-23"><a href="" aria-label="23"></a>                )</span>
-<span id="cb11-24"><a href="" aria-label="24"></a></span>
-<span id="cb11-25"><a href="" aria-label="25"></a>settings_df <span class="op">=</span> pd.DataFrame(settings).sort_values([<span class="st">"k_min"</span>, <span class="st">"share_unique"</span>], ascending<span class="op">=</span>[<span class="va">False</span>, <span class="va">True</span>])</span>
-<span id="cb11-26"><a href="" aria-label="26"></a>display(settings_df.head(<span class="dv">10</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Evaluate a grid of generalization settings against the linkage-risk metrics.</span></span>
+<span id="cb11-2"><a href="" aria-label="2"></a><span class="co"># Try several anonymization policies and compare their privacy metrics.</span></span>
+<span id="cb11-3"><a href="" aria-label="3"></a>settings <span class="op">=</span> []</span>
+<span id="cb11-4"><a href="" aria-label="4"></a><span class="cf">for</span> age_width <span class="kw">in</span> [<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>]:</span>
+<span id="cb11-5"><a href="" aria-label="5"></a>    <span class="cf">for</span> education_width <span class="kw">in</span> [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>]:</span>
+<span id="cb11-6"><a href="" aria-label="6"></a>        <span class="cf">for</span> country <span class="kw">in</span> [<span class="st">"exact"</span>, <span class="st">"region"</span>]:</span>
+<span id="cb11-7"><a href="" aria-label="7"></a>            <span class="cf">for</span> marital <span class="kw">in</span> [<span class="st">"exact"</span>, <span class="st">"broad"</span>]:</span>
+<span id="cb11-8"><a href="" aria-label="8"></a>                candidate <span class="op">=</span> generalize_adult(</span>
+<span id="cb11-9"><a href="" aria-label="9"></a>                    df,</span>
+<span id="cb11-10"><a href="" aria-label="10"></a>                    age_width<span class="op">=</span>age_width,</span>
+<span id="cb11-11"><a href="" aria-label="11"></a>                    education_width<span class="op">=</span>education_width,</span>
+<span id="cb11-12"><a href="" aria-label="12"></a>                    country<span class="op">=</span>country,</span>
+<span id="cb11-13"><a href="" aria-label="13"></a>                    marital<span class="op">=</span>marital,</span>
+<span id="cb11-14"><a href="" aria-label="14"></a>                )</span>
+<span id="cb11-15"><a href="" aria-label="15"></a>                report <span class="op">=</span> risk_report(candidate, gen_qi)</span>
+<span id="cb11-16"><a href="" aria-label="16"></a>                settings.append(</span>
+<span id="cb11-17"><a href="" aria-label="17"></a>                    {</span>
+<span id="cb11-18"><a href="" aria-label="18"></a>                        <span class="st">"age_width"</span>: age_width,</span>
+<span id="cb11-19"><a href="" aria-label="19"></a>                        <span class="st">"education_width"</span>: education_width,</span>
+<span id="cb11-20"><a href="" aria-label="20"></a>                        <span class="st">"country"</span>: country,</span>
+<span id="cb11-21"><a href="" aria-label="21"></a>                        <span class="st">"marital"</span>: marital,</span>
+<span id="cb11-22"><a href="" aria-label="22"></a>                        <span class="op">**</span>report.to_dict(),</span>
+<span id="cb11-23"><a href="" aria-label="23"></a>                    }</span>
+<span id="cb11-24"><a href="" aria-label="24"></a>                )</span>
+<span id="cb11-25"><a href="" aria-label="25"></a></span>
+<span id="cb11-26"><a href="" aria-label="26"></a>settings_df <span class="op">=</span> pd.DataFrame(settings).sort_values([<span class="st">"k_min"</span>, <span class="st">"share_unique"</span>], ascending<span class="op">=</span>[<span class="va">False</span>, <span class="va">True</span>])</span>
+<span id="cb11-27"><a href="" aria-label="27"></a>display(settings_df.head(<span class="dv">10</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1019,20 +1032,21 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="16d16246" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="8">
+<div id="a7ec7baf" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>target_k <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb12-2"><a href="" aria-label="2"></a>k_candidates <span class="op">=</span> settings_df[settings_df[<span class="st">"k_min"</span>] <span class="op">&gt;=</span> target_k].copy()</span>
-<span id="cb12-3"><a href="" aria-label="3"></a>chosen <span class="op">=</span> k_candidates.sort_values(</span>
-<span id="cb12-4"><a href="" aria-label="4"></a>    [<span class="st">"share_in_classes_lt_5"</span>, <span class="st">"age_width"</span>, <span class="st">"education_width"</span>],</span>
-<span id="cb12-5"><a href="" aria-label="5"></a>    ascending<span class="op">=</span>[<span class="va">True</span>, <span class="va">True</span>, <span class="va">True</span>],</span>
-<span id="cb12-6"><a href="" aria-label="6"></a>).head(<span class="dv">1</span>)</span>
-<span id="cb12-7"><a href="" aria-label="7"></a></span>
-<span id="cb12-8"><a href="" aria-label="8"></a><span class="cf">if</span> chosen.empty:</span>
-<span id="cb12-9"><a href="" aria-label="9"></a>    chosen <span class="op">=</span> settings_df.sort_values([<span class="st">"k_min"</span>, <span class="st">"share_unique"</span>], ascending<span class="op">=</span>[<span class="va">False</span>, <span class="va">True</span>]).head(<span class="dv">1</span>)</span>
-<span id="cb12-10"><a href="" aria-label="10"></a></span>
-<span id="cb12-11"><a href="" aria-label="11"></a>chosen</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="co"># Pick the least coarse candidate that reaches the target k when possible.</span></span>
+<span id="cb12-2"><a href="" aria-label="2"></a>target_k <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb12-3"><a href="" aria-label="3"></a>k_candidates <span class="op">=</span> settings_df[settings_df[<span class="st">"k_min"</span>] <span class="op">&gt;=</span> target_k].copy()</span>
+<span id="cb12-4"><a href="" aria-label="4"></a>chosen <span class="op">=</span> k_candidates.sort_values(</span>
+<span id="cb12-5"><a href="" aria-label="5"></a>    [<span class="st">"share_in_classes_lt_5"</span>, <span class="st">"age_width"</span>, <span class="st">"education_width"</span>],</span>
+<span id="cb12-6"><a href="" aria-label="6"></a>    ascending<span class="op">=</span>[<span class="va">True</span>, <span class="va">True</span>, <span class="va">True</span>],</span>
+<span id="cb12-7"><a href="" aria-label="7"></a>).head(<span class="dv">1</span>)</span>
+<span id="cb12-8"><a href="" aria-label="8"></a></span>
+<span id="cb12-9"><a href="" aria-label="9"></a><span class="cf">if</span> chosen.empty:</span>
+<span id="cb12-10"><a href="" aria-label="10"></a>    chosen <span class="op">=</span> settings_df.sort_values([<span class="st">"k_min"</span>, <span class="st">"share_unique"</span>], ascending<span class="op">=</span>[<span class="va">False</span>, <span class="va">True</span>]).head(<span class="dv">1</span>)</span>
+<span id="cb12-11"><a href="" aria-label="11"></a></span>
+<span id="cb12-12"><a href="" aria-label="12"></a>chosen</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
@@ -1086,20 +1100,21 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="41c7c91d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="9">
+<div id="31574366" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>chosen_params <span class="op">=</span> chosen.iloc[<span class="dv">0</span>][[<span class="st">"age_width"</span>, <span class="st">"education_width"</span>, <span class="st">"country"</span>, <span class="st">"marital"</span>]].to_dict()</span>
-<span id="cb13-2"><a href="" aria-label="2"></a>anon <span class="op">=</span> generalize_adult(</span>
-<span id="cb13-3"><a href="" aria-label="3"></a>    df,</span>
-<span id="cb13-4"><a href="" aria-label="4"></a>    age_width<span class="op">=</span><span class="bu">int</span>(chosen_params[<span class="st">"age_width"</span>]),</span>
-<span id="cb13-5"><a href="" aria-label="5"></a>    education_width<span class="op">=</span><span class="bu">int</span>(chosen_params[<span class="st">"education_width"</span>]),</span>
-<span id="cb13-6"><a href="" aria-label="6"></a>    country<span class="op">=</span>chosen_params[<span class="st">"country"</span>],</span>
-<span id="cb13-7"><a href="" aria-label="7"></a>    marital<span class="op">=</span>chosen_params[<span class="st">"marital"</span>],</span>
-<span id="cb13-8"><a href="" aria-label="8"></a>)</span>
-<span id="cb13-9"><a href="" aria-label="9"></a></span>
-<span id="cb13-10"><a href="" aria-label="10"></a><span class="bu">print</span>(chosen_params)</span>
-<span id="cb13-11"><a href="" aria-label="11"></a>display(risk_report(anon, gen_qi).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># Materialize the chosen anonymized release for the following privacy checks.</span></span>
+<span id="cb13-2"><a href="" aria-label="2"></a>chosen_params <span class="op">=</span> chosen.iloc[<span class="dv">0</span>][[<span class="st">"age_width"</span>, <span class="st">"education_width"</span>, <span class="st">"country"</span>, <span class="st">"marital"</span>]].to_dict()</span>
+<span id="cb13-3"><a href="" aria-label="3"></a>anon <span class="op">=</span> generalize_adult(</span>
+<span id="cb13-4"><a href="" aria-label="4"></a>    df,</span>
+<span id="cb13-5"><a href="" aria-label="5"></a>    age_width<span class="op">=</span><span class="bu">int</span>(chosen_params[<span class="st">"age_width"</span>]),</span>
+<span id="cb13-6"><a href="" aria-label="6"></a>    education_width<span class="op">=</span><span class="bu">int</span>(chosen_params[<span class="st">"education_width"</span>]),</span>
+<span id="cb13-7"><a href="" aria-label="7"></a>    country<span class="op">=</span>chosen_params[<span class="st">"country"</span>],</span>
+<span id="cb13-8"><a href="" aria-label="8"></a>    marital<span class="op">=</span>chosen_params[<span class="st">"marital"</span>],</span>
+<span id="cb13-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb13-10"><a href="" aria-label="10"></a></span>
+<span id="cb13-11"><a href="" aria-label="11"></a><span class="bu">print</span>(chosen_params)</span>
+<span id="cb13-12"><a href="" aria-label="12"></a>display(risk_report(anon, gen_qi).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>{'age_width': 20, 'education_width': 16, 'country': 'region', 'marital': 'broad'}</code></pre>
@@ -1114,29 +1129,31 @@ median_class_size         895.000
 dtype: float64</code></pre>
 </div>
 </div>
-<h3 id="why-inspect-the-chosen-release">Why inspect the chosen release?</h3>
+<p><strong>Why inspect the chosen release?</strong></p>
 <p>The search chooses a candidate using simple rules, but the analyst still needs to inspect the result.</p>
 <p>Automated anonymization choices can hide rare groups by overgeneralizing them or by forcing later suppression. Both effects should be visible in the report.</p>
 </section>
 <section id="row-suppression" class="slide level2">
 <h2>7. Row Suppression</h2>
 <p>Suppression removes records that still belong to small equivalence classes. This can achieve a target <code>k</code>, but it changes the population being analyzed.</p>
-<div id="07f0db07" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="10">
+<p>Suppression is a second privacy knob. It can meet a target <code>k</code>, but it removes people from the released population.</p>
+<div id="a580004c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a><span class="co"># Drop records whose equivalence class remains smaller than the target k.</span></span>
-<span id="cb16-2"><a href="" aria-label="2"></a><span class="kw">def</span> suppress_small_classes(data, qi_cols, k):</span>
-<span id="cb16-3"><a href="" aria-label="3"></a>    sizes <span class="op">=</span> equivalence_class_sizes(data, qi_cols).reset_index()</span>
-<span id="cb16-4"><a href="" aria-label="4"></a>    keep_groups <span class="op">=</span> sizes[sizes[<span class="st">"equivalence_class_size"</span>] <span class="op">&gt;=</span> k][qi_cols]</span>
-<span id="cb16-5"><a href="" aria-label="5"></a>    kept <span class="op">=</span> data.merge(keep_groups, on<span class="op">=</span>qi_cols, how<span class="op">=</span><span class="st">"inner"</span>)</span>
-<span id="cb16-6"><a href="" aria-label="6"></a>    <span class="cf">return</span> kept.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb16-7"><a href="" aria-label="7"></a></span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a><span class="co"># Remove rows that still belong to equivalence classes below the target k.</span></span>
+<span id="cb16-2"><a href="" aria-label="2"></a><span class="co"># Drop records whose equivalence class remains smaller than the target k.</span></span>
+<span id="cb16-3"><a href="" aria-label="3"></a><span class="kw">def</span> suppress_small_classes(data, qi_cols, k):</span>
+<span id="cb16-4"><a href="" aria-label="4"></a>    sizes <span class="op">=</span> equivalence_class_sizes(data, qi_cols).reset_index()</span>
+<span id="cb16-5"><a href="" aria-label="5"></a>    keep_groups <span class="op">=</span> sizes[sizes[<span class="st">"equivalence_class_size"</span>] <span class="op">&gt;=</span> k][qi_cols]</span>
+<span id="cb16-6"><a href="" aria-label="6"></a>    kept <span class="op">=</span> data.merge(keep_groups, on<span class="op">=</span>qi_cols, how<span class="op">=</span><span class="st">"inner"</span>)</span>
+<span id="cb16-7"><a href="" aria-label="7"></a>    <span class="cf">return</span> kept.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb16-8"><a href="" aria-label="8"></a></span>
-<span id="cb16-9"><a href="" aria-label="9"></a>suppressed <span class="op">=</span> suppress_small_classes(anon, gen_qi, target_k)</span>
-<span id="cb16-10"><a href="" aria-label="10"></a><span class="bu">print</span>(<span class="ss">f"Rows before suppression: </span><span class="sc">{</span><span class="bu">len</span>(anon)<span class="sc">:,}</span><span class="ss">"</span>)</span>
-<span id="cb16-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="ss">f"Rows after suppression:  </span><span class="sc">{</span><span class="bu">len</span>(suppressed)<span class="sc">:,}</span><span class="ss">"</span>)</span>
-<span id="cb16-12"><a href="" aria-label="12"></a><span class="bu">print</span>(<span class="ss">f"Retained share:          </span><span class="sc">{</span><span class="bu">len</span>(suppressed) <span class="op">/</span> <span class="bu">len</span>(anon)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb16-13"><a href="" aria-label="13"></a>display(risk_report(suppressed, gen_qi).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+<span id="cb16-9"><a href="" aria-label="9"></a></span>
+<span id="cb16-10"><a href="" aria-label="10"></a>suppressed <span class="op">=</span> suppress_small_classes(anon, gen_qi, target_k)</span>
+<span id="cb16-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="ss">f"Rows before suppression: </span><span class="sc">{</span><span class="bu">len</span>(anon)<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb16-12"><a href="" aria-label="12"></a><span class="bu">print</span>(<span class="ss">f"Rows after suppression:  </span><span class="sc">{</span><span class="bu">len</span>(suppressed)<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb16-13"><a href="" aria-label="13"></a><span class="bu">print</span>(<span class="ss">f"Retained share:          </span><span class="sc">{</span><span class="bu">len</span>(suppressed) <span class="op">/</span> <span class="bu">len</span>(anon)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb16-14"><a href="" aria-label="14"></a>display(risk_report(suppressed, gen_qi).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows before suppression: 8,000
@@ -1153,33 +1170,35 @@ median_class_size         895.0
 dtype: float64</code></pre>
 </div>
 </div>
-<h3 id="exercise-1">Exercise</h3>
+<p><strong>Exercise</strong></p>
 <p>Which groups are more likely to be suppressed? Why can this become a fairness or representativeness problem?</p>
 </section>
 <section id="l-diversity" class="slide level2">
 <h2>8. l-Diversity</h2>
 <p>k-anonymity only checks whether people are hidden in a group. l-diversity checks whether sensitive values vary inside that group.</p>
-<h3 id="what-l-diversity-adds">What l-diversity adds</h3>
+<p>This section shows why identity protection alone is not enough when a group shares the same sensitive value.</p>
+<p><strong>What l-diversity adds</strong></p>
 <p>k-anonymity asks: <em>how many people look the same?</em><br>
 l-diversity asks: <em>do those people have different sensitive values?</em></p>
 <p>A group can be safely large and still unsafe if all records in that group have the same income label.</p>
-<div id="db36e423" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="11">
+<div id="cf2eec63" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># Count how many distinct sensitive values appear in each equivalence class.</span></span>
-<span id="cb19-2"><a href="" aria-label="2"></a><span class="kw">def</span> l_diversity_report(data, qi_cols, sensitive_col):</span>
-<span id="cb19-3"><a href="" aria-label="3"></a>    sensitive_counts <span class="op">=</span> data.groupby(qi_cols, dropna<span class="op">=</span><span class="va">False</span>)[sensitive_col].nunique().rename(<span class="st">"distinct_sensitive_values"</span>)</span>
-<span id="cb19-4"><a href="" aria-label="4"></a>    row_l <span class="op">=</span> data.merge(sensitive_counts.reset_index(), on<span class="op">=</span>qi_cols, how<span class="op">=</span><span class="st">"left"</span>)[<span class="st">"distinct_sensitive_values"</span>]</span>
-<span id="cb19-5"><a href="" aria-label="5"></a>    <span class="cf">return</span> pd.Series(</span>
-<span id="cb19-6"><a href="" aria-label="6"></a>        {</span>
-<span id="cb19-7"><a href="" aria-label="7"></a>            <span class="st">"min_l"</span>: <span class="bu">int</span>(sensitive_counts.<span class="bu">min</span>()),</span>
-<span id="cb19-8"><a href="" aria-label="8"></a>            <span class="st">"share_rows_l_lt_2"</span>: <span class="bu">float</span>((row_l <span class="op">&lt;</span> <span class="dv">2</span>).mean()),</span>
-<span id="cb19-9"><a href="" aria-label="9"></a>            <span class="st">"share_groups_l_lt_2"</span>: <span class="bu">float</span>((sensitive_counts <span class="op">&lt;</span> <span class="dv">2</span>).mean()),</span>
-<span id="cb19-10"><a href="" aria-label="10"></a>        }</span>
-<span id="cb19-11"><a href="" aria-label="11"></a>    )</span>
-<span id="cb19-12"><a href="" aria-label="12"></a></span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># Check whether each equivalence class contains enough sensitive-value variety.</span></span>
+<span id="cb19-2"><a href="" aria-label="2"></a><span class="co"># Count how many distinct sensitive values appear in each equivalence class.</span></span>
+<span id="cb19-3"><a href="" aria-label="3"></a><span class="kw">def</span> l_diversity_report(data, qi_cols, sensitive_col):</span>
+<span id="cb19-4"><a href="" aria-label="4"></a>    sensitive_counts <span class="op">=</span> data.groupby(qi_cols, dropna<span class="op">=</span><span class="va">False</span>)[sensitive_col].nunique().rename(<span class="st">"distinct_sensitive_values"</span>)</span>
+<span id="cb19-5"><a href="" aria-label="5"></a>    row_l <span class="op">=</span> data.merge(sensitive_counts.reset_index(), on<span class="op">=</span>qi_cols, how<span class="op">=</span><span class="st">"left"</span>)[<span class="st">"distinct_sensitive_values"</span>]</span>
+<span id="cb19-6"><a href="" aria-label="6"></a>    <span class="cf">return</span> pd.Series(</span>
+<span id="cb19-7"><a href="" aria-label="7"></a>        {</span>
+<span id="cb19-8"><a href="" aria-label="8"></a>            <span class="st">"min_l"</span>: <span class="bu">int</span>(sensitive_counts.<span class="bu">min</span>()),</span>
+<span id="cb19-9"><a href="" aria-label="9"></a>            <span class="st">"share_rows_l_lt_2"</span>: <span class="bu">float</span>((row_l <span class="op">&lt;</span> <span class="dv">2</span>).mean()),</span>
+<span id="cb19-10"><a href="" aria-label="10"></a>            <span class="st">"share_groups_l_lt_2"</span>: <span class="bu">float</span>((sensitive_counts <span class="op">&lt;</span> <span class="dv">2</span>).mean()),</span>
+<span id="cb19-11"><a href="" aria-label="11"></a>        }</span>
+<span id="cb19-12"><a href="" aria-label="12"></a>    )</span>
 <span id="cb19-13"><a href="" aria-label="13"></a></span>
-<span id="cb19-14"><a href="" aria-label="14"></a>display(l_diversity_report(suppressed, gen_qi, sensitive).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+<span id="cb19-14"><a href="" aria-label="14"></a></span>
+<span id="cb19-15"><a href="" aria-label="15"></a>display(l_diversity_report(suppressed, gen_qi, sensitive).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <pre><code>min_l                  1.000
@@ -1188,17 +1207,18 @@ share_groups_l_lt_2    0.309
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="14766df4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="12">
+<div id="21719b7a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>bad_l_groups <span class="op">=</span> (</span>
-<span id="cb21-2"><a href="" aria-label="2"></a>    suppressed.groupby(gen_qi, dropna<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb21-3"><a href="" aria-label="3"></a>    .agg(n<span class="op">=</span>(sensitive, <span class="st">"size"</span>), distinct_income<span class="op">=</span>(sensitive, <span class="st">"nunique"</span>), income_values<span class="op">=</span>(sensitive, <span class="kw">lambda</span> x: <span class="st">", "</span>.join(<span class="bu">sorted</span>(x.astype(<span class="bu">str</span>).unique()))))</span>
-<span id="cb21-4"><a href="" aria-label="4"></a>    .query(<span class="st">"distinct_income &lt; 2"</span>)</span>
-<span id="cb21-5"><a href="" aria-label="5"></a>    .sort_values(<span class="st">"n"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb21-6"><a href="" aria-label="6"></a>)</span>
-<span id="cb21-7"><a href="" aria-label="7"></a></span>
-<span id="cb21-8"><a href="" aria-label="8"></a>bad_l_groups.head(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a><span class="co"># List k-anonymous groups that still reveal a single income value.</span></span>
+<span id="cb21-2"><a href="" aria-label="2"></a>bad_l_groups <span class="op">=</span> (</span>
+<span id="cb21-3"><a href="" aria-label="3"></a>    suppressed.groupby(gen_qi, dropna<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb21-4"><a href="" aria-label="4"></a>    .agg(n<span class="op">=</span>(sensitive, <span class="st">"size"</span>), distinct_income<span class="op">=</span>(sensitive, <span class="st">"nunique"</span>), income_values<span class="op">=</span>(sensitive, <span class="kw">lambda</span> x: <span class="st">", "</span>.join(<span class="bu">sorted</span>(x.astype(<span class="bu">str</span>).unique()))))</span>
+<span id="cb21-5"><a href="" aria-label="5"></a>    .query(<span class="st">"distinct_income &lt; 2"</span>)</span>
+<span id="cb21-6"><a href="" aria-label="6"></a>    .sort_values(<span class="st">"n"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb21-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb21-8"><a href="" aria-label="8"></a></span>
+<span id="cb21-9"><a href="" aria-label="9"></a>bad_l_groups.head(<span class="dv">10</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
@@ -1349,48 +1369,50 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<h3 id="what-the-unsafe-groups-teach">What the unsafe groups teach</h3>
+<p><strong>What the unsafe groups teach</strong></p>
 <p>These groups satisfy the current k-anonymity requirement, but they do not protect income well.</p>
 <p>This is the key lesson: hiding identity is not the same as hiding sensitive attributes.</p>
-<h3 id="exercise-2">Exercise</h3>
+<p><strong>Exercise</strong></p>
 <p>Pick one group with <code>distinct_income &lt; 2</code>. Explain why an attacker can learn the sensitive value even though the release is k-anonymous.</p>
 </section>
 <section id="t-closeness" class="slide level2">
 <h2>9. t-Closeness</h2>
 <p>t-closeness compares the sensitive-value distribution inside each equivalence class with the global distribution.</p>
 <p>For binary income, total variation distance reduces to the absolute difference between the group share of <code>&gt;50K</code> and the global share of <code>&gt;50K</code>.</p>
-<h3 id="what-t-closeness-adds">What t-closeness adds</h3>
+<p>t-closeness adds distributional thinking: a group can be diverse but still unusually revealing.</p>
+<p><strong>What t-closeness adds</strong></p>
 <p>l-diversity can miss skewness. A group may contain both income values, yet still have a much higher <code>&gt;50K</code> rate than the full dataset.</p>
 <p>t-closeness asks whether each group’s sensitive-value distribution is close to the global sensitive-value distribution.</p>
-<div id="ca9feae0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="13">
+<div id="e6ed9c5f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="co"># For binary income, total variation distance is an absolute gap in positive rates.</span></span>
-<span id="cb22-2"><a href="" aria-label="2"></a><span class="kw">def</span> t_closeness_report(data, qi_cols, sensitive_col, positive_value<span class="op">=</span><span class="st">"&gt;50K"</span>, t<span class="op">=</span><span class="fl">0.15</span>):</span>
-<span id="cb22-3"><a href="" aria-label="3"></a>    global_positive <span class="op">=</span> (data[sensitive_col] <span class="op">==</span> positive_value).mean()</span>
-<span id="cb22-4"><a href="" aria-label="4"></a></span>
-<span id="cb22-5"><a href="" aria-label="5"></a>    group_stats <span class="op">=</span> (</span>
-<span id="cb22-6"><a href="" aria-label="6"></a>        data.assign(_positive<span class="op">=</span>(data[sensitive_col] <span class="op">==</span> positive_value).astype(<span class="bu">int</span>))</span>
-<span id="cb22-7"><a href="" aria-label="7"></a>        .groupby(qi_cols, dropna<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb22-8"><a href="" aria-label="8"></a>        .agg(n<span class="op">=</span>(<span class="st">"_positive"</span>, <span class="st">"size"</span>), positive_share<span class="op">=</span>(<span class="st">"_positive"</span>, <span class="st">"mean"</span>))</span>
-<span id="cb22-9"><a href="" aria-label="9"></a>        .reset_index()</span>
-<span id="cb22-10"><a href="" aria-label="10"></a>    )</span>
-<span id="cb22-11"><a href="" aria-label="11"></a>    group_stats[<span class="st">"tv_distance"</span>] <span class="op">=</span> (group_stats[<span class="st">"positive_share"</span>] <span class="op">-</span> global_positive).<span class="bu">abs</span>()</span>
-<span id="cb22-12"><a href="" aria-label="12"></a>    row_distances <span class="op">=</span> data.merge(group_stats[qi_cols <span class="op">+</span> [<span class="st">"tv_distance"</span>]], on<span class="op">=</span>qi_cols, how<span class="op">=</span><span class="st">"left"</span>)[<span class="st">"tv_distance"</span>]</span>
-<span id="cb22-13"><a href="" aria-label="13"></a></span>
-<span id="cb22-14"><a href="" aria-label="14"></a>    <span class="cf">return</span> pd.Series(</span>
-<span id="cb22-15"><a href="" aria-label="15"></a>        {</span>
-<span id="cb22-16"><a href="" aria-label="16"></a>            <span class="st">"global_positive_share"</span>: global_positive,</span>
-<span id="cb22-17"><a href="" aria-label="17"></a>            <span class="st">"max_t_distance"</span>: group_stats[<span class="st">"tv_distance"</span>].<span class="bu">max</span>(),</span>
-<span id="cb22-18"><a href="" aria-label="18"></a>            <span class="st">"share_rows_t_violation"</span>: (row_distances <span class="op">&gt;</span> t).mean(),</span>
-<span id="cb22-19"><a href="" aria-label="19"></a>            <span class="st">"share_groups_t_violation"</span>: (group_stats[<span class="st">"tv_distance"</span>] <span class="op">&gt;</span> t).mean(),</span>
-<span id="cb22-20"><a href="" aria-label="20"></a>        }</span>
-<span id="cb22-21"><a href="" aria-label="21"></a>    ), group_stats.sort_values(<span class="st">"tv_distance"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb22-22"><a href="" aria-label="22"></a></span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="co"># Compare each group's income distribution with the global income distribution.</span></span>
+<span id="cb22-2"><a href="" aria-label="2"></a><span class="co"># For binary income, total variation distance is an absolute gap in positive rates.</span></span>
+<span id="cb22-3"><a href="" aria-label="3"></a><span class="kw">def</span> t_closeness_report(data, qi_cols, sensitive_col, positive_value<span class="op">=</span><span class="st">"&gt;50K"</span>, t<span class="op">=</span><span class="fl">0.15</span>):</span>
+<span id="cb22-4"><a href="" aria-label="4"></a>    global_positive <span class="op">=</span> (data[sensitive_col] <span class="op">==</span> positive_value).mean()</span>
+<span id="cb22-5"><a href="" aria-label="5"></a></span>
+<span id="cb22-6"><a href="" aria-label="6"></a>    group_stats <span class="op">=</span> (</span>
+<span id="cb22-7"><a href="" aria-label="7"></a>        data.assign(_positive<span class="op">=</span>(data[sensitive_col] <span class="op">==</span> positive_value).astype(<span class="bu">int</span>))</span>
+<span id="cb22-8"><a href="" aria-label="8"></a>        .groupby(qi_cols, dropna<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb22-9"><a href="" aria-label="9"></a>        .agg(n<span class="op">=</span>(<span class="st">"_positive"</span>, <span class="st">"size"</span>), positive_share<span class="op">=</span>(<span class="st">"_positive"</span>, <span class="st">"mean"</span>))</span>
+<span id="cb22-10"><a href="" aria-label="10"></a>        .reset_index()</span>
+<span id="cb22-11"><a href="" aria-label="11"></a>    )</span>
+<span id="cb22-12"><a href="" aria-label="12"></a>    group_stats[<span class="st">"tv_distance"</span>] <span class="op">=</span> (group_stats[<span class="st">"positive_share"</span>] <span class="op">-</span> global_positive).<span class="bu">abs</span>()</span>
+<span id="cb22-13"><a href="" aria-label="13"></a>    row_distances <span class="op">=</span> data.merge(group_stats[qi_cols <span class="op">+</span> [<span class="st">"tv_distance"</span>]], on<span class="op">=</span>qi_cols, how<span class="op">=</span><span class="st">"left"</span>)[<span class="st">"tv_distance"</span>]</span>
+<span id="cb22-14"><a href="" aria-label="14"></a></span>
+<span id="cb22-15"><a href="" aria-label="15"></a>    <span class="cf">return</span> pd.Series(</span>
+<span id="cb22-16"><a href="" aria-label="16"></a>        {</span>
+<span id="cb22-17"><a href="" aria-label="17"></a>            <span class="st">"global_positive_share"</span>: global_positive,</span>
+<span id="cb22-18"><a href="" aria-label="18"></a>            <span class="st">"max_t_distance"</span>: group_stats[<span class="st">"tv_distance"</span>].<span class="bu">max</span>(),</span>
+<span id="cb22-19"><a href="" aria-label="19"></a>            <span class="st">"share_rows_t_violation"</span>: (row_distances <span class="op">&gt;</span> t).mean(),</span>
+<span id="cb22-20"><a href="" aria-label="20"></a>            <span class="st">"share_groups_t_violation"</span>: (group_stats[<span class="st">"tv_distance"</span>] <span class="op">&gt;</span> t).mean(),</span>
+<span id="cb22-21"><a href="" aria-label="21"></a>        }</span>
+<span id="cb22-22"><a href="" aria-label="22"></a>    ), group_stats.sort_values(<span class="st">"tv_distance"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb22-23"><a href="" aria-label="23"></a></span>
-<span id="cb22-24"><a href="" aria-label="24"></a>t_report, t_groups <span class="op">=</span> t_closeness_report(suppressed, gen_qi, sensitive, t<span class="op">=</span><span class="fl">0.15</span>)</span>
-<span id="cb22-25"><a href="" aria-label="25"></a>display(t_report.<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb22-26"><a href="" aria-label="26"></a>display(t_groups.head(<span class="dv">10</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+<span id="cb22-24"><a href="" aria-label="24"></a></span>
+<span id="cb22-25"><a href="" aria-label="25"></a>t_report, t_groups <span class="op">=</span> t_closeness_report(suppressed, gen_qi, sensitive, t<span class="op">=</span><span class="fl">0.15</span>)</span>
+<span id="cb22-26"><a href="" aria-label="26"></a>display(t_report.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb22-27"><a href="" aria-label="27"></a>display(t_groups.head(<span class="dv">10</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <pre><code>global_positive_share       0.247
@@ -1557,13 +1579,14 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<h3 id="exercise-3">Exercise</h3>
+<p><strong>Exercise</strong></p>
 <p>Compare the worst t-closeness group with the global income distribution. Is this closer to a skewness problem, a homogeneity problem, or both?</p>
 </section>
 <section id="privacy-utility-tradeoff" class="slide level2">
 <h2>10. Privacy-Utility Tradeoff</h2>
 <p>One way to measure utility is to ask whether a classifier trained on the privacy-transformed data still predicts income well. This is not the only notion of utility, but it is concrete.</p>
-<h3 id="utility-is-task-dependent">Utility is task-dependent</h3>
+<p>Utility is measured with a downstream classifier so privacy choices can be compared against an analytic task.</p>
+<p><strong>Utility is task-dependent</strong></p>
 <p>Here utility means predictive usefulness for an income classifier. That is only one possible utility definition.</p>
 <p>Other tasks might care about:</p>
 <ul>
@@ -1573,65 +1596,66 @@ dtype: float64</code></pre>
 <li>preserving ranking or segmentation quality.</li>
 </ul>
 <p>A privacy technique should be evaluated against the analysis the released data is meant to support.</p>
-<div id="82b73b36" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="14">
+<div id="bbef1148" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="kw">def</span> make_model_frame(data, feature_cols, target_col):</span>
-<span id="cb24-2"><a href="" aria-label="2"></a>    X <span class="op">=</span> data[feature_cols].copy()</span>
-<span id="cb24-3"><a href="" aria-label="3"></a>    y <span class="op">=</span> (data[target_col] <span class="op">==</span> <span class="st">"&gt;50K"</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb24-4"><a href="" aria-label="4"></a>    <span class="cf">return</span> X, y</span>
-<span id="cb24-5"><a href="" aria-label="5"></a></span>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="co"># Train the same classifier on each release to measure task-specific utility.</span></span>
+<span id="cb24-2"><a href="" aria-label="2"></a><span class="kw">def</span> make_model_frame(data, feature_cols, target_col):</span>
+<span id="cb24-3"><a href="" aria-label="3"></a>    X <span class="op">=</span> data[feature_cols].copy()</span>
+<span id="cb24-4"><a href="" aria-label="4"></a>    y <span class="op">=</span> (data[target_col] <span class="op">==</span> <span class="st">"&gt;50K"</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb24-5"><a href="" aria-label="5"></a>    <span class="cf">return</span> X, y</span>
 <span id="cb24-6"><a href="" aria-label="6"></a></span>
-<span id="cb24-7"><a href="" aria-label="7"></a><span class="kw">def</span> evaluate_income_model(data, feature_cols, label):</span>
-<span id="cb24-8"><a href="" aria-label="8"></a>    X, y <span class="op">=</span> make_model_frame(data, feature_cols, sensitive)</span>
-<span id="cb24-9"><a href="" aria-label="9"></a>    X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
-<span id="cb24-10"><a href="" aria-label="10"></a>        X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, stratify<span class="op">=</span>y, random_state<span class="op">=</span>RANDOM_STATE</span>
-<span id="cb24-11"><a href="" aria-label="11"></a>    )</span>
-<span id="cb24-12"><a href="" aria-label="12"></a>    numeric_features <span class="op">=</span> X.select_dtypes(include<span class="op">=</span>np.number).columns.tolist()</span>
-<span id="cb24-13"><a href="" aria-label="13"></a>    categorical_features <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> X.columns <span class="cf">if</span> c <span class="kw">not</span> <span class="kw">in</span> numeric_features]</span>
-<span id="cb24-14"><a href="" aria-label="14"></a></span>
-<span id="cb24-15"><a href="" aria-label="15"></a>    <span class="cf">try</span>:</span>
-<span id="cb24-16"><a href="" aria-label="16"></a>        one_hot <span class="op">=</span> OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">"ignore"</span>, sparse_output<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb24-17"><a href="" aria-label="17"></a>    <span class="cf">except</span> <span class="pp">TypeError</span>:</span>
-<span id="cb24-18"><a href="" aria-label="18"></a>        one_hot <span class="op">=</span> OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">"ignore"</span>, sparse<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb24-19"><a href="" aria-label="19"></a></span>
-<span id="cb24-20"><a href="" aria-label="20"></a>    model <span class="op">=</span> Pipeline(</span>
-<span id="cb24-21"><a href="" aria-label="21"></a>        steps<span class="op">=</span>[</span>
-<span id="cb24-22"><a href="" aria-label="22"></a>            (</span>
-<span id="cb24-23"><a href="" aria-label="23"></a>                <span class="st">"preprocess"</span>,</span>
-<span id="cb24-24"><a href="" aria-label="24"></a>                ColumnTransformer(</span>
-<span id="cb24-25"><a href="" aria-label="25"></a>                    [</span>
-<span id="cb24-26"><a href="" aria-label="26"></a>                        (<span class="st">"num"</span>, StandardScaler(), numeric_features),</span>
-<span id="cb24-27"><a href="" aria-label="27"></a>                        (<span class="st">"cat"</span>, one_hot, categorical_features),</span>
-<span id="cb24-28"><a href="" aria-label="28"></a>                    ]</span>
-<span id="cb24-29"><a href="" aria-label="29"></a>                ),</span>
-<span id="cb24-30"><a href="" aria-label="30"></a>            ),</span>
-<span id="cb24-31"><a href="" aria-label="31"></a>            (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, random_state<span class="op">=</span>RANDOM_STATE)),</span>
-<span id="cb24-32"><a href="" aria-label="32"></a>        ]</span>
-<span id="cb24-33"><a href="" aria-label="33"></a>    )</span>
-<span id="cb24-34"><a href="" aria-label="34"></a>    model.fit(X_train, y_train)</span>
-<span id="cb24-35"><a href="" aria-label="35"></a>    pred <span class="op">=</span> model.predict(X_test)</span>
-<span id="cb24-36"><a href="" aria-label="36"></a>    <span class="cf">return</span> {</span>
-<span id="cb24-37"><a href="" aria-label="37"></a>        <span class="st">"dataset"</span>: label,</span>
-<span id="cb24-38"><a href="" aria-label="38"></a>        <span class="st">"rows"</span>: <span class="bu">len</span>(data),</span>
-<span id="cb24-39"><a href="" aria-label="39"></a>        <span class="st">"accuracy"</span>: accuracy_score(y_test, pred),</span>
-<span id="cb24-40"><a href="" aria-label="40"></a>        <span class="st">"balanced_accuracy"</span>: balanced_accuracy_score(y_test, pred),</span>
-<span id="cb24-41"><a href="" aria-label="41"></a>        <span class="st">"f1"</span>: f1_score(y_test, pred),</span>
-<span id="cb24-42"><a href="" aria-label="42"></a>    }</span>
-<span id="cb24-43"><a href="" aria-label="43"></a></span>
+<span id="cb24-7"><a href="" aria-label="7"></a></span>
+<span id="cb24-8"><a href="" aria-label="8"></a><span class="kw">def</span> evaluate_income_model(data, feature_cols, label):</span>
+<span id="cb24-9"><a href="" aria-label="9"></a>    X, y <span class="op">=</span> make_model_frame(data, feature_cols, sensitive)</span>
+<span id="cb24-10"><a href="" aria-label="10"></a>    X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb24-11"><a href="" aria-label="11"></a>        X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, stratify<span class="op">=</span>y, random_state<span class="op">=</span>RANDOM_STATE</span>
+<span id="cb24-12"><a href="" aria-label="12"></a>    )</span>
+<span id="cb24-13"><a href="" aria-label="13"></a>    numeric_features <span class="op">=</span> X.select_dtypes(include<span class="op">=</span>np.number).columns.tolist()</span>
+<span id="cb24-14"><a href="" aria-label="14"></a>    categorical_features <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> X.columns <span class="cf">if</span> c <span class="kw">not</span> <span class="kw">in</span> numeric_features]</span>
+<span id="cb24-15"><a href="" aria-label="15"></a></span>
+<span id="cb24-16"><a href="" aria-label="16"></a>    <span class="cf">try</span>:</span>
+<span id="cb24-17"><a href="" aria-label="17"></a>        one_hot <span class="op">=</span> OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">"ignore"</span>, sparse_output<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb24-18"><a href="" aria-label="18"></a>    <span class="cf">except</span> <span class="pp">TypeError</span>:</span>
+<span id="cb24-19"><a href="" aria-label="19"></a>        one_hot <span class="op">=</span> OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">"ignore"</span>, sparse<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb24-20"><a href="" aria-label="20"></a></span>
+<span id="cb24-21"><a href="" aria-label="21"></a>    model <span class="op">=</span> Pipeline(</span>
+<span id="cb24-22"><a href="" aria-label="22"></a>        steps<span class="op">=</span>[</span>
+<span id="cb24-23"><a href="" aria-label="23"></a>            (</span>
+<span id="cb24-24"><a href="" aria-label="24"></a>                <span class="st">"preprocess"</span>,</span>
+<span id="cb24-25"><a href="" aria-label="25"></a>                ColumnTransformer(</span>
+<span id="cb24-26"><a href="" aria-label="26"></a>                    [</span>
+<span id="cb24-27"><a href="" aria-label="27"></a>                        (<span class="st">"num"</span>, StandardScaler(), numeric_features),</span>
+<span id="cb24-28"><a href="" aria-label="28"></a>                        (<span class="st">"cat"</span>, one_hot, categorical_features),</span>
+<span id="cb24-29"><a href="" aria-label="29"></a>                    ]</span>
+<span id="cb24-30"><a href="" aria-label="30"></a>                ),</span>
+<span id="cb24-31"><a href="" aria-label="31"></a>            ),</span>
+<span id="cb24-32"><a href="" aria-label="32"></a>            (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, random_state<span class="op">=</span>RANDOM_STATE)),</span>
+<span id="cb24-33"><a href="" aria-label="33"></a>        ]</span>
+<span id="cb24-34"><a href="" aria-label="34"></a>    )</span>
+<span id="cb24-35"><a href="" aria-label="35"></a>    model.fit(X_train, y_train)</span>
+<span id="cb24-36"><a href="" aria-label="36"></a>    pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb24-37"><a href="" aria-label="37"></a>    <span class="cf">return</span> {</span>
+<span id="cb24-38"><a href="" aria-label="38"></a>        <span class="st">"dataset"</span>: label,</span>
+<span id="cb24-39"><a href="" aria-label="39"></a>        <span class="st">"rows"</span>: <span class="bu">len</span>(data),</span>
+<span id="cb24-40"><a href="" aria-label="40"></a>        <span class="st">"accuracy"</span>: accuracy_score(y_test, pred),</span>
+<span id="cb24-41"><a href="" aria-label="41"></a>        <span class="st">"balanced_accuracy"</span>: balanced_accuracy_score(y_test, pred),</span>
+<span id="cb24-42"><a href="" aria-label="42"></a>        <span class="st">"f1"</span>: f1_score(y_test, pred),</span>
+<span id="cb24-43"><a href="" aria-label="43"></a>    }</span>
 <span id="cb24-44"><a href="" aria-label="44"></a></span>
-<span id="cb24-45"><a href="" aria-label="45"></a>original_features <span class="op">=</span> [<span class="st">"age"</span>, <span class="st">"education_num"</span>, <span class="st">"marital_status"</span>, <span class="st">"race"</span>, <span class="st">"sex"</span>, <span class="st">"native_country"</span>, <span class="st">"hours_per_week"</span>, <span class="st">"workclass"</span>, <span class="st">"occupation"</span>]</span>
-<span id="cb24-46"><a href="" aria-label="46"></a>anonymous_features <span class="op">=</span> gen_qi</span>
-<span id="cb24-47"><a href="" aria-label="47"></a></span>
-<span id="cb24-48"><a href="" aria-label="48"></a>utility_results <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb24-49"><a href="" aria-label="49"></a>    [</span>
-<span id="cb24-50"><a href="" aria-label="50"></a>        evaluate_income_model(df, original_features, <span class="st">"original detail"</span>),</span>
-<span id="cb24-51"><a href="" aria-label="51"></a>        evaluate_income_model(anon, anonymous_features, <span class="st">"generalized release"</span>),</span>
-<span id="cb24-52"><a href="" aria-label="52"></a>        evaluate_income_model(suppressed, anonymous_features, <span class="st">"generalized + suppressed"</span>),</span>
-<span id="cb24-53"><a href="" aria-label="53"></a>    ]</span>
-<span id="cb24-54"><a href="" aria-label="54"></a>)</span>
-<span id="cb24-55"><a href="" aria-label="55"></a></span>
-<span id="cb24-56"><a href="" aria-label="56"></a>utility_results.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<span id="cb24-45"><a href="" aria-label="45"></a></span>
+<span id="cb24-46"><a href="" aria-label="46"></a>original_features <span class="op">=</span> [<span class="st">"age"</span>, <span class="st">"education_num"</span>, <span class="st">"marital_status"</span>, <span class="st">"race"</span>, <span class="st">"sex"</span>, <span class="st">"native_country"</span>, <span class="st">"hours_per_week"</span>, <span class="st">"workclass"</span>, <span class="st">"occupation"</span>]</span>
+<span id="cb24-47"><a href="" aria-label="47"></a>anonymous_features <span class="op">=</span> gen_qi</span>
+<span id="cb24-48"><a href="" aria-label="48"></a></span>
+<span id="cb24-49"><a href="" aria-label="49"></a>utility_results <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb24-50"><a href="" aria-label="50"></a>    [</span>
+<span id="cb24-51"><a href="" aria-label="51"></a>        evaluate_income_model(df, original_features, <span class="st">"original detail"</span>),</span>
+<span id="cb24-52"><a href="" aria-label="52"></a>        evaluate_income_model(anon, anonymous_features, <span class="st">"generalized release"</span>),</span>
+<span id="cb24-53"><a href="" aria-label="53"></a>        evaluate_income_model(suppressed, anonymous_features, <span class="st">"generalized + suppressed"</span>),</span>
+<span id="cb24-54"><a href="" aria-label="54"></a>    ]</span>
+<span id="cb24-55"><a href="" aria-label="55"></a>)</span>
+<span id="cb24-56"><a href="" aria-label="56"></a></span>
+<span id="cb24-57"><a href="" aria-label="57"></a>utility_results.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
@@ -1691,21 +1715,22 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<h3 id="interpreting-model-utility">Interpreting model utility</h3>
+<p><strong>Interpreting model utility</strong></p>
 <p>If anonymization improves privacy but destroys balanced accuracy or F1, the release may no longer support the intended mining task.</p>
 <p>If performance stays similar, the removed detail may have been unnecessary for this task, even if it would matter for another analysis.</p>
-<div id="4102d258" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="15">
+<div id="d0fc2de4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>privacy_utility <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb25-2"><a href="" aria-label="2"></a>    [</span>
-<span id="cb25-3"><a href="" aria-label="3"></a>        {<span class="st">"dataset"</span>: <span class="st">"original detail"</span>, <span class="op">**</span>risk_report(df, base_qi).to_dict()},</span>
-<span id="cb25-4"><a href="" aria-label="4"></a>        {<span class="st">"dataset"</span>: <span class="st">"generalized release"</span>, <span class="op">**</span>risk_report(anon, gen_qi).to_dict()},</span>
-<span id="cb25-5"><a href="" aria-label="5"></a>        {<span class="st">"dataset"</span>: <span class="st">"generalized + suppressed"</span>, <span class="op">**</span>risk_report(suppressed, gen_qi).to_dict()},</span>
-<span id="cb25-6"><a href="" aria-label="6"></a>    ]</span>
-<span id="cb25-7"><a href="" aria-label="7"></a>).merge(utility_results, on<span class="op">=</span><span class="st">"dataset"</span>)</span>
-<span id="cb25-8"><a href="" aria-label="8"></a></span>
-<span id="cb25-9"><a href="" aria-label="9"></a>display(privacy_utility[[<span class="st">"dataset"</span>, <span class="st">"rows"</span>, <span class="st">"k_min"</span>, <span class="st">"share_unique"</span>, <span class="st">"share_in_classes_lt_5"</span>, <span class="st">"balanced_accuracy"</span>, <span class="st">"f1"</span>]].<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a><span class="co"># Put privacy and utility metrics side by side for discussion.</span></span>
+<span id="cb25-2"><a href="" aria-label="2"></a>privacy_utility <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb25-3"><a href="" aria-label="3"></a>    [</span>
+<span id="cb25-4"><a href="" aria-label="4"></a>        {<span class="st">"dataset"</span>: <span class="st">"original detail"</span>, <span class="op">**</span>risk_report(df, base_qi).to_dict()},</span>
+<span id="cb25-5"><a href="" aria-label="5"></a>        {<span class="st">"dataset"</span>: <span class="st">"generalized release"</span>, <span class="op">**</span>risk_report(anon, gen_qi).to_dict()},</span>
+<span id="cb25-6"><a href="" aria-label="6"></a>        {<span class="st">"dataset"</span>: <span class="st">"generalized + suppressed"</span>, <span class="op">**</span>risk_report(suppressed, gen_qi).to_dict()},</span>
+<span id="cb25-7"><a href="" aria-label="7"></a>    ]</span>
+<span id="cb25-8"><a href="" aria-label="8"></a>).merge(utility_results, on<span class="op">=</span><span class="st">"dataset"</span>)</span>
+<span id="cb25-9"><a href="" aria-label="9"></a></span>
+<span id="cb25-10"><a href="" aria-label="10"></a>display(privacy_utility[[<span class="st">"dataset"</span>, <span class="st">"rows"</span>, <span class="st">"k_min"</span>, <span class="st">"share_unique"</span>, <span class="st">"share_in_classes_lt_5"</span>, <span class="st">"balanced_accuracy"</span>, <span class="st">"f1"</span>]].<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1773,7 +1798,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<h3 id="privacy-utility-summary">Privacy-utility summary</h3>
+<p><strong>Privacy-utility summary</strong></p>
 <p>Use this table as the main evidence for the lab discussion.</p>
 <p>A good answer does not simply pick the most private row or the most accurate row. It explains why a particular tradeoff is acceptable for a stated use case.</p>
 </section>
@@ -1782,39 +1807,41 @@ dtype: float64</code></pre>
 <p>Differential privacy protects the output of a randomized computation. For a count query, one person’s record can change the count by at most 1, so the global sensitivity is 1.</p>
 <p>The Laplace mechanism answers:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb26-1"><a href="" aria-label="1"></a>private_answer = true_answer + Laplace(scale = sensitivity / epsilon)</span></code></pre></div>
-<h3 id="microdata-release-versus-query-release">Microdata release versus query release</h3>
+<p>Differential privacy changes the release model: publish noisy answers rather than transformed individual records.</p>
+<p><strong>Microdata release versus query release</strong></p>
 <p>k-anonymity, l-diversity, and t-closeness usually transform and publish records.</p>
 <p>Differential privacy is often used differently: the raw records stay hidden, and users receive noisy query answers or synthetic outputs. The guarantee is attached to the randomized mechanism that produces the output.</p>
-<div id="883a17fe" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="16">
+<div id="d61573d0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a><span class="co"># Add Laplace noise calibrated to global sensitivity and epsilon.</span></span>
-<span id="cb27-2"><a href="" aria-label="2"></a><span class="kw">def</span> laplace_mechanism(true_value, sensitivity, epsilon, random_state<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb27-3"><a href="" aria-label="3"></a>    local_rng <span class="op">=</span> np.random.default_rng(random_state)</span>
-<span id="cb27-4"><a href="" aria-label="4"></a>    scale <span class="op">=</span> sensitivity <span class="op">/</span> epsilon</span>
-<span id="cb27-5"><a href="" aria-label="5"></a>    <span class="cf">return</span> true_value <span class="op">+</span> local_rng.laplace(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span>scale)</span>
-<span id="cb27-6"><a href="" aria-label="6"></a></span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a><span class="co"># Add Laplace noise calibrated by sensitivity and epsilon.</span></span>
+<span id="cb27-2"><a href="" aria-label="2"></a><span class="co"># Add Laplace noise calibrated to global sensitivity and epsilon.</span></span>
+<span id="cb27-3"><a href="" aria-label="3"></a><span class="kw">def</span> laplace_mechanism(true_value, sensitivity, epsilon, random_state<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb27-4"><a href="" aria-label="4"></a>    local_rng <span class="op">=</span> np.random.default_rng(random_state)</span>
+<span id="cb27-5"><a href="" aria-label="5"></a>    scale <span class="op">=</span> sensitivity <span class="op">/</span> epsilon</span>
+<span id="cb27-6"><a href="" aria-label="6"></a>    <span class="cf">return</span> true_value <span class="op">+</span> local_rng.laplace(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span>scale)</span>
 <span id="cb27-7"><a href="" aria-label="7"></a></span>
-<span id="cb27-8"><a href="" aria-label="8"></a>true_high_income_count <span class="op">=</span> <span class="bu">int</span>((df[sensitive] <span class="op">==</span> <span class="st">"&gt;50K"</span>).<span class="bu">sum</span>())</span>
-<span id="cb27-9"><a href="" aria-label="9"></a></span>
-<span id="cb27-10"><a href="" aria-label="10"></a>epsilon_values <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">1.0</span>, <span class="fl">5.0</span>]</span>
-<span id="cb27-11"><a href="" aria-label="11"></a>dp_count_rows <span class="op">=</span> []</span>
-<span id="cb27-12"><a href="" aria-label="12"></a><span class="cf">for</span> eps <span class="kw">in</span> epsilon_values:</span>
-<span id="cb27-13"><a href="" aria-label="13"></a>    noisy_values <span class="op">=</span> [</span>
-<span id="cb27-14"><a href="" aria-label="14"></a>        laplace_mechanism(true_high_income_count, sensitivity<span class="op">=</span><span class="dv">1</span>, epsilon<span class="op">=</span>eps, random_state<span class="op">=</span>RANDOM_STATE <span class="op">+</span> i)</span>
-<span id="cb27-15"><a href="" aria-label="15"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">200</span>)</span>
-<span id="cb27-16"><a href="" aria-label="16"></a>    ]</span>
-<span id="cb27-17"><a href="" aria-label="17"></a>    dp_count_rows.append(</span>
-<span id="cb27-18"><a href="" aria-label="18"></a>        {</span>
-<span id="cb27-19"><a href="" aria-label="19"></a>            <span class="st">"epsilon"</span>: eps,</span>
-<span id="cb27-20"><a href="" aria-label="20"></a>            <span class="st">"true_count"</span>: true_high_income_count,</span>
-<span id="cb27-21"><a href="" aria-label="21"></a>            <span class="st">"noise_scale"</span>: <span class="dv">1</span> <span class="op">/</span> eps,</span>
-<span id="cb27-22"><a href="" aria-label="22"></a>            <span class="st">"mean_noisy_count"</span>: np.mean(noisy_values),</span>
-<span id="cb27-23"><a href="" aria-label="23"></a>            <span class="st">"mean_absolute_error"</span>: np.mean(np.<span class="bu">abs</span>(np.array(noisy_values) <span class="op">-</span> true_high_income_count)),</span>
-<span id="cb27-24"><a href="" aria-label="24"></a>        }</span>
-<span id="cb27-25"><a href="" aria-label="25"></a>    )</span>
-<span id="cb27-26"><a href="" aria-label="26"></a></span>
-<span id="cb27-27"><a href="" aria-label="27"></a>pd.DataFrame(dp_count_rows).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
+<span id="cb27-8"><a href="" aria-label="8"></a></span>
+<span id="cb27-9"><a href="" aria-label="9"></a>true_high_income_count <span class="op">=</span> <span class="bu">int</span>((df[sensitive] <span class="op">==</span> <span class="st">"&gt;50K"</span>).<span class="bu">sum</span>())</span>
+<span id="cb27-10"><a href="" aria-label="10"></a></span>
+<span id="cb27-11"><a href="" aria-label="11"></a>epsilon_values <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">1.0</span>, <span class="fl">5.0</span>]</span>
+<span id="cb27-12"><a href="" aria-label="12"></a>dp_count_rows <span class="op">=</span> []</span>
+<span id="cb27-13"><a href="" aria-label="13"></a><span class="cf">for</span> eps <span class="kw">in</span> epsilon_values:</span>
+<span id="cb27-14"><a href="" aria-label="14"></a>    noisy_values <span class="op">=</span> [</span>
+<span id="cb27-15"><a href="" aria-label="15"></a>        laplace_mechanism(true_high_income_count, sensitivity<span class="op">=</span><span class="dv">1</span>, epsilon<span class="op">=</span>eps, random_state<span class="op">=</span>RANDOM_STATE <span class="op">+</span> i)</span>
+<span id="cb27-16"><a href="" aria-label="16"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">200</span>)</span>
+<span id="cb27-17"><a href="" aria-label="17"></a>    ]</span>
+<span id="cb27-18"><a href="" aria-label="18"></a>    dp_count_rows.append(</span>
+<span id="cb27-19"><a href="" aria-label="19"></a>        {</span>
+<span id="cb27-20"><a href="" aria-label="20"></a>            <span class="st">"epsilon"</span>: eps,</span>
+<span id="cb27-21"><a href="" aria-label="21"></a>            <span class="st">"true_count"</span>: true_high_income_count,</span>
+<span id="cb27-22"><a href="" aria-label="22"></a>            <span class="st">"noise_scale"</span>: <span class="dv">1</span> <span class="op">/</span> eps,</span>
+<span id="cb27-23"><a href="" aria-label="23"></a>            <span class="st">"mean_noisy_count"</span>: np.mean(noisy_values),</span>
+<span id="cb27-24"><a href="" aria-label="24"></a>            <span class="st">"mean_absolute_error"</span>: np.mean(np.<span class="bu">abs</span>(np.array(noisy_values) <span class="op">-</span> true_high_income_count)),</span>
+<span id="cb27-25"><a href="" aria-label="25"></a>        }</span>
+<span id="cb27-26"><a href="" aria-label="26"></a>    )</span>
+<span id="cb27-27"><a href="" aria-label="27"></a></span>
+<span id="cb27-28"><a href="" aria-label="28"></a>pd.DataFrame(dp_count_rows).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
@@ -1882,22 +1909,23 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="e5bafb10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="17">
+<div id="ba9bdbbc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
-<span id="cb28-2"><a href="" aria-label="2"></a><span class="cf">for</span> eps <span class="kw">in</span> epsilon_values:</span>
-<span id="cb28-3"><a href="" aria-label="3"></a>    noisy_values <span class="op">=</span> [</span>
-<span id="cb28-4"><a href="" aria-label="4"></a>        laplace_mechanism(true_high_income_count, sensitivity<span class="op">=</span><span class="dv">1</span>, epsilon<span class="op">=</span>eps, random_state<span class="op">=</span><span class="dv">10_000</span> <span class="op">+</span> <span class="bu">int</span>(eps <span class="op">*</span> <span class="dv">100</span>) <span class="op">+</span> i)</span>
-<span id="cb28-5"><a href="" aria-label="5"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>)</span>
-<span id="cb28-6"><a href="" aria-label="6"></a>    ]</span>
-<span id="cb28-7"><a href="" aria-label="7"></a>    ax.hist(np.array(noisy_values) <span class="op">-</span> true_high_income_count, bins<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.45</span>, label<span class="op">=</span><span class="ss">f"epsilon=</span><span class="sc">{</span>eps<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb28-8"><a href="" aria-label="8"></a></span>
-<span id="cb28-9"><a href="" aria-label="9"></a>ax.set_title(<span class="st">"Noise added to the high-income count"</span>)</span>
-<span id="cb28-10"><a href="" aria-label="10"></a>ax.set_xlabel(<span class="st">"noisy count - true count"</span>)</span>
-<span id="cb28-11"><a href="" aria-label="11"></a>ax.set_ylabel(<span class="st">"frequency"</span>)</span>
-<span id="cb28-12"><a href="" aria-label="12"></a>ax.legend()</span>
-<span id="cb28-13"><a href="" aria-label="13"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a><span class="co"># Simulate repeated noisy answers to show how epsilon changes error spread.</span></span>
+<span id="cb28-2"><a href="" aria-label="2"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb28-3"><a href="" aria-label="3"></a><span class="cf">for</span> eps <span class="kw">in</span> epsilon_values:</span>
+<span id="cb28-4"><a href="" aria-label="4"></a>    noisy_values <span class="op">=</span> [</span>
+<span id="cb28-5"><a href="" aria-label="5"></a>        laplace_mechanism(true_high_income_count, sensitivity<span class="op">=</span><span class="dv">1</span>, epsilon<span class="op">=</span>eps, random_state<span class="op">=</span><span class="dv">10_000</span> <span class="op">+</span> <span class="bu">int</span>(eps <span class="op">*</span> <span class="dv">100</span>) <span class="op">+</span> i)</span>
+<span id="cb28-6"><a href="" aria-label="6"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>)</span>
+<span id="cb28-7"><a href="" aria-label="7"></a>    ]</span>
+<span id="cb28-8"><a href="" aria-label="8"></a>    ax.hist(np.array(noisy_values) <span class="op">-</span> true_high_income_count, bins<span class="op">=</span><span class="dv">40</span>, alpha<span class="op">=</span><span class="fl">0.45</span>, label<span class="op">=</span><span class="ss">f"epsilon=</span><span class="sc">{</span>eps<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb28-9"><a href="" aria-label="9"></a></span>
+<span id="cb28-10"><a href="" aria-label="10"></a>ax.set_title(<span class="st">"Noise added to the high-income count"</span>)</span>
+<span id="cb28-11"><a href="" aria-label="11"></a>ax.set_xlabel(<span class="st">"noisy count - true count"</span>)</span>
+<span id="cb28-12"><a href="" aria-label="12"></a>ax.set_ylabel(<span class="st">"frequency"</span>)</span>
+<span id="cb28-13"><a href="" aria-label="13"></a>ax.legend()</span>
+<span id="cb28-14"><a href="" aria-label="14"></a>plt.show()</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1907,26 +1935,28 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<h3 id="reading-the-noise-plot">Reading the noise plot</h3>
+<p><strong>Reading the noise plot</strong></p>
 <p>The histograms show the error added by the Laplace mechanism.</p>
 <p>Narrower distributions mean more accurate answers. Wider distributions mean stronger privacy for the same query sensitivity.</p>
 </section>
 <section id="sensitivity-count-sum-and-mean" class="slide level2">
 <h2>12. Sensitivity: Count, Sum, and Mean</h2>
 <p>Sensitivity depends on the query. For a bounded sum of <code>hours_per_week</code>, one record can change the sum by at most the upper bound. For a mean, we also need a minimum dataset size.</p>
-<div id="7a3456b9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="18">
+<p>Sensitivity determines the amount of noise needed for the same privacy budget.</p>
+<div id="8102da27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>hours <span class="op">=</span> df[<span class="st">"hours_per_week"</span>].astype(<span class="bu">float</span>).clip(<span class="dv">0</span>, <span class="dv">80</span>)</span>
-<span id="cb29-2"><a href="" aria-label="2"></a></span>
-<span id="cb29-3"><a href="" aria-label="3"></a>queries <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb29-4"><a href="" aria-label="4"></a>    [</span>
-<span id="cb29-5"><a href="" aria-label="5"></a>        {<span class="st">"query"</span>: <span class="st">"count high income"</span>, <span class="st">"true_value"</span>: true_high_income_count, <span class="st">"sensitivity"</span>: <span class="dv">1</span>},</span>
-<span id="cb29-6"><a href="" aria-label="6"></a>        {<span class="st">"query"</span>: <span class="st">"sum hours_per_week"</span>, <span class="st">"true_value"</span>: hours.<span class="bu">sum</span>(), <span class="st">"sensitivity"</span>: <span class="dv">80</span>},</span>
-<span id="cb29-7"><a href="" aria-label="7"></a>        {<span class="st">"query"</span>: <span class="st">"mean hours_per_week, n fixed"</span>, <span class="st">"true_value"</span>: hours.mean(), <span class="st">"sensitivity"</span>: <span class="dv">80</span> <span class="op">/</span> <span class="bu">len</span>(hours)},</span>
-<span id="cb29-8"><a href="" aria-label="8"></a>    ]</span>
-<span id="cb29-9"><a href="" aria-label="9"></a>)</span>
-<span id="cb29-10"><a href="" aria-label="10"></a>queries</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a><span class="co"># Compare sensitivities for common aggregate queries.</span></span>
+<span id="cb29-2"><a href="" aria-label="2"></a>hours <span class="op">=</span> df[<span class="st">"hours_per_week"</span>].astype(<span class="bu">float</span>).clip(<span class="dv">0</span>, <span class="dv">80</span>)</span>
+<span id="cb29-3"><a href="" aria-label="3"></a></span>
+<span id="cb29-4"><a href="" aria-label="4"></a>queries <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb29-5"><a href="" aria-label="5"></a>    [</span>
+<span id="cb29-6"><a href="" aria-label="6"></a>        {<span class="st">"query"</span>: <span class="st">"count high income"</span>, <span class="st">"true_value"</span>: true_high_income_count, <span class="st">"sensitivity"</span>: <span class="dv">1</span>},</span>
+<span id="cb29-7"><a href="" aria-label="7"></a>        {<span class="st">"query"</span>: <span class="st">"sum hours_per_week"</span>, <span class="st">"true_value"</span>: hours.<span class="bu">sum</span>(), <span class="st">"sensitivity"</span>: <span class="dv">80</span>},</span>
+<span id="cb29-8"><a href="" aria-label="8"></a>        {<span class="st">"query"</span>: <span class="st">"mean hours_per_week, n fixed"</span>, <span class="st">"true_value"</span>: hours.mean(), <span class="st">"sensitivity"</span>: <span class="dv">80</span> <span class="op">/</span> <span class="bu">len</span>(hours)},</span>
+<span id="cb29-9"><a href="" aria-label="9"></a>    ]</span>
+<span id="cb29-10"><a href="" aria-label="10"></a>)</span>
+<span id="cb29-11"><a href="" aria-label="11"></a>queries</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div>
@@ -1978,23 +2008,24 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<h3 id="why-bounds-matter">Why bounds matter</h3>
+<p><strong>Why bounds matter</strong></p>
 <p>Differential privacy needs a worst-case bound on one person’s contribution.</p>
 <p>Without clipping <code>hours_per_week</code> to <code>[0, 80]</code>, a single impossible or erroneous value could make the sum’s sensitivity unbounded or too large to answer accurately.</p>
-<div id="234001d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="19">
+<div id="aff9fed6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>epsilon <span class="op">=</span> <span class="fl">0.5</span></span>
-<span id="cb30-2"><a href="" aria-label="2"></a>private_answers <span class="op">=</span> queries.assign(</span>
-<span id="cb30-3"><a href="" aria-label="3"></a>    epsilon<span class="op">=</span>epsilon,</span>
-<span id="cb30-4"><a href="" aria-label="4"></a>    noise_scale<span class="op">=</span>queries[<span class="st">"sensitivity"</span>] <span class="op">/</span> epsilon,</span>
-<span id="cb30-5"><a href="" aria-label="5"></a>    one_private_answer<span class="op">=</span>[</span>
-<span id="cb30-6"><a href="" aria-label="6"></a>        laplace_mechanism(row.true_value, row.sensitivity, epsilon, RANDOM_STATE <span class="op">+</span> i)</span>
-<span id="cb30-7"><a href="" aria-label="7"></a>        <span class="cf">for</span> i, row <span class="kw">in</span> <span class="bu">enumerate</span>(queries.itertuples())</span>
-<span id="cb30-8"><a href="" aria-label="8"></a>    ],</span>
-<span id="cb30-9"><a href="" aria-label="9"></a>)</span>
-<span id="cb30-10"><a href="" aria-label="10"></a></span>
-<span id="cb30-11"><a href="" aria-label="11"></a>private_answers.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a><span class="co"># Apply the same epsilon to queries with different sensitivities.</span></span>
+<span id="cb30-2"><a href="" aria-label="2"></a>epsilon <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb30-3"><a href="" aria-label="3"></a>private_answers <span class="op">=</span> queries.assign(</span>
+<span id="cb30-4"><a href="" aria-label="4"></a>    epsilon<span class="op">=</span>epsilon,</span>
+<span id="cb30-5"><a href="" aria-label="5"></a>    noise_scale<span class="op">=</span>queries[<span class="st">"sensitivity"</span>] <span class="op">/</span> epsilon,</span>
+<span id="cb30-6"><a href="" aria-label="6"></a>    one_private_answer<span class="op">=</span>[</span>
+<span id="cb30-7"><a href="" aria-label="7"></a>        laplace_mechanism(row.true_value, row.sensitivity, epsilon, RANDOM_STATE <span class="op">+</span> i)</span>
+<span id="cb30-8"><a href="" aria-label="8"></a>        <span class="cf">for</span> i, row <span class="kw">in</span> <span class="bu">enumerate</span>(queries.itertuples())</span>
+<span id="cb30-9"><a href="" aria-label="9"></a>    ],</span>
+<span id="cb30-10"><a href="" aria-label="10"></a>)</span>
+<span id="cb30-11"><a href="" aria-label="11"></a></span>
+<span id="cb30-12"><a href="" aria-label="12"></a>private_answers.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <div>
@@ -2058,32 +2089,34 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<h3 id="sensitivity-drives-noise">Sensitivity drives noise</h3>
+<p><strong>Sensitivity drives noise</strong></p>
 <p>At the same <code>epsilon</code>, high-sensitivity queries receive larger noise.</p>
 <p>This is why private systems often prefer counts, bounded means, histograms, or carefully designed model-selection mechanisms over arbitrary raw sums.</p>
-<h3 id="exercise-4">Exercise</h3>
+<p><strong>Exercise</strong></p>
 <p>Why is the noisy sum much less accurate than the noisy count at the same <code>epsilon</code>? What bound did we impose to make the sum sensitivity finite?</p>
 </section>
 <section id="privacy-budget-composition" class="slide level2">
 <h2>13. Privacy Budget Composition</h2>
 <p>Repeated differentially private queries accumulate privacy loss. If each query spends part of the budget, the total privacy loss is the sum of the epsilons.</p>
-<h3 id="why-budget-accounting-matters">Why budget accounting matters</h3>
+<p>Budget composition turns repeated queries into a resource-management problem.</p>
+<p><strong>Why budget accounting matters</strong></p>
 <p>If every query releases a little information, many queries can release a lot.</p>
 <p>The privacy budget makes this cumulative loss explicit. A system can then stop answering queries, lower accuracy, or require a new governance decision when the budget is exhausted.</p>
-<div id="0fcde4ad" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="20">
+<div id="eeb69dc1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>budget_plan <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb31-2"><a href="" aria-label="2"></a>    [</span>
-<span id="cb31-3"><a href="" aria-label="3"></a>        {<span class="st">"query"</span>: <span class="st">"count records"</span>, <span class="st">"epsilon"</span>: <span class="fl">0.10</span>},</span>
-<span id="cb31-4"><a href="" aria-label="4"></a>        {<span class="st">"query"</span>: <span class="st">"count high-income records"</span>, <span class="st">"epsilon"</span>: <span class="fl">0.20</span>},</span>
-<span id="cb31-5"><a href="" aria-label="5"></a>        {<span class="st">"query"</span>: <span class="st">"mean hours_per_week"</span>, <span class="st">"epsilon"</span>: <span class="fl">0.20</span>},</span>
-<span id="cb31-6"><a href="" aria-label="6"></a>        {<span class="st">"query"</span>: <span class="st">"choose a model split"</span>, <span class="st">"epsilon"</span>: <span class="fl">0.30</span>},</span>
-<span id="cb31-7"><a href="" aria-label="7"></a>        {<span class="st">"query"</span>: <span class="st">"release final aggregate"</span>, <span class="st">"epsilon"</span>: <span class="fl">0.20</span>},</span>
-<span id="cb31-8"><a href="" aria-label="8"></a>    ]</span>
-<span id="cb31-9"><a href="" aria-label="9"></a>)</span>
-<span id="cb31-10"><a href="" aria-label="10"></a>budget_plan[<span class="st">"cumulative_epsilon"</span>] <span class="op">=</span> budget_plan[<span class="st">"epsilon"</span>].cumsum()</span>
-<span id="cb31-11"><a href="" aria-label="11"></a>budget_plan</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a><span class="co"># Track cumulative epsilon as each private query spends part of the budget.</span></span>
+<span id="cb31-2"><a href="" aria-label="2"></a>budget_plan <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb31-3"><a href="" aria-label="3"></a>    [</span>
+<span id="cb31-4"><a href="" aria-label="4"></a>        {<span class="st">"query"</span>: <span class="st">"count records"</span>, <span class="st">"epsilon"</span>: <span class="fl">0.10</span>},</span>
+<span id="cb31-5"><a href="" aria-label="5"></a>        {<span class="st">"query"</span>: <span class="st">"count high-income records"</span>, <span class="st">"epsilon"</span>: <span class="fl">0.20</span>},</span>
+<span id="cb31-6"><a href="" aria-label="6"></a>        {<span class="st">"query"</span>: <span class="st">"mean hours_per_week"</span>, <span class="st">"epsilon"</span>: <span class="fl">0.20</span>},</span>
+<span id="cb31-7"><a href="" aria-label="7"></a>        {<span class="st">"query"</span>: <span class="st">"choose a model split"</span>, <span class="st">"epsilon"</span>: <span class="fl">0.30</span>},</span>
+<span id="cb31-8"><a href="" aria-label="8"></a>        {<span class="st">"query"</span>: <span class="st">"release final aggregate"</span>, <span class="st">"epsilon"</span>: <span class="fl">0.20</span>},</span>
+<span id="cb31-9"><a href="" aria-label="9"></a>    ]</span>
+<span id="cb31-10"><a href="" aria-label="10"></a>)</span>
+<span id="cb31-11"><a href="" aria-label="11"></a>budget_plan[<span class="st">"cumulative_epsilon"</span>] <span class="op">=</span> budget_plan[<span class="st">"epsilon"</span>].cumsum()</span>
+<span id="cb31-12"><a href="" aria-label="12"></a>budget_plan</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <div>
@@ -2147,21 +2180,22 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<h3 id="budget-design-question">Budget design question</h3>
+<p><strong>Budget design question</strong></p>
 <p>The budget plan is a design artifact.</p>
 <p>Before running a private analysis, decide which outputs matter most and reserve more budget for them. Spending budget on exploratory queries leaves less for the final release.</p>
-<div id="ddd68a17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="21">
+<div id="fe70c847" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
-<span id="cb32-2"><a href="" aria-label="2"></a>ax.step(<span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(budget_plan) <span class="op">+</span> <span class="dv">1</span>), budget_plan[<span class="st">"cumulative_epsilon"</span>], where<span class="op">=</span><span class="st">"mid"</span>, marker<span class="op">=</span><span class="st">"o"</span>)</span>
-<span id="cb32-3"><a href="" aria-label="3"></a>ax.axhline(<span class="fl">1.0</span>, color<span class="op">=</span><span class="st">"red"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"budget = 1.0"</span>)</span>
-<span id="cb32-4"><a href="" aria-label="4"></a>ax.set_xticks(<span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(budget_plan) <span class="op">+</span> <span class="dv">1</span>), budget_plan[<span class="st">"query"</span>], rotation<span class="op">=</span><span class="dv">25</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
-<span id="cb32-5"><a href="" aria-label="5"></a>ax.set_ylabel(<span class="st">"cumulative epsilon"</span>)</span>
-<span id="cb32-6"><a href="" aria-label="6"></a>ax.set_title(<span class="st">"Privacy budget accounting"</span>)</span>
-<span id="cb32-7"><a href="" aria-label="7"></a>ax.legend()</span>
-<span id="cb32-8"><a href="" aria-label="8"></a>plt.tight_layout()</span>
-<span id="cb32-9"><a href="" aria-label="9"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a><span class="co"># Plot budget consumption so the stopping rule is visible.</span></span>
+<span id="cb32-2"><a href="" aria-label="2"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb32-3"><a href="" aria-label="3"></a>ax.step(<span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(budget_plan) <span class="op">+</span> <span class="dv">1</span>), budget_plan[<span class="st">"cumulative_epsilon"</span>], where<span class="op">=</span><span class="st">"mid"</span>, marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb32-4"><a href="" aria-label="4"></a>ax.axhline(<span class="fl">1.0</span>, color<span class="op">=</span><span class="st">"red"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"budget = 1.0"</span>)</span>
+<span id="cb32-5"><a href="" aria-label="5"></a>ax.set_xticks(<span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(budget_plan) <span class="op">+</span> <span class="dv">1</span>), budget_plan[<span class="st">"query"</span>], rotation<span class="op">=</span><span class="dv">25</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb32-6"><a href="" aria-label="6"></a>ax.set_ylabel(<span class="st">"cumulative epsilon"</span>)</span>
+<span id="cb32-7"><a href="" aria-label="7"></a>ax.set_title(<span class="st">"Privacy budget accounting"</span>)</span>
+<span id="cb32-8"><a href="" aria-label="8"></a>ax.legend()</span>
+<span id="cb32-9"><a href="" aria-label="9"></a>plt.tight_layout()</span>
+<span id="cb32-10"><a href="" aria-label="10"></a>plt.show()</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -2171,7 +2205,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<h3 id="reading-the-budget-plot">Reading the budget plot</h3>
+<p><strong>Reading the budget plot</strong></p>
 <p>The step plot shows cumulative privacy loss.</p>
 <p>Once the cumulative value reaches the budget, the private interface should stop, deny additional queries, or require a new approval decision.</p>
 </section>
@@ -2192,23 +2226,25 @@ dtype: float64</code></pre>
 <li>Explain what attack remains possible.</li>
 <li>Explain what information the analyst loses.</li>
 </ul>
-<div id="a66c9528" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="22">
+<p>The challenge asks students to state a privacy goal, tune parameters, and defend the remaining risk.</p>
+<div id="22cce09e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;slideshow&quot;,&quot;value&quot;:{&quot;slide_type&quot;:&quot;fragment&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a><span class="co"># Challenge workspace.</span></span>
-<span id="cb33-2"><a href="" aria-label="2"></a><span class="co"># Try changing these parameters and re-running the reports above.</span></span>
-<span id="cb33-3"><a href="" aria-label="3"></a>student_release <span class="op">=</span> generalize_adult(</span>
-<span id="cb33-4"><a href="" aria-label="4"></a>    df,</span>
-<span id="cb33-5"><a href="" aria-label="5"></a>    age_width<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb33-6"><a href="" aria-label="6"></a>    education_width<span class="op">=</span><span class="dv">8</span>,</span>
-<span id="cb33-7"><a href="" aria-label="7"></a>    country<span class="op">=</span><span class="st">"region"</span>,</span>
-<span id="cb33-8"><a href="" aria-label="8"></a>    marital<span class="op">=</span><span class="st">"broad"</span>,</span>
-<span id="cb33-9"><a href="" aria-label="9"></a>)</span>
-<span id="cb33-10"><a href="" aria-label="10"></a>student_suppressed <span class="op">=</span> suppress_small_classes(student_release, gen_qi, k<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb33-11"><a href="" aria-label="11"></a></span>
-<span id="cb33-12"><a href="" aria-label="12"></a>display(risk_report(student_suppressed, gen_qi).<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb33-13"><a href="" aria-label="13"></a>display(l_diversity_report(student_suppressed, gen_qi, sensitive).<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb33-14"><a href="" aria-label="14"></a>display(t_closeness_report(student_suppressed, gen_qi, sensitive, t<span class="op">=</span><span class="fl">0.15</span>)[<span class="dv">0</span>].<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a><span class="co"># Challenge starting point: tune these release parameters and compare the reports.</span></span>
+<span id="cb33-2"><a href="" aria-label="2"></a><span class="co"># Challenge workspace.</span></span>
+<span id="cb33-3"><a href="" aria-label="3"></a><span class="co"># Try changing these parameters and re-running the reports above.</span></span>
+<span id="cb33-4"><a href="" aria-label="4"></a>student_release <span class="op">=</span> generalize_adult(</span>
+<span id="cb33-5"><a href="" aria-label="5"></a>    df,</span>
+<span id="cb33-6"><a href="" aria-label="6"></a>    age_width<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb33-7"><a href="" aria-label="7"></a>    education_width<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb33-8"><a href="" aria-label="8"></a>    country<span class="op">=</span><span class="st">"region"</span>,</span>
+<span id="cb33-9"><a href="" aria-label="9"></a>    marital<span class="op">=</span><span class="st">"broad"</span>,</span>
+<span id="cb33-10"><a href="" aria-label="10"></a>)</span>
+<span id="cb33-11"><a href="" aria-label="11"></a>student_suppressed <span class="op">=</span> suppress_small_classes(student_release, gen_qi, k<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb33-12"><a href="" aria-label="12"></a></span>
+<span id="cb33-13"><a href="" aria-label="13"></a>display(risk_report(student_suppressed, gen_qi).<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb33-14"><a href="" aria-label="14"></a>display(l_diversity_report(student_suppressed, gen_qi, sensitive).<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb33-15"><a href="" aria-label="15"></a>display(t_closeness_report(student_suppressed, gen_qi, sensitive, t<span class="op">=</span><span class="fl">0.15</span>)[<span class="dv">0</span>].<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <pre><code>records                  7712.0
@@ -2233,7 +2269,7 @@ share_groups_t_violation    0.686
 dtype: float64</code></pre>
 </div>
 </div>
-<h3 id="how-to-approach-the-challenge">How to approach the challenge</h3>
+<p><strong>How to approach the challenge</strong></p>
 <p>Start with one privacy target, then tune one knob at a time.</p>
 <p>For example, increase <code>age_width</code> first, then <code>education_width</code>, then switch country from exact values to regions. After each change, record both privacy metrics and utility metrics.</p>
 </section>
