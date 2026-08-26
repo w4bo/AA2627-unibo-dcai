@@ -351,31 +351,27 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <div class="sourceCode" id="cb6"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb6-1"><a href="" aria-label="1"></a>x_new = x_i + lambda * (x_j - x_i)</span></code></pre></div>
 <p>The intuition is simple: fill sparse minority regions. The risk is also simple: interpolation may create impossible records.</p>
 </section>
-<section id="borderline-smote" class="slide level2">
-<h2>Borderline-SMOTE</h2>
-<p>Borderline-SMOTE focuses on minority observations near the class boundary <span class="citation" data-cites="han2005borderline">(<a href="#/references" role="doc-biblioref" onclick="">Han et al. 2005</a>)</span>.</p>
-<p>These are the points a classifier is most likely to confuse with the majority class.</p>
-<p>This can help boundary recall, but noisy or mislabeled boundary points can be reinforced.</p>
-</section>
-<section id="smote-nc" class="slide level2">
-<h2>SMOTE-NC</h2>
-<p>SMOTE-NC handles mixed numerical and categorical data <span class="citation" data-cites="chawla2002smote">(<a href="#/references" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</p>
+<section id="other-algorithms" class="slide level2">
+<h2>Other algorithms</h2>
+<p><strong>Borderline-SMOTE</strong> focuses on minority observations near the class boundary <span class="citation" data-cites="han2005borderline">(<a href="#/references" role="doc-biblioref" onclick="">Han et al. 2005</a>)</span>.</p>
+<ul>
+<li>These are the points a classifier is most likely to confuse with the majority class.</li>
+<li>This can help boundary recall, but noisy or mislabeled boundary points can be reinforced.</li>
+</ul>
+<p><strong>SMOTE-NC</strong> handles mixed numerical and categorical data <span class="citation" data-cites="chawla2002smote">(<a href="#/references" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</p>
 <ul>
 <li>Numerical columns are interpolated.</li>
 <li>Categorical columns are chosen from neighboring minority examples.</li>
+<li>It avoids fractional one-hot categories, but it still cannot guarantee every generated category combination is realistic.</li>
 </ul>
-<p>It avoids fractional one-hot categories, but it still cannot guarantee every generated category combination is realistic.</p>
-</section>
-<section id="adasyn" class="slide level2">
-<h2>ADASYN</h2>
-<p>ADASYN estimates local difficulty from nearest neighbors <span class="citation" data-cites="he2008adasyn">(<a href="#/references" role="doc-biblioref" onclick="">He et al. 2008</a>)</span>.</p>
+<p><strong>ADASYN</strong> estimates local difficulty from nearest neighbors <span class="citation" data-cites="he2008adasyn">(<a href="#/references" role="doc-biblioref" onclick="">He et al. 2008</a>)</span>.</p>
 <ul>
-<li>Minority observations surrounded by many majority observations receive larger sampling weights.</li>
 <li>The method shifts attention toward hard minority regions, which can be useful or risky depending on label noise and class overlap.</li>
-</ul>
-<p>ADASYN creates more synthetic minority examples around locally difficult observations: minority points surrounded by many majority neighbors.</p>
+<li>Minority observations surrounded by many majority observations receive larger sampling weights.</li>
+<li>Creates more synthetic minority examples around locally difficult observations: minority points surrounded by many majority neighbors.
 <ul>
 <li>This can improve recall in hard regions, but it can also amplify mislabeled points or outliers.</li>
+</ul></li>
 </ul>
 </section>
 <section id="leakage-warning" class="slide level2">
@@ -392,7 +388,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h2>11. Create a deliberately imbalanced dataset</h2>
 <p>We will use a synthetic binary classification dataset so the notebook is reproducible without external data downloads.</p>
 <p>Think of <code>y=1</code> as a rare high-risk event, such as fraud, churn, default, or failure.</p>
-<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:20.221888Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:20.221595Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:20.237490Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:20.236536Z&quot;}}" data-execution_count="3">
+<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:25.003063Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:25.002530Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:25.018647Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:25.017744Z&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -448,7 +444,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="majority-class-baseline" class="slide level2">
 <h2>Majority-class baseline</h2>
 <p>A classifier that always predicts the majority class can look strong by accuracy alone. But it has zero recall for the minority class.</p>
-<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:20.341312Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:20.341080Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:20.357326Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:20.356516Z&quot;}}" data-execution_count="5">
+<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:25.122324Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:25.122118Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:25.138948Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:25.138021Z&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <style scoped="">
@@ -517,7 +513,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="baseline-pipeline" class="slide level2">
 <h2>14. Baseline pipeline</h2>
 <p>A conventional <code>sklearn.pipeline.Pipeline</code> is sufficient when all steps are transformers and estimators.</p>
-<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:21.163547Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:21.163353Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:21.184532Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:21.183570Z&quot;}}" data-execution_count="8">
+<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:25.944450Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:25.944215Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:25.964050Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:25.963217Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># Standardize numeric features before logistic regression.</span></span>
@@ -1752,7 +1748,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="stratified-cross-validation" class="slide level2">
 <h2>16. Stratified cross-validation</h2>
 <p>Loops over stratified folds. This makes it explicit that every pipeline is cloned, fitted on the training fold, and evaluated on the untouched validation fold.</p>
-<div id="5ec6d60e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:21.194308Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:21.194111Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:22.278741Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:22.278145Z&quot;}}" data-execution_count="10">
+<div id="5ec6d60e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:25.974657Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:25.974485Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:27.069058Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:27.068305Z&quot;}}" data-execution_count="10">
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <style scoped="">
@@ -1863,7 +1859,7 @@ forceTheme('sk-container-id-1');</script>
 </ul>
 
 </blockquote>
-<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:22.282340Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:22.282100Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:22.301092Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:22.300545Z&quot;}}" data-execution_count="11">
+<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:27.073038Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:27.072821Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:27.093144Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:27.092061Z&quot;}}" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
@@ -2027,7 +2023,7 @@ forceTheme('sk-container-id-1');</script>
 <ul>
 <li>Threshold tuning should be evaluated with validation data, business constraints, and the metric that matches the real decision problem.</li>
 </ul>
-<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:22.882776Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:22.882573Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:22.963875Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:22.962958Z&quot;}}" data-execution_count="14">
+<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:27.682217Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:27.682021Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:27.763929Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:27.762998Z&quot;}}" data-execution_count="14">
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <style scoped="">
@@ -2136,7 +2132,7 @@ forceTheme('sk-container-id-1');</script>
 <h2>21. Choose a threshold for high-cost false negatives</h2>
 <p>Suppose a false negative costs 10 times as much as a false positive.</p>
 <p>This is a simple teaching cost model, not a universal decision rule. In a real application, you would estimate costs with domain experts and validate the downstream effects.</p>
-<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:23.102372Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:23.102171Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:28.516070Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:28.515174Z&quot;}}" data-execution_count="16">
+<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:27.912569Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:27.912389Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:33.408709Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:33.407766Z&quot;}}" data-execution_count="16">
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <style scoped="">
@@ -2259,7 +2255,7 @@ forceTheme('sk-container-id-1');</script>
 <li>The <strong>wrong</strong> structure applies SMOTE before cross-validation. The validation folds are no longer clean because the synthetic data was produced using information from the full dataset.</li>
 <li>The <strong>right</strong> structure places SMOTE inside an <code>imblearn</code> pipeline, so SMOTE is fitted only on each training fold.</li>
 </ul>
-<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T14:48:28.518003Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T14:48:28.517811Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T14:48:28.763751Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T14:48:28.763271Z&quot;}}" data-execution_count="17">
+<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T15:12:33.410908Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T15:12:33.410679Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T15:12:33.657825Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T15:12:33.657040Z&quot;}}" data-execution_count="17">
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
