@@ -9,7 +9,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
-  <title>Data Augmentation, SMOTE, and Leakage-Safe Pipelines</title>
+  <title>Data-Centric AI (Module II)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -222,7 +222,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Data Augmentation, SMOTE, and Leakage-Safe Pipelines</h1>
+  <h1 class="title">Data-Centric AI (Module II)</h1>
+  <p class="subtitle">Data Augmentation, SMOTE, and Leakage-Safe Pipelines</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -233,26 +234,21 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
-<section>
-<section id="data-augmentation-smote-and-leakage-safe-pipelines" class="title-slide slide level1 center">
-<h1>Data Augmentation, SMOTE, and Leakage-Safe Pipelines</h1>
-
-</section>
 <section id="learning-outcomes" class="slide level2">
 <h2>Learning outcomes</h2>
 <p>By the end of this notebook, you should be able to:</p>
 <ul>
+<li>Build <code>sklearn</code> pipelines and optimize their hyper-parameters.</li>
 <li>Explain class imbalance and why accuracy can be misleading.</li>
 <li>Distinguish data augmentation from resampling.</li>
 <li>Compare random oversampling, undersampling, SMOTE, ADASYN, and class weighting.</li>
 <li>Place resampling correctly inside a cross-validation pipeline.</li>
 <li>Select appropriate metrics and decision thresholds.</li>
-<li>Build <code>sklearn</code> pipelines and optimize their hyper-parameters.</li>
 </ul>
 </section>
 <section id="why-pipelines-matter" class="slide level2">
 <h2>1. Why pipelines matter</h2>
-<p>A machine-learning model is rarely just a classifier. A real workflow often includes missing-value handling, scaling, categorical encoding, feature selection, resampling, and then the final estimator.</p>
+<p>A machine-learning pipeline is rarely just a classifier. A real workflow often includes missing-value handling, scaling, categorical encoding, feature selection, resampling, and then the final estimator.</p>
 <p><code>sklearn.pipeline.Pipeline</code> packages these steps into one object with a single <code>fit</code>, <code>predict</code>, and <code>predict_proba</code> interface.</p>
 <p>This matters because every preprocessing step must be learned only from the training data. A pipeline makes that discipline automatic during train/test splits and cross-validation.</p>
 </section>
@@ -409,7 +405,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="code-generate-the-dataset" class="slide level2">
 <h2>Code: Generate the dataset</h2>
 <p>The class weights make the positive class rare but not impossible, so students can observe both false negatives and false positives in later metrics.</p>
-<div id="679b435e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:16.137903Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:16.137587Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:16.153486Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:16.152513Z&quot;}}" data-execution_count="3">
+<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:24.806841Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:24.806496Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:24.823472Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:24.822466Z&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -469,7 +465,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="code-majority-class-baseline" class="slide level2">
 <h2>Code: Majority-class baseline</h2>
 <p>This deliberately weak baseline is useful because it exposes why accuracy alone is not a sufficient objective.</p>
-<div id="c09b7eab" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:16.260608Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:16.260414Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:16.277322Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:16.276465Z&quot;}}" data-execution_count="5">
+<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:24.936332Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:24.936146Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:24.953249Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:24.952313Z&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <style scoped="">
@@ -530,7 +526,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="code-build-a-2d-imbalanced-dataset" class="slide level2">
 <h2>Code: Build a 2D imbalanced dataset</h2>
 <p>The 2D dataset is only for visualization. The full experiment later uses all features and cross-validation.</p>
-<div id="bad1c05c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:16.279220Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:16.279010Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:16.286953Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:16.286132Z&quot;}}" data-execution_count="6">
+<div id="451b19b6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:24.955220Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:24.955035Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:24.963544Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:24.962713Z&quot;}}" data-execution_count="6">
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 <style scoped="">
@@ -602,7 +598,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="code-build-the-baseline-pipeline" class="slide level2">
 <h2>Code: Build the baseline pipeline</h2>
 <p>The baseline establishes the ordinary preprocessing-and-classifier structure before samplers are introduced.</p>
-<div id="4ac62ce5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:17.068199Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:17.067962Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:17.088799Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:17.087530Z&quot;}}" data-execution_count="8">
+<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:25.778310Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:25.778099Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:25.798554Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:25.797582Z&quot;}}" data-execution_count="8">
 <div class="cell-output cell-output-display" data-execution_count="8">
 <style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
@@ -1810,7 +1806,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-define-candidate-pipelines" class="slide level2">
 <h2>Code: Define candidate pipelines</h2>
 <p>The sampler position is the key idea: preprocessing first, resampling second, classifier last.</p>
-<div id="3d6a968d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:17.092965Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:17.092448Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:17.100033Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:17.099110Z&quot;}}" data-execution_count="9">
+<div id="631d78d9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:25.800447Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:25.800248Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:25.807205Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:25.806344Z&quot;}}" data-execution_count="9">
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>['No treatment',
  'Class weight',
@@ -1837,7 +1833,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-summarize-average-performance" class="slide level2">
 <h2>Code: Summarize average performance</h2>
 <p>Compare recall and specificity together. Higher minority recall often comes with more majority false positives.</p>
-<div id="50e2b4da" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:18.200603Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:18.200394Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:18.220760Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:18.219587Z&quot;}}" data-execution_count="11">
+<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:26.930173Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:26.929968Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:26.948153Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:26.947425Z&quot;}}" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
@@ -1949,7 +1945,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-inspect-fold-variability" class="slide level2">
 <h2>Code: Inspect fold variability</h2>
 <p>Fold variability helps distinguish a consistently useful method from a lucky average.</p>
-<div id="e17eca7f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:18.222942Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:18.222741Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:18.237374Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:18.236657Z&quot;}}" data-execution_count="12">
+<div id="e33d948d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:26.950580Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:26.950376Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:26.964969Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:26.964234Z&quot;}}" data-execution_count="12">
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 <style scoped="">
@@ -2088,7 +2084,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-evaluate-thresholds" class="slide level2">
 <h2>Code: Evaluate thresholds</h2>
 <p>Thresholds turn probabilities into decisions. This table lets students choose a decision rule for a stated cost.</p>
-<div id="762dc73d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:18.863545Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:18.863350Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:19.042924Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:19.041944Z&quot;}}" data-execution_count="15">
+<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:27.560348Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:27.560168Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:27.739825Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:27.739042Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># Recompute metrics over a grid of decision thresholds for one selected method.</span></span>
@@ -2313,7 +2309,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-minimize-threshold-sensitive-cost" class="slide level2">
 <h2>Code: Minimize threshold-sensitive cost</h2>
 <p>The cost model is intentionally simple; its purpose is to connect metrics to operational consequences.</p>
-<div id="58832695" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:19.147179Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:19.146953Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:24.668273Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:24.667265Z&quot;}}" data-execution_count="17">
+<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:27.858159Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:27.857941Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:33.496033Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:33.495179Z&quot;}}" data-execution_count="17">
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
@@ -2438,7 +2434,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="code-show-a-leakage-pattern" class="slide level2">
 <h2>Code: Show a leakage pattern</h2>
 <p>This cell is intentionally unsafe first, then safe. Keep both results visible for the leakage discussion.</p>
-<div id="b87a6be0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:47:24.670205Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:47:24.670000Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:47:24.920408Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:47:24.919626Z&quot;}}" data-execution_count="18">
+<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-26T13:53:33.497988Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-26T13:53:33.497769Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-26T13:53:33.746062Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-26T13:53:33.745452Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Contrast an intentionally leaky workflow with the leakage-safe pipeline workflow.</span></span>
@@ -2581,7 +2577,7 @@ Han, Hui, Wen-Yuan Wang, and Bing-Huan Mao. 2005. <span>“Borderline-SMOTE: A N
 He, Haibo, Yang Bai, Edwardo A. Garcia, and Shutao Li. 2008. <span>“ADASYN: Adaptive Synthetic Sampling Approach for Imbalanced Learning.”</span> <em>2008 IEEE International Joint Conference on Neural Networks</em>, 1322–28. <a href="https://doi.org/10.1109/IJCNN.2008.4633969">https://doi.org/10.1109/IJCNN.2008.4633969</a>.
 </div>
 </div>
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
