@@ -1,3 +1,14 @@
+## [1.0.2](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.0.1...1.0.2) (2026-08-26)
+
+### Bug Fixes
+
+* add imbalanced refs ([da570d0](https://github.com/w4bo/AA2627-unibo-dcai/commit/da570d0add9260bec11fc5839d4a13e718e25a83))
+
+### General maintenance
+
+* working on privacy ([991da48](https://github.com/w4bo/AA2627-unibo-dcai/commit/991da487e5597b0422b68438d896ef6c01bae3de))
+* working on the slides ([198e4d3](https://github.com/w4bo/AA2627-unibo-dcai/commit/198e4d3fd2f65d5d0826849ff13ce50664d0ef74))
+
 ## [1.0.1](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.0.0...1.0.1) (2026-08-24)
 
 ### Bug Fixes
