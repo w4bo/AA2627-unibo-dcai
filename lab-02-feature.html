@@ -309,7 +309,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="flight-delay-prediction" class="slide level2">
 <h2>2. Flight delay prediction</h2>
 <p>The synthetic dataset predicts whether a flight arrives at least 15 minutes late.</p>
-<div id="750a7c46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:43.551027Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:43.550713Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:42:43.574157Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:42:43.572762Z&quot;}}" data-execution_count="3">
+<div id="750a7c46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:04.929903Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:04.929724Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:04.947383Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:04.946449Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>X.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
@@ -341,13 +341,18 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <th data-quarto-table-cell-role="th">aircraft_type</th>
 <th data-quarto-table-cell-role="th">scheduled_duration_min</th>
 <th data-quarto-table-cell-role="th">distance_km</th>
-<th data-quarto-table-cell-role="th">prev_hour_origin_departures</th>
-<th data-quarto-table-cell-role="th">weather_wind_kmh</th>
-<th data-quarto-table-cell-role="th">weather_precip_mm</th>
+<th data-quarto-table-cell-role="th">seat_capacity</th>
+<th data-quarto-table-cell-role="th">tickets_sold</th>
+<th data-quarto-table-cell-role="th">scheduled_turnaround_min</th>
+<th data-quarto-table-cell-role="th">...</th>
 <th data-quarto-table-cell-role="th">visibility_km</th>
 <th data-quarto-table-cell-role="th">baggage_load_kg</th>
-<th data-quarto-table-cell-role="th">noise_random_1</th>
-<th data-quarto-table-cell-role="th">noise_random_2</th>
+<th data-quarto-table-cell-role="th">maintenance_risk_score</th>
+<th data-quarto-table-cell-role="th">weather_precip_sensor_2</th>
+<th data-quarto-table-cell-role="th">rnd_1</th>
+<th data-quarto-table-cell-role="th">rnd_2</th>
+<th data-quarto-table-cell-role="th">rnd_3</th>
+<th data-quarto-table-cell-role="th">rnd_4</th>
 <th data-quarto-table-cell-role="th">actual_departure</th>
 <th data-quarto-table-cell-role="th">actual_arrival</th>
 </tr>
@@ -360,17 +365,22 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>JFK</td>
 <td>MIA</td>
 <td>A321</td>
-<td>110.512352</td>
-<td>817.635735</td>
-<td>15</td>
-<td>13.194911</td>
-<td>2.734495</td>
-<td>12.569336</td>
-<td>4581.412148</td>
-<td>0.324653</td>
-<td>-0.309169</td>
-<td>2025-02-02 15:11:00.275901222</td>
-<td>2025-02-02 17:02:15.457055862</td>
+<td>201.002510</td>
+<td>1592.049407</td>
+<td>220</td>
+<td>180</td>
+<td>47.718848</td>
+<td>...</td>
+<td>10.702821</td>
+<td>2423.053145</td>
+<td>0.049676</td>
+<td>2.516653</td>
+<td>-0.276956</td>
+<td>-0.470078</td>
+<td>-0.686032</td>
+<td>-0.598854</td>
+<td>2025-02-02 15:04:50.464866972</td>
+<td>2025-02-02 18:28:30.568652735</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
@@ -379,17 +389,22 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>LAX</td>
 <td>ATL</td>
 <td>B737</td>
-<td>186.906015</td>
-<td>1196.839476</td>
-<td>18</td>
-<td>15.393482</td>
-<td>4.922769</td>
-<td>8.661092</td>
-<td>4321.840787</td>
-<td>1.357950</td>
-<td>0.337125</td>
-<td>2025-10-10 09:24:04.609407672</td>
-<td>2025-10-10 12:34:08.178684078</td>
+<td>129.629232</td>
+<td>997.624058</td>
+<td>170</td>
+<td>142</td>
+<td>40.305783</td>
+<td>...</td>
+<td>15.933457</td>
+<td>2934.224336</td>
+<td>0.140807</td>
+<td>0.322852</td>
+<td>-0.241501</td>
+<td>1.204046</td>
+<td>-0.545967</td>
+<td>-1.350601</td>
+<td>2025-10-10 09:29:11.807586642</td>
+<td>2025-10-10 11:44:01.316117214</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
@@ -398,25 +413,31 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>SFO</td>
 <td>PHX</td>
 <td>E190</td>
-<td>183.661116</td>
-<td>1298.763124</td>
-<td>21</td>
-<td>6.074298</td>
-<td>0.879508</td>
-<td>11.172557</td>
-<td>5143.883406</td>
-<td>-0.414977</td>
-<td>1.272568</td>
-<td>2025-08-27 19:31:38.859671472</td>
-<td>2025-08-27 22:19:35.809267008</td>
+<td>225.144332</td>
+<td>2234.644465</td>
+<td>100</td>
+<td>85</td>
+<td>42.423762</td>
+<td>...</td>
+<td>12.420012</td>
+<td>1870.716086</td>
+<td>0.118209</td>
+<td>1.513488</td>
+<td>1.491242</td>
+<td>0.072681</td>
+<td>0.595533</td>
+<td>0.645589</td>
+<td>2025-08-27 20:02:40.305270024</td>
+<td>2025-08-27 23:52:39.416656602</td>
 </tr>
 </tbody>
 </table>
 
+<p>3 rows × 25 columns</p>
 </div>
 </div>
 </div>
-<div id="4540b3a7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:43.576515Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:43.576317Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:42:43.581918Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:42:43.580564Z&quot;}}" data-execution_count="4">
+<div id="4540b3a7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:04.949146Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:04.948944Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:04.953475Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:04.952692Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>y.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
@@ -424,29 +445,29 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>0    0
 1    0
-2    0
+2    1
 Name: arrival_delay_15min, dtype: int64</code></pre>
 </div>
 </div>
 </section>
 <section id="data-understanding" class="slide level2">
 <h2>Data understanding</h2>
-<div id="e2fd1889" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:43.584367Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:43.584188Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:42:43.589996Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:42:43.589095Z&quot;}}" data-execution_count="5">
+<div id="e2fd1889" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:04.955412Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:04.955051Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:04.960433Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:04.959575Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>y.value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"class_share"</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>arrival_delay_15min
-0    0.710286
-1    0.289714
+0    0.803429
+1    0.196571
 Name: class_share, dtype: float64</code></pre>
 </div>
 </div>
 </section>
 <section id="data-understanding-1" class="slide level2">
 <h2>Data understanding</h2>
-<div id="24e266bb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:43.592282Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:43.592098Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:42:43.602431Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:42:43.601137Z&quot;}}" data-execution_count="6">
+<div id="24e266bb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:04.962284Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:04.962070Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:04.971028Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:04.970228Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>X.info()</span></code></pre></div>
@@ -454,7 +475,7 @@ Name: class_share, dtype: float64</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.DataFrame'&gt;
 RangeIndex: 3500 entries, 0 to 3499
-Data columns (total 16 columns):
+Data columns (total 25 columns):
  #   Column                       Non-Null Count  Dtype         
 ---  ------                       --------------  -----         
  0   scheduled_departure          3500 non-null   datetime64[us]
@@ -464,17 +485,26 @@ Data columns (total 16 columns):
  4   aircraft_type                3500 non-null   str           
  5   scheduled_duration_min       3500 non-null   float64       
  6   distance_km                  3500 non-null   float64       
- 7   prev_hour_origin_departures  3500 non-null   int64         
- 8   weather_wind_kmh             3500 non-null   float64       
- 9   weather_precip_mm            3500 non-null   float64       
- 10  visibility_km                3500 non-null   float64       
- 11  baggage_load_kg              3500 non-null   float64       
- 12  noise_random_1               3500 non-null   float64       
- 13  noise_random_2               3500 non-null   float64       
- 14  actual_departure             3500 non-null   datetime64[ns]
- 15  actual_arrival               3500 non-null   datetime64[ns]
-dtypes: datetime64[ns](2), datetime64[us](1), float64(8), int64(1), str(4)
-memory usage: 437.6 KB</code></pre>
+ 7   seat_capacity                3500 non-null   int64         
+ 8   tickets_sold                 3500 non-null   int64         
+ 9   scheduled_turnaround_min     3500 non-null   float64       
+ 10  inbound_delay_forecast_min   3500 non-null   float64       
+ 11  origin_runway_capacity       3500 non-null   int64         
+ 12  prev_hour_origin_departures  3500 non-null   int64         
+ 13  weather_wind_kmh             3500 non-null   float64       
+ 14  weather_precip_mm            3500 non-null   float64       
+ 15  visibility_km                3500 non-null   float64       
+ 16  baggage_load_kg              3500 non-null   float64       
+ 17  maintenance_risk_score       3500 non-null   float64       
+ 18  weather_precip_sensor_2      3500 non-null   float64       
+ 19  rnd_1                        3500 non-null   float64       
+ 20  rnd_2                        3500 non-null   float64       
+ 21  rnd_3                        3500 non-null   float64       
+ 22  rnd_4                        3500 non-null   float64       
+ 23  actual_departure             3500 non-null   datetime64[ns]
+ 24  actual_arrival               3500 non-null   datetime64[ns]
+dtypes: datetime64[ns](2), datetime64[us](1), float64(14), int64(4), str(4)
+memory usage: 683.7 KB</code></pre>
 </div>
 </div>
 </section>
@@ -484,37 +514,22 @@ memory usage: 437.6 KB</code></pre>
 <ul>
 <li><code>departure_hour</code>, <code>day_of_week</code>, <code>month</code>, <code>is_weekend</code>, and <code>is_evening_peak</code>: scheduled date/time decomposition.</li>
 <li><code>km_per_minute</code>: a ratio between distance and scheduled duration.</li>
-<li><code>congestion_per_gate_proxy</code>: a normalized congestion proxy.</li>
+<li><code>congestion_ratio</code>: scheduled demand relative to origin runway capacity.</li>
+<li><code>load_factor</code>: tickets sold relative to aircraft seat capacity.</li>
+<li><code>turnaround_pressure</code>: inbound delay forecast relative to scheduled turnaround time.</li>
+<li><code>weather_severity</code>: precipitation and wind scaled by visibility.</li>
 <li><code>precip_x_evening_peak</code>: an interaction between bad weather and an operationally busy period.</li>
-<li><code>low_visibility</code>: a nonlinear threshold feature.</li>
+<li><code>low_visibility</code>, <code>high_load</code>, <code>tight_turnaround</code>, <code>bad_weather</code>, <code>congested_origin</code>, <code>slow_route</code>, and <code>holiday_season</code>: nonlinear threshold features.</li>
+<li><code>high_load_x_tight_turnaround</code>, <code>congestion_x_evening_peak</code>, <code>weather_x_evening_peak</code>, <code>slow_route_x_congestion</code>, and <code>holiday_x_high_load</code>: interaction features that expose the main signal.</li>
+<li><code>route</code> and <code>carrier_origin</code>: categorical interaction terms.</li>
 <li><code>actual_elapsed_min</code>, <code>actual_arrival_delay_min</code>, and <code>actual_departure_delay_min</code>: actual delay features.</li>
 </ul>
 <p>For example, evening flights may accumulate delays from earlier flights, and precipitation may be worse during peak operating hours.</p>
 </section>
-<section id="data-understanding-and-visualization" class="slide level2">
-<h2>Data understanding and visualization</h2>
-<div id="bd353dd5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:43.756030Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:43.755803Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:42:44.741434Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:42:44.740434Z&quot;}}" data-execution_count="9">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>check_correlations(FlightFeatureEngineer(add_manual_features<span class="op">=</span><span class="va">True</span>, include_actual_times<span class="op">=</span><span class="va">True</span>, drop_datetime<span class="op">=</span><span class="va">False</span>).transform(X), y)</span></code></pre></div>
-</details>
-
-</div>
-<img data-src="lab-02-feature_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
-<section id="data-understanding-and-visualization-1" class="slide level2">
-<h2>Data understanding and visualization</h2>
-<div id="a3a8c98c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:44.743714Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:44.743535Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:42:45.419220Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:42:45.418227Z&quot;}}" data-execution_count="10">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>check_correlations(FlightFeatureEngineer( add_manual_features<span class="op">=</span><span class="va">True</span>, include_actual_times<span class="op">=</span><span class="va">False</span>, drop_datetime<span class="op">=</span><span class="va">False</span>).transform(X), y)</span></code></pre></div>
-</details>
-
-</div>
-<img data-src="lab-02-feature_files/figure-revealjs/cell-11-output-1.png" class="r-stretch"></section>
 <section id="can-this-column-exist-at-prediction-time-and-did-we-create-it-from-future-data" class="slide level2">
 <h2>Can this column exist at prediction time, and did we create it from future data?</h2>
-<div id="a8ac1eec" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:45.421243Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:45.421058Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:42:45.449888Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:42:45.449013Z&quot;}}" data-execution_count="11">
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div id="110bf60c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:04.988612Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:04.988429Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:05.058774Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:05.057771Z&quot;}}" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -624,7 +639,7 @@ memory usage: 437.6 KB</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">7</th>
-<td>prev_hour_origin_departures</td>
+<td>seat_capacity</td>
 <td>int64</td>
 <td>raw</td>
 <td>before departure</td>
@@ -635,8 +650,8 @@ memory usage: 437.6 KB</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">8</th>
-<td>weather_wind_kmh</td>
-<td>float64</td>
+<td>tickets_sold</td>
+<td>int64</td>
 <td>raw</td>
 <td>before departure</td>
 <td>raw input</td>
@@ -646,7 +661,7 @@ memory usage: 437.6 KB</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">9</th>
-<td>weather_precip_mm</td>
+<td>scheduled_turnaround_min</td>
 <td>float64</td>
 <td>raw</td>
 <td>before departure</td>
@@ -657,7 +672,7 @@ memory usage: 437.6 KB</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">10</th>
-<td>visibility_km</td>
+<td>inbound_delay_forecast_min</td>
 <td>float64</td>
 <td>raw</td>
 <td>before departure</td>
@@ -668,8 +683,8 @@ memory usage: 437.6 KB</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">11</th>
-<td>baggage_load_kg</td>
-<td>float64</td>
+<td>origin_runway_capacity</td>
+<td>int64</td>
 <td>raw</td>
 <td>before departure</td>
 <td>raw input</td>
@@ -679,8 +694,8 @@ memory usage: 437.6 KB</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">12</th>
-<td>noise_random_1</td>
-<td>float64</td>
+<td>prev_hour_origin_departures</td>
+<td>int64</td>
 <td>raw</td>
 <td>before departure</td>
 <td>raw input</td>
@@ -690,7 +705,7 @@ memory usage: 437.6 KB</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">13</th>
-<td>noise_random_2</td>
+<td>weather_wind_kmh</td>
 <td>float64</td>
 <td>raw</td>
 <td>before departure</td>
@@ -701,6 +716,105 @@ memory usage: 437.6 KB</code></pre>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">14</th>
+<td>weather_precip_mm</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+<td>raw input</td>
+<td>candidate</td>
+<td>low</td>
+<td>Candidate feature; keep only if available at p...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">15</th>
+<td>visibility_km</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+<td>raw input</td>
+<td>candidate</td>
+<td>low</td>
+<td>Candidate feature; keep only if available at p...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">16</th>
+<td>baggage_load_kg</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+<td>raw input</td>
+<td>candidate</td>
+<td>low</td>
+<td>Candidate feature; keep only if available at p...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">17</th>
+<td>maintenance_risk_score</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+<td>raw input</td>
+<td>candidate</td>
+<td>low</td>
+<td>Candidate feature; keep only if available at p...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">18</th>
+<td>weather_precip_sensor_2</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+<td>raw input</td>
+<td>candidate</td>
+<td>low</td>
+<td>Candidate feature; keep only if available at p...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">19</th>
+<td>rnd_1</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+<td>raw input</td>
+<td>candidate</td>
+<td>low</td>
+<td>Candidate feature; keep only if available at p...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">20</th>
+<td>rnd_2</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+<td>raw input</td>
+<td>candidate</td>
+<td>low</td>
+<td>Candidate feature; keep only if available at p...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">21</th>
+<td>rnd_3</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+<td>raw input</td>
+<td>candidate</td>
+<td>low</td>
+<td>Candidate feature; keep only if available at p...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">22</th>
+<td>rnd_4</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+<td>raw input</td>
+<td>candidate</td>
+<td>low</td>
+<td>Candidate feature; keep only if available at p...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">23</th>
 <td>actual_departure</td>
 <td>datetime64[ns]</td>
 <td>raw</td>
@@ -710,8 +824,8 @@ memory usage: 437.6 KB</code></pre>
 <td>high</td>
 <td>May score very high, but must be excluded beca...</td>
 </tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">15</th>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">24</th>
 <td>actual_arrival</td>
 <td>datetime64[ns]</td>
 <td>raw</td>
@@ -730,8 +844,8 @@ memory usage: 437.6 KB</code></pre>
 </section>
 <section id="can-this-column-exist-at-prediction-time-and-did-we-create-it-from-future-data-1" class="slide level2">
 <h2>Can this column exist at prediction time, and did we create it from future data?</h2>
-<div id="0297819c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:45.451836Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:45.451654Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:42:45.463122Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:42:45.462250Z&quot;}}" data-execution_count="12">
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div id="fdc896e9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:05.060600Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:05.060419Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:05.073593Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:05.072803Z&quot;}}" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -763,7 +877,7 @@ memory usage: 437.6 KB</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">16</th>
+<th data-quarto-table-cell-role="th">25</th>
 <td>departure_hour</td>
 <td>int32</td>
 <td>engineered</td>
@@ -774,7 +888,7 @@ memory usage: 437.6 KB</code></pre>
 <td>SelectKBest keeps it only if its mutual-inform...</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">17</th>
+<th data-quarto-table-cell-role="th">26</th>
 <td>day_of_week</td>
 <td>int32</td>
 <td>engineered</td>
@@ -785,7 +899,7 @@ memory usage: 437.6 KB</code></pre>
 <td>SelectKBest keeps it only if its mutual-inform...</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">18</th>
+<th data-quarto-table-cell-role="th">27</th>
 <td>month</td>
 <td>int32</td>
 <td>engineered</td>
@@ -796,7 +910,7 @@ memory usage: 437.6 KB</code></pre>
 <td>SelectKBest keeps it only if its mutual-inform...</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">24</th>
+<th data-quarto-table-cell-role="th">33</th>
 <td>is_weekend</td>
 <td>int64</td>
 <td>engineered</td>
@@ -807,7 +921,7 @@ memory usage: 437.6 KB</code></pre>
 <td>SelectKBest keeps it only if its mutual-inform...</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">25</th>
+<th data-quarto-table-cell-role="th">34</th>
 <td>is_evening_peak</td>
 <td>int64</td>
 <td>engineered</td>
@@ -818,7 +932,18 @@ memory usage: 437.6 KB</code></pre>
 <td>SelectKBest keeps it only if its mutual-inform...</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">26</th>
+<th data-quarto-table-cell-role="th">35</th>
+<td>holiday_season</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">36</th>
 <td>km_per_minute</td>
 <td>float64</td>
 <td>engineered</td>
@@ -828,9 +953,20 @@ memory usage: 437.6 KB</code></pre>
 <td>low</td>
 <td>SelectKBest keeps it only if its mutual-inform...</td>
 </tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">37</th>
+<td>congestion_ratio</td>
+<td>float64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">27</th>
-<td>congestion_per_gate_proxy</td>
+<th data-quarto-table-cell-role="th">38</th>
+<td>load_factor</td>
 <td>float64</td>
 <td>engineered</td>
 <td>before departure</td>
@@ -840,7 +976,29 @@ memory usage: 437.6 KB</code></pre>
 <td>SelectKBest keeps it only if its mutual-inform...</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">28</th>
+<th data-quarto-table-cell-role="th">39</th>
+<td>turnaround_pressure</td>
+<td>float64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">40</th>
+<td>weather_severity</td>
+<td>float64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">41</th>
 <td>precip_x_evening_peak</td>
 <td>float64</td>
 <td>engineered</td>
@@ -851,7 +1009,7 @@ memory usage: 437.6 KB</code></pre>
 <td>SelectKBest keeps it only if its mutual-inform...</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">29</th>
+<th data-quarto-table-cell-role="th">42</th>
 <td>low_visibility</td>
 <td>int64</td>
 <td>engineered</td>
@@ -862,7 +1020,139 @@ memory usage: 437.6 KB</code></pre>
 <td>SelectKBest keeps it only if its mutual-inform...</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">19</th>
+<th data-quarto-table-cell-role="th">43</th>
+<td>high_load</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">44</th>
+<td>tight_turnaround</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">45</th>
+<td>bad_weather</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">46</th>
+<td>congested_origin</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">47</th>
+<td>slow_route</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">48</th>
+<td>high_load_x_tight_turnaround</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">49</th>
+<td>congestion_x_evening_peak</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">50</th>
+<td>weather_x_evening_peak</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">51</th>
+<td>slow_route_x_congestion</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">52</th>
+<td>holiday_x_high_load</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">53</th>
+<td>route</td>
+<td>str</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">54</th>
+<td>carrier_origin</td>
+<td>str</td>
+<td>engineered</td>
+<td>before departure</td>
+<td>manual/domain</td>
+<td>candidate</td>
+<td>low</td>
+<td>SelectKBest keeps it only if its mutual-inform...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">28</th>
 <td>actual_departure_hour</td>
 <td>int32</td>
 <td>engineered</td>
@@ -873,7 +1163,7 @@ memory usage: 437.6 KB</code></pre>
 <td>May score very high, but must be excluded beca...</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">21</th>
+<th data-quarto-table-cell-role="th">30</th>
 <td>actual_departure_delay_min</td>
 <td>float64</td>
 <td>engineered</td>
@@ -884,7 +1174,7 @@ memory usage: 437.6 KB</code></pre>
 <td>May score very high, but must be excluded beca...</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">20</th>
+<th data-quarto-table-cell-role="th">29</th>
 <td>actual_arrival_hour</td>
 <td>int32</td>
 <td>engineered</td>
@@ -895,7 +1185,7 @@ memory usage: 437.6 KB</code></pre>
 <td>May score very high, but must be excluded beca...</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">22</th>
+<th data-quarto-table-cell-role="th">31</th>
 <td>actual_arrival_delay_min</td>
 <td>float64</td>
 <td>engineered</td>
@@ -906,7 +1196,7 @@ memory usage: 437.6 KB</code></pre>
 <td>May score very high, but must be excluded beca...</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">23</th>
+<th data-quarto-table-cell-role="th">32</th>
 <td>actual_elapsed_min</td>
 <td>float64</td>
 <td>engineered</td>
@@ -923,8 +1213,29 @@ memory usage: 437.6 KB</code></pre>
 </div>
 </div>
 </section>
-<section id="prediction-time-matters" class="slide level2">
-<h2>Prediction time matters</h2>
+<section id="data-understanding-and-visualization" class="slide level2">
+<h2>Data understanding and visualization</h2>
+<div id="bd353dd5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:05.177206Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:05.176991Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:07.081626Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:07.080637Z&quot;}}" data-execution_count="11">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>check_correlations(FlightFeatureEngineer(add_manual_features<span class="op">=</span><span class="va">True</span>, include_actual_times<span class="op">=</span><span class="va">True</span>, drop_datetime<span class="op">=</span><span class="va">False</span>).transform(X), y)</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-02-feature_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
+<section id="data-understanding-and-visualization-1" class="slide level2">
+<h2>Data understanding and visualization</h2>
+<div id="a3a8c98c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:07.085056Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:07.084864Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:08.639394Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:08.638365Z&quot;}}" data-execution_count="12">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>check_correlations(FlightFeatureEngineer(add_manual_features<span class="op">=</span><span class="va">True</span>, include_actual_times<span class="op">=</span><span class="va">False</span>, drop_datetime<span class="op">=</span><span class="va">False</span>).transform(X), y)</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-02-feature_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"></section>
+<section id="actual-departure-and-arrival-times-keep-or-drop" class="slide level2">
+<h2>9. Actual departure and arrival times: keep or drop?</h2>
+<p>Prediction time matters</p>
 <ul>
 <li><em>Ticket sale</em>: route, carrier, season, schedule.</li>
 <li><em>Morning of travel</em>: forecasts and known schedule pressure.</li>
@@ -932,180 +1243,6 @@ memory usage: 437.6 KB</code></pre>
 <li><em>After departure</em>: actual delay may be inferred.</li>
 <li><em>After landing</em>: actual delay is known.</li>
 </ul>
-</section>
-<section id="automated-feature-selection" class="slide level2">
-<h2>7. Automated feature selection</h2>
-<p>We compare two families of selectors:</p>
-<ul>
-<li><strong>Filter methods</strong> rank features using a statistical criterion independent of the final model. Here we use mutual information with <code>SelectKBest</code>.
-<ul>
-<li><code>SelectKBest(score_func=mutual_info_classif, k=20)</code> estimates one mutual-information score per preprocessed feature and keeps the 20 features with the highest scores.</li>
-<li>Mutual information is non-negative. A score near zero means the feature and target look almost independent under the estimator; a larger score means knowing the feature reduces more uncertainty about the class label.</li>
-<li>It is univariate: each feature is scored one at a time. It can miss features that are useful only together, and it may keep redundant features if each one individually has high signal.</li>
-<li>Filter methods are usually faster. <em>Why?</em></li>
-</ul></li>
-<li><strong>Wrapper methods</strong> search for a subset by repeatedly fitting a model. Here we use <code>SequentialFeatureSelector</code> and <code>RFE</code>.
-<ul>
-<li>Wrapper methods can capture model-specific usefulness, but they are more computationally expensive. <em>Why?</em></li>
-</ul></li>
-</ul>
-<p>Important: selection is inside the pipeline. During cross-validation, the selector is fitted only on each training fold.</p>
-</section></section>
-<section id="filter-selectkbest" class="title-slide slide level1 center">
-<h1>Filter: <code>SelectKBest</code></h1>
-<p><code>SelectKBest</code> does exactly what its name says after scoring: it sorts features by the score returned by <code>score_func</code> and keeps the top <code>k</code>. With <code>mutual_info_classif</code>, those are the features with the highest estimated mutual information with the class label.</p>
-<p>This does <strong>not</strong> mean the selected features are causal, non-leaky, or non-redundant. It only means they had the largest training-fold association with <code>y</code> according to the mutual-information estimator.</p>
-<div id="416e8f42" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:45.472465Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:45.472277Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:42:45.475260Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:42:45.474405Z&quot;}}" data-execution_count="14">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># Score each preprocessed feature by estimated mutual information with y.</span></span>
-<span id="cb10-2"><a href="" aria-label="2"></a><span class="co"># Keep only the k=20 highest-scoring features inside each training fold.</span></span>
-<span id="cb10-3"><a href="" aria-label="3"></a>filter_selector <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>mutual_info_reproducible, k<span class="op">=</span><span class="dv">20</span>)</span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="wrapper-sequentialfeatureselector" class="title-slide slide level1 center">
-<h1>Wrapper: <code>SequentialFeatureSelector</code></h1>
-<div id="2b471f3e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:45.477038Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:45.476829Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:42:45.480215Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:42:45.479271Z&quot;}}" data-execution_count="15">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>wrapper_selector <span class="op">=</span> SequentialFeatureSelector(</span>
-<span id="cb11-2"><a href="" aria-label="2"></a>    estimator<span class="op">=</span>make_logistic(max_iter<span class="op">=</span><span class="dv">800</span>),</span>
-<span id="cb11-3"><a href="" aria-label="3"></a>    n_features_to_select<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb11-4"><a href="" aria-label="4"></a>    direction<span class="op">=</span><span class="st">"forward"</span>,</span>
-<span id="cb11-5"><a href="" aria-label="5"></a>    scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>,</span>
-<span id="cb11-6"><a href="" aria-label="6"></a>    cv<span class="op">=</span><span class="dv">3</span>,</span>
-<span id="cb11-7"><a href="" aria-label="7"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
-<span id="cb11-8"><a href="" aria-label="8"></a>)</span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section>
-<section id="wrapper-rfe" class="title-slide slide level1 center">
-<h1>Wrapper: <code>RFE</code></h1>
-<p>Given an external estimator that assigns weights to features (e.g., the coefficients of a linear model), recursive feature elimination (RFE) selects features by recursively considering smaller and smaller sets of features.</p>
-<ul>
-<li>First, the estimator is trained on the initial set of features and the importance of each feature is obtained either through any specific attribute (such as coef_, feature_importances_).</li>
-<li>Then, the least important features are pruned from the current set of features.</li>
-<li>That procedure is recursively repeated on the pruned set until the desired number of features to select is eventually reached.</li>
-</ul>
-<div id="93b0ce4c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:45.481938Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:45.481727Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:42:45.484570Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:42:45.483709Z&quot;}}" data-execution_count="16">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>rfe_selector <span class="op">=</span> RFE(</span>
-<span id="cb12-2"><a href="" aria-label="2"></a>    estimator<span class="op">=</span>make_logistic(max_iter<span class="op">=</span><span class="dv">800</span>),</span>
-<span id="cb12-3"><a href="" aria-label="3"></a>    n_features_to_select<span class="op">=</span><span class="dv">20</span>,</span>
-<span id="cb12-4"><a href="" aria-label="4"></a>    step<span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb12-5"><a href="" aria-label="5"></a>)</span></code></pre></div>
-</details>
-</div>
-</section>
-<section id="compare-raw-engineered-and-selected-feature-sets" class="slide level2">
-<h2>8. Compare raw, engineered, and selected feature sets</h2>
-<p>We measure predictive performance, number of selected features, and training time. We also keep the fitted estimators from cross-validation so we can inspect selection stability.</p>
-<p>The experiment table compares predictive value, selected feature count, and runtime rather than optimizing only one number.</p>
-<div id="e5e93528" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:42:45.486472Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:42:45.486301Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:43:16.574537Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:43:16.573708Z&quot;}}" data-execution_count="17">
-<div class="cell-output cell-output-display" data-execution_count="17">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">experiment</th>
-<th data-quarto-table-cell-role="th">balanced_accuracy_mean</th>
-<th data-quarto-table-cell-role="th">balanced_accuracy_std</th>
-<th data-quarto-table-cell-role="th">f1_mean</th>
-<th data-quarto-table-cell-role="th">features_mean</th>
-<th data-quarto-table-cell-role="th">features_std</th>
-<th data-quarto-table-cell-role="th">fit_time_total_sec</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>raw features</td>
-<td>0.663987</td>
-<td>0.018400</td>
-<td>0.532392</td>
-<td>34.0</td>
-<td>0.0</td>
-<td>2.387515</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">4</th>
-<td>manual + filter selection</td>
-<td>0.663819</td>
-<td>0.028676</td>
-<td>0.531587</td>
-<td>20.0</td>
-<td>0.0</td>
-<td>0.896464</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">1</th>
-<td>manual features</td>
-<td>0.663736</td>
-<td>0.019865</td>
-<td>0.531912</td>
-<td>40.0</td>
-<td>0.0</td>
-<td>0.158373</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">5</th>
-<td>manual + RFE</td>
-<td>0.663422</td>
-<td>0.016417</td>
-<td>0.531696</td>
-<td>20.0</td>
-<td>0.0</td>
-<td>0.191975</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">3</th>
-<td>wrapper selection</td>
-<td>0.658847</td>
-<td>0.018524</td>
-<td>0.526310</td>
-<td>20.0</td>
-<td>0.0</td>
-<td>26.668397</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">2</th>
-<td>filter selection</td>
-<td>0.650180</td>
-<td>0.015573</td>
-<td>0.515650</td>
-<td>20.0</td>
-<td>0.0</td>
-<td>0.763843</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</section>
-<section id="actual-departure-and-arrival-times-keep-or-drop" class="slide level2">
-<h2>9. Actual departure and arrival times: keep or drop?</h2>
 <p>For this pre-departure prediction task, <code>actual_departure</code> and <code>actual_arrival</code> should be dropped. They are measured after the moment when the model is supposed to make its prediction.</p>
 <p>However, they are useful teaching columns because they let us ask a precise operational question: <strong>what information exists at prediction time?</strong></p>
 <ul>
@@ -1116,25 +1253,29 @@ memory usage: 437.6 KB</code></pre>
 </ul>
 <p>The next cell intentionally compares a leakage-safe pipeline with a pipeline that uses actual-time-derived features. If the second pipeline looks much better, that is a warning sign, not a success.</p>
 <p>The leakage comparison should look suspiciously strong when actual-time information is included.</p>
-<div id="219791f4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:43:16.576882Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:43:16.576551Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:43:16.878906Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:43:16.877902Z&quot;}}" data-execution_count="18">
+<div id="2e1613f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:08.649705Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:08.649529Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:11.571933Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:11.571046Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># Demonstrate how future information can inflate validation metrics.</span></span>
-<span id="cb13-2"><a href="" aria-label="2"></a>leakage_demo <span class="op">=</span> {</span>
-<span id="cb13-3"><a href="" aria-label="3"></a>    <span class="st">"safe pre-departure features"</span>: make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb13-4"><a href="" aria-label="4"></a>    <span class="st">"DO NOT USE: actual-time features"</span>: make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>, include_actual_times<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb13-5"><a href="" aria-label="5"></a>}</span>
-<span id="cb13-6"><a href="" aria-label="6"></a></span>
-<span id="cb13-7"><a href="" aria-label="7"></a>leakage_rows <span class="op">=</span> []</span>
-<span id="cb13-8"><a href="" aria-label="8"></a><span class="cf">for</span> name, estimator <span class="kw">in</span> leakage_demo.items():</span>
-<span id="cb13-9"><a href="" aria-label="9"></a>    result <span class="op">=</span> cross_validate(estimator, X, y, cv<span class="op">=</span>cv, scoring<span class="op">=</span>scoring, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
-<span id="cb13-10"><a href="" aria-label="10"></a>    leakage_rows.append({</span>
-<span id="cb13-11"><a href="" aria-label="11"></a>        <span class="st">"experiment"</span>: name,</span>
-<span id="cb13-12"><a href="" aria-label="12"></a>        <span class="st">"balanced_accuracy_mean"</span>: result[<span class="st">"test_balanced_accuracy"</span>].mean(),</span>
-<span id="cb13-13"><a href="" aria-label="13"></a>        <span class="st">"f1_mean"</span>: result[<span class="st">"test_f1"</span>].mean(),</span>
-<span id="cb13-14"><a href="" aria-label="14"></a>    })</span>
-<span id="cb13-15"><a href="" aria-label="15"></a></span>
-<span id="cb13-16"><a href="" aria-label="16"></a>display(pd.DataFrame(leakage_rows))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># Demonstrate how future information can inflate validation metrics.</span></span>
+<span id="cb10-2"><a href="" aria-label="2"></a>leakage_demo <span class="op">=</span> {</span>
+<span id="cb10-3"><a href="" aria-label="3"></a>    <span class="st">"safe pre-departure features"</span>: make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb10-4"><a href="" aria-label="4"></a>    <span class="st">"DO NOT USE: actual-time features"</span>: make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>, include_actual_times<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb10-5"><a href="" aria-label="5"></a>}</span>
+<span id="cb10-6"><a href="" aria-label="6"></a>cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
+<span id="cb10-7"><a href="" aria-label="7"></a>scoring <span class="op">=</span> {</span>
+<span id="cb10-8"><a href="" aria-label="8"></a>    <span class="st">"balanced_accuracy"</span>: make_scorer(balanced_accuracy_score),</span>
+<span id="cb10-9"><a href="" aria-label="9"></a>    <span class="st">"f1"</span>: make_scorer(f1_score),</span>
+<span id="cb10-10"><a href="" aria-label="10"></a>}</span>
+<span id="cb10-11"><a href="" aria-label="11"></a>leakage_rows <span class="op">=</span> []</span>
+<span id="cb10-12"><a href="" aria-label="12"></a><span class="cf">for</span> name, estimator <span class="kw">in</span> leakage_demo.items():</span>
+<span id="cb10-13"><a href="" aria-label="13"></a>    result <span class="op">=</span> cross_validate(estimator, X, y, cv<span class="op">=</span>cv, scoring<span class="op">=</span>scoring, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb10-14"><a href="" aria-label="14"></a>    leakage_rows.append({</span>
+<span id="cb10-15"><a href="" aria-label="15"></a>        <span class="st">"experiment"</span>: name,</span>
+<span id="cb10-16"><a href="" aria-label="16"></a>        <span class="st">"balanced_accuracy_mean"</span>: result[<span class="st">"test_balanced_accuracy"</span>].mean(),</span>
+<span id="cb10-17"><a href="" aria-label="17"></a>        <span class="st">"f1_mean"</span>: result[<span class="st">"test_f1"</span>].mean(),</span>
+<span id="cb10-18"><a href="" aria-label="18"></a>    })</span>
+<span id="cb10-19"><a href="" aria-label="19"></a></span>
+<span id="cb10-20"><a href="" aria-label="20"></a>display(pd.DataFrame(leakage_rows))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -1165,14 +1306,203 @@ memory usage: 437.6 KB</code></pre>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
 <td>safe pre-departure features</td>
-<td>0.663736</td>
-<td>0.531912</td>
+<td>0.622426</td>
+<td>0.392019</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
 <td>DO NOT USE: actual-time features</td>
-<td>0.964664</td>
-<td>0.948049</td>
+<td>0.967647</td>
+<td>0.940456</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="automated-feature-selection" class="slide level2">
+<h2>7. Automated feature selection</h2>
+<p>We compare two families of selectors:</p>
+<ul>
+<li><strong>Filter methods</strong> rank features using a statistical criterion independent of the final model. Here we use mutual information with <code>SelectKBest</code>.
+<ul>
+<li><code>SelectKBest(score_func=mutual_info_classif, k=20)</code> estimates one mutual-information score per preprocessed feature and keeps the 20 features with the highest scores.</li>
+<li>Mutual information is non-negative. A score near zero means the feature and target look almost independent under the estimator; a larger score means knowing the feature reduces more uncertainty about the class label.</li>
+<li>It is univariate: each feature is scored one at a time. It can miss features that are useful only together, and it may keep redundant features if each one individually has high signal.</li>
+<li>Filter methods are usually faster. <em>Why?</em></li>
+</ul></li>
+<li><strong>Wrapper methods</strong> search for a subset by repeatedly fitting a model. Here we use <code>SequentialFeatureSelector</code> and <code>RFE</code>.
+<ul>
+<li>Wrapper methods can capture model-specific usefulness, but they are more computationally expensive. <em>Why?</em></li>
+</ul></li>
+</ul>
+<p>Important: selection is inside the pipeline. During cross-validation, the selector is fitted only on each training fold.</p>
+</section></section>
+<section id="filter-selectkbest" class="title-slide slide level1 center">
+<h1>Filter: <code>SelectKBest</code></h1>
+<p><code>SelectKBest</code> sorts features by the score returned by <code>score_func</code> and keeps the top <code>k</code>.</p>
+<ul>
+<li>With <code>mutual_info_classif</code>, those are the features with the highest estimated mutual information with the class label.</li>
+<li>This does <strong>not</strong> mean the selected features are causal, non-leaky, or non-redundant.</li>
+<li>It only means they had the largest training-fold association with <code>y</code> according to the mutual-information estimator.</li>
+</ul>
+<div id="abacbae2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:11.573862Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:11.573677Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:11.576750Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:11.575894Z&quot;}}" data-execution_count="15">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Score each preprocessed feature by estimated mutual information with y. Keep only the k=20 highest-scoring features inside each training fold.</span></span>
+<span id="cb11-2"><a href="" aria-label="2"></a>filter_selector <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>mutual_info_reproducible, k<span class="op">=</span><span class="dv">20</span>)</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="wrapper-sequentialfeatureselector" class="title-slide slide level1 center">
+<h1>Wrapper: <code>SequentialFeatureSelector</code></h1>
+<p>Forward-SFS is a greedy procedure that iteratively finds the best new feature to add to the set of selected features.</p>
+<ul>
+<li>Start with zero features and find the one feature that maximizes a cross-validated score when an estimator is trained on this single feature.</li>
+<li>Once that first feature is selected, repeat the procedure by adding a new feature to the set of selected features.</li>
+<li>Stop when the desired number of selected features is reached.</li>
+</ul>
+<p>Backward-SFS follows the same idea but works in the opposite direction: it starts with all features and removes one feature at a time. In sklearn this is obtained with <code>SequentialFeatureSelector(direction="backward")</code>.</p>
+<div id="2b471f3e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:11.578499Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:11.578325Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:11.581432Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:11.580580Z&quot;}}" data-execution_count="16">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>wrapper_selector <span class="op">=</span> SequentialFeatureSelector(</span>
+<span id="cb12-2"><a href="" aria-label="2"></a>    estimator<span class="op">=</span>make_logistic(max_iter<span class="op">=</span><span class="dv">800</span>),</span>
+<span id="cb12-3"><a href="" aria-label="3"></a>    n_features_to_select<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb12-4"><a href="" aria-label="4"></a>    direction<span class="op">=</span><span class="st">"forward"</span>,</span>
+<span id="cb12-5"><a href="" aria-label="5"></a>    scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>,</span>
+<span id="cb12-6"><a href="" aria-label="6"></a>    cv<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb12-7"><a href="" aria-label="7"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb12-8"><a href="" aria-label="8"></a>)</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section>
+<section id="wrapper-rfe" class="title-slide slide level1 center">
+<h1>Wrapper: <code>RFE</code></h1>
+<p>Given an external estimator that assigns weights to features (e.g., the coefficients of a linear model), recursive feature elimination (RFE) selects features by recursively considering smaller and smaller sets of features.</p>
+<ul>
+<li>First, the estimator is trained on the initial set of features and the importance of each feature is obtained either through any specific attribute (such as coef_, feature_importances_).</li>
+<li>Then, the least important features are pruned from the current set of features.</li>
+<li>That procedure is recursively repeated on the pruned set until the desired number of features to select is eventually reached.</li>
+</ul>
+<div id="93b0ce4c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:11.583217Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:11.583003Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:11.585994Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:11.585217Z&quot;}}" data-execution_count="17">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>rfe_selector <span class="op">=</span> RFE(estimator<span class="op">=</span>make_logistic(max_iter<span class="op">=</span><span class="dv">800</span>), n_features_to_select<span class="op">=</span><span class="dv">20</span>, step<span class="op">=</span><span class="fl">0.2</span>)</span></code></pre></div>
+</details>
+</div>
+<p>RFE vs backward <code>SequentialFeatureSelector</code>: both methods remove features until the desired subset size is reached.</p>
+<ul>
+<li><strong>RFE</strong> fits the estimator and removes the least important features according to the estimator’s internal importance signal. With logistic regression, this usually means small coefficient magnitudes; with trees, it may mean feature importances.
+<ul>
+<li>asks <em>which feature does the fitted model currently consider weakest?</em></li>
+</ul></li>
+<li><strong>Backward <code>SequentialFeatureSelector</code></strong> tries candidate removals and evaluates the resulting model with a scoring metric, here balanced accuracy. At each step, it removes the feature whose removal gives the best cross-validated score, or hurts the score least.
+<ul>
+<li>asks <em>which feature can I remove while preserving validation performance?</em></li>
+</ul></li>
+<li>Backward SFS RFE is usually faster; backward SFS is usually more expensive but more directly tied to the chosen evaluation metric.</li>
+</ul>
+</section>
+<section id="compare-raw-engineered-and-selected-feature-sets" class="slide level2">
+<h2>8. Compare raw, engineered, and selected feature sets</h2>
+<p>We measure predictive performance, number of selected features, and training time. We also keep the fitted estimators from cross-validation so we can inspect selection stability.</p>
+<p>The experiment table compares predictive value, selected feature count, and runtime rather than optimizing only one number.</p>
+<div id="8928817f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:11.587788Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:11.587615Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:52.643971Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:52.643112Z&quot;}}" data-execution_count="18">
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">experiment</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_mean</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_std</th>
+<th data-quarto-table-cell-role="th">f1_mean</th>
+<th data-quarto-table-cell-role="th">features_mean</th>
+<th data-quarto-table-cell-role="th">features_std</th>
+<th data-quarto-table-cell-role="th">fit_time_total_sec</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>manual features</td>
+<td>0.622426</td>
+<td>0.029446</td>
+<td>0.392019</td>
+<td>129.0</td>
+<td>0.0</td>
+<td>0.249660</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>manual + filter selection</td>
+<td>0.607426</td>
+<td>0.030651</td>
+<td>0.366423</td>
+<td>20.0</td>
+<td>0.0</td>
+<td>2.652621</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>manual + RFE</td>
+<td>0.593107</td>
+<td>0.016984</td>
+<td>0.355655</td>
+<td>20.0</td>
+<td>0.0</td>
+<td>0.429262</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>wrapper selection</td>
+<td>0.589573</td>
+<td>0.012170</td>
+<td>0.361354</td>
+<td>20.0</td>
+<td>0.0</td>
+<td>36.630119</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>raw features</td>
+<td>0.587502</td>
+<td>0.020486</td>
+<td>0.358025</td>
+<td>43.0</td>
+<td>0.0</td>
+<td>0.131868</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>filter selection</td>
+<td>0.574992</td>
+<td>0.021432</td>
+<td>0.346140</td>
+<td>20.0</td>
+<td>0.0</td>
+<td>0.940546</td>
 </tr>
 </tbody>
 </table>
@@ -1185,7 +1515,7 @@ memory usage: 437.6 KB</code></pre>
 <h2>10. Selection stability across folds</h2>
 <p>A selector is more trustworthy when it keeps similar features across folds. Instability does not always mean the selector is wrong: correlated features may be interchangeable. But instability should make us cautious when interpreting selected variables as domain truth.</p>
 <p>Stability is an interpretation check: selected features that change across folds should be discussed cautiously.</p>
-<div id="4bc6e198" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:43:16.880859Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:43:16.880654Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:43:16.895949Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:43:16.895176Z&quot;}}" data-execution_count="19">
+<div id="503c4e27" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:52.646233Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:52.646033Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:40:52.661677Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:40:52.660643Z&quot;}}" data-execution_count="19">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1213,28 +1543,28 @@ memory usage: 437.6 KB</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">3</th>
-<td>manual + RFE</td>
-<td>0.712042</td>
-<td>[aircraft_type_E190, carrier_ALP, carrier_BLU,...</td>
-</tr>
-<tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
 <td>wrapper selection</td>
-<td>0.491867</td>
-<td>[aircraft_type_A321, aircraft_type_B738, aircr...</td>
+<td>0.449593</td>
+<td>[aircraft_type_A320, aircraft_type_A321, aircr...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>manual + RFE</td>
+<td>0.396429</td>
+<td>[aircraft_type_A321, carrier_origin_ALP_BOS, c...</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
 <td>filter selection</td>
-<td>0.470491</td>
-<td>[aircraft_type_A320, aircraft_type_A321, aircr...</td>
+<td>0.340795</td>
+<td>[aircraft_type_A320, aircraft_type_B737, aircr...</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">2</th>
 <td>manual + filter selection</td>
-<td>0.392968</td>
-<td>[aircraft_type_B737, aircraft_type_B738, aircr...</td>
+<td>0.211180</td>
+<td>[aircraft_type_E190, carrier_origin_ALP_SEA, c...</td>
 </tr>
 </tbody>
 </table>
@@ -1247,7 +1577,7 @@ memory usage: 437.6 KB</code></pre>
 <h2>11. Performance versus number of features</h2>
 <p>A useful visualization is a performance-versus-number-of-features curve. Here we vary <code>k</code> for <code>SelectKBest</code>. A good choice is not necessarily the highest possible balanced accuracy: we may prefer a smaller model when the performance loss is negligible.</p>
 <p>This curve helps students look for diminishing returns as more features are selected.</p>
-<div id="2c3ed611" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:43:16.898119Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:43:16.897942Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:43:22.265260Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:43:22.264210Z&quot;}}" data-execution_count="20">
+<div id="3fac4257" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:40:52.663416Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:40:52.663245Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:41:08.453414Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:41:08.452376Z&quot;}}" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1277,38 +1607,38 @@ memory usage: 437.6 KB</code></pre>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
 <td>5</td>
-<td>0.627403</td>
-<td>0.021024</td>
+<td>0.607571</td>
+<td>0.028687</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
 <td>10</td>
-<td>0.635198</td>
-<td>0.024745</td>
+<td>0.607753</td>
+<td>0.031910</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
 <td>15</td>
-<td>0.654321</td>
-<td>0.035097</td>
+<td>0.600352</td>
+<td>0.034281</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
 <td>20</td>
-<td>0.663819</td>
-<td>0.028676</td>
+<td>0.607426</td>
+<td>0.030651</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
 <td>30</td>
-<td>0.658858</td>
-<td>0.023292</td>
+<td>0.620866</td>
+<td>0.027322</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">5</th>
 <td>40</td>
-<td>0.663736</td>
-<td>0.019865</td>
+<td>0.620401</td>
+<td>0.035388</td>
 </tr>
 </tbody>
 </table>
@@ -1322,9 +1652,9 @@ memory usage: 437.6 KB</code></pre>
 <h2>12. Interpretability check</h2>
 <p>After choosing a pipeline, fit it once on a training split and inspect which features are selected. This final inspection is for interpretation, not for deciding the reported cross-validation score.</p>
 <p>Fit once on a holdout split only after cross-validation has motivated a candidate pipeline.</p>
-<div id="fa3a1cda" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:43:22.267199Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:43:22.267021Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:43:22.611814Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:43:22.610867Z&quot;}}" data-execution_count="21">
+<div id="fb377be3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:41:08.455427Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:41:08.455213Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:41:09.449287Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:41:09.448331Z&quot;}}" data-execution_count="21">
 <div class="cell-output cell-output-stdout">
-<pre><code>Holdout balanced accuracy: 0.611</code></pre>
+<pre><code>Holdout balanced accuracy: 0.635</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1352,43 +1682,43 @@ memory usage: 437.6 KB</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>aircraft_type_B737</td>
+<td>aircraft_type_A321</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
-<td>baggage_load_kg</td>
+<td>carrier_ALP</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
-<td>carrier_ALP</td>
+<td>carrier_BLU</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
-<td>carrier_BLU</td>
+<td>carrier_origin_BLU_ORD</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
-<td>carrier_DTA</td>
+<td>carrier_origin_DTA_BOS</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">5</th>
-<td>congestion_per_gate_proxy</td>
+<td>carrier_origin_ECO_JFK</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">6</th>
-<td>departure_hour</td>
+<td>congested_origin</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">7</th>
-<td>destination_MSP</td>
+<td>congestion_ratio</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">8</th>
-<td>destination_PHX</td>
+<td>congestion_x_evening_peak</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">9</th>
-<td>distance_km</td>
+<td>high_load</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">10</th>
@@ -1396,39 +1726,39 @@ memory usage: 437.6 KB</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">11</th>
-<td>is_weekend</td>
+<td>origin_BOS</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">12</th>
-<td>noise_random_2</td>
+<td>precip_x_evening_peak</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">13</th>
-<td>origin_LAX</td>
+<td>prev_hour_origin_departures</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">14</th>
-<td>origin_SEA</td>
+<td>route_JFK_DFW</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">15</th>
-<td>origin_SFO</td>
+<td>route_ORD_ATL</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">16</th>
-<td>scheduled_duration_min</td>
+<td>route_SEA_DEN</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">17</th>
-<td>visibility_km</td>
+<td>route_SFO_PHX</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">18</th>
-<td>weather_precip_mm</td>
+<td>slow_route</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">19</th>
-<td>weather_wind_kmh</td>
+<td>weather_x_evening_peak</td>
 </tr>
 </tbody>
 </table>
@@ -1438,7 +1768,7 @@ memory usage: 437.6 KB</code></pre>
 </div>
 <p>Optional: permutation importance estimates how much the fitted pipeline depends on each raw input column. This is different from selected one-hot or engineered features, but it is useful for discussing model behavior at the original data level.</p>
 <p>Permutation importance answers a different question from feature selection: which raw inputs the fitted pipeline relies on most.</p>
-<div id="faefd3be" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:43:22.613671Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:43:22.613492Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:43:23.386091Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:43:23.385142Z&quot;}}" data-execution_count="22">
+<div id="341110dc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:41:09.451115Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:41:09.450932Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:41:11.656579Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:41:11.655674Z&quot;}}" data-execution_count="22">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1466,76 +1796,76 @@ memory usage: 437.6 KB</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">8</th>
-<td>weather_wind_kmh</td>
-<td>0.046703</td>
-<td>0.017847</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">10</th>
-<td>visibility_km</td>
-<td>0.016205</td>
-<td>0.009807</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">9</th>
-<td>weather_precip_mm</td>
-<td>0.002760</td>
-<td>0.007388</td>
+<th data-quarto-table-cell-role="th">0</th>
+<td>scheduled_departure</td>
+<td>0.084364</td>
+<td>0.009889</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">12</th>
-<td>noise_random_1</td>
-<td>0.000000</td>
-<td>0.000000</td>
+<td>prev_hour_origin_departures</td>
+<td>0.047897</td>
+<td>0.009116</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">14</th>
-<td>actual_departure</td>
-<td>0.000000</td>
-<td>0.000000</td>
+<th data-quarto-table-cell-role="th">8</th>
+<td>tickets_sold</td>
+<td>0.025905</td>
+<td>0.009566</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">15</th>
-<td>actual_arrival</td>
-<td>0.000000</td>
-<td>0.000000</td>
+<th data-quarto-table-cell-role="th">7</th>
+<td>seat_capacity</td>
+<td>0.022344</td>
+<td>0.009732</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">7</th>
-<td>prev_hour_origin_departures</td>
-<td>-0.001196</td>
-<td>0.007639</td>
+<th data-quarto-table-cell-role="th">5</th>
+<td>scheduled_duration_min</td>
+<td>0.010744</td>
+<td>0.006905</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">11</th>
-<td>baggage_load_kg</td>
-<td>-0.001423</td>
-<td>0.002013</td>
+<td>origin_runway_capacity</td>
+<td>0.009163</td>
+<td>0.005677</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">6</th>
-<td>distance_km</td>
-<td>-0.002482</td>
-<td>0.003777</td>
-</tr>
-<tr class="even">
 <th data-quarto-table-cell-role="th">2</th>
 <td>origin</td>
-<td>-0.003068</td>
-<td>0.002374</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">1</th>
-<td>carrier</td>
-<td>-0.005024</td>
-<td>0.010081</td>
+<td>0.007874</td>
+<td>0.012246</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>destination</td>
-<td>-0.005721</td>
-<td>0.003305</td>
+<th data-quarto-table-cell-role="th">14</th>
+<td>weather_precip_mm</td>
+<td>0.007441</td>
+<td>0.006047</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>aircraft_type</td>
+<td>0.003964</td>
+<td>0.006065</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">6</th>
+<td>distance_km</td>
+<td>0.003761</td>
+<td>0.009317</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">13</th>
+<td>weather_wind_kmh</td>
+<td>0.000213</td>
+<td>0.000455</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">15</th>
+<td>visibility_km</td>
+<td>0.000071</td>
+<td>0.000213</td>
 </tr>
 </tbody>
 </table>
@@ -1564,7 +1894,7 @@ memory usage: 437.6 KB</code></pre>
 </ul>
 <p>Be careful with historical aggregates. If you compute route delay rate using the whole dataset before cross-validation, you leak validation-fold labels into the training features. To use target-based aggregates safely, implement them as a transformer fitted inside the pipeline.</p>
 <p>The challenge asks students to connect feature ideas to evidence, not just to add columns.</p>
-<div id="75bdb8b0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T08:43:23.387999Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T08:43:23.387786Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T08:43:23.395900Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T08:43:23.395152Z&quot;}}" data-execution_count="23">
+<div id="f9e8e36a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T09:41:11.658743Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T09:41:11.658541Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T09:41:11.666899Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T09:41:11.666025Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="co"># Use this table to record feature hypotheses and evidence during the challenge.</span></span>
