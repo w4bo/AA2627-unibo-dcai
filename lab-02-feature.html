@@ -309,7 +309,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="flight-delay-prediction" class="slide level2">
 <h2>2. Flight delay prediction</h2>
 <p>The synthetic dataset predicts whether a flight arrives at least 15 minutes late.</p>
-<div id="03f27e34" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:41.751552Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:41.751249Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:41.857710Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:41.856762Z&quot;}}" data-execution_count="2">
+<div id="03f27e34" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:36.897592Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:36.897270Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:36.937176Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:36.936357Z&quot;}}" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -427,71 +427,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <span id="cb1-113"><a href="" aria-label="113"></a>y <span class="op">=</span> df[<span class="st">"delayed_15_min"</span>].rename(<span class="st">"arrival_delay_15min"</span>)</span>
 <span id="cb1-114"><a href="" aria-label="114"></a></span>
 <span id="cb1-115"><a href="" aria-label="115"></a><span class="co"># Persist a copy for students who want to inspect the generated data outside the notebook.</span></span>
-<span id="cb1-116"><a href="" aria-label="116"></a>df.to_csv(<span class="st">"synthetic_flight_delays.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-117"><a href="" aria-label="117"></a></span>
-<span id="cb1-118"><a href="" aria-label="118"></a>df.groupby([<span class="st">"is_holiday"</span>, <span class="st">"is_late_night"</span>, <span class="st">"high_precipitation"</span>, <span class="st">"airport_limited_visibility"</span>]).agg({<span class="st">"delayed_15_min"</span>: [<span class="st">"count"</span>, <span class="st">"sum"</span>, <span class="st">"mean"</span>]}).<span class="bu">round</span>(<span class="dv">2</span>)</span>
-<span id="cb1-119"><a href="" aria-label="119"></a></span>
-<span id="cb1-120"><a href="" aria-label="120"></a>df.groupby([<span class="st">"airport_limited_visibility"</span>]).agg({<span class="st">"delayed_15_min"</span>: [<span class="st">"count"</span>, <span class="st">"sum"</span>, <span class="st">"mean"</span>]}).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
+<span id="cb1-116"><a href="" aria-label="116"></a><span class="co"># df.to_csv("synthetic_flight_delays.csv", index=False)</span></span>
+<span id="cb1-117"><a href="" aria-label="117"></a><span class="co"># df.groupby(["is_holiday", "is_late_night", "high_precipitation", "airport_limited_visibility"]).agg({"delayed_15_min": ["count", "sum", "mean"]}).round(2)</span></span>
+<span id="cb1-118"><a href="" aria-label="118"></a><span class="co"># df.groupby(["airport_limited_visibility"]).agg({"delayed_15_min": ["count", "sum", "mean"]}).round(2)</span></span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead tr th {
-        text-align: left;
-    }
-
-    .dataframe thead tr:last-of-type th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th colspan="3" data-quarto-table-cell-role="th" data-halign="left">delayed_15_min</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">count</th>
-<th data-quarto-table-cell-role="th">sum</th>
-<th data-quarto-table-cell-role="th">mean</th>
-</tr>
-<tr class="header">
-<th data-quarto-table-cell-role="th">airport_limited_visibility</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>4133</td>
-<td>1149</td>
-<td>0.28</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>867</td>
-<td>817</td>
-<td>0.94</td>
-</tr>
-</tbody>
-</table>
-
 </div>
-</div>
-</div>
-<div id="750a7c46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:41.859577Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:41.859390Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:41.871386Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:41.870523Z&quot;}}" data-execution_count="3">
+<div id="750a7c46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:36.939119Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:36.938919Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:36.953025Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:36.952254Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>X.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
@@ -598,7 +539,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div>
-<div id="4540b3a7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:41.873159Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:41.872983Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:41.877577Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:41.876680Z&quot;}}" data-execution_count="4">
+<div id="4540b3a7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:36.954881Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:36.954703Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:36.958623Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:36.958052Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>y.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
@@ -613,7 +554,7 @@ Name: arrival_delay_15min, dtype: int64</code></pre>
 </section>
 <section id="data-understanding" class="slide level2">
 <h2>Data understanding</h2>
-<div id="e2fd1889" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:41.879326Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:41.879137Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:41.884420Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:41.883555Z&quot;}}" data-execution_count="5">
+<div id="e2fd1889" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:36.960624Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:36.960451Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:36.965049Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:36.964270Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>y.value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"class_share"</span>)</span></code></pre></div>
@@ -628,7 +569,7 @@ Name: class_share, dtype: float64</code></pre>
 </section>
 <section id="data-understanding-1" class="slide level2">
 <h2>Data understanding</h2>
-<div id="24e266bb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:41.886352Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:41.886019Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:41.894563Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:41.893651Z&quot;}}" data-execution_count="6">
+<div id="24e266bb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:36.966854Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:36.966652Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:36.974449Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:36.973727Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>X.info()</span></code></pre></div>
@@ -677,7 +618,7 @@ memory usage: 625.1 KB</code></pre>
 </section>
 <section id="can-this-column-exist-at-prediction-time-and-did-we-create-it-from-future-data" class="slide level2">
 <h2>Can this column exist at prediction time, and did we create it from future data?</h2>
-<div id="110bf60c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:41.909656Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:41.909476Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:42.269360Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:42.268442Z&quot;}}" data-execution_count="8">
+<div id="110bf60c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:36.985868Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:36.985645Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:37.272596Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:37.271849Z&quot;}}" data-execution_count="8">
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <style scoped="">
@@ -894,7 +835,7 @@ memory usage: 625.1 KB</code></pre>
 </section>
 <section id="can-this-column-exist-at-prediction-time-and-did-we-create-it-from-future-data-1" class="slide level2">
 <h2>Can this column exist at prediction time, and did we create it from future data?</h2>
-<div id="fdc896e9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:42.271345Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:42.271133Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:42.282688Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:42.281794Z&quot;}}" data-execution_count="9">
+<div id="fdc896e9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:37.274832Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:37.274614Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:37.284515Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:37.283830Z&quot;}}" data-execution_count="9">
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <style scoped="">
@@ -1100,7 +1041,7 @@ memory usage: 625.1 KB</code></pre>
 </section>
 <section id="data-understanding-and-visualization" class="slide level2">
 <h2>Data understanding and visualization</h2>
-<div id="bd353dd5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:42.385417Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:42.385226Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:43.380414Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:43.379371Z&quot;}}" data-execution_count="11">
+<div id="bd353dd5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:37.388655Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:37.388475Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:38.156042Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:38.155163Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>check_correlations(X, y)</span></code></pre></div>
@@ -1110,7 +1051,7 @@ memory usage: 625.1 KB</code></pre>
 <img data-src="lab-02-feature_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
 <section id="data-understanding-and-visualization-1" class="slide level2">
 <h2>Data understanding and visualization</h2>
-<div id="a3a8c98c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:43.382815Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:43.382600Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:44.075536Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:44.074481Z&quot;}}" data-execution_count="12">
+<div id="a3a8c98c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:38.158165Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:38.157975Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:38.703489Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:38.702762Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>check_correlations(X, y, include_actual_times<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
@@ -1129,7 +1070,7 @@ memory usage: 625.1 KB</code></pre>
 <li><em>After landing</em>: actual arrival time and arrival delay are known.</li>
 </ul>
 <p>For this pre-departure prediction task, <code>actual_departure</code>, <code>actual_arrival</code>, <code>departure_delay_min</code>, and <code>arrival_delay_min</code> must be dropped. The notebook keeps actual timestamps in <code>X</code> only so that we can deliberately demonstrate leakage with <code>include_actual_times=True</code>.</p>
-<div id="2e1613f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:44.086196Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:44.086007Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:47.933438Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:47.932573Z&quot;}}" data-execution_count="14">
+<div id="2e1613f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:38.716276Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:38.716037Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:42.060832Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:42.060119Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Demonstrate how future information can inflate validation metrics.</span></span>
@@ -1256,7 +1197,7 @@ memory usage: 625.1 KB</code></pre>
 </ul></li>
 </ul>
 <p>Important: selection is inside the pipeline. During cross-validation, the selector is fitted only on each training fold.</p>
-<div id="a391528c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:47.935593Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:47.935368Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:47.938709Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:47.937776Z&quot;}}" data-execution_count="15">
+<div id="a391528c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:42.063084Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:42.062907Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:42.065885Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:42.065047Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>n_features_to_select <span class="op">=</span> <span class="dv">10</span></span></code></pre></div>
@@ -1271,7 +1212,7 @@ memory usage: 625.1 KB</code></pre>
 <li>This does <strong>not</strong> mean the selected features are causal, non-leaky, or non-redundant.</li>
 <li>It only means they had the largest training-fold association with <code>y</code> according to the mutual-information estimator.</li>
 </ul>
-<div id="6a252685" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:47.940712Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:47.940363Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:47.943561Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:47.942771Z&quot;}}" data-execution_count="16">
+<div id="66ff1ee1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:42.067508Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:42.067347Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:42.070132Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:42.069351Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># Score each preprocessed feature by estimated mutual information with y. Keep only the k=20 highest-scoring features inside each training fold.</span></span>
@@ -1289,7 +1230,7 @@ memory usage: 625.1 KB</code></pre>
 <li>Stop when the desired number of selected features is reached.</li>
 </ul>
 <p>Backward-SFS follows the same idea but works in the opposite direction: it starts with all features and removes one feature at a time. In sklearn this is obtained with <code>SequentialFeatureSelector(direction="backward")</code>.</p>
-<div id="2b471f3e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:47.945538Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:47.945352Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:47.948610Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:47.947678Z&quot;}}" data-execution_count="17">
+<div id="2b471f3e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:42.071814Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:42.071611Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:42.074699Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:42.073905Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>wrapper_selector <span class="op">=</span> SequentialFeatureSelector(estimator<span class="op">=</span>make_tree(), n_features_to_select<span class="op">=</span>n_features_to_select, direction<span class="op">=</span><span class="st">"forward"</span>, scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>, cv<span class="op">=</span><span class="dv">3</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span></code></pre></div>
@@ -1306,7 +1247,7 @@ memory usage: 625.1 KB</code></pre>
 <li>Then, the least important features are pruned from the current set of features.</li>
 <li>That procedure is recursively repeated on the pruned set until the desired number of features to select is eventually reached.</li>
 </ul>
-<div id="93b0ce4c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:47.950314Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:47.950141Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:43:47.953247Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:43:47.952256Z&quot;}}" data-execution_count="18">
+<div id="93b0ce4c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:42.076395Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:42.076229Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:45:42.079163Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:45:42.078354Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>rfe_selector <span class="op">=</span> RFE(estimator<span class="op">=</span>make_tree(), n_features_to_select<span class="op">=</span>n_features_to_select, step<span class="op">=</span><span class="fl">0.2</span>)</span></code></pre></div>
@@ -1329,7 +1270,7 @@ memory usage: 625.1 KB</code></pre>
 <h2>8. Compare raw, engineered, and selected feature sets</h2>
 <p>We measure predictive performance, number of selected features, and training time. We also keep the fitted estimators from cross-validation so we can inspect selection stability.</p>
 <p>The experiment table compares predictive value, selected feature count, and runtime rather than optimizing only one number.</p>
-<div id="4c15b5f1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:43:47.955012Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:43:47.954838Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:44:09.203268Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:44:09.202235Z&quot;}}" data-execution_count="19">
+<div id="e67a8f2b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:45:42.080943Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:45:42.080778Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:46:02.513586Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:46:02.512658Z&quot;}}" data-execution_count="19">
 <div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 <style scoped="">
@@ -1368,7 +1309,7 @@ memory usage: 625.1 KB</code></pre>
 <td>0.747099</td>
 <td>10.0</td>
 <td>0.0</td>
-<td>18.125856</td>
+<td>17.718871</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
@@ -1378,7 +1319,7 @@ memory usage: 625.1 KB</code></pre>
 <td>0.746087</td>
 <td>34.0</td>
 <td>0.0</td>
-<td>0.623228</td>
+<td>0.470938</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
@@ -1388,7 +1329,7 @@ memory usage: 625.1 KB</code></pre>
 <td>0.745804</td>
 <td>10.0</td>
 <td>0.0</td>
-<td>0.816281</td>
+<td>0.703308</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
@@ -1398,7 +1339,7 @@ memory usage: 625.1 KB</code></pre>
 <td>0.716170</td>
 <td>10.0</td>
 <td>0.0</td>
-<td>1.510850</td>
+<td>1.370443</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
@@ -1408,7 +1349,7 @@ memory usage: 625.1 KB</code></pre>
 <td>0.702503</td>
 <td>24.0</td>
 <td>0.0</td>
-<td>0.152623</td>
+<td>0.151334</td>
 </tr>
 </tbody>
 </table>
@@ -1421,7 +1362,7 @@ memory usage: 625.1 KB</code></pre>
 <h2>10. Selection stability across folds</h2>
 <p>A selector is more trustworthy when it keeps similar features across folds. Instability does not always mean the selector is wrong: correlated features may be interchangeable. But instability should make us cautious when interpreting selected variables as domain truth.</p>
 <p>Stability is an interpretation check: selected features that change across folds should be discussed cautiously.</p>
-<div id="05aca7ea" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:44:09.205173Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:44:09.204989Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:44:09.218758Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:44:09.217973Z&quot;}}" data-execution_count="20">
+<div id="0738ef85" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:46:02.515498Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:46:02.515303Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:46:02.528092Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:46:02.527213Z&quot;}}" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1477,7 +1418,7 @@ memory usage: 625.1 KB</code></pre>
 <h2>11. Performance versus number of features</h2>
 <p>A useful visualization is a performance-versus-number-of-features curve. Here we vary <code>k</code> for <code>SelectKBest</code>. A good choice is not necessarily the highest possible balanced accuracy: we may prefer a smaller model when the performance loss is negligible.</p>
 <p>This curve helps students look for diminishing returns as more features are selected.</p>
-<div id="c5e642dd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:44:09.220999Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:44:09.220819Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:44:24.363121Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:44:24.362180Z&quot;}}" data-execution_count="21">
+<div id="348e20d7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:46:02.529899Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:46:02.529713Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:46:16.269838Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:46:16.269012Z&quot;}}" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1574,7 +1515,7 @@ memory usage: 625.1 KB</code></pre>
 <img data-src="lab-02-feature_files/figure-revealjs/cell-22-output-2.png" class="r-stretch"></section>
 <section id="interpretability-check" class="slide level2">
 <h2>12. Interpretability check</h2>
-<div id="859e3080" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:44:24.365432Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:44:24.365227Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:44:30.372873Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:44:30.371949Z&quot;}}" data-execution_count="22">
+<div id="54eb353e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:46:16.271808Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:46:16.271585Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:46:22.203111Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:46:22.202076Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>chosen_pipeline <span class="op">=</span> make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>, selector<span class="op">=</span>wrapper_selector)</span>
@@ -1660,7 +1601,7 @@ memory usage: 625.1 KB</code></pre>
 <img data-src="lab-02-feature_files/figure-revealjs/cell-24-output-1.png" class="r-stretch"></section>
 <section id="checking-tree-feature-importance" class="slide level2">
 <h2>Checking tree feature importance</h2>
-<div id="3064a126" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:44:31.484417Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:44:31.484238Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:44:31.491760Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:44:31.490959Z&quot;}}" data-execution_count="24">
+<div id="3064a126" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:46:23.110932Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:46:23.110738Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:46:23.117956Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:46:23.117113Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>pd.DataFrame({</span>
@@ -1752,7 +1693,7 @@ memory usage: 625.1 KB</code></pre>
 </section>
 <section id="permutation-importance-estimates-how-much-the-fitted-decision-tree-depends-on-each-selected-feature." class="slide level2">
 <h2>Permutation importance estimates how much the fitted decision tree depends on each selected feature.</h2>
-<div id="66f3f753" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:44:31.493620Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:44:31.493431Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:44:31.768324Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:44:31.767506Z&quot;}}" data-execution_count="25">
+<div id="5d15eb85" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-27T13:46:23.119844Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-27T13:46:23.119644Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-27T13:46:23.345684Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-27T13:46:23.344925Z&quot;}}" data-execution_count="25">
 <div class="cell-output cell-output-display" data-execution_count="25">
 <div>
 <style scoped="">
