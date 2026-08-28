@@ -215,6 +215,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
+<section class="slide level2">
+
+<p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-02-feature.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+</section>
 <section id="learning-outcomes" class="slide level2">
 <h2>Learning outcomes</h2>
 <p>By the end of this notebook, you should be able to:</p>
@@ -243,7 +247,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="flight-delay-prediction" class="slide level2">
 <h2>2. Flight delay prediction</h2>
 <p>The synthetic dataset predicts whether a flight arrives at least 15 minutes late.</p>
-<div id="750a7c46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:40.002472Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:40.002294Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:40.015652Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:40.014865Z&quot;}}" data-execution_count="3">
+<div id="750a7c46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:28.296220Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:28.296031Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:28.310777Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:28.309824Z&quot;}}" data-outputid="9262426d-6a15-41c6-c5b6-a7a17cf88863" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>X.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
@@ -350,7 +354,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div>
-<div id="4540b3a7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:40.017297Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:40.017106Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:40.021069Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:40.020275Z&quot;}}" data-execution_count="4">
+<div id="4540b3a7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:28.312355Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:28.312184Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:28.316537Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:28.315755Z&quot;}}" data-outputid="0631b593-0cf9-4d8c-f604-d4f8b7ca848e" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>y.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
@@ -365,7 +369,7 @@ Name: arrival_delay_15min, dtype: int64</code></pre>
 </section>
 <section id="data-understanding" class="slide level2">
 <h2>4. Data understanding</h2>
-<div id="e2fd1889" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:40.022887Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:40.022704Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:40.027635Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:40.026927Z&quot;}}" data-execution_count="5">
+<div id="e2fd1889" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:28.318251Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:28.318081Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:28.323076Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:28.322175Z&quot;}}" data-outputid="e74c6a7e-f6f8-48f2-a6de-3b2a1f609454" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>y.value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"class_share"</span>)</span></code></pre></div>
@@ -380,7 +384,7 @@ Name: class_share, dtype: float64</code></pre>
 </section>
 <section id="data-understanding-1" class="slide level2">
 <h2>4. Data understanding</h2>
-<div id="24e266bb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:40.029530Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:40.029372Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:40.037368Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:40.036527Z&quot;}}" data-execution_count="6">
+<div id="24e266bb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:28.324778Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:28.324607Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:28.333115Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:28.332218Z&quot;}}" data-outputid="dc7c16fb-1c93-48dc-ac34-901935171033" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>X.info()</span></code></pre></div>
@@ -423,7 +427,7 @@ memory usage: 625.1 KB</code></pre>
 </section>
 <section id="can-this-column-exist-at-prediction-time-and-did-we-create-it-from-future-data" class="slide level2">
 <h2>Can this column exist at prediction time, and did we create it from future data?</h2>
-<div id="110bf60c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:40.048629Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:40.048464Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:40.141272Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:40.140378Z&quot;}}" data-execution_count="8">
+<div id="110bf60c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:28.344645Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:28.344312Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:28.432965Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:28.432074Z&quot;}}" data-outputid="18b357f7-25ab-4b25-bd9e-6d805aad8ec0" data-execution_count="8">
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <style scoped="">
@@ -572,7 +576,7 @@ memory usage: 625.1 KB</code></pre>
 </section>
 <section id="can-this-column-exist-at-prediction-time-and-did-we-create-it-from-future-data-1" class="slide level2">
 <h2>Can this column exist at prediction time, and did we create it from future data?</h2>
-<div id="fdc896e9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:40.143151Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:40.142961Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:40.151609Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:40.150840Z&quot;}}" data-execution_count="9">
+<div id="fdc896e9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:28.434812Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:28.434624Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:28.443984Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:28.443076Z&quot;}}" data-outputid="e64b1793-aa40-4dbb-b9b8-380d6467e4dc" data-execution_count="9">
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <style scoped="">
@@ -714,7 +718,7 @@ memory usage: 625.1 KB</code></pre>
 </section>
 <section id="data-understanding-and-visualization" class="slide level2">
 <h2>Data understanding and visualization</h2>
-<div id="bd353dd5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:40.253282Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:40.253061Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:40.917616Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:40.916742Z&quot;}}" data-execution_count="11">
+<div id="bd353dd5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:28.544831Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:28.544659Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:29.307080Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:29.306088Z&quot;}}" data-outputid="5d37dd4c-0a45-42d6-88d7-0683d68c2646" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>check_correlations(X, y)</span></code></pre></div>
@@ -724,7 +728,7 @@ memory usage: 625.1 KB</code></pre>
 <img data-src="lab-02-feature_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
 <section id="data-understanding-and-visualization-1" class="slide level2">
 <h2>Data understanding and visualization</h2>
-<div id="a3a8c98c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:40.919929Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:40.919737Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:41.364303Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:41.363325Z&quot;}}" data-execution_count="12">
+<div id="a3a8c98c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:29.309063Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:29.308876Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:29.808166Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:29.807172Z&quot;}}" data-outputid="395f5a31-e679-4154-fd39-3342c975bf76" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>check_correlations(X, y, include_actual_times<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
@@ -734,7 +738,7 @@ memory usage: 625.1 KB</code></pre>
 <img data-src="lab-02-feature_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"></section>
 <section id="pipeline-generation" class="slide level2">
 <h2>6. Pipeline generation</h2>
-<div id="f6b0e58a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:41.366214Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:41.365982Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:41.397429Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:41.396499Z&quot;}}" data-execution_count="13">
+<div id="f6b0e58a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:29.810180Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:29.809991Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:29.845392Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:29.844606Z&quot;}}" data-outputid="193d445c-9813-4ff1-f978-9c59c2296717" data-execution_count="13">
 <div class="cell-output cell-output-display" data-execution_count="13">
 <style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
@@ -1292,11 +1296,11 @@ a.param-doc-link::before {
                  ColumnTransformer(transformers=[('num',
                                                   Pipeline(steps=[('variance',
                                                                    VarianceThreshold())]),
-                                                  &lt;function numeric_columns at 0x7f39a8bf14e0&gt;),
+                                                  &lt;function numeric_columns at 0x7f45c39c52d0&gt;),
                                                  ('cat',
                                                   OneHotEncoder(handle_unknown='ignore',
                                                                 sparse_output=False),
-                                                  &lt;function categorical_columns at 0x7f39a966d380&gt;)],
+                                                  &lt;function categorical_columns at 0x7f45c3f6d170&gt;)],
                                    verbose_feature_names_out=False)),
                 ('classifier',
                  DecisionTreeClassifier(class_weight='balanced', max_depth=5,
@@ -1546,7 +1550,7 @@ The default value for `force_int_remainder_cols` will change from<br>
 
             </details>
         </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>num</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>&lt;function numeric_columns at 0x7f39a8bf14e0&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox"><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>VarianceThreshold</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.feature_selection.VarianceThreshold.html">?<span>Documentation for VarianceThreshold</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__variance__">
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>num</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>&lt;function numeric_columns at 0x7f45c39c52d0&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox"><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>VarianceThreshold</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.feature_selection.VarianceThreshold.html">?<span>Documentation for VarianceThreshold</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__variance__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1572,7 +1576,7 @@ i.e. remove the features that have the same value in all samples.</span></a></td
 
             </details>
         </div>
-    </div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox"><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>cat</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__"><pre>&lt;function categorical_columns at 0x7f39a966d380&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox"><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__">
+    </div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox"><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>cat</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__"><pre>&lt;function categorical_columns at 0x7f45c3f6d170&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox"><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -2086,7 +2090,7 @@ forceTheme('sk-container-id-1');</script>
 <li><em>After departure</em>: actual departure time and departure delay may be inferred.</li>
 <li><em>After landing</em>: actual arrival time and arrival delay are known.</li>
 </ul>
-<div id="2e1613f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:41.399343Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:41.399137Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:44.188780Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:44.187842Z&quot;}}" data-execution_count="14">
+<div id="2e1613f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:29.847469Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:29.847294Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:32.737381Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:32.736615Z&quot;}}" data-outputid="f221860c-dfee-4159-852a-22b67ea3376f" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -2152,7 +2156,7 @@ forceTheme('sk-container-id-1');</script>
 </ul></li>
 </ul>
 <p>Important: selection is inside the pipeline. During cross-validation, the selector is fitted only on each training fold.</p>
-<div id="a391528c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:44.190584Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:44.190408Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:44.192980Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:44.192276Z&quot;}}" data-execution_count="15">
+<div id="a391528c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:32.739713Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:32.739469Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:32.742525Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:32.741616Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>n_features_to_select <span class="op">=</span> <span class="dv">10</span></span></code></pre></div>
@@ -2171,7 +2175,7 @@ forceTheme('sk-container-id-1');</script>
 <li>This does <strong>not</strong> mean the selected features are causal, non-leaky, or non-redundant.</li>
 <li>It only means they had the largest training-fold association with <code>y</code> according to the mutual-information estimator.</li>
 </ul>
-<div id="818ef165" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:44.194647Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:44.194481Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:44.197153Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:44.196436Z&quot;}}" data-execution_count="16">
+<div id="NuaGvoQqrwWY" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:32.744278Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:32.744111Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:32.747036Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:32.746230Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># Score each preprocessed feature by estimated mutual information with y. Keep only the k=n_features_to_select highest-scoring features inside each training fold.</span></span>
@@ -2189,7 +2193,7 @@ forceTheme('sk-container-id-1');</script>
 <li>Stop when the desired number of selected features is reached.</li>
 </ul>
 <p>Backward-SFS follows the same idea but works in the opposite direction: it starts with all features and removes one feature at a time. In sklearn this is obtained with <code>SequentialFeatureSelector(direction="backward")</code>.</p>
-<div id="2b471f3e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:44.198835Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:44.198657Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:44.201759Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:44.200929Z&quot;}}" data-execution_count="17">
+<div id="2b471f3e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:32.749036Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:32.748850Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:32.752664Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:32.751744Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>sfs_selector <span class="op">=</span> SequentialFeatureSelector(estimator<span class="op">=</span>make_tree(), n_features_to_select<span class="op">=</span>n_features_to_select, direction<span class="op">=</span><span class="st">"forward"</span>, scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>, cv<span class="op">=</span><span class="dv">3</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span></code></pre></div>
@@ -2206,7 +2210,7 @@ forceTheme('sk-container-id-1');</script>
 <li>Then, the least important features are pruned from the current set of features.</li>
 <li>That procedure is recursively repeated on the pruned set until the desired number of features to select is eventually reached.</li>
 </ul>
-<div id="93b0ce4c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:44.203424Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:44.203254Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:08:44.206030Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:08:44.205239Z&quot;}}" data-execution_count="18">
+<div id="93b0ce4c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:32.754376Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:32.754209Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:32.757206Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:32.756334Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>rfe_selector <span class="op">=</span> RFE(estimator<span class="op">=</span>make_tree(), n_features_to_select<span class="op">=</span>n_features_to_select, step<span class="op">=</span><span class="fl">0.2</span>)</span></code></pre></div>
@@ -2229,7 +2233,7 @@ forceTheme('sk-container-id-1');</script>
 <h2>9. Compare raw, engineered, and selected feature sets</h2>
 <p>We measure predictive performance, number of selected features, and training time. We also keep the fitted estimators from cross-validation so we can inspect selection stability.</p>
 <p>The experiment table compares predictive value, selected feature count, and runtime rather than optimizing only one number.</p>
-<div id="8450d186" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:08:44.207704Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:08:44.207541Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:09:03.302342Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:09:03.301536Z&quot;}}" data-execution_count="19">
+<div id="A1xoT8hfrwWa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:32.758958Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:32.758796Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:51.982471Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:51.981547Z&quot;}}" data-outputid="39211e1f-175a-4dde-f984-d0e94d3cd594" data-execution_count="19">
 <div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 <style scoped="">
@@ -2268,7 +2272,7 @@ forceTheme('sk-container-id-1');</script>
 <td>0.746013</td>
 <td>10.0</td>
 <td>0.0</td>
-<td>17.239115</td>
+<td>17.368204</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
@@ -2278,7 +2282,7 @@ forceTheme('sk-container-id-1');</script>
 <td>0.745900</td>
 <td>34.0</td>
 <td>0.0</td>
-<td>0.194078</td>
+<td>0.202727</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
@@ -2288,7 +2292,7 @@ forceTheme('sk-container-id-1');</script>
 <td>0.745617</td>
 <td>10.0</td>
 <td>0.0</td>
-<td>0.407342</td>
+<td>0.389012</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
@@ -2298,7 +2302,7 @@ forceTheme('sk-container-id-1');</script>
 <td>0.716002</td>
 <td>10.0</td>
 <td>0.0</td>
-<td>1.086043</td>
+<td>1.080211</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
@@ -2308,7 +2312,7 @@ forceTheme('sk-container-id-1');</script>
 <td>0.702503</td>
 <td>24.0</td>
 <td>0.0</td>
-<td>0.151074</td>
+<td>0.164751</td>
 </tr>
 </tbody>
 </table>
@@ -2321,7 +2325,7 @@ forceTheme('sk-container-id-1');</script>
 <h2>10. Selection stability across folds</h2>
 <p>A selector is more trustworthy when it keeps similar features across folds. Instability does not always mean the selector is wrong: correlated features may be interchangeable. But instability should make us cautious when interpreting selected variables as domain truth.</p>
 <p>Stability is an interpretation check: selected features that change across folds should be discussed cautiously.</p>
-<div id="aa77d589" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:09:03.304226Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:09:03.304028Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:09:03.316549Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:09:03.315437Z&quot;}}" data-execution_count="20">
+<div id="Pyu6mZoGrwWa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:51.984416Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:51.984212Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:51.997403Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:51.996631Z&quot;}}" data-outputid="265ddcb3-bde4-41e9-f43c-77974e2ee267" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -2380,7 +2384,7 @@ forceTheme('sk-container-id-1');</script>
 <img data-src="lab-02-feature_files/figure-revealjs/cell-22-output-1.png" class="r-stretch"></section>
 <section id="interpretability-check" class="slide level2">
 <h2>12. Interpretability check</h2>
-<div id="4757e1bc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:09:14.217948Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:09:14.217758Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:09:20.056757Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:09:20.056051Z&quot;}}" data-execution_count="22">
+<div id="15_19AAMrwWb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:17:02.781280Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:17:02.781099Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:17:08.431869Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:17:08.430847Z&quot;}}" data-outputid="88a879af-205a-4134-96fc-0326f3593c09" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>chosen_pipeline <span class="op">=</span> make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>, selector<span class="op">=</span>sfs_selector)</span>
@@ -2466,7 +2470,7 @@ forceTheme('sk-container-id-1');</script>
 <img data-src="lab-02-feature_files/figure-revealjs/cell-24-output-1.png" class="r-stretch"></section>
 <section id="checking-tree-feature-importance" class="slide level2">
 <h2>Checking tree feature importance</h2>
-<div id="3064a126" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:09:20.973916Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:09:20.973719Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:09:20.980484Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:09:20.979718Z&quot;}}" data-execution_count="24">
+<div id="3064a126" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:17:09.459775Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:17:09.459558Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:17:09.466706Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:17:09.465909Z&quot;}}" data-outputid="8f40c776-998c-4e7c-ce63-22b1e908ded6" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>pd.DataFrame({</span>
@@ -2558,7 +2562,7 @@ forceTheme('sk-container-id-1');</script>
 </section>
 <section id="permutation-importance-estimates-how-much-the-fitted-decision-tree-depends-on-each-selected-feature." class="slide level2">
 <h2>Permutation importance estimates how much the fitted decision tree depends on each selected feature.</h2>
-<div id="5830f18c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:09:20.982412Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:09:20.982108Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:09:21.114702Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:09:21.113929Z&quot;}}" data-execution_count="25">
+<div id="eE84MYZmrwWd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:17:09.468527Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:17:09.468354Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:17:09.607090Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:17:09.606090Z&quot;}}" data-outputid="d6351adb-9d2f-4495-9858-42561252d048" data-execution_count="25">
 <div class="cell-output cell-output-display" data-execution_count="25">
 <div>
 <style scoped="">
