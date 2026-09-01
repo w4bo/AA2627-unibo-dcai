@@ -1050,6 +1050,90 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>End-to-end scores can hide component failures, so keep component metrics visible.</p>
 </section>
 
+<section id="evaluation-methodology" class="title-slide slide level1 center">
+<h1>Evaluation methodology</h1>
+<p>AI Engineering frames evaluation as a way to <strong>mitigate risks</strong> and <strong>uncover opportunities</strong>, not as a single score <span class="citation" data-cites="huyen2024ai">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>)</span>.</p>
+<p>For RAG, start from the system failure points:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>RAG artifact to inspect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Did we retrieve the right evidence?</td>
+<td>query, top-k chunks, ranks</td>
+</tr>
+<tr class="even">
+<td>Did the prompt use evidence correctly?</td>
+<td>final assembled prompt</td>
+</tr>
+<tr class="odd">
+<td>Did the model answer the question?</td>
+<td>generated answer</td>
+</tr>
+<tr class="even">
+<td>Are claims supported?</td>
+<td>cited chunks and claim-level checks</td>
+</tr>
+<tr class="odd">
+<td>Is the behavior deployable?</td>
+<td>cost, latency, refusal, monitoring</td>
+</tr>
+</tbody>
+</table>
+<p>Evaluation should increase visibility into where the system fails.</p>
+</section>
+
+<section id="exact-subjective-comparative" class="title-slide slide level1 center">
+<h1>Exact, subjective, comparative</h1>
+<p>Chapter 3 separates evaluation methods by how their signal is produced <span class="citation" data-cites="huyen2024ai">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>)</span>.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Signal type</th>
+<th>Use when</th>
+<th>RAG example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exact</td>
+<td>There is a verifiable target</td>
+<td>Recall@k, JSON validity, citation entailment</td>
+</tr>
+<tr class="even">
+<td>Similarity</td>
+<td>A reference answer exists</td>
+<td>cosine similarity, BERTScore <span class="citation" data-cites="zhang2020bertscore">(<a href="#/references" role="doc-biblioref" onclick="">Zhang et al. 2020</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Subjective</td>
+<td>Quality requires judgment</td>
+<td>LLM-as-a-judge rubrics</td>
+</tr>
+<tr class="even">
+<td>Comparative</td>
+<td>Absolute scores are unstable</td>
+<td>answer A is better than answer B</td>
+</tr>
+<tr class="odd">
+<td>Human</td>
+<td>Risk is high or judges need calibration</td>
+<td>expert review of sampled answers</td>
+</tr>
+</tbody>
+</table>
+<p>The strongest setup mixes exact checks, subjective rubrics, and human calibration.</p>
+</section>
+
 <section id="evaluating-generated-answers" class="title-slide slide level1 center">
 <h1>Evaluating generated answers</h1>
 <p>Open-ended answers usually do not have one exact reference answer.</p>
