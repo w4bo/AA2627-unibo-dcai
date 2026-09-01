@@ -478,6 +478,36 @@ flowchart LR
 
 End-to-end scores can hide component failures, so keep component metrics visible.
 
+# Evaluation methodology
+
+AI Engineering frames evaluation as a way to **mitigate risks** and **uncover opportunities**, not as a single score [@huyen2024ai].
+
+For RAG, start from the system failure points:
+
+| Question | RAG artifact to inspect |
+|---|---|
+| Did we retrieve the right evidence? | query, top-k chunks, ranks |
+| Did the prompt use evidence correctly? | final assembled prompt |
+| Did the model answer the question? | generated answer |
+| Are claims supported? | cited chunks and claim-level checks |
+| Is the behavior deployable? | cost, latency, refusal, monitoring |
+
+Evaluation should increase visibility into where the system fails.
+
+# Exact, subjective, comparative
+
+Chapter 3 separates evaluation methods by how their signal is produced [@huyen2024ai].
+
+| Signal type | Use when | RAG example |
+|---|---|---|
+| Exact | There is a verifiable target | Recall@k, JSON validity, citation entailment |
+| Similarity | A reference answer exists | cosine similarity, BERTScore [@zhang2020bertscore] |
+| Subjective | Quality requires judgment | LLM-as-a-judge rubrics |
+| Comparative | Absolute scores are unstable | answer A is better than answer B |
+| Human | Risk is high or judges need calibration | expert review of sampled answers |
+
+The strongest setup mixes exact checks, subjective rubrics, and human calibration.
+
 # Evaluating generated answers
 
 Open-ended answers usually do not have one exact reference answer.
@@ -865,5 +895,4 @@ The data-centric lesson is the same: better external structure can produce bette
 
 ::: {#refs}
 :::
-
 
