@@ -1050,6 +1050,188 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>End-to-end scores can hide component failures, so keep component metrics visible.</p>
 </section>
 
+<section id="evaluating-generated-answers" class="title-slide slide level1 center">
+<h1>Evaluating generated answers</h1>
+<p>Open-ended answers usually do not have one exact reference answer.</p>
+<p>A useful evaluation suite combines complementary signals:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Family</th>
+<th>Main idea</th>
+<th>Example techniques</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Similarity-based</td>
+<td>Compare answer with reference text</td>
+<td>cosine similarity, BERTScore <span class="citation" data-cites="zhang2020bertscore">(<a href="#/references" role="doc-biblioref" onclick="">Zhang et al. 2020</a>)</span></td>
+</tr>
+<tr class="even">
+<td>LLM-as-a-judge</td>
+<td>Ask a model to score with a rubric</td>
+<td>G-Eval, vRAG-Eval, SocREval, Peer Review <span class="citation" data-cites="liu2023geval wang2024vrag he2024socreval chu2024peerreview">(<a href="#/references" role="doc-biblioref" onclick="">Liu et al. 2023</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">He et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Chu et al. 2024</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Consistency and uncertainty</td>
+<td>Probe stability or confidence across rewrites, samples, or model probabilities</td>
+<td>TrustScore, BSDetector, InterrogateLLM, LLM-Check <span class="citation" data-cites="zheng2024trustscore chen2023bsdetector yehuda2024interrogatellm sriramanan2024llmcheck">(<a href="#/references" role="doc-biblioref" onclick="">Zheng et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Chen and Mueller 2023</a>; <a href="#/references" role="doc-biblioref" onclick="">Yehuda et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Sriramanan et al. 2024</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Grounding-based</td>
+<td>Check whether claims are supported by evidence</td>
+<td>grounded citations, Trust-Score <span class="citation" data-cites="song2025grounded">(<a href="#/references" role="doc-biblioref" onclick="">Song et al. 2025</a>)</span></td>
+</tr>
+</tbody>
+</table>
+<p>No single metric captures answer quality. Use several metrics and inspect disagreements.</p>
+</section>
+
+<section id="similarity-based-evaluation" class="title-slide slide level1 center">
+<h1>Similarity-based evaluation</h1>
+<p>Similarity metrics compare a generated answer with a reference answer.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>What it measures</th>
+<th>Watch out</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cosine similarity</td>
+<td>Sentence-level embedding closeness</td>
+<td>May reward fluent but wrong paraphrases</td>
+</tr>
+<tr class="even">
+<td>BERTScore</td>
+<td>Token-level semantic overlap</td>
+<td>Better with paraphrases, still weak on factual errors</td>
+</tr>
+</tbody>
+</table>
+<p>These metrics are fast baselines, but they evaluate similarity more than correctness.</p>
+</section>
+
+<section id="llm-as-a-judge" class="title-slide slide level1 center">
+<h1>LLM-as-a-judge</h1>
+<p>LLM-as-a-judge methods turn quality criteria into a grading prompt.</p>
+<p>Typical rubric dimensions:</p>
+<ul>
+<li><strong>Correctness</strong>: are factual claims aligned with the reference or evidence?</li>
+<li><strong>Completeness</strong>: does the answer cover the important parts?</li>
+<li><strong>Directness</strong>: does it answer the actual question?</li>
+<li><strong>Honesty</strong>: does it refuse when evidence is insufficient?</li>
+<li><strong>Citation quality</strong>: are cited sources relevant and supportive?</li>
+</ul>
+<p>G-Eval decomposes criteria into evaluation steps; vRAG-Eval scores correctness, completeness, and honesty; SocREval evaluates reasoning chains with Socratic prompting; Peer Review aggregates judgments from multiple LLM evaluators <span class="citation" data-cites="liu2023geval wang2024vrag he2024socreval chu2024peerreview">(<a href="#/references" role="doc-biblioref" onclick="">Liu et al. 2023</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">He et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Chu et al. 2024</a>)</span>.</p>
+</section>
+
+<section id="consistency-and-uncertainty-checks" class="title-slide slide level1 center">
+<h1>Consistency and uncertainty checks</h1>
+<p>Some evaluations ask: would the system give the same answer under small perturbations?</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Technique</th>
+<th>Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Query reformulation</td>
+<td>Similar questions should produce consistent answers</td>
+</tr>
+<tr class="even">
+<td>Multi-answer sampling</td>
+<td>Independent answers should agree on core claims</td>
+</tr>
+<tr class="odd">
+<td>Reverse prompting</td>
+<td>The answer should reconstruct a compatible question</td>
+</tr>
+<tr class="even">
+<td>Token uncertainty</td>
+<td>High entropy or internal model uncertainty can flag low-confidence generations</td>
+</tr>
+</tbody>
+</table>
+<p>These methods are useful when no gold answer exists, but consistency does not guarantee truth.</p>
+</section>
+
+<section id="grounded-answer-evaluation" class="title-slide slide level1 center">
+<h1>Grounded answer evaluation</h1>
+<p>For RAG, the central question is whether answer claims are supported by retrieved evidence.</p>
+<p>A grounding evaluation usually works claim by claim:</p>
+<ol type="1">
+<li>Split the answer into atomic statements.</li>
+<li>Link each statement to cited chunks.</li>
+<li>Check entailment between cited chunks and the statement.</li>
+<li>Compute citation precision and citation recall.</li>
+</ol>
+<p>Citation precision asks whether citations are relevant. Citation recall asks whether answer statements are supported <span class="citation" data-cites="song2025grounded">(<a href="#/references" role="doc-biblioref" onclick="">Song et al. 2025</a>)</span>.</p>
+</section>
+
+<section id="rag-evaluation-matrix" class="title-slide slide level1 center">
+<h1>RAG evaluation matrix</h1>
+<p>Use the metric that matches the failure you care about.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Failure</th>
+<th>Useful evaluation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Correct passage not retrieved</td>
+<td>Recall@k, MRR, nDCG</td>
+</tr>
+<tr class="even">
+<td>Answer drifts from evidence</td>
+<td>Grounded citation checks</td>
+</tr>
+<tr class="odd">
+<td>Answer is incomplete</td>
+<td>Rubric judging, answer correctness</td>
+</tr>
+<tr class="even">
+<td>Answer is evasive</td>
+<td>Directness and refusal evaluation</td>
+</tr>
+<tr class="odd">
+<td>Answer is unstable</td>
+<td>Reformulation or multi-sample consistency</td>
+</tr>
+<tr class="even">
+<td>Answer sounds right but is wrong</td>
+<td>Human review plus grounded evaluation</td>
+</tr>
+</tbody>
+</table>
+<p>The practical pattern is layered evaluation: retrieve, judge, ground, and sample.</p>
+</section>
+
 <section id="from-rag-to-agents" class="title-slide slide level1 center">
 <h1>From RAG to agents</h1>
 <p>RAG and agents are context-construction patterns <span class="citation" data-cites="huyen2024ai">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>)</span></p>
@@ -1643,6 +1825,12 @@ Anthropic. 2024. <em>Introducing Contextual Retrieval</em>. <a href="https://www
 <div id="ref-brown2020language" class="csl-entry" role="listitem">
 <span class="nocase">Brown, Tom B., Benjamin Mann, Nick Ryder, et al.</span> 2020. <span>“Language Models Are Few-Shot Learners.”</span> <em>Advances in Neural Information Processing Systems</em> 33: 1877–901.
 </div>
+<div id="ref-chen2023bsdetector" class="csl-entry" role="listitem">
+Chen, Jiuhai, and Jonas Mueller. 2023. <em>Quantifying Uncertainty in Answers from Any Language Model and Enhancing Their Trustworthiness</em>. <a href="https://arxiv.org/abs/2308.16175">https://arxiv.org/abs/2308.16175</a>.
+</div>
+<div id="ref-chu2024peerreview" class="csl-entry" role="listitem">
+Chu, Zhumin, Qingyao Ai, Yiteng Tu, Haitao Li, and Yiqun Liu. 2024. <span>“Automatic Large Language Model Evaluation via Peer Review.”</span> <em>Proceedings of the 33rd ACM International Conference on Information and Knowledge Management</em>, 384–93. <a href="https://doi.org/10.1145/3627673.3679677">https://doi.org/10.1145/3627673.3679677</a>.
+</div>
 <div id="ref-devlin2019bert" class="csl-entry" role="listitem">
 Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. <span>“<span>BERT</span>: Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies</em>, 4171–86. <a href="https://doi.org/10.18653/v1/N19-1423">https://doi.org/10.18653/v1/N19-1423</a>.
 </div>
@@ -1651,6 +1839,9 @@ Edge, Darren, Ha Trinh, Newman Cheng, et al. 2025. <span>“From Local to Global
 </div>
 <div id="ref-grattafiori2024llama" class="csl-entry" role="listitem">
 <span class="nocase">Grattafiori, Aaron, Abhimanyu Dubey, Abhinav Jauhri, et al.</span> 2024. <em>The Llama 3 Herd of Models</em>. <a href="https://arxiv.org/abs/2407.21783">https://arxiv.org/abs/2407.21783</a>.
+</div>
+<div id="ref-he2024socreval" class="csl-entry" role="listitem">
+He, Hangfeng, Hongming Zhang, and Dan Roth. 2024. <span>“<span>SocREval</span>: Large Language Models with the Socratic Method for Reference-Free Reasoning Evaluation.”</span> <em>Findings of the Association for Computational Linguistics: NAACL 2024</em>. <a href="https://doi.org/10.18653/v1/2024.findings-naacl.175">https://doi.org/10.18653/v1/2024.findings-naacl.175</a>.
 </div>
 <div id="ref-huyen2024ai" class="csl-entry" role="listitem">
 Huyen, Chip. 2024. <em>AI Engineering: Building Applications with Foundation Models</em>. O’Reilly Media.
@@ -1682,6 +1873,9 @@ Lewis, Patrick, Ethan Perez, Aleksandra Piktus, et al. 2020. <span>“Retrieval-
 <div id="ref-liu2024lost" class="csl-entry" role="listitem">
 Liu, Nelson F., Kevin Lin, John Hewitt, et al. 2024. <span>“Lost in the Middle: How Language Models Use Long Contexts.”</span> <em>Transactions of the Association for Computational Linguistics</em> 12: 157–73. <a href="https://doi.org/10.1162/tacl_a_00638">https://doi.org/10.1162/tacl_a_00638</a>.
 </div>
+<div id="ref-liu2023geval" class="csl-entry" role="listitem">
+Liu, Yang, Dan Iter, Yichong Xu, Shuohang Wang, Ruochen Xu, and Chenguang Zhu. 2023. <span>“<span>G-Eval</span>: <span>NLG</span> Evaluation Using <span>GPT-4</span> with Better Human Alignment.”</span> <em>Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing</em>, 2511–22. <a href="https://doi.org/10.18653/v1/2023.emnlp-main.153">https://doi.org/10.18653/v1/2023.emnlp-main.153</a>.
+</div>
 <div id="ref-llamaindex2026prompts" class="csl-entry" role="listitem">
 LlamaIndex. 2026. <em>Prompts</em>. <a href="https://docs.llamaindex.ai/en/stable/module_guides/models/prompts/" class="uri">Https://docs.llamaindex.ai/en/stable/module_guides/models/prompts/</a>.
 </div>
@@ -1697,14 +1891,32 @@ Raffel, Colin, Noam Shazeer, Adam Roberts, et al. 2020. <span>“Exploring the L
 <div id="ref-robertson2009probabilistic" class="csl-entry" role="listitem">
 Robertson, Stephen, and Hugo Zaragoza. 2009. <span>“The Probabilistic Relevance Framework: <span>BM25</span> and Beyond.”</span> <em>Foundations and Trends in Information Retrieval</em> 3: 333–89. <a href="https://doi.org/10.1561/1500000019">https://doi.org/10.1561/1500000019</a>.
 </div>
+<div id="ref-song2025grounded" class="csl-entry" role="listitem">
+Song, Maojia, Shang Hong Sim, Rishabh Bhardwaj, Hai Leong Chieu, Navonil Majumder, and Soujanya Poria. 2025. <em>Measuring and Enhancing Trustworthiness of <span>LLMs</span> in <span>RAG</span> Through Grounded Attributions and Learning to Refuse</em>. <a href="https://arxiv.org/abs/2409.11242">https://arxiv.org/abs/2409.11242</a>.
+</div>
+<div id="ref-sriramanan2024llmcheck" class="csl-entry" role="listitem">
+Sriramanan, Gaurang, Siddhant Bharti, Vinu Sankar Sadasivan, Shoumik Saha, Priyatham Kattakinda, and Soheil Feizi. 2024. <em><span>LLM-Check</span>: Investigating Detection of Hallucinations in Large Language Models</em>.
+</div>
+<div id="ref-wang2024vrag" class="csl-entry" role="listitem">
+Wang, Yang, Alberto Garcia Hernandez, Roman Kyslyi, and Nicholas Kersting. 2024. <em>Evaluating Quality of Answers for Retrieval-Augmented Generation: A Strong <span>LLM</span> Is All You Need</em>. <a href="https://arxiv.org/abs/2406.18064">https://arxiv.org/abs/2406.18064</a>.
+</div>
 <div id="ref-wei2022chain" class="csl-entry" role="listitem">
 Wei, Jason, Xuezhi Wang, Dale Schuurmans, et al. 2022. <span>“Chain-of-Thought Prompting Elicits Reasoning in Large Language Models.”</span> <em>Advances in Neural Information Processing Systems</em> 35: 24824–37.
 </div>
 <div id="ref-yao2023react" class="csl-entry" role="listitem">
 Yao, Shunyu, Jeffrey Zhao, Dian Yu, et al. 2023. <span>“<span>ReAct</span>: Synergizing Reasoning and Acting in Language Models.”</span> <em>International Conference on Learning Representations</em>.
 </div>
+<div id="ref-yehuda2024interrogatellm" class="csl-entry" role="listitem">
+Yehuda, Yakir, Itzik Malkiel, Oren Barkan, Jonathan Weill, Royi Ronen, and Noam Koenigstein. 2024. <span>“<span>InterrogateLLM</span>: Zero-Resource Hallucination Detection in <span>LLM</span>-Generated Answers.”</span> <em>Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics</em>. <a href="https://doi.org/10.18653/v1/2024.acl-long.506">https://doi.org/10.18653/v1/2024.acl-long.506</a>.
+</div>
 <div id="ref-zha2023datacentric" class="csl-entry" role="listitem">
 Zha, Daochen, Zaid Pervaiz Bhat, Kwei-Herng Lai, et al. 2023. <span>“Data-Centric Artificial Intelligence: A Survey.”</span> <em>ACM Computing Surveys</em> 56 (5): 1–42. <a href="https://doi.org/10.1145/3615852">https://doi.org/10.1145/3615852</a>.
+</div>
+<div id="ref-zhang2020bertscore" class="csl-entry" role="listitem">
+Zhang, Tianyi, Varsha Kishore, Felix Wu, Kilian Q. Weinberger, and Yoav Artzi. 2020. <span>“<span>BERTScore</span>: Evaluating Text Generation with <span>BERT</span>.”</span> <em>International Conference on Learning Representations</em>. <a href="https://arxiv.org/abs/1904.09675">https://arxiv.org/abs/1904.09675</a>.
+</div>
+<div id="ref-zheng2024trustscore" class="csl-entry" role="listitem">
+Zheng, Danna, Danyang Liu, Mirella Lapata, and Jeff Z. Pan. 2024. <em><span>TrustScore</span>: Reference-Free Evaluation of <span>LLM</span> Response Trustworthiness</em>. <a href="https://arxiv.org/abs/2402.12545">https://arxiv.org/abs/2402.12545</a>.
 </div>
 </div>
 
