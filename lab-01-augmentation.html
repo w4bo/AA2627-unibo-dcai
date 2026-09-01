@@ -99,27 +99,8 @@
     code span.va { color: #111111; } /* Variable */
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
-    /* CSS for citations */
-    div.csl-bib-body { }
-    div.csl-entry {
-      clear: both;
-    }
-    .hanging-indent div.csl-entry {
-      margin-left:2em;
-      text-indent:-2em;
-    }
-    div.csl-left-margin {
-      min-width:2em;
-      float:left;
-    }
-    div.csl-right-inline {
-      margin-left:2em;
-      padding-left:1em;
-    }
-    div.csl-indent {
-      margin-left: 2em;
-    }  </style>
-  <link rel="stylesheet" href="lab-01-augmentation_files/libs/revealjs/dist/theme/quarto-16bc8fc46cf16bb45dbb7941de0fb807.css">
+  </style>
+  <link rel="stylesheet" href="lab-01-augmentation_files/libs/revealjs/dist/theme/quarto-2a4b070768aef88e7992984127cace11.css">
   <link href="lab-01-augmentation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="lab-01-augmentation_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="lab-01-augmentation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -350,25 +331,25 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="how-smote-works" class="slide level2">
 <h2>8. How SMOTE works</h2>
-<p>SMOTE creates new minority-class observations instead of duplicating existing ones <span class="citation" data-cites="chawla2002smote">(<a href="#/references" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</p>
+<p>SMOTE creates new minority-class observations instead of duplicating existing ones <span class="citation" data-cites="chawla2002smote">(<a href="" role="doc-biblioref" onclick="return false;"><strong>chawla2002smote?</strong></a>)</span>.</p>
 <p>For a minority point <code>x_i</code>, it selects a nearby minority point <code>x_j</code> and creates:</p>
 <p><span class="math inline">\(x_{new} = x_i + \lambda * (x_j - x_i)\)</span></p>
 <p>The intuition is simple: fill sparse minority regions. The risk is also simple: interpolation may create impossible records.</p>
 </section>
 <section id="other-algorithms" class="slide level2">
 <h2>Other algorithms</h2>
-<p><strong>Borderline-SMOTE</strong> focuses on minority observations near the class boundary <span class="citation" data-cites="han2005borderline">(<a href="#/references" role="doc-biblioref" onclick="">Han et al. 2005</a>)</span>.</p>
+<p><strong>Borderline-SMOTE</strong> focuses on minority observations near the class boundary <span class="citation" data-cites="han2005borderline">(<a href="" role="doc-biblioref" onclick="return false;"><strong>han2005borderline?</strong></a>)</span>.</p>
 <ul>
 <li>These are the points a classifier is most likely to confuse with the majority class.</li>
 <li>This can help boundary recall, but noisy or mislabeled boundary points can be reinforced.</li>
 </ul>
-<p><strong>SMOTE-NC</strong> handles mixed numerical and categorical data <span class="citation" data-cites="chawla2002smote">(<a href="#/references" role="doc-biblioref" onclick="">Chawla et al. 2002</a>)</span>.</p>
+<p><strong>SMOTE-NC</strong> handles mixed numerical and categorical data <span class="citation" data-cites="chawla2002smote">(<a href="" role="doc-biblioref" onclick="return false;"><strong>chawla2002smote?</strong></a>)</span>.</p>
 <ul>
 <li>Numerical columns are interpolated.</li>
 <li>Categorical columns are chosen from neighboring minority examples.</li>
 <li>It avoids fractional one-hot categories, but it still cannot guarantee every generated category combination is realistic.</li>
 </ul>
-<p><strong>ADASYN</strong> estimates local difficulty from nearest neighbors <span class="citation" data-cites="he2008adasyn">(<a href="#/references" role="doc-biblioref" onclick="">He et al. 2008</a>)</span>.</p>
+<p><strong>ADASYN</strong> estimates local difficulty from nearest neighbors <span class="citation" data-cites="he2008adasyn">(<a href="" role="doc-biblioref" onclick="return false;"><strong>he2008adasyn?</strong></a>)</span>.</p>
 <ul>
 <li>The method shifts attention toward hard minority regions, which can be useful or risky depending on label noise and class overlap.</li>
 <li>Minority observations surrounded by many majority observations receive larger sampling weights.</li>
@@ -392,7 +373,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h2>11. Create a deliberately imbalanced dataset</h2>
 <p>We will use a synthetic binary classification dataset so the notebook is reproducible without external data downloads.</p>
 <p>Think of <code>y=1</code> as a rare high-risk event, such as fraud, churn, default, or failure.</p>
-<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:10.965643Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:10.965321Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:10.981068Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:10.980261Z&quot;}}" data-outputid="4dd78d42-7805-469e-9ab6-175493ce1c3d" data-execution_count="3">
+<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-01T14:01:45.695651Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-01T14:01:45.695315Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-01T14:01:45.712152Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-01T14:01:45.711291Z&quot;}}" data-outputid="4dd78d42-7805-469e-9ab6-175493ce1c3d" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -448,7 +429,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="majority-class-baseline" class="slide level2">
 <h2>Majority-class baseline</h2>
 <p>A classifier that always predicts the majority class can look strong by accuracy alone. But it has zero recall for the minority class.</p>
-<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:11.090015Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:11.089816Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:11.107391Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:11.106448Z&quot;}}" data-outputid="c7ba5970-7a8d-4a62-9dc3-69989ccde573" data-execution_count="5">
+<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-01T14:01:45.822022Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-01T14:01:45.821830Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-01T14:01:45.839003Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-01T14:01:45.838162Z&quot;}}" data-outputid="c7ba5970-7a8d-4a62-9dc3-69989ccde573" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <style scoped="">
@@ -517,7 +498,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="baseline-pipeline" class="slide level2">
 <h2>14. Baseline pipeline</h2>
 <p>A conventional <code>sklearn.pipeline.Pipeline</code> is sufficient when all steps are transformers and estimators.</p>
-<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:11.939352Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:11.939116Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:11.959898Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:11.959112Z&quot;}}" data-outputid="4c229548-5a5d-4480-9927-0f6b62a6a763" data-execution_count="8">
+<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-01T14:01:46.670136Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-01T14:01:46.669922Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-01T14:01:46.690646Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-01T14:01:46.689694Z&quot;}}" data-outputid="4c229548-5a5d-4480-9927-0f6b62a6a763" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># Standardize numeric features before logistic regression.</span></span>
@@ -1752,7 +1733,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="stratified-cross-validation" class="slide level2">
 <h2>16. Stratified cross-validation</h2>
 <p>Loops over stratified folds. This makes it explicit that every pipeline is cloned, fitted on the training fold, and evaluated on the untouched validation fold.</p>
-<div id="5ec6d60e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:11.971045Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:11.970857Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:13.101499Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:13.100735Z&quot;}}" data-outputid="5e890a83-95c7-457a-cfa3-8f7bcf533666" data-execution_count="10">
+<div id="5ec6d60e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-01T14:01:46.701932Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-01T14:01:46.701713Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-01T14:01:47.851563Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-01T14:01:47.850704Z&quot;}}" data-outputid="5e890a83-95c7-457a-cfa3-8f7bcf533666" data-execution_count="10">
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <style scoped="">
@@ -1863,7 +1844,7 @@ forceTheme('sk-container-id-1');</script>
 </ul>
 
 </blockquote>
-<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:13.105614Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:13.105364Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:13.124455Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:13.123515Z&quot;}}" data-outputid="2a2f072e-1700-4a2c-b6b0-be58bf4c7be8" data-execution_count="11">
+<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-01T14:01:47.853615Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-01T14:01:47.853389Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-01T14:01:47.873651Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-01T14:01:47.872983Z&quot;}}" data-outputid="2a2f072e-1700-4a2c-b6b0-be58bf4c7be8" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
@@ -2027,7 +2008,7 @@ forceTheme('sk-container-id-1');</script>
 <ul>
 <li>Threshold tuning should be evaluated with validation data, business constraints, and the metric that matches the real decision problem.</li>
 </ul>
-<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:13.722280Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:13.722085Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:13.805226Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:13.804273Z&quot;}}" data-outputid="bf5cd3d0-6d65-454a-f513-d35f52f5c284" data-execution_count="14">
+<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-01T14:01:48.481195Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-01T14:01:48.480990Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-01T14:01:48.565470Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-01T14:01:48.564485Z&quot;}}" data-outputid="bf5cd3d0-6d65-454a-f513-d35f52f5c284" data-execution_count="14">
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <style scoped="">
@@ -2136,7 +2117,7 @@ forceTheme('sk-container-id-1');</script>
 <h2>21. Choose a threshold for high-cost false negatives</h2>
 <p>Suppose a false negative costs 10 times as much as a false positive.</p>
 <p>This is a simple teaching cost model, not a universal decision rule. In a real application, you would estimate costs with domain experts and validate the downstream effects.</p>
-<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:13.972130Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:13.971908Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:19.535226Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:19.534050Z&quot;}}" data-outputid="e9bdd02e-c40f-4ba9-83ea-1065bc7845c6" data-execution_count="16">
+<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-01T14:01:48.676102Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-01T14:01:48.675917Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-01T14:01:54.415942Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-01T14:01:54.414816Z&quot;}}" data-outputid="e9bdd02e-c40f-4ba9-83ea-1065bc7845c6" data-execution_count="16">
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <style scoped="">
@@ -2259,7 +2240,7 @@ forceTheme('sk-container-id-1');</script>
 <li>The <strong>wrong</strong> structure applies SMOTE before cross-validation. The validation folds are no longer clean because the synthetic data was produced using information from the full dataset.</li>
 <li>The <strong>right</strong> structure places SMOTE inside an <code>imblearn</code> pipeline, so SMOTE is fitted only on each training fold.</li>
 </ul>
-<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-08-28T14:16:19.537221Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-08-28T14:16:19.537038Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-08-28T14:16:19.787177Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-08-28T14:16:19.786446Z&quot;}}" data-outputid="db4c1917-1746-43a8-cf67-5f3d65fdb70f" data-execution_count="17">
+<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-01T14:01:54.417819Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-01T14:01:54.417611Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-01T14:01:54.685507Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-01T14:01:54.684747Z&quot;}}" data-outputid="db4c1917-1746-43a8-cf67-5f3d65fdb70f" data-execution_count="17">
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
@@ -2340,20 +2321,9 @@ forceTheme('sk-container-id-1');</script>
 <li>Defend the final choice with evidence.</li>
 </ol>
 </section>
-<section id="references" class="title-slide slide level1 smaller scrollable">
+<section id="references" class="title-slide slide level1 center">
 <h1>References</h1>
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-chawla2002smote" class="csl-entry" role="listitem">
-Chawla, Nitesh V., Kevin W. Bowyer, Lawrence O. Hall, and W. Philip Kegelmeyer. 2002. <span>“SMOTE: Synthetic Minority over-Sampling Technique.”</span> <em>Journal of Artificial Intelligence Research</em> 16: 321–57. <a href="https://doi.org/10.1613/jair.953">https://doi.org/10.1613/jair.953</a>.
-</div>
-<div id="ref-han2005borderline" class="csl-entry" role="listitem">
-Han, Hui, Wen-Yuan Wang, and Bing-Huan Mao. 2005. <span>“Borderline-SMOTE: A New over-Sampling Method in Imbalanced Data Sets Learning.”</span> <em>Advances in Intelligent Computing</em>, Lecture notes in computer science, vol. 3644: 878–87. <a href="https://doi.org/10.1007/11538059_91">https://doi.org/10.1007/11538059_91</a>.
-</div>
-<div id="ref-he2008adasyn" class="csl-entry" role="listitem">
-He, Haibo, Yang Bai, Edwardo A. Garcia, and Shutao Li. 2008. <span>“ADASYN: Adaptive Synthetic Sampling Approach for Imbalanced Learning.”</span> <em>2008 IEEE International Joint Conference on Neural Networks</em>, 1322–28. <a href="https://doi.org/10.1109/IJCNN.2008.4633969">https://doi.org/10.1109/IJCNN.2008.4633969</a>.
-</div>
-</div>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
