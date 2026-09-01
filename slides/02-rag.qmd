@@ -478,6 +478,87 @@ flowchart LR
 
 End-to-end scores can hide component failures, so keep component metrics visible.
 
+# Evaluating generated answers
+
+Open-ended answers usually do not have one exact reference answer.
+
+A useful evaluation suite combines complementary signals:
+
+| Family | Main idea | Example techniques |
+|---|---|---|
+| Similarity-based | Compare answer with reference text | cosine similarity, BERTScore [@zhang2020bertscore] |
+| LLM-as-a-judge | Ask a model to score with a rubric | G-Eval, vRAG-Eval, SocREval, Peer Review [@liu2023geval; @wang2024vrag; @he2024socreval; @chu2024peerreview] |
+| Consistency and uncertainty | Probe stability or confidence across rewrites, samples, or model probabilities | TrustScore, BSDetector, InterrogateLLM, LLM-Check [@zheng2024trustscore; @chen2023bsdetector; @yehuda2024interrogatellm; @sriramanan2024llmcheck] |
+| Grounding-based | Check whether claims are supported by evidence | grounded citations, Trust-Score [@song2025grounded] |
+
+No single metric captures answer quality. Use several metrics and inspect disagreements.
+
+# Similarity-based evaluation
+
+Similarity metrics compare a generated answer with a reference answer.
+
+| Method | What it measures | Watch out |
+|---|---|---|
+| Cosine similarity | Sentence-level embedding closeness | May reward fluent but wrong paraphrases |
+| BERTScore | Token-level semantic overlap | Better with paraphrases, still weak on factual errors |
+
+These metrics are fast baselines, but they evaluate similarity more than correctness.
+
+# LLM-as-a-judge
+
+LLM-as-a-judge methods turn quality criteria into a grading prompt.
+
+Typical rubric dimensions:
+
+- **Correctness**: are factual claims aligned with the reference or evidence?
+- **Completeness**: does the answer cover the important parts?
+- **Directness**: does it answer the actual question?
+- **Honesty**: does it refuse when evidence is insufficient?
+- **Citation quality**: are cited sources relevant and supportive?
+
+G-Eval decomposes criteria into evaluation steps; vRAG-Eval scores correctness, completeness, and honesty; SocREval evaluates reasoning chains with Socratic prompting; Peer Review aggregates judgments from multiple LLM evaluators [@liu2023geval; @wang2024vrag; @he2024socreval; @chu2024peerreview].
+
+# Consistency and uncertainty checks
+
+Some evaluations ask: would the system give the same answer under small perturbations?
+
+| Technique | Signal |
+|---|---|
+| Query reformulation | Similar questions should produce consistent answers |
+| Multi-answer sampling | Independent answers should agree on core claims |
+| Reverse prompting | The answer should reconstruct a compatible question |
+| Token uncertainty | High entropy or internal model uncertainty can flag low-confidence generations |
+
+These methods are useful when no gold answer exists, but consistency does not guarantee truth.
+
+# Grounded answer evaluation
+
+For RAG, the central question is whether answer claims are supported by retrieved evidence.
+
+A grounding evaluation usually works claim by claim:
+
+1. Split the answer into atomic statements.
+1. Link each statement to cited chunks.
+1. Check entailment between cited chunks and the statement.
+1. Compute citation precision and citation recall.
+
+Citation precision asks whether citations are relevant. Citation recall asks whether answer statements are supported [@song2025grounded].
+
+# RAG evaluation matrix
+
+Use the metric that matches the failure you care about.
+
+| Failure | Useful evaluation |
+|---|---|
+| Correct passage not retrieved | Recall@k, MRR, nDCG |
+| Answer drifts from evidence | Grounded citation checks |
+| Answer is incomplete | Rubric judging, answer correctness |
+| Answer is evasive | Directness and refusal evaluation |
+| Answer is unstable | Reformulation or multi-sample consistency |
+| Answer sounds right but is wrong | Human review plus grounded evaluation |
+
+The practical pattern is layered evaluation: retrieve, judge, ground, and sample.
+
 # From RAG to agents
 
 RAG and agents are context-construction patterns [@huyen2024ai]
