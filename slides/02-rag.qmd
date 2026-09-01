@@ -1,0 +1,788 @@
+---
+subtitle: "RAG Pipelines"
+---
+
+# Foundation models
+
+A **foundation model** is a large, general-purpose model trained on broad data and adapted to many downstream tasks [@huyen2024ai].
+
+The same base model can support many applications:
+
+- Answering questions
+- Summarizing documents
+- Extracting structured information
+- Writing code or SQL
+- Classifying text, images, or multimodal inputs
+
+In applications, we usually do not train a new model from scratch. We decide how to control and contextualize an existing one.
+
+# Examples of foundation models
+
+Foundation models are not one specific architecture or product. They are reusable base models trained at scale and adapted through prompting, retrieval, finetuning, or tools.
+
+| Model family | Modality / role | Why it matters |
+|---|---|---|
+| BERT | Language understanding | Transfer learning with pretrained representations [@devlin2019bert] |
+| T5 | Text-to-text NLP | Many tasks cast into one text-in/text-out format [@raffel2020exploring] |
+| GPT-4 | General-purpose LLM | Broad language, reasoning, coding, and multimodal capability [@openai2024gpt4] |
+| Llama 3 | Open-weight LLM family | Multilingual, coding, reasoning, and tool-use capabilities [@grattafiori2024llama] |
+
+The common pattern is reuse: train once at large scale, adapt many times for specific tasks.
+
+# A data-centric view
+
+Data-Centric AI shifts attention from only changing the model to systematically improving the data that reaches the model [@jarrahi2024principles; @zha2023datacentric].
+
+For black-box foundation models, this is especially important:
+
+- We may not control the model weights
+- We may not know the full training data
+- We may not be able to retrain the model
+- We can still control the **input data**, **retrieved evidence**, and **prompt context**
+
+RAG is therefore a data-centric technique for improving black-box model performance.
+
+# Why RAG is data-centric
+
+A RAG pipeline improves the model output by improving the data supplied at inference time.
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  B[Black-box model] --> O[Output quality]
+  D[Curated external data] --> C[Retrieved context]
+  C --> P[Prompt]
+  P --> B
+```
+
+Instead of asking only "which model trick fixes this?", RAG asks which evidence the model should see and how the prompt should present it.
+
+# How we adapt foundation models
+
+For applications, the main adaptation levers are:
+
+| Lever | What changes | Example |
+|---|---|---|
+| Prompting | The model input | Ask for JSON with specific fields |
+| RAG | The context supplied at query time | Retrieve course regulations before answering |
+| Finetuning | The model weights | Teach a domain-specific style or behavior |
+| Tools | The actions available to the model | Search, SQL, code execution, APIs |
+
+RAG sits between prompting and system design: the prompt is partly built by the retrieval pipeline.
+
+# Prompting
+
+A **prompt** is the input that tells the model what to do, what context to use, and what form the answer should take [@huyen2024ai].
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  I[Instruction] --> P[Prompt]
+  C[Context] --> P
+  E[Examples] --> P
+  F[Output format] --> P
+  P --> M[Model]
+  M --> O[Output]
+```
+
+Prompting is the first control surface of an AI application. RAG extends it by constructing part of the prompt automatically from retrieved evidence.
+
+# Anatomy of a prompt
+
+A useful prompt often separates concerns:
+
+```text
+Role: You are a teaching assistant for Data-Centric AI.
+Task: Answer the student's question using only the provided context.
+Context: <retrieved chunks with source IDs>
+Rules: Cite sources. If evidence is missing, say what is missing.
+Output: Short answer, then bullet list of cited evidence.
+Question: <user question>
+```
+
+This structure makes the prompt easier to test, version, and debug.
+
+# Prompting patterns
+
+| Pattern | Idea | When useful |
+|---|---|---|
+| Zero-shot | Instruction only | Simple, familiar tasks |
+| One-shot | One worked example | Fixing format or style |
+| Few-shot | Several examples | Teaching labels, edge cases, tone |
+| Chain-of-thought | Examples include reasoning steps | Multi-step reasoning tasks |
+| Zero-shot CoT | Ask the model to reason step by step | Quick reasoning baseline |
+| ReAct | Interleave reasoning, actions, observations | Tool use and agentic workflows |
+
+Few-shot prompting was popularized by GPT-3-style in-context learning [@brown2020language]. Chain-of-thought and zero-shot CoT showed how prompts can elicit stronger reasoning behavior [@wei2022chain; @kojima2022large]. ReAct extends prompting toward tool use [@yao2023react].
+
+# One-shot and few-shot examples
+
+One-shot prompt:
+
+```text
+Classify sentiment as positive, neutral, or negative.
+
+Text: "The interface is fast but the setup is confusing."
+Label: neutral
+
+Text: "The new search result is exactly what I needed."
+Label:
+```
+
+Few-shot prompting adds more examples, especially boundary cases. The examples become a small, temporary training set inside the prompt.
+
+# RAG prompt example
+
+In RAG, the prompt should make evidence use explicit:
+
+```text
+Answer the question using only the sources below.
+If the sources do not contain enough information, answer: "I do not know from the provided sources."
+Cite sources using [S1], [S2], ...
+
+[S1] <retrieved chunk>
+[S2] <retrieved chunk>
+
+Question: <user question>
+Answer:
+```
+
+This is where prompt engineering becomes part of the RAG pipeline: retrieved chunks must be arranged so the model can use them faithfully.
+
+# Prompt engineering frameworks
+
+Modern frameworks help make prompts reusable, testable, and optimizable.
+
+| Framework | Prompt-engineering role |
+|---|---|
+| LangChain | Prompt templates, variables, message formatting [@langchain2026prompttemplate] |
+| LlamaIndex | RAG prompts for retrieval and answer synthesis [@llamaindex2026prompts] |
+| DSPy | Structured signatures and automatic prompt optimization [@khattab2024dspy] |
+| Guidance | Constrained generation with regexes, selections, and grammars [@guidance2026github] |
+
+The practical lesson: prompts should be treated as versioned application artifacts, not throwaway strings.
+
+# Retrieval-augmented generation
+
+Retrieval-augmented generation (RAG) builds the model's **working context** at query time instead of expecting all knowledge to live in the model weights [@huyen2024ai; @lewis2020retrieval].
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  Q[User query] --> P[Task prompt]
+  P --> M[Model]
+  M --> A[Answer from parameters]
+```
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  D[(External knowledge)] --> R[Retriever]
+  Q2[User query] --> R[Retriever]
+  R --> C[Relevant evidence]
+  C --> G[Grounded prompt]
+  Q2 --> G
+  G --> M2[Model]
+  M2 --> A2[Answer with sources]
+```
+
+# Why RAG pipelines matter
+
+RAG is useful when answers depend on information that is:
+
+- **Private**: company documents, tickets, manuals, logs
+- **Changing**: policies, prices, schedules, regulations
+- **Large**: more material than fits in the context window
+- **Auditable**: users need sources, provenance, and traceability
+
+The key engineering idea is simple: retrieve before generating.
+
+# RAG pipelines
+
+RAG is a pattern for **context construction**: instructions are mostly stable, while context is selected for each query [@huyen2024ai].
+
+Missing pieces to keep in mind:
+
+- Retrieval quality often dominates final answer quality
+- Retrieval can be optimized before, during, and after search
+- RAG is not only for text documents
+- RAG is a bridge toward agents: retrieval is a tool-like action
+- Memory systems generalize the idea of external context
+
+# The basic pipeline
+
+Offline:
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  D[(Documents)] --> C[1. Chunk]
+  C --> E[2. Embed]
+  E --> I[(VectorDB)]
+```
+
+Online: 
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  Q[User query] --> R[3. Retrieve]
+  I[(VectorDB)] --> R
+  R -->|Relevant chunks| X[4. Prompt]
+  X --> G[Model]
+  G -->|Answer and citations| E
+  GT[Ground truth] --> E[5. Evaluate]
+```
+
+# Retrieval optimization levers
+
+Retrieval can be improved without changing the generator model [@huyen2024ai].
+
+| Lever | What changes | Why it helps |
+|---|---|---|
+| Chunking | The searchable unit | Avoids missing or noisy evidence |
+| Reranking | Candidate order | Promotes stronger evidence after broad recall |
+| Query rewriting | Search query | Makes vague or conversational queries searchable |
+| Contextual retrieval | Indexed chunk text | Adds missing local context before embedding/search |
+
+This is another data-centric pattern: improve the information path into the black-box model.
+
+# Pipeline failure modes
+
+| Stage | Typical failure |
+|---|---|
+| Parsing | Tables, figures, and metadata are lost |
+| Chunking | Relevant facts are split apart |
+| Retrieval | Correct evidence is not in top-k |
+| Ranking | Good evidence is buried below noisy matches |
+| Generating | The model ignores evidence or overstates it |
+| Evaluating | Metrics hide component failures |
+
+Trace the pipeline end to end: query, candidates, reranked evidence, final prompt, answer, citations.
+
+# Step 1: Chunking
+
+A chunk is the retrieval unit.
+
+| Choice | Benefit | Risk |
+|---|---|---|
+| Small chunks | Precise matches, low context cost | Missing surrounding meaning |
+| Large chunks | More context per hit | More noise, fewer chunks fit |
+| Overlap | Reduces boundary errors | Duplicates evidence |
+| Structure-aware chunks | Keeps sections coherent | Needs good parsers |
+
+Chunking should be evaluated, not chosen by habit.
+
+# Indexing starts with documents
+
+Before retrieval, documents must become searchable units.
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  Raw[(Documents)] --> Extract[Extract text and structure]
+  Extract --> Split[Split into chunks]
+  Split --> Meta[Attach metadata]
+  Meta --> Store[2. Embed]
+  Store --> Searchable[(VectorDB)]
+```
+
+Bad ingestion is expensive because every later component inherits it.
+
+# Preserve useful structure
+
+Document processing should keep signals that help retrieval and citation.
+
+- Title, section, date, author, access rights, links
+- Page number, row number, timestamp, or byte offset where possible
+- Document type and source system
+- Parent-child relationships between sections, tables, and chunks
+
+Normalize enough to search, but do not erase context that explains the content.
+
+# Step 2: Embedding
+
+Embedding turns chunks and queries into vectors that can be compared by similarity [@karpukhin2020dense].
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  QT[User query] --> QE[2. Embed]
+  QE --> SIM[3. Retrieve]
+  CT[(VectorDB)] --> SIM
+```
+
+Good embeddings make semantically related queries and chunks close in vector space. In the lab, we will inspect how representation choices affect retrieval.
+
+# Step 3: Retrieving
+
+Retrieving returns candidate evidence for the current query. Many production systems combine sparse and dense retrieval.
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  Q[User query] --> S[Sparse retriever]
+  Q --> E[2. Embed]
+  E --> D[Dense retriever]
+  S --> R[Reranker]
+  D --> R
+  R -->|Relevant chunks| P[4. Prompt]
+  I[(VectorDB)] --> D
+```
+
+- *Sparse retrieval* captures exact identifiers and rare terms
+- *Dense retrieval* captures paraphrases and conceptual matches.
+
+# Sparse (syntactic) retrieval
+
+Sparse retrieval matches query terms to document terms.
+
+- Classic methods include TF-IDF and BM25 [@robertson2009probabilistic]
+- Strong baseline for exact terms, names, IDs, error messages, legal phrases
+- Easy to inspect: users and developers can often explain why a document matched
+- Weak when relevant documents use different words from the query
+
+Sparse search is still useful in modern RAG, especially for precision-critical domains.
+
+# Dense (semantic) retrieval
+
+Naive nearest-neighbor search compares the query vector with every chunk vector.
+
+Approximate nearest-neighbor indexes make search fast enough for large corpora [@johnson2021billion].
+
+| Design pressure | Examples of questions |
+|---|---|
+| Latency | How fast must search respond? |
+| Recall | How often can we miss the best chunk? |
+| Memory | How many vectors fit in RAM or GPU memory? |
+| Freshness | How quickly must new documents become searchable? |
+
+# Dense (semantic) retrieval: contextual retrieval
+
+A chunk can be hard to retrieve when it has lost the document context that made it meaningful.
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  Doc[(Documents)] --> Chunk[Raw chunk]
+  Doc --> Summary[Short chunk context]
+  Summary --> Enriched[Contextualized chunk]
+  Chunk --> Enriched
+  Enriched --> Embed[2. Embed]
+```
+
+Contextual retrieval enriches chunks before indexing, for example with section summaries, keywords, entities, or a short description of where the chunk came from [@huyen2024ai; @anthropic2024contextual].
+
+# Reranking
+
+The retriever optimizes for *recall*: find plausible candidates quickly.
+
+The reranker optimizes for *precision*: put the best evidence first.
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  A[(Retrieved chunks)] --> B[Stronger scoring model]
+  B --> C[Top K chunks]
+  C --> D[4. Prompt]
+```
+
+# Step 4: Prompt engineering
+
+Prompt engineering turns retrieved evidence into a usable model input. The final prompt connects retrieval and generation.
+
+Good RAG prompts should:
+
+- Put the user's task and output constraints before evidence
+- Keep evidence blocks clearly separated
+- Include source IDs for citation
+- Remove duplicates and near-duplicates
+- Fit within the model's effective context budget
+
+Long context helps, but models can still underuse relevant text depending on where it appears [@liu2024lost].
+
+# Generation with grounded answers
+
+The generator should answer from the retrieved evidence, not merely around it.
+
+Useful prompt constraints:
+
+- Answer only when the evidence is sufficient
+- Cite sources for factual claims
+- Say what is missing when evidence is incomplete
+- Separate retrieved facts from inference
+- Avoid copying long passages unless quotation is required
+
+RAG reduces hallucination risk, but it does not remove it.
+
+# RAG beyond text
+
+RAG is not limited to text chunks [@huyen2024ai]
+
+```{mermaid}
+%%| echo: false
+flowchart TB
+  Q[User query] --> R[3. Retrieve]
+  R -->|Text chunks| P[4. Prompt]
+  R -->|Images / captions| P
+  R -->|Tables / SQL| P
+```
+
+# RAG over tables
+
+For relational databases text chunks may be the wrong abstraction
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  Q[User query] --> Schema[Retrieve relevant schema]
+  Schema --> SQL[Generate SQL]
+  SQL --> DB[(Database)]
+  DB --> Result[Query result]
+  Result --> G[4. Prompt]
+```
+
+Text-to-SQL:
+
+- model writes the query
+- database becomes the retrieval engine [@huyen2024ai; @katsogiannis2023texttosql]
+
+# Step 5: Evaluating retrieval
+
+Evaluate retrieval separately from generation
+
+| Metric | Question |
+|---|---|
+| Recall@k | Is the needed evidence somewhere in the top-k? |
+| Precision@k | How much retrieved context is actually useful? |
+| MRR | How high is the first relevant result? |
+| nDCG | Are better results ranked above weaker ones? |
+
+Need a test set:
+
+- queries
+- known relevant documents or passages
+
+# Step 5: Evaluating end-to-end RAG
+
+Then evaluate the whole answer pipeline.
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  Retrieval[Retrieval quality] --> Answer[Answer quality]
+  Evidence[Evidence quality] --> Faith[Faithfulness]
+  Citations[Citation quality] --> Trust[User trust]
+  Cost[Latency and cost] --> Use[Usability]
+```
+
+End-to-end scores can hide component failures, so keep component metrics visible.
+
+# From RAG to agents
+
+RAG and agents are context-construction patterns [@huyen2024ai]
+
+| Pattern | Main action | Typical risk |
+|---|---|---|
+| RAG | Retrieve information | Wrong or insufficient context |
+| Agent | Use tools and act | Wrong action, unsafe action, cascading failure |
+
+- A RAG retriever is a limited tool that reads external knowledge
+- Agents generalize this: choose among tools , plan multiple steps , sometimes write to external systems
+
+# Memory systems
+
+Memory makes context construction persistent: across turns , across tasks , across users [@huyen2024ai]
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  Interaction[Interaction] --> Extract[Extract useful facts]
+  Extract --> Memory[(Memory store)]
+  Memory --> Retrieve[Retrieve relevant memory]
+  Retrieve --> Prompt[Current prompt]
+  Prompt --> Model[Model response]
+```
+
+- For a RAG course, memory is a useful extension
+- It is retrieval over information accumulated by the system itself
+
+# Common failure modes
+
+| Symptom | Likely cause |
+|---|---|
+| Correct document not retrieved | Bad chunking, weak embedding, missing metadata |
+| Many near-duplicate chunks | Overlap too large, no deduplication |
+| Answer cites irrelevant source | Context too noisy, citation prompt too loose |
+| Model ignores top evidence | Context order, prompt, or long-context weakness |
+| Stale answer | Index refresh and source lifecycle are not managed |
+
+# Security and governance
+
+RAG systems can leak or misuse retrieved information.
+
+```{mermaid}
+%%| echo: false
+flowchart TB
+  U[User query] --> ACL[Permission check]
+  ACL --> Ret[Retrieve allowed content]
+  Ret --> Guard[Prompt-injection aware filtering]
+  Guard --> LLM[Model]
+  LLM --> Log[Log sources and versions]
+```
+
+The retrieval layer is part of the security boundary.
+
+# RAG versus finetuning
+
+RAG and finetuning solve different problems.
+
+| Use RAG when... | Use finetuning when... |
+|---|---|
+| Knowledge changes often | Behavior should change consistently |
+| Answers need sources | Style or format must be learned |
+| Data is large or private | The pattern is repeated many times |
+| You need fast updates | Latency must be reduced at inference |
+
+In practice, strong systems often use both.
+
+# Design checklist
+
+For a RAG pipeline, specify:
+
+1. Which sources are in scope?
+1. How are documents parsed and chunked? **Step 1: Chunking**
+1. Which metadata is preserved?
+1. Which embedding model/index is used? **Step 2: Embedding**
+1. Which retrieval methods are combined? **Step 3: Retrieving**
+1. How are queries rewritten or expanded?
+1. How are candidates reranked?
+1. How is context assembled into the prompt? **Step 4: Prompting**
+1. How are answers, citations, and refusals evaluated? **Step 5: Evaluating**
+1. How are non-text sources, tables, tools, or memory handled?
+1. How are freshness, permissions, and monitoring handled?
+
+# Takeaways
+
+- RAG is context construction: retrieve the right evidence for each query.
+- Retrieval quality is usually the limiting factor.
+- The lab loop is: chunking, embedding, Retrieving, prompting, evaluating.
+- Query rewriting, contextual retrieval, and reranking are major optimization levers.
+- RAG can extend beyond text to images, tables, tools, and memory.
+- Evaluation should separate retrieval, generation, citation, cost, and latency.
+
+# GraphRAG: from local to global
+
+Vector RAG works well when an answer is localized in a few chunks.
+
+GraphRAG targets **global sensemaking** questions over a whole corpus, for example:
+
+- What are the main themes in this collection?
+- Which actors, events, or concepts are connected across documents?
+- What patterns emerge across the dataset rather than inside one passage?
+
+The key idea is to build a graph index, summarize communities, and answer using those summaries [@edge2025graphrag].
+
+# Why ordinary RAG can fail globally
+
+A similarity search query retrieves chunks that are close to the query.
+
+That is not enough when the answer requires broad coverage:
+
+| Query type | Ordinary vector RAG | GraphRAG |
+|---|---|---|
+| Local fact | Retrieve a few relevant chunks | Also possible |
+| Multi-hop relation | May miss connecting evidence | Uses graph relationships |
+| Corpus theme | Top-k chunks are too narrow | Uses community summaries |
+| Sensemaking | Hard to cover the whole corpus | Designed for global synthesis |
+
+GraphRAG is not a replacement for vector RAG; it is useful when the task is global.
+
+# GraphRAG indexing workflow
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  D[(Documents)] --> C[Text chunks]
+  C --> ER[Extract entities, relationships, claims]
+  ER --> KG[(Knowledge graph)]
+  KG --> CD[Community detection]
+  CD --> CS[Community summaries]
+```
+
+At indexing time, LLM prompts extract entities, relationships, and claims from chunks. The graph is then partitioned into communities, and each community receives a summary [@edge2025graphrag].
+
+# GraphRAG query workflow
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  Q[User question] --> S[Select community summaries]
+  S --> M[Map: partial answers]
+  M --> R[Reduce: global answer]
+  R --> A[Answer with data references]
+```
+
+At query time, community summaries generate partial answers in parallel. A final summarization step combines them into one global response [@edge2025graphrag].
+
+# Community summaries
+
+GraphRAG uses community summaries as a form of precomputed corpus memory.
+
+A useful community summary should capture:
+
+- The central entities in the community
+- Important relationships among those entities
+- Claims, events, or evidence linked to the community
+- A concise title and explanation of why the community matters
+- References back to extracted graph records
+
+This moves part of the work from query time to indexing time.
+
+# Example: extracting a graph
+
+Suppose a chunk says that NeoChip went public, had previously been acquired by Quantum Systems, and makes low-power chips for wearables and IoT devices.
+
+GraphRAG would extract structured records such as:
+
+| Type | Example |
+|---|---|
+| Entity | `NeoChip`: semiconductor company |
+| Entity | `Quantum Systems`: previous owner |
+| Relationship | `Quantum Systems -> owned -> NeoChip` |
+| Claim | NeoChip shares surged after listing |
+
+The paper uses this kind of extraction to turn local text into graph elements [@edge2025graphrag].
+
+# Example: toy knowledge graph
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  NC[NeoChip] -->|acquired by in 2016| QS[Quantum Systems]
+  NC -->|listed on| NTE[NewTech Exchange]
+  NC -->|builds| LP[Low-power processors]
+  LP -->|used in| W[Wearables]
+  LP -->|used in| IOT[IoT devices]
+  MA[Market analysts] -->|comment on| NC
+```
+
+A vector index sees chunks. A graph index also exposes entities, relationships, and claims that can be summarized across the corpus.
+
+# Example: community summaries
+
+After community detection, related graph elements are summarized together.
+
+| Community | Possible summary focus |
+|---|---|
+| NeoChip, Quantum Systems, NewTech Exchange | Ownership history and IPO transition |
+| NeoChip, low-power processors, wearables, IoT | Technical product positioning |
+| Market analysts, technology IPOs, public debut | Market interpretation and risk signals |
+
+Community summaries compress many local records into reusable global context [@edge2025graphrag].
+
+# Example: local vs global questions
+
+| Question | Better fit | Why |
+|---|---|---|
+| When did Quantum Systems acquire NeoChip? | Vector RAG | One fact may live in one chunk |
+| What companies are connected to NeoChip? | GraphRAG | Requires relationships across records |
+| What are the main market themes in the corpus? | GraphRAG | Requires corpus-level synthesis |
+| Which communities appear risky or influential? | GraphRAG | Uses community summaries and claims |
+
+This helps students decide when ordinary RAG is enough and when graph structure is worth the cost.
+
+# Example: map-reduce answer
+
+For a question such as "What are the main themes in the dataset?", GraphRAG can answer in two passes.
+
+```{mermaid}
+%%| echo: false
+flowchart TB
+  Q[Global question] --> C1[Community summary 1]
+  Q --> C2[Community summary 2]
+  Q --> C3[Community summary 3]
+  C1 --> A1[Partial answer 1]
+  C2 --> A2[Partial answer 2]
+  C3 --> A3[Partial answer 3]
+  A1 --> F[Final synthesis]
+  A2 --> F
+  A3 --> F
+```
+
+The map step answers from each community. The reduce step merges useful partial answers and removes irrelevant material [@edge2025graphrag].
+
+# Example: GraphRAG lab exercise
+
+A small lab can reuse the same five-step spine:
+
+1. **Chunking**: split a mini-corpus of course documents or news articles
+1. **Embedding**: create baseline vector retrieval
+1. **Retrieving**: compare top-k vector results with graph/community retrieval
+1. **Prompting**: generate local answers and global summaries
+1. **Evaluating**: compare directness, coverage, and diversity
+
+The point is not that GraphRAG always wins. The point is to learn which data structure helps which question.
+
+# GraphRAG and the lab pipeline
+
+GraphRAG extends the same five-step RAG spine:
+
+| Lab step | Ordinary RAG | GraphRAG extension |
+|---|---|---|
+| Chunking | Split documents | Split before graph extraction |
+| Embedding | Embed chunks | May combine vectors with graph records |
+| Retrieving | Retrieve top-k chunks | Retrieve/select communities or reports |
+| Prompting | Insert evidence chunks | Map-reduce over community summaries |
+| Evaluating | Retrieval and answer quality | Global answer quality and coverage |
+
+The pipeline is still data-centric: improve the index and evidence structure to improve a black-box model.
+
+# GraphRAG evaluation
+
+The paper evaluates GraphRAG on global sensemaking questions where there is no simple gold answer.
+
+The evaluation uses LLM-as-a-judge comparisons across criteria such as:
+
+- **Comprehensiveness**: does the answer cover the important aspects?
+- **Diversity**: does it provide varied perspectives and insights?
+- **Directness**: does it answer the question clearly?
+- **Empowerment**: does it help the reader make informed judgments?
+
+For broad corpus-level questions, GraphRAG improves especially on comprehensiveness and diversity compared with vector RAG baselines [@edge2025graphrag].
+
+# GraphRAG tradeoffs
+
+GraphRAG buys global coverage with extra system complexity.
+
+| Benefit | Cost |
+|---|---|
+| Better corpus-level summaries | More expensive indexing |
+| Explicit entities and relationships | Extraction errors can enter the graph |
+| Community-level organization | Community detection adds design choices |
+| Better global sensemaking | Less necessary for simple local questions |
+
+Use GraphRAG when the application needs structured understanding of a corpus, not only nearest-neighbor evidence.
+
+# GraphRAG takeaway
+
+GraphRAG is useful when RAG needs to answer questions about **the corpus as a whole**.
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  Local[Local questions] --> VR[Vector RAG]
+  Global[Global questions] --> GR[GraphRAG]
+  VR --> DCAI[Data-centric improvement]
+  GR --> DCAI
+  DCAI --> Better[Better black-box model outputs]
+```
+
+The data-centric lesson is the same: better external structure can produce better model behavior without retraining the foundation model.
+
+# References
+
+::: {#refs}
+:::
+
+
