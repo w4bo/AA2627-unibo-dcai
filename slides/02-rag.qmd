@@ -162,6 +162,22 @@ Modern frameworks help make prompts reusable, testable, and optimizable.
 
 The practical lesson: prompts should be treated as versioned application artifacts, not throwaway strings.
 
+# Toy corpus for the lesson
+
+We will reuse a tiny course-policy corpus.
+
+| ID | Source text |
+|---|---|
+| D1 | Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day. |
+| D2 | The final grade is 40% project, 40% oral exam, and 20% labs. |
+| D3 | Students may use AI tools, but they must cite generated text and verify factual claims. |
+
+Question:
+
+```text
+Can I submit Assignment 1 on Saturday?
+```
+
 # Retrieval-augmented generation
 
 Retrieval-augmented generation (RAG) builds the model's **working context** at query time instead of expecting all knowledge to live in the model weights [@huyen2024ai; @lewis2020retrieval].
@@ -289,6 +305,23 @@ flowchart LR
 
 Bad ingestion is expensive because every later component inherits it.
 
+# Toy example: chunking choices
+
+Document:
+
+```text
+Students can submit Assignment 1 until Friday at 18:00.
+Late submissions lose 10% per day.
+```
+
+| Chunking choice | Retrieved context for "Saturday submission" |
+|---|---|
+| One sentence per chunk | Only the deadline may be retrieved |
+| Whole paragraph | Deadline and penalty stay together |
+| Overlap | Deadline appears in more than one searchable unit |
+
+The right chunk keeps the rule and its consequence together.
+
 # Preserve useful structure
 
 Document processing should keep signals that help retrieval and citation.
@@ -313,6 +346,22 @@ flowchart LR
 ```
 
 Good embeddings make semantically related queries and chunks close in vector space. In the lab, we will inspect how representation choices affect retrieval.
+
+# Toy example: embedding search
+
+Query:
+
+```text
+Can I hand in the homework after the deadline?
+```
+
+Good dense retrieval should rank this chunk highly even without the word "homework":
+
+```text
+Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.
+```
+
+Sparse retrieval may miss it unless the index also contains synonyms such as assignment, homework, deadline, and submission.
 
 # Step 3: Retrieving
 
@@ -343,6 +392,22 @@ Sparse retrieval matches query terms to document terms.
 - Weak when relevant documents use different words from the query
 
 Sparse search is still useful in modern RAG, especially for precision-critical domains.
+
+# Toy example: sparse wins
+
+Question:
+
+```text
+What is the penalty for Assignment 1?
+```
+
+BM25 likes exact anchors:
+
+- `Assignment 1`
+- `penalty`
+- `late submissions`
+
+Dense search may retrieve a general grading-policy chunk. Sparse search is often better for IDs, names, deadlines, laws, error codes, and course-specific terms.
 
 # Dense (semantic) retrieval
 
@@ -379,6 +444,16 @@ The retriever optimizes for *recall*: find plausible candidates quickly.
 
 The reranker optimizes for *precision*: put the best evidence first.
 
+# Toy example: reranking
+
+| Rank before | Candidate |
+|---|---|
+| 1 | Final grade weights |
+| 2 | Assignment 1 deadline and late penalty |
+| 3 | AI tool policy |
+
+A reranker should move candidate 2 to the top for a deadline question.
+
 ```{mermaid}
 %%| echo: false
 flowchart LR
@@ -414,6 +489,28 @@ Useful prompt constraints:
 - Avoid copying long passages unless quotation is required
 
 RAG reduces hallucination risk, but it does not remove it.
+
+# Toy example: grounded vs ungrounded
+
+Retrieved context:
+
+```text
+Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.
+```
+
+Good answer:
+
+```text
+Yes, but it is late. A Saturday submission is after Friday 18:00, so it loses 10%.
+```
+
+Bad answer:
+
+```text
+No. Saturday submissions are automatically rejected.
+```
+
+The bad answer sounds decisive, but the rejection rule is not in the evidence.
 
 # RAG beyond text
 
@@ -463,6 +560,16 @@ Need a test set:
 - queries
 - known relevant documents or passages
 
+# Toy retrieval test set
+
+| Query | Relevant document | Why |
+|---|---|---|
+| Can I submit on Saturday? | D1 | deadline and penalty |
+| How is the grade computed? | D2 | grade weights |
+| Can I use ChatGPT? | D3 | AI-use policy |
+
+If D1 is absent from the top-k results for the Saturday query, the generator cannot reliably answer.
+
 # Step 5: Evaluating end-to-end RAG
 
 Then evaluate the whole answer pipeline.
@@ -508,6 +615,29 @@ Chapter 3 separates evaluation methods by how their signal is produced [@huyen20
 
 The strongest setup mixes exact checks, subjective rubrics, and human calibration.
 
+# Toy evaluation item
+
+Question:
+
+```text
+Can I submit Assignment 1 on Saturday?
+```
+
+Retrieved evidence:
+
+```text
+Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.
+```
+
+Candidate answers:
+
+| Answer | Label |
+|---|---|
+| Yes, but it is late and loses 10%. | correct |
+| Yes, with no penalty. | minor/severe error |
+| No, it will be rejected. | hallucinated rule |
+| The project is 40% of the grade. | evasive |
+
 # Evaluating generated answers
 
 Open-ended answers usually do not have one exact reference answer.
@@ -534,6 +664,14 @@ Similarity metrics compare a generated answer with a reference answer.
 
 These metrics are fast baselines, but they evaluate similarity more than correctness.
 
+# Toy example: similarity failure
+
+| Reference | Candidate |
+|---|---|
+| Saturday is allowed but late, with a 10% penalty. | Saturday is allowed and has no penalty. |
+
+The two answers are semantically close, but one changes the decision.
+
 # LLM-as-a-judge
 
 LLM-as-a-judge methods turn quality criteria into a grading prompt.
@@ -548,6 +686,16 @@ Typical rubric dimensions:
 
 G-Eval decomposes criteria into evaluation steps; vRAG-Eval scores correctness, completeness, and honesty; SocREval evaluates reasoning chains with Socratic prompting; Peer Review aggregates judgments from multiple LLM evaluators [@liu2023geval; @wang2024vrag; @he2024socreval; @chu2024peerreview].
 
+# Toy example: judge rubric
+
+| Score | Meaning |
+|---|---|
+| 5 | Correct, complete, cited, and grounded |
+| 3 | Mostly relevant but contains an important error |
+| 1 | Unsupported, off-topic, or contradicts evidence |
+
+This makes judgment repeatable enough to compare prompts and retrievers.
+
 # Consistency and uncertainty checks
 
 Some evaluations ask: would the system give the same answer under small perturbations?
@@ -561,6 +709,16 @@ Some evaluations ask: would the system give the same answer under small perturba
 
 These methods are useful when no gold answer exists, but consistency does not guarantee truth.
 
+# Toy example: consistency check
+
+| Reformulated query | Expected stable claim |
+|---|---|
+| Can I submit Assignment 1 on Saturday? | Saturday is late |
+| What happens if I hand in Assignment 1 one day late? | 10% penalty |
+| Is the Assignment 1 deadline Friday evening? | deadline is Friday 18:00 |
+
+If the answers disagree, inspect retrieval before blaming the model.
+
 # Grounded answer evaluation
 
 For RAG, the central question is whether answer claims are supported by retrieved evidence.
@@ -573,6 +731,16 @@ A grounding evaluation usually works claim by claim:
 1. Compute citation precision and citation recall.
 
 Citation precision asks whether citations are relevant. Citation recall asks whether answer statements are supported [@song2025grounded].
+
+# Toy example: claim grounding
+
+| Answer claim | Supported by D1? |
+|---|---|
+| Saturday is after the deadline. | yes |
+| A late submission loses 10%. | yes |
+| The submission is automatically rejected. | no |
+
+Grounding turns a fluent answer into checkable claims.
 
 # RAG evaluation matrix
 
@@ -895,4 +1063,3 @@ The data-centric lesson is the same: better external structure can produce bette
 
 ::: {#refs}
 :::
-
