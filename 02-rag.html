@@ -518,6 +518,39 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The practical lesson: prompts should be treated as versioned application artifacts, not throwaway strings.</p>
 </section>
 
+<section id="toy-corpus-for-the-lesson" class="title-slide slide level1 center">
+<h1>Toy corpus for the lesson</h1>
+<p>We will reuse a tiny course-policy corpus.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Source text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>D1</td>
+<td>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</td>
+</tr>
+<tr class="even">
+<td>D2</td>
+<td>The final grade is 40% project, 40% oral exam, and 20% labs.</td>
+</tr>
+<tr class="odd">
+<td>D3</td>
+<td>Students may use AI tools, but they must cite generated text and verify factual claims.</td>
+</tr>
+</tbody>
+</table>
+<p>Question:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb4-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
+</section>
+
 <section id="retrieval-augmented-generation" class="title-slide slide level1 center">
 <h1>Retrieval-augmented generation</h1>
 <p>Retrieval-augmented generation (RAG) builds the model’s <strong>working context</strong> at query time instead of expecting all knowledge to live in the model weights <span class="citation" data-cites="huyen2024ai lewis2020retrieval">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Lewis et al. 2020</a>)</span>.</p>
@@ -767,6 +800,36 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>Bad ingestion is expensive because every later component inherits it.</p>
 </section>
 
+<section id="toy-example-chunking-choices" class="title-slide slide level1 center">
+<h1>Toy example: chunking choices</h1>
+<p>Document:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb5-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00.</span>
+<span id="cb5-2"><a href="" aria-label="2"></a>Late submissions lose 10% per day.</span></code></pre></div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Chunking choice</th>
+<th>Retrieved context for “Saturday submission”</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>One sentence per chunk</td>
+<td>Only the deadline may be retrieved</td>
+</tr>
+<tr class="even">
+<td>Whole paragraph</td>
+<td>Deadline and penalty stay together</td>
+</tr>
+<tr class="odd">
+<td>Overlap</td>
+<td>Deadline appears in more than one searchable unit</td>
+</tr>
+</tbody>
+</table>
+<p>The right chunk keeps the rule and its consequence together.</p>
+</section>
+
 <section id="preserve-useful-structure" class="title-slide slide level1 center">
 <h1>Preserve useful structure</h1>
 <p>Document processing should keep signals that help retrieval and citation.</p>
@@ -798,6 +861,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 <p>Good embeddings make semantically related queries and chunks close in vector space. In the lab, we will inspect how representation choices affect retrieval.</p>
+</section>
+
+<section id="toy-example-embedding-search" class="title-slide slide level1 center">
+<h1>Toy example: embedding search</h1>
+<p>Query:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb6-1"><a href="" aria-label="1"></a>Can I hand in the homework after the deadline?</span></code></pre></div>
+<p>Good dense retrieval should rank this chunk highly even without the word “homework”:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb7-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
+<p>Sparse retrieval may miss it unless the index also contains synonyms such as assignment, homework, deadline, and submission.</p>
 </section>
 
 <section id="step-3-retrieving" class="title-slide slide level1 center">
@@ -838,6 +910,19 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Weak when relevant documents use different words from the query</li>
 </ul>
 <p>Sparse search is still useful in modern RAG, especially for precision-critical domains.</p>
+</section>
+
+<section id="toy-example-sparse-wins" class="title-slide slide level1 center">
+<h1>Toy example: sparse wins</h1>
+<p>Question:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb8-1"><a href="" aria-label="1"></a>What is the penalty for Assignment 1?</span></code></pre></div>
+<p>BM25 likes exact anchors:</p>
+<ul>
+<li><code>Assignment 1</code></li>
+<li><code>penalty</code></li>
+<li><code>late submissions</code></li>
+</ul>
+<p>Dense search may retrieve a general grading-policy chunk. Sparse search is often better for IDs, names, deadlines, laws, error codes, and course-specific terms.</p>
 </section>
 
 <section id="dense-semantic-retrieval" class="title-slide slide level1 center">
@@ -899,6 +984,33 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Reranking</h1>
 <p>The retriever optimizes for <em>recall</em>: find plausible candidates quickly.</p>
 <p>The reranker optimizes for <em>precision</em>: put the best evidence first.</p>
+</section>
+
+<section id="toy-example-reranking" class="title-slide slide level1 center">
+<h1>Toy example: reranking</h1>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Rank before</th>
+<th>Candidate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Final grade weights</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Assignment 1 deadline and late penalty</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>AI tool policy</td>
+</tr>
+</tbody>
+</table>
+<p>A reranker should move candidate 2 to the top for a deadline question.</p>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -942,6 +1054,17 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Avoid copying long passages unless quotation is required</li>
 </ul>
 <p>RAG reduces hallucination risk, but it does not remove it.</p>
+</section>
+
+<section id="toy-example-grounded-vs-ungrounded" class="title-slide slide level1 center">
+<h1>Toy example: grounded vs ungrounded</h1>
+<p>Retrieved context:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb9-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
+<p>Good answer:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb10-1"><a href="" aria-label="1"></a>Yes, but it is late. A Saturday submission is after Friday 18:00, so it loses 10%.</span></code></pre></div>
+<p>Bad answer:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb11-1"><a href="" aria-label="1"></a>No. Saturday submissions are automatically rejected.</span></code></pre></div>
+<p>The bad answer sounds decisive, but the rejection rule is not in the evidence.</p>
 </section>
 
 <section id="rag-beyond-text" class="title-slide slide level1 center">
@@ -1026,6 +1149,37 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>queries</li>
 <li>known relevant documents or passages</li>
 </ul>
+</section>
+
+<section id="toy-retrieval-test-set" class="title-slide slide level1 center">
+<h1>Toy retrieval test set</h1>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Query</th>
+<th>Relevant document</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Can I submit on Saturday?</td>
+<td>D1</td>
+<td>deadline and penalty</td>
+</tr>
+<tr class="even">
+<td>How is the grade computed?</td>
+<td>D2</td>
+<td>grade weights</td>
+</tr>
+<tr class="odd">
+<td>Can I use ChatGPT?</td>
+<td>D3</td>
+<td>AI-use policy</td>
+</tr>
+</tbody>
+</table>
+<p>If D1 is absent from the top-k results for the Saturday query, the generator cannot reliably answer.</p>
 </section>
 
 <section id="step-5-evaluating-end-to-end-rag" class="title-slide slide level1 center">
@@ -1134,6 +1288,41 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The strongest setup mixes exact checks, subjective rubrics, and human calibration.</p>
 </section>
 
+<section id="toy-evaluation-item" class="title-slide slide level1 center">
+<h1>Toy evaluation item</h1>
+<p>Question:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb12-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
+<p>Retrieved evidence:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb13-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
+<p>Candidate answers:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Answer</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Yes, but it is late and loses 10%.</td>
+<td>correct</td>
+</tr>
+<tr class="even">
+<td>Yes, with no penalty.</td>
+<td>minor/severe error</td>
+</tr>
+<tr class="odd">
+<td>No, it will be rejected.</td>
+<td>hallucinated rule</td>
+</tr>
+<tr class="even">
+<td>The project is 40% of the grade.</td>
+<td>evasive</td>
+</tr>
+</tbody>
+</table>
+</section>
+
 <section id="evaluating-generated-answers" class="title-slide slide level1 center">
 <h1>Evaluating generated answers</h1>
 <p>Open-ended answers usually do not have one exact reference answer.</p>
@@ -1209,6 +1398,29 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>These metrics are fast baselines, but they evaluate similarity more than correctness.</p>
 </section>
 
+<section id="toy-example-similarity-failure" class="title-slide slide level1 center">
+<h1>Toy example: similarity failure</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Reference</th>
+<th>Candidate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Saturday is allowed but late, with a 10% penalty.</td>
+<td>Saturday is allowed and has no penalty.</td>
+</tr>
+</tbody>
+</table>
+<p>The two answers are semantically close, but one changes the decision.</p>
+</section>
+
 <section id="llm-as-a-judge" class="title-slide slide level1 center">
 <h1>LLM-as-a-judge</h1>
 <p>LLM-as-a-judge methods turn quality criteria into a grading prompt.</p>
@@ -1221,6 +1433,33 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><strong>Citation quality</strong>: are cited sources relevant and supportive?</li>
 </ul>
 <p>G-Eval decomposes criteria into evaluation steps; vRAG-Eval scores correctness, completeness, and honesty; SocREval evaluates reasoning chains with Socratic prompting; Peer Review aggregates judgments from multiple LLM evaluators <span class="citation" data-cites="liu2023geval wang2024vrag he2024socreval chu2024peerreview">(<a href="#/references" role="doc-biblioref" onclick="">Liu et al. 2023</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">He et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Chu et al. 2024</a>)</span>.</p>
+</section>
+
+<section id="toy-example-judge-rubric" class="title-slide slide level1 center">
+<h1>Toy example: judge rubric</h1>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Score</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5</td>
+<td>Correct, complete, cited, and grounded</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>Mostly relevant but contains an important error</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>Unsupported, off-topic, or contradicts evidence</td>
+</tr>
+</tbody>
+</table>
+<p>This makes judgment repeatable enough to compare prompts and retrievers.</p>
 </section>
 
 <section id="consistency-and-uncertainty-checks" class="title-slide slide level1 center">
@@ -1259,6 +1498,37 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>These methods are useful when no gold answer exists, but consistency does not guarantee truth.</p>
 </section>
 
+<section id="toy-example-consistency-check" class="title-slide slide level1 center">
+<h1>Toy example: consistency check</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Reformulated query</th>
+<th>Expected stable claim</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Can I submit Assignment 1 on Saturday?</td>
+<td>Saturday is late</td>
+</tr>
+<tr class="even">
+<td>What happens if I hand in Assignment 1 one day late?</td>
+<td>10% penalty</td>
+</tr>
+<tr class="odd">
+<td>Is the Assignment 1 deadline Friday evening?</td>
+<td>deadline is Friday 18:00</td>
+</tr>
+</tbody>
+</table>
+<p>If the answers disagree, inspect retrieval before blaming the model.</p>
+</section>
+
 <section id="grounded-answer-evaluation" class="title-slide slide level1 center">
 <h1>Grounded answer evaluation</h1>
 <p>For RAG, the central question is whether answer claims are supported by retrieved evidence.</p>
@@ -1270,6 +1540,33 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Compute citation precision and citation recall.</li>
 </ol>
 <p>Citation precision asks whether citations are relevant. Citation recall asks whether answer statements are supported <span class="citation" data-cites="song2025grounded">(<a href="#/references" role="doc-biblioref" onclick="">Song et al. 2025</a>)</span>.</p>
+</section>
+
+<section id="toy-example-claim-grounding" class="title-slide slide level1 center">
+<h1>Toy example: claim grounding</h1>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Answer claim</th>
+<th>Supported by D1?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Saturday is after the deadline.</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>A late submission loses 10%.</td>
+<td>yes</td>
+</tr>
+<tr class="odd">
+<td>The submission is automatically rejected.</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<p>Grounding turns a fluent answer into checkable claims.</p>
 </section>
 
 <section id="rag-evaluation-matrix" class="title-slide slide level1 center">
