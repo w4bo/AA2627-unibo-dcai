@@ -234,15 +234,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 
 </section>
-<section id="section" class="title-slide slide level1 center">
-<h1></h1>
+<section id="model-as-a-service" class="title-slide slide level1 center">
+<h1>Model as a service</h1>
 <p>AI models are becoming more powerful and capable of more tasks, enabling more applications.</p>
-<p>Training large language models (LLMs) requires data, compute resources, and specialized talent that only a few organizations can afford.</p>
-<p>This has led to the emergence of <em>model as a service</em>:</p>
+<p>Training large language models (LLMs) requires data, compute, and specialized talent that only a few organizations can afford.</p>
+<p>This has led to <em>model as a service</em>:</p>
 <ul>
-<li>Models developed by these few organizations are made available for others to use as a service.</li>
-<li>Anyone who wishes to leverage AI to build applications can now use these models to do so</li>
-<li>This has turned AI engineering (the process of building applications on top of readily available models) into one of the fastestgrowing engineering disciplines.</li>
+<li>A few organizations train large models</li>
+<li>Others access them through APIs or hosted platforms</li>
+<li>AI engineering builds applications on top of those models</li>
 </ul>
 </section>
 
@@ -274,7 +274,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="examples-of-foundation-models" class="title-slide slide level1 center">
 <h1>Examples of foundation models</h1>
 <p>Foundation models are not one specific architecture or product.</p>
-<p>They are reusable base models trained at scale and adapted through prompting, retrieval, finetuning, or tools.</p>
+<ul>
+<li>They are reusable base models trained at scale and adapted through prompting, retrieval, finetuning, or tools.</li>
+<li>The common pattern is reuse: train once at large scale, adapt many times for specific tasks.</li>
+</ul>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -296,7 +299,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>The common pattern is reuse: train once at large scale, adapt many times for specific tasks.</p>
 </section>
 
 <section id="how-we-adapt-foundation-models" class="title-slide slide level1 center">
@@ -322,7 +324,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>Ask for JSON with specific fields</td>
 </tr>
 <tr class="even">
-<td>RAG</td>
+<td>Retrieval Augmented Generation (RAG)</td>
 <td>The context supplied at query time</td>
 <td>Retrieve course regulations before answering</td>
 </tr>
@@ -342,8 +344,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="a-data-centric-view" class="title-slide slide level1 center">
 <h1>A data-centric view</h1>
-<p>Data-Centric AI shifts attention from only changing the model to systematically improving the data that reaches the model <span class="citation" data-cites="jarrahi2024principles zha2023datacentric">(<a href="#/references" role="doc-biblioref" onclick="">Jarrahi et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Zha et al. 2023</a>)</span>.</p>
-<p>For black-box foundation models, this is especially important:</p>
+<p>Data-Centric AI shifts attention from only changing the model to improving the data that reaches the model <span class="citation" data-cites="jarrahi2024principles zha2023datacentric">(<a href="#/references" role="doc-biblioref" onclick="">Jarrahi et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Zha et al. 2023</a>)</span>.</p>
+<p>For <em>black-box foundation models</em>, this is especially important:</p>
 <ul>
 <li>We may not control the model weights</li>
 <li>We may not know the full training data</li>
@@ -353,75 +355,28 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>RAG is therefore a data-centric technique for improving black-box model performance.</p>
 <ul>
 <li>RAG sits between prompting and system design: the prompt is partly built by the retrieval pipeline.</li>
+<li>Instead of asking only “which model trick fixes this?”, RAG asks which evidence the model should see and how the prompt should present it.</li>
 </ul>
-</section>
-
-<section id="why-rag-is-data-centric" class="title-slide slide level1 center">
-<h1>Why RAG is data-centric</h1>
-<p>A RAG pipeline improves the model output by improving the data supplied at inference time.</p>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-  B[Black-box model] --&gt; O[Output quality]
-  D[Curated external data] --&gt; C[Retrieved context]
-  C --&gt; P[Prompt]
-  P --&gt; B
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>Instead of asking only “which model trick fixes this?”, RAG asks which evidence the model should see and how the prompt should present it.</p>
 </section>
 
 <section id="prompting" class="title-slide slide level1 center">
 <h1>Prompting</h1>
 <p>A <strong>prompt</strong> is the input that tells the model what to do, what context to use, and what form the answer should take <span class="citation" data-cites="huyen2024ai">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>)</span>.</p>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-  I[Instruction] --&gt; P[Prompt]
-  C[Context] --&gt; P
-  E[Examples] --&gt; P
-  F[Output format] --&gt; P
-  P --&gt; M[Model]
-  M --&gt; O[Output]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>Prompting is the first control surface of an AI application. RAG extends it by constructing part of the prompt automatically from retrieved evidence.</p>
-</section>
-
-<section id="anatomy-of-a-prompt" class="title-slide slide level1 center">
-<h1>Anatomy of a prompt</h1>
-<p>A useful prompt often separates concerns:</p>
+<ul>
+<li>Prompting is the first control surface of an AI application. RAG extends it by constructing part of the prompt automatically from retrieved evidence.</li>
+<li>A useful prompt often separates concerns:</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Role: You are a teaching assistant for Data-Centric AI.</span>
 <span id="cb1-2"><a href="" aria-label="2"></a>Task: Answer the student's question using only the provided context.</span>
 <span id="cb1-3"><a href="" aria-label="3"></a>Context: &lt;retrieved chunks with source IDs&gt;</span>
 <span id="cb1-4"><a href="" aria-label="4"></a>Rules: Cite sources. If evidence is missing, say what is missing.</span>
 <span id="cb1-5"><a href="" aria-label="5"></a>Output: Short answer, then bullet list of cited evidence.</span>
 <span id="cb1-6"><a href="" aria-label="6"></a>Question: &lt;user question&gt;</span></code></pre></div>
-<p>This structure makes the prompt easier to test, version, and debug.</p>
 </section>
 
 <section id="prompting-patterns" class="title-slide slide level1 center">
 <h1>Prompting patterns</h1>
 <table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Pattern</th>
@@ -443,26 +398,50 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <tr class="odd">
 <td>Few-shot</td>
 <td>Several examples</td>
-<td>Teaching labels, edge cases, tone</td>
-</tr>
-<tr class="even">
-<td>Chain-of-thought</td>
-<td>Examples include reasoning steps</td>
-<td>Multi-step reasoning tasks</td>
-</tr>
-<tr class="odd">
-<td>Zero-shot CoT</td>
-<td>Ask the model to reason step by step</td>
-<td>Quick reasoning baseline</td>
-</tr>
-<tr class="even">
-<td>ReAct</td>
-<td>Interleave reasoning, actions, observations</td>
-<td>Tool use and agentic workflows</td>
+<td>Teaching labels and edge cases</td>
 </tr>
 </tbody>
 </table>
-<p>Few-shot prompting was popularized by GPT-3-style in-context learning <span class="citation" data-cites="brown2020language">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Brown et al.</span> 2020</a>)</span>. Chain-of-thought and zero-shot CoT showed how prompts can elicit stronger reasoning behavior <span class="citation" data-cites="wei2022chain kojima2022large">(<a href="#/references" role="doc-biblioref" onclick="">Wei et al. 2022</a>; <a href="#/references" role="doc-biblioref" onclick="">Kojima et al. 2022</a>)</span>. ReAct extends prompting toward tool use <span class="citation" data-cites="yao2023react">(<a href="#/references" role="doc-biblioref" onclick="">Yao et al. 2023</a>)</span>.</p>
+<p>Few-shot prompting was popularized by GPT-3-style in-context learning <span class="citation" data-cites="brown2020language">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Brown et al.</span> 2020</a>)</span>.</p>
+</section>
+
+<section id="reasoning-and-tool-prompts" class="title-slide slide level1 center">
+<h1>Reasoning and tool prompts</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pattern</th>
+<th>Idea</th>
+<th>When useful</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Chain-of-thought</td>
+<td>Examples include reasoning steps</td>
+<td>Multi-step tasks</td>
+</tr>
+<tr class="even">
+<td>Zero-shot CoT</td>
+<td>Ask for step-by-step reasoning</td>
+<td>Quick reasoning baseline</td>
+</tr>
+<tr class="odd">
+<td>ReAct</td>
+<td>Interleave reasoning, actions, observations</td>
+<td>Tool use</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Chain-of-thought and zero-shot CoT elicit stronger reasoning behavior <span class="citation" data-cites="wei2022chain kojima2022large">(<a href="#/references" role="doc-biblioref" onclick="">Wei et al. 2022</a>; <a href="#/references" role="doc-biblioref" onclick="">Kojima et al. 2022</a>)</span>.</li>
+<li>ReAct extends prompting toward tool use <span class="citation" data-cites="yao2023react">(<a href="#/references" role="doc-biblioref" onclick="">Yao et al. 2023</a>)</span>.</li>
+</ul>
 </section>
 
 <section id="one-shot-and-few-shot-examples" class="title-slide slide level1 center">
@@ -475,7 +454,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <span id="cb2-5"><a href="" aria-label="5"></a></span>
 <span id="cb2-6"><a href="" aria-label="6"></a>Text: "The new search result is exactly what I needed."</span>
 <span id="cb2-7"><a href="" aria-label="7"></a>Label:</span></code></pre></div>
-<p>Few-shot prompting adds more examples, especially boundary cases. The examples become a small, temporary training set inside the prompt.</p>
+<p>Few-shot prompting adds more examples, especially boundary cases.</p>
+<ul>
+<li>The examples become a small, temporary training set inside the prompt.</li>
+</ul>
 </section>
 
 <section id="rag-prompt-example" class="title-slide slide level1 center">
@@ -531,7 +513,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="toy-corpus-for-the-lesson" class="title-slide slide level1 center">
 <h1>Toy corpus for the lesson</h1>
-<p>We will reuse a tiny course-policy corpus.</p>
+<p>We will reuse one tiny course-policy corpus from <code>resources/rag_toy_corpus.csv</code>.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -558,41 +540,52 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>Question:</p>
+<p>Question, loaded from <code>resources/rag_toy_queries.csv</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb4-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
 </section>
 
-<section id="retrieval-augmented-generation" class="title-slide slide level1 center">
-<h1>Retrieval-augmented generation</h1>
-<p>Retrieval-augmented generation (RAG) builds the model’s <strong>working context</strong> at query time instead of expecting all knowledge to live in the model weights <span class="citation" data-cites="huyen2024ai lewis2020retrieval">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Lewis et al. 2020</a>)</span>.</p>
+<section id="generation-without-retrieval" class="title-slide slide level1 center">
+<h1>Generation without retrieval</h1>
+<p>A plain prompt relies mainly on knowledge stored in model parameters.</p>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  Q[User query] --&gt; P[Task prompt]
-  P --&gt; M[Model]
-  M --&gt; A[Answer from parameters]
+  Q@{ shape: doc, label: "User question" } --&gt; P[Prompting]
+  P --&gt; M[Foundation model]
+  M --&gt; A@{ shape: doc, label: "Answer" }
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class P focus
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
+</section>
+
+<section id="retrieval-augmented-generation" class="title-slide slide level1 center">
+<h1>Retrieval-augmented generation</h1>
+<p>RAG builds the model’s <strong>working context</strong> at query time <span class="citation" data-cites="huyen2024ai lewis2020retrieval">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Lewis et al. 2020</a>)</span>.</p>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  D[(External knowledge)] --&gt; R[Retriever]
-  Q2[User query] --&gt; R[Retriever]
-  R --&gt; C[Relevant evidence]
-  C --&gt; G[Grounded prompt]
-  Q2 --&gt; G
-  G --&gt; M2[Model]
-  M2 --&gt; A2[Answer with sources]
+  D@{ shape: docs, label: "Documents" } --&gt; R[Retrieval]
+  Q@{ shape: doc, label: "User question" } --&gt; R
+  R --&gt; C@{ shape: docs, label: "Retrieved chunks" }
+  C --&gt; P[Prompting]
+  Q --&gt; P
+  P --&gt; M[Foundation model]
+  M --&gt; A@{ shape: doc, label: "Answer with sources" }
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class R,C,P focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -616,7 +609,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="rag-pipelines" class="title-slide slide level1 center">
 <h1>RAG pipelines</h1>
 <p>RAG is a pattern for <strong>context construction</strong>: instructions are mostly stable, while context is selected for each query <span class="citation" data-cites="huyen2024ai">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>)</span>.</p>
-<p>Missing pieces to keep in mind:</p>
 <ul>
 <li>Retrieval quality often dominates final answer quality</li>
 <li>Retrieval can be optimized before, during, and after search</li>
@@ -626,37 +618,48 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
-<section id="the-basic-pipeline" class="title-slide slide level1 center">
-<h1>The basic pipeline</h1>
-<p>Offline:</p>
+<section id="the-basic-pipeline-indexing" class="title-slide slide level1 center">
+<h1>The basic pipeline: indexing</h1>
+<p>Offline work prepares searchable evidence.</p>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  D[(Documents)] --&gt; C[1. Chunking]
+  D@{ shape: docs, label: "Documents" } --&gt; C[1. Chunking]
   C --&gt; E[2. Embedding]
   E --&gt; I[(Vector DB)]
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class C,E focus
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-<p>Online:</p>
+</section>
+
+<section id="the-basic-pipeline-answering" class="title-slide slide level1 center">
+<h1>The basic pipeline: answering</h1>
+<p>Online work builds the prompt for one question.</p>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  Q[User query] --&gt; R[3. Retrieval]
+  Q@{ shape: doc, label: "User question" } --&gt; R[3. Retrieval]
   I[(Vector DB)] --&gt; R
-  R --&gt;|Relevant chunks| X[4. Prompting]
-  X --&gt; G[Model]
-  G --&gt;|Answer and citations| E
-  GT[Ground truth] --&gt; E[5. Evaluation]
+  R --&gt; C@{ shape: docs, label: "Retrieved chunks" }
+  C --&gt; P[4. Prompting]
+  P --&gt; M[Foundation model]
+  M --&gt; A@{ shape: doc, label: "Answer with sources" }
+  A --&gt; V[5. Evaluation]
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class R,P,V focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -707,48 +710,35 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>This is another data-centric pattern: improve the information path into the black-box model.</p>
 </section>
 
-<section id="pipeline-failure-modes" class="title-slide slide level1 center">
-<h1>Pipeline failure modes</h1>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Stage</th>
-<th>Typical failure</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Parsing</td>
-<td>Tables, figures, and metadata are lost</td>
-</tr>
-<tr class="even">
-<td>Chunking</td>
-<td>Relevant facts are split apart</td>
-</tr>
-<tr class="odd">
-<td>Retrieval</td>
-<td>Correct evidence is not in top-k</td>
-</tr>
-<tr class="even">
-<td>Ranking</td>
-<td>Good evidence is buried below noisy matches</td>
-</tr>
-<tr class="odd">
-<td>Generating</td>
-<td>The model ignores evidence or overstates it</td>
-</tr>
-<tr class="even">
-<td>Evaluating</td>
-<td>Metrics hide component failures</td>
-</tr>
-</tbody>
-</table>
-<p>Trace the pipeline end to end: query, candidates, reranked evidence, final prompt, answer, citations.</p>
-</section>
-
 <section id="step-1-chunking" class="title-slide slide level1 center">
 <h1>Step 1: Chunking</h1>
-<p>A chunk is the retrieval unit.</p>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  D@{ shape: docs, label: "Documents" } --&gt; C[1. Chunking]
+  C --&gt; E[2. Embedding]
+  E --&gt; I[(Vector DB)]
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class C focus
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="chunking" class="title-slide slide level1 center">
+<h1>Chunking</h1>
+<p>A <strong>chunk</strong> is the retrieval unit.</p>
+<ul>
+<li>Chunking should be evaluated, not chosen by habit.</li>
+<li>Bad ingestion is expensive because every later component inherits it.</li>
+</ul>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -785,30 +775,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>Chunking should be evaluated, not chosen by habit.</p>
-</section>
-
-<section id="indexing-starts-with-documents" class="title-slide slide level1 center">
-<h1>Indexing starts with documents</h1>
-<p>Before retrieval, documents must become searchable units.</p>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-  Raw[(Documents)] --&gt; Extract[Extract text and structure]
-  Extract --&gt; Split[Split into chunks]
-  Split --&gt; Meta[Attach metadata]
-  Meta --&gt; Store[2. Embedding]
-  Store --&gt; Searchable[(Vector DB)]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>Bad ingestion is expensive because every later component inherits it.</p>
 </section>
 
 <section id="toy-example-chunking-choices" class="title-slide slide level1 center">
@@ -838,7 +804,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>The right chunk keeps the rule and its consequence together.</p>
+<p>The “right” chunk keeps the rule and its consequence together.</p>
 </section>
 
 <section id="preserve-useful-structure" class="title-slide slide level1 center">
@@ -853,6 +819,32 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>Normalize enough to search, but do not erase context that explains the content.</p>
 </section>
 
+<section id="contextual-chunking" class="title-slide slide level1 center">
+<h1>Contextual chunking</h1>
+<p>A chunk can be hard to retrieve when it has lost the document context that made it meaningful.</p>
+<div class="cell" data-reveal="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  D@{ shape: docs, label: "Documents" } --&gt; C[1. Chunking]
+  D --&gt; X[Chunk context]
+  C --&gt; EC[Contextualized chunk]
+  X --&gt; EC
+  EC --&gt; E[2. Embedding]
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class X,EC focus
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Enriches chunks before indexing, for example with section summaries, keywords, entities, or a short description of where the chunk came from <span class="citation" data-cites="huyen2024ai anthropic2024contextual">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Anthropic 2024</a>)</span>.</p>
+</section>
+
 <section id="step-2-embedding" class="title-slide slide level1 center">
 <h1>Step 2: Embedding</h1>
 <p>Embedding turns chunks and queries into vectors that can be compared by similarity <span class="citation" data-cites="karpukhin2020dense">(<a href="#/references" role="doc-biblioref" onclick="">Karpukhin et al. 2020</a>)</span>.</p>
@@ -862,42 +854,43 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  QT[User query] --&gt; QE[2. Embedding]
-  QE --&gt; SIM[3. Retrieval]
-  CT[(Vector DB)] --&gt; SIM
+  Q@{ shape: doc, label: "User question" } --&gt; E[2. Embedding]
+  E --&gt; R[3. Retrieval]
+  I[(Vector DB)] --&gt; R
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class E focus
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-<p>Good embeddings make semantically related queries and chunks close in vector space. In the lab, we will inspect how representation choices affect retrieval. # Example: embedding as vectors</p>
-<p>A real RAG system would use neural embeddings. This toy version uses word-count vectors so the mechanics are visible.</p>
-<div id="5880b9e0" class="cell" data-execution_count="2">
+<p>Good embeddings make semantically related queries and chunks close in vector space.</p>
+</section>
+
+<section id="example-embedding-as-vectors" class="title-slide slide level1 center">
+<h1>Example: embedding as vectors</h1>
+<p>A real RAG system would use neural embeddings.</p>
+<ul>
+<li>The important idea is representation: similar meanings should become nearby vectors.</li>
+<li>This toy version uses word-count vectors so the mechanics are visible.</li>
+</ul>
+<div id="261a14b5" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>q_vec <span class="op">=</span> bow(query)</span>
-<span id="cb6-2"><a href="" aria-label="2"></a>doc_vec <span class="op">=</span> bow(corpus[<span class="dv">2</span>])</span>
+<span id="cb6-2"><a href="" aria-label="2"></a>doc_vec <span class="op">=</span> bow(corpus[relevant_doc])</span>
 <span id="cb6-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"query vector:"</span>, <span class="bu">dict</span>(q_vec))</span>
-<span id="cb6-4"><a href="" aria-label="4"></a><span class="bu">print</span>(<span class="st">"chunk vector:"</span>, <span class="bu">dict</span>(doc_vec))</span>
+<span id="cb6-4"><a href="" aria-label="4"></a><span class="bu">print</span>(<span class="ss">f"chunk vector (</span><span class="sc">{</span>doc_ids[relevant_doc]<span class="sc">}</span><span class="ss">):"</span>, <span class="bu">dict</span>(doc_vec))</span>
 <span id="cb6-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">"similarity:"</span>, <span class="bu">round</span>(cosine(q_vec, doc_vec), <span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>query vector: {'can': 1, 'students': 1, 'submit': 1, 'the': 1, 'assignment': 1, 'late': 1}
-chunk vector: {'late': 1, 'submissions': 1, 'require': 1, 'explicit': 1, 'approval': 1, 'from': 1, 'the': 1, 'instructor': 1}
-similarity: 0.289</code></pre>
+<pre><code>query vector: {'can': 1, 'i': 1, 'submit': 1, 'assignment': 1, 'on': 1, 'saturday': 1}
+chunk vector (D1): {'students': 1, 'can': 1, 'submit': 1, 'assignment': 1, 'until': 1, 'friday': 1, 'at': 1, 'late': 1, 'submissions': 1, 'lose': 1, 'per': 1, 'day': 1}
+similarity: 0.354</code></pre>
 </div>
 </div>
-<p>The important idea is representation: similar meanings should become nearby vectors.</p>
-</section>
-
-<section id="toy-example-embedding-search" class="title-slide slide level1 center">
-<h1>Toy example: embedding search</h1>
-<p>Query:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb8-1"><a href="" aria-label="1"></a>Can I hand in the homework after the deadline?</span></code></pre></div>
-<p>Good dense retrieval should rank this chunk highly even without the word “homework”:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb9-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
-<p>Sparse retrieval may miss it unless the index also contains synonyms such as assignment, homework, deadline, and submission.</p>
 </section>
 
 <section id="step-3-retrieval" class="title-slide slide level1 center">
@@ -909,13 +902,17 @@ similarity: 0.289</code></pre>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  Q[User query] --&gt; S[Sparse retriever]
+  Q@{ shape: doc, label: "User question" } --&gt; S[Sparse retrieval]
   Q --&gt; E[2. Embedding]
-  E --&gt; D[Dense retriever]
-  S --&gt; R[Reranker]
-  D --&gt; R
-  R --&gt;|Relevant chunks| P[4. Prompting]
+  E --&gt; D[Dense retrieval]
   I[(Vector DB)] --&gt; D
+  S --&gt; R[3. Retrieval]
+  D --&gt; R
+  R --&gt; C@{ shape: docs, label: "Retrieved chunks" }
+  C --&gt; P[4. Prompting]
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class S,D,R,C focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -924,24 +921,8 @@ similarity: 0.289</code></pre>
 </div>
 <ul>
 <li><em>Sparse retrieval</em> captures exact identifiers and rare terms</li>
-<li><em>Dense retrieval</em> captures paraphrases and conceptual matches. # Example: retrieval ranking</li>
+<li><em>Dense retrieval</em> captures paraphrases and conceptual matches.</li>
 </ul>
-<p>Given one query, rank chunks by similarity.</p>
-<div id="14695bc1" class="cell" data-execution_count="3">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>scores <span class="op">=</span> [(i, cosine(bow(query), bow(text)), text) <span class="cf">for</span> i, text <span class="kw">in</span> <span class="bu">enumerate</span>(corpus)]</span>
-<span id="cb10-2"><a href="" aria-label="2"></a><span class="cf">for</span> i, score, text <span class="kw">in</span> <span class="bu">sorted</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>):</span>
-<span id="cb10-3"><a href="" aria-label="3"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>score<span class="sc">:.3f}</span><span class="ss"> | D</span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>0.589 | D1 | Students can submit the final assignment individually or in groups of two.
-0.375 | D2 | The assignment proposal should describe the dataset, link the source, and identify challenges.
-0.340 | D4 | The oral exam starts from a discussion of the submitted assignment.
-0.289 | D3 | Late submissions require explicit approval from the instructor.</code></pre>
-</div>
-</div>
-<p>The retrieved context is not the whole corpus. It is the evidence selected for the current answer.</p>
 </section>
 
 <section id="sparse-syntactic-retrieval" class="title-slide slide level1 center">
@@ -956,17 +937,45 @@ similarity: 0.289</code></pre>
 <p>Sparse search is still useful in modern RAG, especially for precision-critical domains.</p>
 </section>
 
-<section id="toy-example-sparse-wins" class="title-slide slide level1 center">
-<h1>Toy example: sparse wins</h1>
-<p>Question:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb12-1"><a href="" aria-label="1"></a>What is the penalty for Assignment 1?</span></code></pre></div>
-<p>BM25 likes exact anchors:</p>
+<section id="example-retrieval-ranking" class="title-slide slide level1 center">
+<h1>Example: retrieval ranking</h1>
+<p>Given the query</p>
+<div id="a0f147c9" class="cell" data-execution_count="3">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="bu">print</span>(query)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Can I submit Assignment 1 on Saturday?</code></pre>
+</div>
+</div>
+<p>… rank chunks by similarity</p>
+<div id="790648dd" class="cell" data-execution_count="4">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>scores <span class="op">=</span> [(i, cosine(bow(query), bow(text)), text) <span class="cf">for</span> i, text <span class="kw">in</span> <span class="bu">enumerate</span>(corpus)]</span>
+<span id="cb10-2"><a href="" aria-label="2"></a><span class="cf">for</span> i, score, text <span class="kw">in</span> <span class="bu">sorted</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb10-3"><a href="" aria-label="3"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>score<span class="sc">:.3f}</span><span class="ss"> | </span><span class="sc">{</span>doc_ids[i]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.354 | D1 | Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.
+0.000 | D2 | The final grade is 40% project, 40% oral exam, and 20% labs.
+0.000 | D3 | Students may use AI tools, but they must cite generated text and verify factual claims.</code></pre>
+</div>
+</div>
+</section>
+
+<section id="toy-example-sparse-retrieval" class="title-slide slide level1 center">
+<h1>Toy example: sparse retrieval</h1>
+<p>Use the same question:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb12-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
+<p>BM25 likes exact anchors in <code>D1</code>:</p>
 <ul>
 <li><code>Assignment 1</code></li>
-<li><code>penalty</code></li>
-<li><code>late submissions</code></li>
+<li><code>submit</code></li>
+<li><code>Late submissions</code></li>
 </ul>
-<p>Dense search may retrieve a general grading-policy chunk. Sparse search is often better for IDs, names, deadlines, laws, error codes, and course-specific terms.</p>
+<p>Sparse search helps when the question contains IDs, names, deadlines, laws, error codes, or course-specific terms.</p>
 </section>
 
 <section id="dense-semantic-retrieval" class="title-slide slide level1 center">
@@ -1001,41 +1010,49 @@ similarity: 0.289</code></pre>
 </table>
 </section>
 
-<section id="dense-semantic-retrieval-contextual-retrieval" class="title-slide slide level1 center">
-<h1>Dense (semantic) retrieval: contextual retrieval</h1>
-<p>A chunk can be hard to retrieve when it has lost the document context that made it meaningful.</p>
+<section id="toy-example-embedding-search" class="title-slide slide level1 center">
+<h1>Toy example: embedding search</h1>
+<p>Use the same question:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb13-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
+<p>Dense retrieval should rank <code>D1</code> highly because the question and the chunk discuss the same policy.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb14-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
+<p>The embedding step decides whether this meaning becomes searchable.</p>
+</section>
+
+<section id="reranking" class="title-slide slide level1 center">
+<h1>Reranking</h1>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  Doc[(Documents)] --&gt; Chunk[Raw chunk]
-  Doc --&gt; Summary[Short chunk context]
-  Summary --&gt; Enriched[Contextualized chunk]
-  Chunk --&gt; Enriched
-  Enriched --&gt; Embed[2. Embedding]
+  C@{ shape: docs, label: "Retrieved chunks" } --&gt; R[Reranker]
+  R --&gt; T@{ shape: docs, label: "Top-k chunks" }
+  T --&gt; P[4. Prompting]
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class R focus
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-<p>Contextual retrieval enriches chunks before indexing, for example with section summaries, keywords, entities, or a short description of where the chunk came from <span class="citation" data-cites="huyen2024ai anthropic2024contextual">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Anthropic 2024</a>)</span>.</p>
-</section>
-
-<section id="reranking" class="title-slide slide level1 center">
-<h1>Reranking</h1>
-<p>The retriever optimizes for <em>recall</em>: find plausible candidates quickly.</p>
-<p>The reranker optimizes for <em>precision</em>: put the best evidence first.</p>
+<ul>
+<li>The retriever optimizes for <em>recall</em>: find plausible candidates quickly.</li>
+<li>The reranker optimizes for <em>precision</em>: put the best evidence first.</li>
+</ul>
 </section>
 
 <section id="toy-example-reranking" class="title-slide slide level1 center">
 <h1>Toy example: reranking</h1>
+<p>Use the same question:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb15-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th>Rank before</th>
+<th>Rank</th>
 <th>Candidate</th>
 </tr>
 </thead>
@@ -1055,21 +1072,6 @@ similarity: 0.289</code></pre>
 </tbody>
 </table>
 <p>A reranker should move candidate 2 to the top for a deadline question.</p>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-  A[(Retrieved chunks)] --&gt; B[Stronger scoring model]
-  B --&gt; C[Top-k chunks]
-  C --&gt; D[4. Prompting]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
 </section>
 
 <section id="step-4-prompt-engineering" class="title-slide slide level1 center">
@@ -1083,22 +1085,26 @@ similarity: 0.289</code></pre>
 <li>Remove duplicates and near-duplicates</li>
 <li>Fit within the model’s effective context budget</li>
 </ul>
-<p>Long context helps, but models can still underuse relevant text depending on where it appears <span class="citation" data-cites="liu2024lost">(<a href="#/references" role="doc-biblioref" onclick="">Liu et al. 2024</a>)</span>. # Example: prompt assembly</p>
+<p>Long context helps, but models can still underuse relevant text depending on where it appears <span class="citation" data-cites="liu2024lost">(<a href="#/references" role="doc-biblioref" onclick="">Liu et al. 2024</a>)</span>.</p>
+</section>
+
+<section id="example-prompt-assembly" class="title-slide slide level1 center">
+<h1>Example: prompt assembly</h1>
 <p>The prompt combines stable instructions with the retrieved chunk.</p>
-<div id="a802e790" class="cell" data-execution_count="4">
+<div id="e6581963" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>top <span class="op">=</span> <span class="bu">max</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>])</span>
-<span id="cb13-2"><a href="" aria-label="2"></a>prompt <span class="op">=</span> <span class="ss">f"""Answer using only the context.</span></span>
-<span id="cb13-3"><a href="" aria-label="3"></a><span class="ss">Context: </span><span class="sc">{</span>top[<span class="dv">2</span>]<span class="sc">}</span></span>
-<span id="cb13-4"><a href="" aria-label="4"></a><span class="ss">Question: </span><span class="sc">{</span>query<span class="sc">}</span></span>
-<span id="cb13-5"><a href="" aria-label="5"></a><span class="ss">Answer:"""</span></span>
-<span id="cb13-6"><a href="" aria-label="6"></a><span class="bu">print</span>(prompt)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>top <span class="op">=</span> <span class="bu">max</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>])</span>
+<span id="cb16-2"><a href="" aria-label="2"></a>prompt <span class="op">=</span> <span class="ss">f"""Answer using only the context.</span></span>
+<span id="cb16-3"><a href="" aria-label="3"></a><span class="ss">Context: </span><span class="sc">{</span>top[<span class="dv">2</span>]<span class="sc">}</span></span>
+<span id="cb16-4"><a href="" aria-label="4"></a><span class="ss">Question: </span><span class="sc">{</span>query<span class="sc">}</span></span>
+<span id="cb16-5"><a href="" aria-label="5"></a><span class="ss">Answer:"""</span></span>
+<span id="cb16-6"><a href="" aria-label="6"></a><span class="bu">print</span>(prompt)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Answer using only the context.
-Context: Students can submit the final assignment individually or in groups of two.
-Question: Can students submit the assignment late?
+Context: Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.
+Question: Can I submit Assignment 1 on Saturday?
 Answer:</code></pre>
 </div>
 </div>
@@ -1121,12 +1127,14 @@ Answer:</code></pre>
 
 <section id="toy-example-grounded-vs-ungrounded" class="title-slide slide level1 center">
 <h1>Toy example: grounded vs ungrounded</h1>
+<p>User question:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb18-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
 <p>Retrieved context:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb15-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb19-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
 <p>Good answer:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb16-1"><a href="" aria-label="1"></a>Yes, but it is late. A Saturday submission is after Friday 18:00, so it loses 10%.</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb20-1"><a href="" aria-label="1"></a>Yes, but it is late. A Saturday submission is after Friday 18:00, so it loses 10%.</span></code></pre></div>
 <p>Bad answer:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb17-1"><a href="" aria-label="1"></a>No. Saturday submissions are automatically rejected.</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb21-1"><a href="" aria-label="1"></a>No. Saturday submissions are automatically rejected.</span></code></pre></div>
 <p>The bad answer sounds decisive, but the rejection rule is not in the evidence.</p>
 </section>
 
@@ -1139,10 +1147,16 @@ Answer:</code></pre>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TB
-  Q[User query] --&gt; R[3. Retrieval]
-  R --&gt;|Text chunks| P[4. Prompting]
-  R --&gt;|Images / captions| P
-  R --&gt;|Tables / SQL| P
+  Q@{ shape: doc, label: "User question" } --&gt; R[3. Retrieval]
+  R --&gt; T@{ shape: docs, label: "Text chunks" }
+  R --&gt; I@{ shape: docs, label: "Images and captions" }
+  R --&gt; D@{ shape: cyl, label: "Tables and SQL" }
+  T --&gt; P[4. Prompting]
+  I --&gt; P
+  D --&gt; P
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class R,T,I,D focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -1160,11 +1174,14 @@ Answer:</code></pre>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  Q[User query] --&gt; Schema[Retrieve relevant schema]
-  Schema --&gt; SQL[Generate SQL]
+  Q@{ shape: doc, label: "User question" } --&gt; S[Retrieve schema]
+  S --&gt; SQL[Generate SQL]
   SQL --&gt; DB[(Database)]
-  DB --&gt; Result[Query result]
-  Result --&gt; G[4. Prompting]
+  DB --&gt; R@{ shape: docs, label: "Query result" }
+  R --&gt; P[4. Prompting]
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class S,SQL,DB,R focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -1178,8 +1195,8 @@ Answer:</code></pre>
 </ul>
 </section>
 
-<section id="step-5-evaluating-retrieval" class="title-slide slide level1 center">
-<h1>Step 5: Evaluating retrieval</h1>
+<section id="step-5-first-evaluating-retrieval" class="title-slide slide level1 center">
+<h1>Step 5: first, evaluating retrieval</h1>
 <p>Evaluate retrieval separately from generation</p>
 <table class="caption-top">
 <thead>
@@ -1196,14 +1213,6 @@ Answer:</code></pre>
 <tr class="even">
 <td>Precision@k</td>
 <td>How much retrieved context is actually useful?</td>
-</tr>
-<tr class="odd">
-<td>MRR</td>
-<td>How high is the first relevant result?</td>
-</tr>
-<tr class="even">
-<td>nDCG</td>
-<td>Are better results ranked above weaker ones?</td>
 </tr>
 </tbody>
 </table>
@@ -1242,52 +1251,34 @@ Answer:</code></pre>
 </tr>
 </tbody>
 </table>
-<p>If D1 is absent from the top-k results for the Saturday query, the generator cannot reliably answer. # Example: retrieval metrics</p>
+<p>If D1 is absent from the top-k results for the Saturday query, the generator cannot reliably answer.</p>
+</section>
+
+<section id="example-retrieval-metrics" class="title-slide slide level1 center">
+<h1>Example: retrieval metrics</h1>
 <p>Assume the relevant document for the query is known.</p>
-<div id="695fa1df" class="cell" data-execution_count="5">
+<div id="12b4e7f1" class="cell" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>ranked <span class="op">=</span> [i <span class="cf">for</span> i, score, text <span class="kw">in</span> <span class="bu">sorted</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)]</span>
-<span id="cb18-2"><a href="" aria-label="2"></a>top_k <span class="op">=</span> ranked[:<span class="dv">2</span>]</span>
-<span id="cb18-3"><a href="" aria-label="3"></a>precision_at_2 <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(top_k) <span class="op">&amp;</span> relevant) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb18-4"><a href="" aria-label="4"></a>recall_at_2 <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(top_k) <span class="op">&amp;</span> relevant) <span class="op">/</span> <span class="bu">len</span>(relevant)</span>
-<span id="cb18-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">"top-2:"</span>, [<span class="ss">f"D</span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> top_k])</span>
-<span id="cb18-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">"precision@2:"</span>, precision_at_2)</span>
-<span id="cb18-7"><a href="" aria-label="7"></a><span class="bu">print</span>(<span class="st">"recall@2:"</span>, recall_at_2)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>ranked <span class="op">=</span> [i <span class="cf">for</span> i, score, text <span class="kw">in</span> <span class="bu">sorted</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)]</span>
+<span id="cb22-2"><a href="" aria-label="2"></a>top_k <span class="op">=</span> ranked[:<span class="dv">2</span>]</span>
+<span id="cb22-3"><a href="" aria-label="3"></a>precision_at_2 <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(top_k) <span class="op">&amp;</span> relevant) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb22-4"><a href="" aria-label="4"></a>recall_at_2 <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(top_k) <span class="op">&amp;</span> relevant) <span class="op">/</span> <span class="bu">len</span>(relevant)</span>
+<span id="cb22-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">"top-2:"</span>, [doc_ids[i] <span class="cf">for</span> i <span class="kw">in</span> top_k])</span>
+<span id="cb22-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">"precision@2:"</span>, precision_at_2)</span>
+<span id="cb22-7"><a href="" aria-label="7"></a><span class="bu">print</span>(<span class="st">"recall@2:"</span>, recall_at_2)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>top-2: ['D1', 'D2']
-precision@2: 0.0
-recall@2: 0.0</code></pre>
+precision@2: 0.5
+recall@2: 1.0</code></pre>
 </div>
 </div>
 <p>Evaluation turns RAG tuning into an experiment: change chunking, embedding, retrieval, or prompting, then measure the effect.</p>
 </section>
 
-<section id="step-5-evaluating-end-to-end-rag" class="title-slide slide level1 center">
-<h1>Step 5: Evaluating end-to-end RAG</h1>
-<p>Then evaluate the whole answer pipeline.</p>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-  Retrieval[Retrieval quality] --&gt; Answer[Answer quality]
-  Evidence[Evidence quality] --&gt; Faith[Faithfulness]
-  Citations[Citation quality] --&gt; Trust[User trust]
-  Cost[Latency and cost] --&gt; Use[Usability]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>End-to-end scores can hide component failures, so keep component metrics visible.</p>
-</section>
-
-<section id="evaluation-methodology" class="title-slide slide level1 center">
-<h1>Evaluation methodology</h1>
+<section id="step-5-then-evaluating-the-whole-answer-pipeline." class="title-slide slide level1 center">
+<h1>Step 5: then, evaluating the whole answer pipeline.</h1>
 <p>AI Engineering frames evaluation as a way to <strong>mitigate risks</strong> and <strong>uncover opportunities</strong>, not as a single score <span class="citation" data-cites="huyen2024ai">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>)</span>.</p>
 <p>For RAG, start from the system failure points:</p>
 <table class="caption-top">
@@ -1325,7 +1316,7 @@ recall@2: 0.0</code></pre>
 
 <section id="exact-subjective-comparative" class="title-slide slide level1 center">
 <h1>Exact, subjective, comparative</h1>
-<p>Chapter 3 separates evaluation methods by how their signal is produced <span class="citation" data-cites="huyen2024ai">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>)</span>.</p>
+<p>Separate evaluation methods by how their signal is produced <span class="citation" data-cites="huyen2024ai">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>)</span>.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -1367,15 +1358,14 @@ recall@2: 0.0</code></pre>
 </tr>
 </tbody>
 </table>
-<p>The strongest setup mixes exact checks, subjective rubrics, and human calibration.</p>
 </section>
 
 <section id="toy-evaluation-item" class="title-slide slide level1 center">
 <h1>Toy evaluation item</h1>
-<p>Question:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb20-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
+<p>Question, loaded from <code>resources/rag_toy_queries.csv</code>:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb24-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
 <p>Retrieved evidence:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb21-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb25-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
 <p>Candidate answers:</p>
 <table class="caption-top">
 <thead>
@@ -1410,42 +1400,56 @@ recall@2: 0.0</code></pre>
 <p>Open-ended answers usually do not have one exact reference answer.</p>
 <p>A useful evaluation suite combines complementary signals:</p>
 <table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Family</th>
 <th>Main idea</th>
-<th>Example techniques</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Similarity-based</td>
 <td>Compare answer with reference text</td>
-<td>cosine similarity, BERTScore <span class="citation" data-cites="zhang2020bertscore">(<a href="#/references" role="doc-biblioref" onclick="">Zhang et al. 2020</a>)</span></td>
 </tr>
 <tr class="even">
 <td>LLM-as-a-judge</td>
-<td>Ask a model to score with a rubric</td>
-<td>G-Eval, vRAG-Eval, SocREval, Peer Review <span class="citation" data-cites="liu2023geval wang2024vrag he2024socreval chu2024peerreview">(<a href="#/references" role="doc-biblioref" onclick="">Liu et al. 2023</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">He et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Chu et al. 2024</a>)</span></td>
+<td>Score answers with a rubric</td>
 </tr>
 <tr class="odd">
-<td>Consistency and uncertainty</td>
-<td>Probe stability or confidence across rewrites, samples, or model probabilities</td>
-<td>TrustScore, BSDetector, InterrogateLLM, LLM-Check <span class="citation" data-cites="zheng2024trustscore chen2023bsdetector yehuda2024interrogatellm sriramanan2024llmcheck">(<a href="#/references" role="doc-biblioref" onclick="">Zheng et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Chen and Mueller 2023</a>; <a href="#/references" role="doc-biblioref" onclick="">Yehuda et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Sriramanan et al. 2024</a>)</span></td>
-</tr>
-<tr class="even">
 <td>Grounding-based</td>
-<td>Check whether claims are supported by evidence</td>
-<td>grounded citations, Trust-Score <span class="citation" data-cites="song2025grounded">(<a href="#/references" role="doc-biblioref" onclick="">Song et al. 2025</a>)</span></td>
+<td>Check whether claims follow from evidence</td>
 </tr>
 </tbody>
 </table>
-<p>No single metric captures answer quality. Use several metrics and inspect disagreements.</p>
+<p>Common techniques include BERTScore, G-Eval, vRAG-Eval, SocREval, Peer Review, and grounded citation checks <span class="citation" data-cites="zhang2020bertscore liu2023geval wang2024vrag he2024socreval chu2024peerreview song2025grounded">(<a href="#/references" role="doc-biblioref" onclick="">Zhang et al. 2020</a>; <a href="#/references" role="doc-biblioref" onclick="">Liu et al. 2023</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">He et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Chu et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Song et al. 2025</a>)</span>.</p>
+</section>
+
+<section id="consistency-and-uncertainty-evaluation" class="title-slide slide level1 center">
+<h1>Consistency and uncertainty evaluation</h1>
+<p>Some checks probe stability across rewrites, samples, or uncertainty signals.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Query reformulation</td>
+<td>Similar questions should agree</td>
+</tr>
+<tr class="even">
+<td>Multi-answer sampling</td>
+<td>Independent answers should converge</td>
+</tr>
+<tr class="odd">
+<td>Token uncertainty</td>
+<td>Low confidence can flag risky answers</td>
+</tr>
+</tbody>
+</table>
+<p>Examples include TrustScore, BSDetector, InterrogateLLM, and LLM-Check <span class="citation" data-cites="zheng2024trustscore chen2023bsdetector yehuda2024interrogatellm sriramanan2024llmcheck">(<a href="#/references" role="doc-biblioref" onclick="">Zheng et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Chen and Mueller 2023</a>; <a href="#/references" role="doc-biblioref" onclick="">Yehuda et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Sriramanan et al. 2024</a>)</span>.</p>
 </section>
 
 <section id="similarity-based-evaluation" class="title-slide slide level1 center">
@@ -1544,42 +1548,6 @@ recall@2: 0.0</code></pre>
 <p>This makes judgment repeatable enough to compare prompts and retrievers.</p>
 </section>
 
-<section id="consistency-and-uncertainty-checks" class="title-slide slide level1 center">
-<h1>Consistency and uncertainty checks</h1>
-<p>Some evaluations ask: would the system give the same answer under small perturbations?</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Technique</th>
-<th>Signal</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Query reformulation</td>
-<td>Similar questions should produce consistent answers</td>
-</tr>
-<tr class="even">
-<td>Multi-answer sampling</td>
-<td>Independent answers should agree on core claims</td>
-</tr>
-<tr class="odd">
-<td>Reverse prompting</td>
-<td>The answer should reconstruct a compatible question</td>
-</tr>
-<tr class="even">
-<td>Token uncertainty</td>
-<td>High entropy or internal model uncertainty can flag low-confidence generations</td>
-</tr>
-</tbody>
-</table>
-<p>These methods are useful when no gold answer exists, but consistency does not guarantee truth.</p>
-</section>
-
 <section id="toy-example-consistency-check" class="title-slide slide level1 center">
 <h1>Toy example: consistency check</h1>
 <table class="caption-top">
@@ -1616,12 +1584,15 @@ recall@2: 0.0</code></pre>
 <p>For RAG, the central question is whether answer claims are supported by retrieved evidence.</p>
 <p>A grounding evaluation usually works claim by claim:</p>
 <ol type="1">
-<li>Split the answer into atomic statements.</li>
-<li>Link each statement to cited chunks.</li>
-<li>Check entailment between cited chunks and the statement.</li>
-<li>Compute citation precision and citation recall.</li>
+<li><p>Split the answer into atomic statements.</p></li>
+<li><p>Link each statement to cited chunks.</p></li>
+<li><p>Check entailment between cited chunks and the statement.</p></li>
+<li><p>Compute citation precision and citation recall.</p>
+<ul>
+<li>Citation <em>precision</em> asks whether citations are relevant.</li>
+<li>Citation <em>recall</em> asks whether answer statements are supported <span class="citation" data-cites="song2025grounded">(<a href="#/references" role="doc-biblioref" onclick="">Song et al. 2025</a>)</span>.</li>
+</ul></li>
 </ol>
-<p>Citation precision asks whether citations are relevant. Citation recall asks whether answer statements are supported <span class="citation" data-cites="song2025grounded">(<a href="#/references" role="doc-biblioref" onclick="">Song et al. 2025</a>)</span>.</p>
 </section>
 
 <section id="toy-example-claim-grounding" class="title-slide slide level1 center">
@@ -1655,10 +1626,6 @@ recall@2: 0.0</code></pre>
 <h1>RAG evaluation matrix</h1>
 <p>Use the metric that matches the failure you care about.</p>
 <table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Failure</th>
@@ -1668,7 +1635,7 @@ recall@2: 0.0</code></pre>
 <tbody>
 <tr class="odd">
 <td>Correct passage not retrieved</td>
-<td>Recall@k, MRR, nDCG</td>
+<td>Recall@k</td>
 </tr>
 <tr class="even">
 <td>Answer drifts from evidence</td>
@@ -1676,19 +1643,11 @@ recall@2: 0.0</code></pre>
 </tr>
 <tr class="odd">
 <td>Answer is incomplete</td>
-<td>Rubric judging, answer correctness</td>
+<td>Rubric judging</td>
 </tr>
 <tr class="even">
-<td>Answer is evasive</td>
-<td>Directness and refusal evaluation</td>
-</tr>
-<tr class="odd">
 <td>Answer is unstable</td>
-<td>Reformulation or multi-sample consistency</td>
-</tr>
-<tr class="even">
-<td>Answer sounds right but is wrong</td>
-<td>Human review plus grounded evaluation</td>
+<td>Reformulation or multi-sample checks</td>
 </tr>
 </tbody>
 </table>
@@ -1732,18 +1691,21 @@ recall@2: 0.0</code></pre>
 
 <section id="memory-systems" class="title-slide slide level1 center">
 <h1>Memory systems</h1>
-<p>Memory makes context construction persistent: across turns , across tasks , across users <span class="citation" data-cites="huyen2024ai">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>)</span></p>
+<p>Memory makes context construction persistent: across turns, across tasks, across users <span class="citation" data-cites="huyen2024ai">(<a href="#/references" role="doc-biblioref" onclick="">Huyen 2024</a>)</span></p>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  Interaction[Interaction] --&gt; Extract[Extract useful facts]
-  Extract --&gt; Memory[(Memory store)]
-  Memory --&gt; Retrieve[Retrieve relevant memory]
-  Retrieve --&gt; Prompt[Current prompt]
-  Prompt --&gt; Model[Model response]
+  I@{ shape: docs, label: "Past interactions" } --&gt; X[Extract useful facts]
+  X --&gt; M[(Memory store)]
+  M --&gt; R[Retrieval]
+  R --&gt; P[Prompting]
+  P --&gt; A@{ shape: doc, label: "Answer" }
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class M,R focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -1826,20 +1788,34 @@ recall@2: 0.0</code></pre>
 <p>In practice, strong systems often use both.</p>
 </section>
 
-<section id="design-checklist" class="title-slide slide level1 center">
-<h1>Design checklist</h1>
+<section id="design-checklist-indexing" class="title-slide slide level1 center">
+<h1>Design checklist: indexing</h1>
 <p>For a RAG pipeline, specify:</p>
 <ol type="1">
 <li>Which sources are in scope?</li>
 <li>How are documents parsed and chunked? <strong>Step 1: Chunking</strong></li>
 <li>Which metadata is preserved?</li>
 <li>Which embedding model/index is used? <strong>Step 2: Embedding</strong></li>
+</ol>
+</section>
+
+<section id="design-checklist-query-time" class="title-slide slide level1 center">
+<h1>Design checklist: query time</h1>
+<p>Then specify:</p>
+<ol type="1">
 <li>Which retrieval methods are combined? <strong>Step 3: Retrieval</strong></li>
 <li>How are queries rewritten or expanded?</li>
 <li>How are candidates reranked?</li>
 <li>How is context assembled into the prompt? <strong>Step 4: Prompting</strong></li>
+</ol>
+</section>
+
+<section id="design-checklist-operations" class="title-slide slide level1 center">
+<h1>Design checklist: operations</h1>
+<p>Finally specify:</p>
+<ol type="1">
 <li>How are answers, citations, and refusals evaluated? <strong>Step 5: Evaluating</strong></li>
-<li>How are non-text sources, tables, tools, or memory handled?</li>
+<li>How are tables, tools, or memory handled?</li>
 <li>How are freshness, permissions, and monitoring handled?</li>
 </ol>
 </section>
@@ -1849,7 +1825,6 @@ recall@2: 0.0</code></pre>
 <ul>
 <li>RAG is context construction: retrieve the right evidence for each query.</li>
 <li>Retrieval quality is usually the limiting factor.</li>
-<li>The lab loop is: chunking, embedding, retrieval, prompting, evaluation.</li>
 <li>Query rewriting, contextual retrieval, and reranking are major optimization levers.</li>
 <li>RAG can extend beyond text to images, tables, tools, and memory.</li>
 <li>Evaluation should separate retrieval, generation, citation, cost, and latency.</li>
@@ -1919,11 +1894,14 @@ recall@2: 0.0</code></pre>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  D[(Documents)] --&gt; C[Text chunks]
-  C --&gt; ER[Extract entities, relationships, claims]
-  ER --&gt; KG[(Knowledge graph)]
+  D@{ shape: docs, label: "Documents" } --&gt; C[1. Chunking]
+  C --&gt; X[Graph extraction]
+  X --&gt; KG[(Knowledge graph)]
   KG --&gt; CD[Community detection]
-  CD --&gt; CS[Community summaries]
+  CD --&gt; CS@{ shape: docs, label: "Community summaries" }
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class X,KG,CD,CS focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -1941,10 +1919,14 @@ recall@2: 0.0</code></pre>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  Q[User question] --&gt; S[Select community summaries]
-  S --&gt; M[Map: partial answers]
-  M --&gt; R[Reduce: global answer]
-  R --&gt; A[Answer with data references]
+  Q@{ shape: doc, label: "User question" } --&gt; S[Retrieval]
+  S --&gt; C@{ shape: docs, label: "Community summaries" }
+  C --&gt; M[Map answers]
+  M --&gt; R[Reduce answer]
+  R --&gt; A@{ shape: doc, label: "Answer with sources" }
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class S,C,M,R focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -2009,12 +1991,22 @@ recall@2: 0.0</code></pre>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  NC[NeoChip] --&gt;|acquired by in 2016| QS[Quantum Systems]
-  NC --&gt;|listed on| NTE[NewTech Exchange]
-  NC --&gt;|builds| LP[Low-power processors]
-  LP --&gt;|used in| W[Wearables]
-  LP --&gt;|used in| IOT[IoT devices]
-  MA[Market analysts] --&gt;|comment on| NC
+  NC[NeoChip]
+  QS[Quantum Systems]
+  NTE[NewTech Exchange]
+  LP[Low-power processors]
+  W[Wearables]
+  IOT[IoT devices]
+  MA[Market analysts]
+  NC --&gt;|acquired by in 2016| QS
+  NC --&gt;|listed on| NTE
+  NC --&gt;|builds| LP
+  LP --&gt;|used in| W
+  LP --&gt;|used in| IOT
+  MA --&gt;|comment on| NC
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class NC,QS,NTE,LP focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -2094,7 +2086,6 @@ recall@2: 0.0</code></pre>
 </tr>
 </tbody>
 </table>
-<p>This helps students decide when ordinary RAG is enough and when graph structure is worth the cost.</p>
 </section>
 
 <section id="example-map-reduce-answer" class="title-slide slide level1 center">
@@ -2106,15 +2097,18 @@ recall@2: 0.0</code></pre>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TB
-  Q[Global question] --&gt; C1[Community summary 1]
-  Q --&gt; C2[Community summary 2]
-  Q --&gt; C3[Community summary 3]
-  C1 --&gt; A1[Partial answer 1]
-  C2 --&gt; A2[Partial answer 2]
-  C3 --&gt; A3[Partial answer 3]
-  A1 --&gt; F[Final synthesis]
+  Q@{ shape: doc, label: "Global question" } --&gt; C1@{ shape: docs, label: "Community summary 1" }
+  Q --&gt; C2@{ shape: docs, label: "Community summary 2" }
+  Q --&gt; C3@{ shape: docs, label: "Community summary 3" }
+  C1 --&gt; A1[Map answer 1]
+  C2 --&gt; A2[Map answer 2]
+  C3 --&gt; A3[Map answer 3]
+  A1 --&gt; F[Reduce answer]
   A2 --&gt; F
   A3 --&gt; F
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class C1,C2,C3,A1,A2,A3,F focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -2124,64 +2118,53 @@ recall@2: 0.0</code></pre>
 <p>The map step answers from each community. The reduce step merges useful partial answers and removes irrelevant material <span class="citation" data-cites="edge2025graphrag">(<a href="#/references" role="doc-biblioref" onclick="">Edge et al. 2025</a>)</span>.</p>
 </section>
 
-<section id="example-graphrag-lab-exercise" class="title-slide slide level1 center">
-<h1>Example: GraphRAG lab exercise</h1>
-<p>A small lab can reuse the same five-step spine:</p>
-<ol type="1">
-<li><strong>Chunking</strong>: split a mini-corpus of course documents or news articles</li>
-<li><strong>Embedding</strong>: create baseline vector retrieval</li>
-<li><strong>Retrieval</strong>: compare top-k vector results with graph/community retrieval</li>
-<li><strong>Prompting</strong>: generate local answers and global summaries</li>
-<li><strong>Evaluating</strong>: compare directness, coverage, and diversity</li>
-</ol>
-<p>The point is not that GraphRAG always wins. The point is to learn which data structure helps which question.</p>
+<section id="graphrag-evaluation" class="title-slide slide level1 center">
+<h1>GraphRAG evaluation</h1>
+<p>The paper evaluates GraphRAG on global sensemaking questions where there is no simple gold answer.</p>
+<p>The evaluation uses LLM-as-a-judge comparisons across criteria such as:</p>
+<ul>
+<li><strong>Comprehensiveness</strong>: does the answer cover the important aspects?</li>
+<li><strong>Diversity</strong>: does it provide varied perspectives and insights?</li>
+<li><strong>Directness</strong>: does it answer the question clearly?</li>
+<li><strong>Empowerment</strong>: does it help the reader make informed judgments?</li>
+</ul>
+<p>For broad corpus-level questions, GraphRAG improves especially on comprehensiveness and diversity compared with vector RAG baselines <span class="citation" data-cites="edge2025graphrag">(<a href="#/references" role="doc-biblioref" onclick="">Edge et al. 2025</a>)</span>.</p>
 </section>
 
-<section id="graphrag-and-the-lab-pipeline" class="title-slide slide level1 center">
-<h1>GraphRAG and the lab pipeline</h1>
-<p>GraphRAG extends the same five-step RAG spine:</p>
+<section id="graphrag-tradeoffs" class="title-slide slide level1 center">
+<h1>GraphRAG tradeoffs</h1>
+<p>GraphRAG buys global coverage with extra system complexity.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Lab step</th>
-<th>Ordinary RAG</th>
-<th>GraphRAG extension</th>
+<th>Benefit</th>
+<th>Cost</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Chunking</td>
-<td>Split documents</td>
-<td>Split before graph extraction</td>
+<td>Better corpus-level summaries</td>
+<td>More expensive indexing</td>
 </tr>
 <tr class="even">
-<td>Embedding</td>
-<td>Embed chunks</td>
-<td>May combine vectors with graph records</td>
+<td>Explicit entities and relationships</td>
+<td>Extraction errors can enter the graph</td>
 </tr>
 <tr class="odd">
-<td>Retrieval</td>
-<td>Retrieve top-k chunks</td>
-<td>Retrieve/select communities or reports</td>
+<td>Community-level organization</td>
+<td>Community detection adds design choices</td>
 </tr>
 <tr class="even">
-<td>Prompting</td>
-<td>Insert evidence chunks</td>
-<td>Map-reduce over community summaries</td>
-</tr>
-<tr class="odd">
-<td>Evaluating</td>
-<td>Retrieval and answer quality</td>
-<td>Global answer quality and coverage</td>
+<td>Better global sensemaking</td>
+<td>Less necessary for simple local questions</td>
 </tr>
 </tbody>
 </table>
-<p>The pipeline is still data-centric: improve the index and evidence structure to improve a black-box model.</p>
+<p>Use GraphRAG when the application needs structured understanding of a corpus, not only nearest-neighbor evidence.</p>
 </section>
 
 <section id="hybrid-rag-loose-vs-tight-coupling" class="title-slide slide level1 center">
@@ -2189,31 +2172,30 @@ recall@2: 0.0</code></pre>
 <p>Hybrid RAG combines text retrieval with graph retrieval.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Design</th>
 <th>What happens</th>
-<th>Limitation</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Loose coupling</td>
 <td>Retrieve text and graph facts separately, then concatenate</td>
-<td>Sources do not guide each other</td>
 </tr>
 <tr class="even">
 <td>Tight coupling</td>
-<td>Graph search guides text retrieval; text evidence prunes graph search</td>
-<td>More complex, but better for multi-hop reasoning</td>
+<td>Let graph search and text retrieval guide each other</td>
 </tr>
 </tbody>
 </table>
-<p>Think-on-Graph 2.0 (ToG-2) is a tight-coupling hybrid RAG framework for structured KGs plus unstructured documents <span class="citation" data-cites="ma2025thinkongraph">(<a href="#/references" role="doc-biblioref" onclick="">Ma et al. 2025</a>)</span>.</p>
+<p>Tight coupling adds complexity, but helps multi-hop questions.</p>
+<ul>
+<li>Think-on-Graph 2.0 (ToG-2) follows this pattern for structured KGs plus unstructured documents <span class="citation" data-cites="ma2025thinkongraph">(<a href="#/references" role="doc-biblioref" onclick="">Ma et al. 2025</a>)</span>.</li>
+</ul>
 </section>
 
 <section id="think-on-graph-2.0" class="title-slide slide level1 center">
@@ -2225,15 +2207,18 @@ recall@2: 0.0</code></pre>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  Q[Question] --&gt; TE[Topic entity linking]
-  TE --&gt; GS[Graph search]
+  Q@{ shape: doc, label: "User question" } --&gt; EL[Entity linking]
+  EL --&gt; GS[Graph search]
   GS --&gt; CR[Context retrieval]
   CR --&gt; EP[Entity pruning]
   EP --&gt; GS
   CR --&gt; RR[Reranker]
   GS --&gt; RR
   RR --&gt; P[Prompting]
-  P --&gt; A[Answer]
+  P --&gt; A@{ shape: doc, label: "Answer" }
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class GS,CR,EP,RR focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -2288,13 +2273,16 @@ recall@2: 0.0</code></pre>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  Q[Question] --&gt; EL[Entity linking]
-  EL --&gt; Seed[Seed entities]
-  Seed --&gt; Rel[Relation discovery]
-  Rel --&gt; Prune[Relation pruning]
-  Prune --&gt; Ent[Candidate entities]
-  Ent --&gt; Chunks[Linked chunks]
-  Chunks --&gt; RR[Reranker]
+  Q@{ shape: doc, label: "User question" } --&gt; EL[Entity linking]
+  EL --&gt; SE[Seed entities]
+  SE --&gt; RD[Relation discovery]
+  RD --&gt; RP[Relation pruning]
+  RP --&gt; CE[Candidate entities]
+  CE --&gt; C@{ shape: docs, label: "Graph-linked chunks" }
+  C --&gt; RR[Reranker]
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class EL,SE,RD,RP,CE,C focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -2313,16 +2301,19 @@ recall@2: 0.0</code></pre>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  Q[Question] --&gt; V[Vector search]
+  Q@{ shape: doc, label: "User question" } --&gt; V[Vector search]
   Q --&gt; G[Graph search]
-  V --&gt; VC[Vector chunks]
-  G --&gt; GC[Graph-linked chunks]
+  V --&gt; VC@{ shape: docs, label: "Vector chunks" }
+  G --&gt; GC@{ shape: docs, label: "Graph-linked chunks" }
   VC --&gt; Pool[Candidate pool]
   GC --&gt; Pool
   Pool --&gt; RR[Reranker]
-  RR --&gt; Top[Top-k evidence]
+  RR --&gt; Top@{ shape: docs, label: "Top-k evidence" }
   Top --&gt; P[Prompting]
-  P --&gt; A[Answer]
+  P --&gt; A@{ shape: doc, label: "Answer" }
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class V,G,Pool,RR,Top focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -2335,7 +2326,7 @@ recall@2: 0.0</code></pre>
 <section id="example-graph-search-returns-chunks" class="title-slide slide level1 center">
 <h1>Example: graph search returns chunks</h1>
 <p>Question:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb22-1"><a href="" aria-label="1"></a>Can a Saturday Assignment 1 submission be accepted, and what happens to the grade?</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb26-1"><a href="" aria-label="1"></a>Can a Saturday Assignment 1 submission be accepted, and what happens to the grade?</span></code></pre></div>
 <p>Graph search:</p>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -2343,12 +2334,15 @@ recall@2: 0.0</code></pre>
 <p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  Q[Question] --&gt; A1[Assignment 1]
+  Q@{ shape: doc, label: "User question" } --&gt; A1[Assignment 1]
   A1 --&gt;|has deadline| F[Friday 18:00]
   A1 --&gt;|has policy| L[Late submission]
   L --&gt;|has penalty| P[10 percent per day]
-  F --&gt; C1[D1 chunk]
+  F --&gt; C1@{ shape: doc, label: "D1 chunk" }
   P --&gt; C1
+
+  classDef focus fill:#e74c3c,color:#fff,stroke:#b83227,stroke-width:3px
+  class A1,F,L,P,C1 focus
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -2362,42 +2356,32 @@ recall@2: 0.0</code></pre>
 <h1>Example: hybrid reranking</h1>
 <p>The reranker receives a mixed candidate pool.</p>
 <table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Source</th>
 <th>Candidate</th>
-<th>Why it appears</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Vector search</td>
 <td><code>D1</code>: deadline and late penalty</td>
-<td>Semantically close to “Saturday submission”</td>
 </tr>
 <tr class="even">
 <td>Vector search</td>
 <td><code>D2</code>: grading weights</td>
-<td>Shares grading vocabulary</td>
 </tr>
 <tr class="odd">
 <td>Graph search</td>
-<td><code>D1</code>: linked to Assignment 1 -&gt; late submission -&gt; penalty</td>
-<td>Relation path supports the question</td>
+<td><code>D1</code>: Assignment 1 -&gt; late submission -&gt; penalty</td>
 </tr>
 <tr class="even">
 <td>Graph search</td>
 <td><code>D3</code>: AI-use policy</td>
-<td>Nearby course-policy entity, but weak relation</td>
 </tr>
 </tbody>
 </table>
-<p>After reranking, <code>D1</code> should be first because both semantic similarity and graph structure support it.</p>
+<p><code>D1</code> should rank first because both semantic similarity and graph structure support it.</p>
 </section>
 
 <section id="tog-2-takeaway" class="title-slide slide level1 center">
@@ -2409,78 +2393,6 @@ recall@2: 0.0</code></pre>
 <li><strong>Iterative search</strong> when one hop is not enough</li>
 </ul>
 <p>Compared with loose hybrid RAG, ToG-2 lets graph retrieval and context retrieval correct each other <span class="citation" data-cites="ma2025thinkongraph">(<a href="#/references" role="doc-biblioref" onclick="">Ma et al. 2025</a>)</span>.</p>
-</section>
-
-<section id="graphrag-evaluation" class="title-slide slide level1 center">
-<h1>GraphRAG evaluation</h1>
-<p>The paper evaluates GraphRAG on global sensemaking questions where there is no simple gold answer.</p>
-<p>The evaluation uses LLM-as-a-judge comparisons across criteria such as:</p>
-<ul>
-<li><strong>Comprehensiveness</strong>: does the answer cover the important aspects?</li>
-<li><strong>Diversity</strong>: does it provide varied perspectives and insights?</li>
-<li><strong>Directness</strong>: does it answer the question clearly?</li>
-<li><strong>Empowerment</strong>: does it help the reader make informed judgments?</li>
-</ul>
-<p>For broad corpus-level questions, GraphRAG improves especially on comprehensiveness and diversity compared with vector RAG baselines <span class="citation" data-cites="edge2025graphrag">(<a href="#/references" role="doc-biblioref" onclick="">Edge et al. 2025</a>)</span>.</p>
-</section>
-
-<section id="graphrag-tradeoffs" class="title-slide slide level1 center">
-<h1>GraphRAG tradeoffs</h1>
-<p>GraphRAG buys global coverage with extra system complexity.</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Benefit</th>
-<th>Cost</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Better corpus-level summaries</td>
-<td>More expensive indexing</td>
-</tr>
-<tr class="even">
-<td>Explicit entities and relationships</td>
-<td>Extraction errors can enter the graph</td>
-</tr>
-<tr class="odd">
-<td>Community-level organization</td>
-<td>Community detection adds design choices</td>
-</tr>
-<tr class="even">
-<td>Better global sensemaking</td>
-<td>Less necessary for simple local questions</td>
-</tr>
-</tbody>
-</table>
-<p>Use GraphRAG when the application needs structured understanding of a corpus, not only nearest-neighbor evidence.</p>
-</section>
-
-<section id="graphrag-takeaway" class="title-slide slide level1 center">
-<h1>GraphRAG takeaway</h1>
-<p>GraphRAG is useful when RAG needs to answer questions about <strong>the corpus as a whole</strong>.</p>
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-  Local[Local questions] --&gt; VR[Vector RAG]
-  Global[Global questions] --&gt; GR[GraphRAG]
-  VR --&gt; DCAI[Data-centric improvement]
-  GR --&gt; DCAI
-  DCAI --&gt; Better[Better black-box model outputs]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>The data-centric lesson is the same: better external structure can produce better model behavior without retraining the foundation model.</p>
 </section>
 
 <section id="references" class="title-slide slide level1 smaller scrollable">
