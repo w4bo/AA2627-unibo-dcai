@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.0...1.1.1) (2026-09-07)
+
+### Bug Fixes
+
+* update hybrid rag ([c0b5d6f](https://github.com/w4bo/AA2627-unibo-dcai/commit/c0b5d6fc7aa6e9dbde9494f7ef45e7610103355d))
+
 ## [1.1.0](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.0.2...1.1.0) (2026-09-01)
 
 ### Features
