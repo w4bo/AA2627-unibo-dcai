@@ -876,7 +876,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>The important idea is representation: similar meanings should become nearby vectors.</li>
 <li>This toy version uses word-count vectors so the mechanics are visible.</li>
 </ul>
-<div id="b62c9360" class="cell" data-execution_count="2">
+<div id="849fb7bb" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>q_vec <span class="op">=</span> bow(query)</span>
@@ -940,7 +940,7 @@ similarity: 0.354</code></pre>
 <section id="example-retrieval-ranking" class="title-slide slide level1 center">
 <h1>Example: retrieval ranking</h1>
 <p>Given the query</p>
-<div id="b8f6f598" class="cell" data-execution_count="3">
+<div id="a7e13033" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="bu">print</span>(query)</span></code></pre></div>
@@ -950,7 +950,7 @@ similarity: 0.354</code></pre>
 </div>
 </div>
 <p>… rank chunks by similarity</p>
-<div id="215f7065" class="cell" data-execution_count="4">
+<div id="2398dad7" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>scores <span class="op">=</span> [(i, cosine(bow(query), bow(text)), text) <span class="cf">for</span> i, text <span class="kw">in</span> <span class="bu">enumerate</span>(corpus)]</span>
@@ -1091,7 +1091,7 @@ similarity: 0.354</code></pre>
 <section id="example-prompt-assembly" class="title-slide slide level1 center">
 <h1>Example: prompt assembly</h1>
 <p>The prompt combines stable instructions with the retrieved chunk.</p>
-<div id="2343a170" class="cell" data-execution_count="5">
+<div id="e0c169c5" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>top <span class="op">=</span> <span class="bu">max</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>])</span>
@@ -1257,7 +1257,7 @@ Answer:</code></pre>
 <section id="example-retrieval-metrics" class="title-slide slide level1 center">
 <h1>Example: retrieval metrics</h1>
 <p>Assume the relevant document for the query is known.</p>
-<div id="90fd09c1" class="cell" data-execution_count="6">
+<div id="8055a2b9" class="cell" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>ranked <span class="op">=</span> [i <span class="cf">for</span> i, score, text <span class="kw">in</span> <span class="bu">sorted</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)]</span>
