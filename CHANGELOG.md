@@ -1,3 +1,18 @@
+## [1.1.3](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.2...1.1.3) (2026-09-09)
+
+### Bug Fixes
+
+* download remote images and replace with local references ([985684b](https://github.com/w4bo/AA2627-unibo-dcai/commit/985684bb723fe98c3ab68c291d16a593a38b6b16))
+* update images ([a4f52dd](https://github.com/w4bo/AA2627-unibo-dcai/commit/a4f52dd203cf483b29ffad3dfbe30774bc46ebc2))
+
+### General maintenance
+
+* allow break system packages ([7c30c1b](https://github.com/w4bo/AA2627-unibo-dcai/commit/7c30c1bae9a634d1a3ccab9bb1e890e2daa4d54b))
+* working on automl ([3a727d8](https://github.com/w4bo/AA2627-unibo-dcai/commit/3a727d860db8e9d697bff31b5d5f296d677176bd))
+* working on the labs ([ae1792f](https://github.com/w4bo/AA2627-unibo-dcai/commit/ae1792f629bd602d7c25101971dfe5bfba444062))
+* working on the labs ([a11d409](https://github.com/w4bo/AA2627-unibo-dcai/commit/a11d409509864e8af00d9b054599a90dce86b3b0))
+* working on the labs ([7d293d8](https://github.com/w4bo/AA2627-unibo-dcai/commit/7d293d8a8fac1740df940b1282785c78e02c56b2))
+
 ## [1.1.2](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.1...1.1.2) (2026-09-07)
 
 ### Bug Fixes
