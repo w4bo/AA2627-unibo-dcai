@@ -1,3 +1,9 @@
+## [1.1.5](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.4...1.1.5) (2026-09-28)
+
+### Bug Fixes
+
+* working on the introduction ([a7667e6](https://github.com/w4bo/AA2627-unibo-dcai/commit/a7667e6a6cb1bd510fc83a16a551437e9a546526))
+
 ## [1.1.4](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.3...1.1.4) (2026-09-11)
 
 ### Bug Fixes
