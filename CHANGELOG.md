@@ -1,3 +1,14 @@
+## [1.1.7](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.6...1.1.7) (2026-10-12)
+
+### Bug Fixes
+
+* remove execute from notebooks ([9274d60](https://github.com/w4bo/AA2627-unibo-dcai/commit/9274d602dd974b459b788381c7e72ba75eafb7a0))
+* update course structure ([a394c59](https://github.com/w4bo/AA2627-unibo-dcai/commit/a394c592ea537e507d9b865023e4a2633509a02e))
+
+### Build and continuous integration
+
+* update ci ([910bd88](https://github.com/w4bo/AA2627-unibo-dcai/commit/910bd883cb04e2c1f5626877d3210e2928642b27))
+
 ## [1.1.6](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.5...1.1.6) (2026-10-12)
 
 ### Dependency updates
