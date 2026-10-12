@@ -1,3 +1,26 @@
+## [1.1.6](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.5...1.1.6) (2026-10-12)
+
+### Dependency updates
+
+* **deps:** update node.js to 24.21 ([#6](https://github.com/w4bo/AA2627-unibo-dcai/issues/6)) ([0878df4](https://github.com/w4bo/AA2627-unibo-dcai/commit/0878df487ffa85bd66e6f3689764bc92e0251937))
+* **deps:** update slides/refs digest to 211532d ([#3](https://github.com/w4bo/AA2627-unibo-dcai/issues/3)) ([ad2b110](https://github.com/w4bo/AA2627-unibo-dcai/commit/ad2b1108b76a82800acc9288e2928bbff4ac77c1))
+* **deps:** update slides/utils digest to 5739861 ([#4](https://github.com/w4bo/AA2627-unibo-dcai/issues/4)) ([2ff413a](https://github.com/w4bo/AA2627-unibo-dcai/commit/2ff413a2c36878f26673f3338c7fdf4074db01af))
+* **deps:** update w4bo/quarto-slides docker tag to v1.0.32 ([#5](https://github.com/w4bo/AA2627-unibo-dcai/issues/5)) ([27d7711](https://github.com/w4bo/AA2627-unibo-dcai/commit/27d7711df1d755d2f0be5a2e6f301b5494e655d8))
+
+### Bug Fixes
+
+* typo ([94b448b](https://github.com/w4bo/AA2627-unibo-dcai/commit/94b448b6a03a1910e58f90c73ca03134479c38a0))
+* update course structure ([4706923](https://github.com/w4bo/AA2627-unibo-dcai/commit/4706923a5904fff2b2832a69b8a8e878246c0002))
+* update course structure ([6f8339f](https://github.com/w4bo/AA2627-unibo-dcai/commit/6f8339fa863fa2821f5040d8bb2f78e1458b82b4))
+* update course structure ([10ae029](https://github.com/w4bo/AA2627-unibo-dcai/commit/10ae0290735ff053e25d39f99981b8a2ae7c1fa7))
+* update course structure ([c578796](https://github.com/w4bo/AA2627-unibo-dcai/commit/c578796ddc2c2e047d399c4c194b2d613a4b7211))
+
+### Build and continuous integration
+
+* **deps:** update actions/setup-node action to v7.1.0 ([#7](https://github.com/w4bo/AA2627-unibo-dcai/issues/7)) ([a0ec3ed](https://github.com/w4bo/AA2627-unibo-dcai/commit/a0ec3edd514603e82d1802bb5c29d86a623e405c))
+* **deps:** update dependency ubuntu to v26 ([#9](https://github.com/w4bo/AA2627-unibo-dcai/issues/9)) ([2978bb3](https://github.com/w4bo/AA2627-unibo-dcai/commit/2978bb379da7d40037203c42ca4f0136008488c6))
+* **deps:** update jamesives/github-pages-deploy-action action to v4.9.0 ([#8](https://github.com/w4bo/AA2627-unibo-dcai/issues/8)) ([6cfd69c](https://github.com/w4bo/AA2627-unibo-dcai/commit/6cfd69ce35b6056a8d5aa76c37fcdf13cc68df94))
+
 ## [1.1.5](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.4...1.1.5) (2026-09-28)
 
 ### Bug Fixes
