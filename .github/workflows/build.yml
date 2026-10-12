@@ -17,10 +17,10 @@ jobs:
           bash utils/init.sh
       - name: Running the notebooks (if any)
         run: |
-          docker compose up build
+          docker compose run --rm build
       - name: Generate the slides
         run: |
-          docker compose up publish
+          docker compose run --rm publish
       - name: Deploy
         if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
         uses: JamesIves/github-pages-deploy-action@v4.9.0
