@@ -9,7 +9,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
-  <title>Data-Centric AI (Module II)</title>
+  <title>RAG Pipelines</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -222,8 +222,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Data-Centric AI (Module II)</h1>
-  <p class="subtitle">RAG Pipelines</p>
+  <h1 class="title">RAG Pipelines</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -876,7 +875,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>The important idea is representation: similar meanings should become nearby vectors.</li>
 <li>This toy version uses word-count vectors so the mechanics are visible.</li>
 </ul>
-<div id="49bc2a3d" class="cell" data-execution_count="2">
+<div id="21257adb" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>q_vec <span class="op">=</span> bow(query)</span>
@@ -940,7 +939,7 @@ similarity: 0.354</code></pre>
 <section id="example-retrieval-ranking" class="title-slide slide level1 center">
 <h1>Example: retrieval ranking</h1>
 <p>Given the query</p>
-<div id="76b2fe40" class="cell" data-execution_count="3">
+<div id="1e1cf1a2" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="bu">print</span>(query)</span></code></pre></div>
@@ -950,7 +949,7 @@ similarity: 0.354</code></pre>
 </div>
 </div>
 <p>… rank chunks by similarity</p>
-<div id="913780e1" class="cell" data-execution_count="4">
+<div id="08eca929" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>scores <span class="op">=</span> [(i, cosine(bow(query), bow(text)), text) <span class="cf">for</span> i, text <span class="kw">in</span> <span class="bu">enumerate</span>(corpus)]</span>
@@ -1091,7 +1090,7 @@ similarity: 0.354</code></pre>
 <section id="example-prompt-assembly" class="title-slide slide level1 center">
 <h1>Example: prompt assembly</h1>
 <p>The prompt combines stable instructions with the retrieved chunk.</p>
-<div id="6b8f3ada" class="cell" data-execution_count="5">
+<div id="b764ed61" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>top <span class="op">=</span> <span class="bu">max</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>])</span>
@@ -1257,7 +1256,7 @@ Answer:</code></pre>
 <section id="example-retrieval-metrics" class="title-slide slide level1 center">
 <h1>Example: retrieval metrics</h1>
 <p>Assume the relevant document for the query is known.</p>
-<div id="d4e5a966" class="cell" data-execution_count="6">
+<div id="4c197d97" class="cell" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>ranked <span class="op">=</span> [i <span class="cf">for</span> i, score, text <span class="kw">in</span> <span class="bu">sorted</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)]</span>
