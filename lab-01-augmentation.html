@@ -219,8 +219,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-01-augmentation.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
 </section>
-<section id="learning-outcomes" class="slide level2">
-<h2>Learning outcomes</h2>
+<section id="learning-outcomes" class="title-slide slide level1 center">
+<h1>Learning outcomes</h1>
 <p>By the end of this notebook, you should be able to:</p>
 <ul>
 <li>Build <code>sklearn</code> pipelines and optimize their hyper-parameters.</li>
@@ -231,86 +231,137 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Select appropriate metrics and decision thresholds.</li>
 </ul>
 </section>
-<section id="why-pipelines-matter" class="slide level2">
-<h2>1. Why pipelines matter</h2>
-<p>A machine-learning pipeline is rarely just a classifier. A real workflow often includes missing-value handling, scaling, categorical encoding, feature selection, resampling, and then the final estimator.</p>
-<p><code>sklearn.pipeline.Pipeline</code> packages these steps into one object with a single <code>fit</code>, <code>predict</code>, and <code>predict_proba</code> interface.</p>
-<p>This matters because every preprocessing step must be learned only from the training data. A pipeline makes that discipline automatic during train/test splits and cross-validation.</p>
+
+<section id="the-estimator-interface" class="title-slide slide level1 center">
+<h1>0. The estimator interface</h1>
+<p>An <strong>estimator</strong> is a scikit-learn object that learns from data.</p>
+<p>Most estimators follow the same pattern:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>model <span class="op">=</span> Estimator(parameters)</span>
+<span id="cb1-2"><a href="" aria-label="2"></a>model.fit(X_train, y_train)</span>
+<span id="cb1-3"><a href="" aria-label="3"></a>predictions <span class="op">=</span> model.predict(X_test)</span></code></pre></div>
+<p>This shared API is one reason scikit-learn is pleasant to use.</p>
 </section>
-<section id="a-basic-sklearn-pipeline" class="slide level2">
-<h2>2. A basic sklearn pipeline</h2>
+
+<section id="why-pipelines-matter" class="title-slide slide level1 center">
+<h1>1. Why pipelines matter</h1>
+<p>A machine-learning pipeline is rarely just a classifier.</p>
+<ul>
+<li>A real workflow often includes missing-value handling, scaling, categorical encoding, feature selection, resampling, and then the final estimator.</li>
+<li><code>sklearn.pipeline.Pipeline</code> packages these steps into one object with a single <code>fit</code>, <code>predict</code>, and <code>predict_proba</code> interface.
+<ul>
+<li>This matters because <em>every preprocessing step must be learned only from the training data</em>.</li>
+<li>A pipeline makes that discipline automatic during train/test splits and cross-validation.</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="a-basic-sklearn-pipeline" class="title-slide slide level1 center">
+<h1>2. A basic sklearn pipeline</h1>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb2-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb2-3"><a href="" aria-label="3"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb2-4"><a href="" aria-label="4"></a></span>
+<span id="cb2-5"><a href="" aria-label="5"></a>pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb2-6"><a href="" aria-label="6"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb2-7"><a href="" aria-label="7"></a>    (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>)),</span>
+<span id="cb2-8"><a href="" aria-label="8"></a>])</span>
+<span id="cb2-9"><a href="" aria-label="9"></a></span>
+<span id="cb2-10"><a href="" aria-label="10"></a>pipeline.fit(X_train, y_train)</span>
+<span id="cb2-11"><a href="" aria-label="11"></a>pipeline.predict(X_test)</span></code></pre></div>
 <p>A typical pipeline chains transformers and a final estimator:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb1-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb1-3"><a href="" aria-label="3"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb1-4"><a href="" aria-label="4"></a></span>
-<span id="cb1-5"><a href="" aria-label="5"></a>pipeline <span class="op">=</span> Pipeline([</span>
-<span id="cb1-6"><a href="" aria-label="6"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
-<span id="cb1-7"><a href="" aria-label="7"></a>    (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>)),</span>
-<span id="cb1-8"><a href="" aria-label="8"></a>])</span>
-<span id="cb1-9"><a href="" aria-label="9"></a></span>
-<span id="cb1-10"><a href="" aria-label="10"></a>pipeline.fit(X_train, y_train)</span>
-<span id="cb1-11"><a href="" aria-label="11"></a>pipeline.predict(X_test)</span></code></pre></div>
-<p>The important point is that <code>StandardScaler</code> is fitted on <code>X_train</code> only. The test set is transformed using the training-set scaling parameters.</p>
+<ul>
+<li>The important point is that <code>StandardScaler</code> is fitted on <code>X_train</code> only.</li>
+<li>The test set is transformed using the training-set scaling parameters.</li>
+</ul>
 </section>
-<section id="pipelines-expose-hyper-parameters" class="slide level2">
-<h2>3. Pipelines expose hyper-parameters</h2>
+
+<section id="pipelines-expose-hyper-parameters" class="title-slide slide level1 center">
+<h1>3. Pipelines expose hyper-parameters</h1>
 <p>Pipeline parameters are addressed with the pattern:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb2-1"><a href="" aria-label="1"></a>step_name__parameter_name</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb3-1"><a href="" aria-label="1"></a>step_name__parameter_name</span></code></pre></div>
 <p>For example, if the classifier step is named <code>classifier</code>, then the logistic-regression regularization strength is <code>classifier__C</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>param_grid <span class="op">=</span> {</span>
-<span id="cb3-2"><a href="" aria-label="2"></a>    <span class="st">"classifier__C"</span>: [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>],</span>
-<span id="cb3-3"><a href="" aria-label="3"></a>    <span class="st">"classifier__class_weight"</span>: [<span class="va">None</span>, <span class="st">"balanced"</span>],</span>
-<span id="cb3-4"><a href="" aria-label="4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb4-2"><a href="" aria-label="2"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb4-3"><a href="" aria-label="3"></a>    (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>)),</span>
+<span id="cb4-4"><a href="" aria-label="4"></a>])</span>
+<span id="cb4-5"><a href="" aria-label="5"></a></span>
+<span id="cb4-6"><a href="" aria-label="6"></a>param_grid <span class="op">=</span> {</span>
+<span id="cb4-7"><a href="" aria-label="7"></a>    <span class="st">"classifier__C"</span>: [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>],</span>
+<span id="cb4-8"><a href="" aria-label="8"></a>    <span class="st">"classifier__class_weight"</span>: [<span class="va">None</span>, <span class="st">"balanced"</span>],</span>
+<span id="cb4-9"><a href="" aria-label="9"></a>}</span></code></pre></div>
 <p>This lets us tune preprocessing choices and model choices together, while keeping the evaluation leakage-safe.</p>
 </section>
-<section id="hyper-parameter-optimization-with-cross-validation" class="slide level2">
-<h2>4. Hyper-parameter optimization with cross-validation</h2>
-<p><code>GridSearchCV</code> trains and evaluates many pipeline configurations using cross-validation. Each fold fits preprocessing and the classifier only on the training part of that fold.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV, StratifiedKFold</span>
-<span id="cb4-2"><a href="" aria-label="2"></a></span>
-<span id="cb4-3"><a href="" aria-label="3"></a>cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb4-4"><a href="" aria-label="4"></a></span>
-<span id="cb4-5"><a href="" aria-label="5"></a>search <span class="op">=</span> GridSearchCV(</span>
-<span id="cb4-6"><a href="" aria-label="6"></a>    estimator<span class="op">=</span>pipeline,</span>
-<span id="cb4-7"><a href="" aria-label="7"></a>    param_grid<span class="op">=</span>param_grid,</span>
-<span id="cb4-8"><a href="" aria-label="8"></a>    scoring<span class="op">=</span><span class="st">"f1"</span>,</span>
-<span id="cb4-9"><a href="" aria-label="9"></a>    cv<span class="op">=</span>cv,</span>
-<span id="cb4-10"><a href="" aria-label="10"></a>)</span>
-<span id="cb4-11"><a href="" aria-label="11"></a></span>
-<span id="cb4-12"><a href="" aria-label="12"></a>search.fit(X_train, y_train)</span>
-<span id="cb4-13"><a href="" aria-label="13"></a>search.best_params_</span></code></pre></div>
-<p>For imbalanced classification, the scoring function should match the task. Accuracy is often the wrong objective; recall, F1, F-beta, average precision, or a custom cost function may be more appropriate.</p>
+
+<section id="hyper-parameter-optimization-with-cross-validation" class="title-slide slide level1 center">
+<h1>4. Hyper-parameter optimization with cross-validation</h1>
+<p><code>GridSearchCV</code> trains and evaluates many pipeline configurations using cross-validation.</p>
+<ul>
+<li>Each fold fits preprocessing and the classifier only on the training part of that fold.</li>
+<li>The scoring function should match the task.</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV, StratifiedKFold</span>
+<span id="cb5-2"><a href="" aria-label="2"></a></span>
+<span id="cb5-3"><a href="" aria-label="3"></a>cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb5-4"><a href="" aria-label="4"></a></span>
+<span id="cb5-5"><a href="" aria-label="5"></a>search <span class="op">=</span> GridSearchCV( <span class="co"># alternative to GridSeach?</span></span>
+<span id="cb5-6"><a href="" aria-label="6"></a>    estimator<span class="op">=</span>pipeline,</span>
+<span id="cb5-7"><a href="" aria-label="7"></a>    param_grid<span class="op">=</span>param_grid,</span>
+<span id="cb5-8"><a href="" aria-label="8"></a>    scoring<span class="op">=</span><span class="st">"f1"</span>, <span class="co"># why?</span></span>
+<span id="cb5-9"><a href="" aria-label="9"></a>    cv<span class="op">=</span>cv,</span>
+<span id="cb5-10"><a href="" aria-label="10"></a>)</span>
+<span id="cb5-11"><a href="" aria-label="11"></a></span>
+<span id="cb5-12"><a href="" aria-label="12"></a>search.fit(X_train, y_train)</span>
+<span id="cb5-13"><a href="" aria-label="13"></a>search.best_params_</span></code></pre></div>
 </section>
-<section id="pipelines-with-resampling-need-imblearn" class="slide level2">
-<h2>5. Pipelines with resampling need imblearn</h2>
-<p><code>sklearn.pipeline.Pipeline</code> is designed for transformers and estimators. Resamplers such as SMOTE change both <code>X</code> and <code>y</code>, so they need <code>imblearn.pipeline.Pipeline</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="im">from</span> imblearn.pipeline <span class="im">import</span> Pipeline <span class="im">as</span> ImbPipeline</span>
-<span id="cb5-2"><a href="" aria-label="2"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
-<span id="cb5-3"><a href="" aria-label="3"></a></span>
-<span id="cb5-4"><a href="" aria-label="4"></a>pipeline <span class="op">=</span> ImbPipeline([</span>
-<span id="cb5-5"><a href="" aria-label="5"></a>    (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb5-6"><a href="" aria-label="6"></a>    (<span class="st">"sampler"</span>, SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)),</span>
-<span id="cb5-7"><a href="" aria-label="7"></a>    (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>)),</span>
-<span id="cb5-8"><a href="" aria-label="8"></a>])</span></code></pre></div>
-<p>The central rule of this lab follows from this: resampling is part of training, so it must happen inside the pipeline and inside each cross-validation fold.</p>
+
+<section id="pipelines-with-resampling-need-imblearn" class="title-slide slide level1 center">
+<h1>5. Pipelines with resampling need imblearn</h1>
+<p><code>sklearn.pipeline.Pipeline</code> is designed for transformers and estimators.</p>
+<ul>
+<li>Resamplers such as SMOTE change both <code>X</code> and <code>y</code>, so they need <code>imblearn.pipeline.Pipeline</code>.</li>
+<li>Resampling is part of training, so it must happen inside the pipeline and inside each cross-validation fold.</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="im">from</span> imblearn.pipeline <span class="im">import</span> Pipeline <span class="im">as</span> ImbPipeline</span>
+<span id="cb6-2"><a href="" aria-label="2"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
+<span id="cb6-3"><a href="" aria-label="3"></a></span>
+<span id="cb6-4"><a href="" aria-label="4"></a>pipeline <span class="op">=</span> ImbPipeline([</span>
+<span id="cb6-5"><a href="" aria-label="5"></a>    (<span class="st">"preprocessing"</span>, preprocessor),</span>
+<span id="cb6-6"><a href="" aria-label="6"></a>    (<span class="st">"sampler"</span>, SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)),</span>
+<span id="cb6-7"><a href="" aria-label="7"></a>    (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>)),</span>
+<span id="cb6-8"><a href="" aria-label="8"></a>])</span></code></pre></div>
 </section>
-<section id="the-imbalanced-classification-problem" class="slide level2">
-<h2>6. The imbalanced classification problem</h2>
-<p>Many important binary classification problems have one class that is much rarer than the other: fraud detection, medical diagnosis, safety incidents, customer churn, credit default, and equipment failures.</p>
-<p>We call the frequent class the <strong>majority class</strong> and the rare class the <strong>minority class</strong>. In this notebook the minority class is the positive class: <code>1</code>.</p>
-<p>When classes are imbalanced, <strong>accuracy can be misleading</strong>. If only 5% of customers churn, a classifier that always predicts “no churn” reaches 95% accuracy while finding no churners at all.</p>
+
+<section id="the-imbalanced-classification-problem" class="title-slide slide level1 center">
+<h1>6. The imbalanced classification problem</h1>
+<p>Many important binary classification problems have one class that is much rarer than the other.</p>
+<details>
+<summary>
+Examples
+</summary>
+Fraud detection, medical diagnosis, safety incidents, customer churn, credit default, and equipment failures.
+</details>
+<p>We call the frequent class the <strong>majority class</strong> and the rare class the <strong>minority class</strong>.</p>
+<ul>
+<li>Usually, the minority class is the positive class: <code>1</code>.</li>
+</ul>
+<p>When classes are imbalanced, <strong>accuracy can be misleading</strong>. <em>Why?</em></p>
+<details>
+<summary>
+Answer
+</summary>
+If only 5% of customers churn, a classifier that always predicts “no churn” reaches 95% accuracy while finding no churners at all.
+</details>
 <p>Useful metrics include:</p>
 <ul>
 <li><strong>Precision</strong>: among predicted positives, how many were actually positive?</li>
 <li><strong>Recall</strong> or sensitivity: among actual positives, how many did we find?</li>
 <li><strong>Specificity</strong>: among actual negatives, how many did we correctly reject?</li>
 <li><strong>F1 score</strong>: harmonic mean of precision and recall.</li>
-<li><strong>Confusion matrix</strong>: counts of true negatives, false positives, false negatives, and true positives.</li>
 </ul>
 </section>
-<section id="methods-for-handling-imbalance" class="slide level2">
-<h2>7. Methods for handling imbalance</h2>
+
+<section id="methods-for-handling-imbalance" class="title-slide slide level1 center">
+<h1>7. Methods for handling imbalance</h1>
 <p>Common strategies include:</p>
 <ul>
 <li><strong>No treatment</strong>: train directly and evaluate carefully.</li>
@@ -319,25 +370,27 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><strong>Oversampling</strong>: duplicate minority examples.</li>
 <li><strong>SMOTE and variants</strong>: synthesize minority examples.</li>
 </ul>
-<p>Use this slide as the menu of interventions. The rest of the lab asks which intervention changes errors in the desired direction.</p>
 </section>
-<section id="data-augmentation-versus-smote" class="slide level2">
-<h2>Data augmentation versus SMOTE</h2>
+
+<section id="data-augmentation-versus-smote" class="title-slide slide level1 center">
+<h1>Data augmentation versus SMOTE</h1>
 <p><em>Data augmentation</em> applies domain-specific label-preserving transformations: image rotations, sensor noise, audio crops, text perturbations, or simulated operating conditions.</p>
 <p><em>SMOTE</em> is narrower. It creates tabular rows by interpolation in feature space.</p>
 <ul>
 <li>The important question is whether the generated record could exist in the real data-generating process.</li>
 </ul>
 </section>
-<section id="how-smote-works" class="slide level2">
-<h2>8. How SMOTE works</h2>
+
+<section id="how-smote-works" class="title-slide slide level1 center">
+<h1>8. How SMOTE works</h1>
 <p>SMOTE creates new minority-class observations instead of duplicating existing ones <span class="citation" data-cites="chawla2002smote">(<a href="" role="doc-biblioref" onclick="return false;"><strong>chawla2002smote?</strong></a>)</span>.</p>
 <p>For a minority point <code>x_i</code>, it selects a nearby minority point <code>x_j</code> and creates:</p>
 <p><span class="math inline">\(x_{new} = x_i + \lambda * (x_j - x_i)\)</span></p>
 <p>The intuition is simple: fill sparse minority regions. The risk is also simple: interpolation may create impossible records.</p>
 </section>
-<section id="other-algorithms" class="slide level2">
-<h2>Other algorithms</h2>
+
+<section id="other-algorithms" class="title-slide slide level1 center">
+<h1>Other algorithms</h1>
 <p><strong>Borderline-SMOTE</strong> focuses on minority observations near the class boundary <span class="citation" data-cites="han2005borderline">(<a href="" role="doc-biblioref" onclick="return false;"><strong>han2005borderline?</strong></a>)</span>.</p>
 <ul>
 <li>These are the points a classifier is most likely to confuse with the majority class.</li>
@@ -359,21 +412,23 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul></li>
 </ul>
 </section>
-<section id="leakage-warning" class="slide level2">
-<h2>9. Leakage warning</h2>
+
+<section id="leakage-warning" class="title-slide slide level1 center">
+<h1>9. Leakage warning</h1>
 <p>Resampling is part of model training. It must be learned from the training data only.</p>
 <ul>
 <li>Do <strong>not</strong> apply SMOTE or oversampling before splitting the data. If synthetic points are created before a train/test split, information from validation or test observations can leak into the training set through nearest-neighbor interpolation or duplicated examples.</li>
 <li>The same rule applies to cross-validation: resampling must happen <strong>inside each training fold</strong>, not once globally before cross-validation.</li>
 <li>This is why we use <code>imblearn.pipeline.Pipeline</code> whenever the pipeline contains a sampler.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb6-1"><a href="" aria-label="1"></a><span class="ex">pip</span> install imbalanced-learn</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb7-1"><a href="" aria-label="1"></a><span class="ex">pip</span> install imbalanced-learn</span></code></pre></div>
 </section>
-<section id="create-a-deliberately-imbalanced-dataset" class="slide level2">
-<h2>11. Create a deliberately imbalanced dataset</h2>
+
+<section id="create-a-deliberately-imbalanced-dataset" class="title-slide slide level1 center">
+<h1>11. Create a deliberately imbalanced dataset</h1>
 <p>We will use a synthetic binary classification dataset so the notebook is reproducible without external data downloads.</p>
 <p>Think of <code>y=1</code> as a rare high-risk event, such as fraud, churn, default, or failure.</p>
-<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:24.444529Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:24.444236Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:24.458615Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:24.457649Z&quot;}}" data-outputid="4dd78d42-7805-469e-9ab6-175493ce1c3d" data-execution_count="3">
+<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T15:12:30.958986Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T15:12:30.958748Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T15:12:30.970268Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T15:12:30.969583Z&quot;}}" data-outputid="4dd78d42-7805-469e-9ab6-175493ce1c3d" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -421,23 +476,18 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 <p>Start with the base rate. Every later metric should be interpreted relative to this imbalance.</p>
-<div id="cc797b34" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:24.460198Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:24.460050Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:24.542626Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:24.541719Z&quot;}}" data-outputid="869adaa1-dacd-47b5-8a71-cc71daaeb95d" data-execution_count="4">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="lab-01-augmentation_files/figure-revealjs/cell-5-output-1.png" width="449" height="299"></p>
-</figure>
-</div>
-</div>
-</div>
+
+<img data-src="lab-01-augmentation_files/figure-revealjs/cell-5-output-1.png" class="r-stretch"></section>
+
+<section id="why-accuracy-fails" class="title-slide slide level1 center">
+<h1>12. Why accuracy fails?</h1>
+
 </section>
-<section id="why-accuracy-fails" class="slide level2">
-<h2>12. Why accuracy fails?</h2>
-</section>
-<section id="majority-class-baseline" class="slide level2">
-<h2>Majority-class baseline</h2>
+
+<section id="majority-class-baseline" class="title-slide slide level1 center">
+<h1>Majority-class baseline</h1>
 <p>A classifier that always predicts the majority class can look strong by accuracy alone. But it has zero recall for the minority class.</p>
-<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:24.544297Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:24.544130Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:24.557893Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:24.557098Z&quot;}}" data-outputid="c7ba5970-7a8d-4a62-9dc3-69989ccde573" data-execution_count="5">
+<div id="3b78a2b4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T15:12:31.031881Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T15:12:31.031761Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T15:12:31.041679Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T15:12:31.041212Z&quot;}}" data-outputid="c7ba5970-7a8d-4a62-9dc3-69989ccde573" data-execution_count="5">
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 <style scoped="">
@@ -479,8 +529,9 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </section>
-<section id="visual-intuition" class="slide level2">
-<h2>13. Visual intuition</h2>
+
+<section id="visual-intuition" class="title-slide slide level1 center">
+<h1>13. Visual intuition</h1>
 <p>Before full pipelines, inspect resampling on a small 2D dataset.</p>
 <p>The goal is not the best model. The goal is to see how the training set changes.</p>
 <ul>
@@ -491,18 +542,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><em>ADASYN</em> focuses on locally difficult minority regions.</li>
 </ul>
 </section>
-<section id="code-build-a-2d-imbalanced-dataset" class="slide level2">
-<h2>Code: Build a 2D imbalanced dataset</h2>
-<div id="c410aa98" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:24.568260Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:24.568108Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:25.161691Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:25.160850Z&quot;}}" data-outputid="8467eb0e-9761-4125-8b73-60de3399f9b9" data-execution_count="7">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="lab-01-augmentation_files/figure-revealjs/cell-8-output-1.png" width="1528" height="894"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The plots show why these techniques are not interchangeable.</p>
+
+<section id="code-build-a-2d-imbalanced-dataset" class="title-slide slide level1 center">
+<h1>Code: Build a 2D imbalanced dataset</h1>
+
+<img data-src="lab-01-augmentation_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"><p>The plots show why these techniques are not interchangeable.</p>
 <ul>
 <li>Random <em>oversampling</em> increases the minority count by repeating existing observations, so the red crosses sit directly on top of known points.</li>
 <li><em>SMOTE</em> fills segments between nearby minority points. This smooths sparse minority regions, but assumes that interpolation produces valid records.</li>
@@ -511,28 +555,29 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 <p>The visual lesson carries over to tabular data: synthetic rows are helpful only if the generated feature combinations are plausible for the domain.</p>
 </section>
-<section id="baseline-pipeline" class="slide level2">
-<h2>14. Baseline pipeline</h2>
+
+<section id="baseline-pipeline" class="title-slide slide level1 center">
+<h1>14. Baseline pipeline</h1>
 <p>A conventional <code>sklearn.pipeline.Pipeline</code> is sufficient when all steps are transformers and estimators.</p>
-<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:25.163323Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:25.163161Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:25.180118Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:25.179308Z&quot;}}" data-outputid="4c229548-5a5d-4480-9927-0f6b62a6a763" data-execution_count="8">
+<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T15:12:31.427205Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T15:12:31.427085Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T15:12:31.439353Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T15:12:31.438873Z&quot;}}" data-outputid="4c229548-5a5d-4480-9927-0f6b62a6a763" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># Standardize numeric features before logistic regression.</span></span>
-<span id="cb7-2"><a href="" aria-label="2"></a>numeric_features <span class="op">=</span> X.columns.tolist()</span>
-<span id="cb7-3"><a href="" aria-label="3"></a>preprocessor <span class="op">=</span> ColumnTransformer(</span>
-<span id="cb7-4"><a href="" aria-label="4"></a>    transformers<span class="op">=</span>[(<span class="st">"num"</span>, StandardScaler(), numeric_features)],</span>
-<span id="cb7-5"><a href="" aria-label="5"></a>    remainder<span class="op">=</span><span class="st">"drop"</span>,</span>
-<span id="cb7-6"><a href="" aria-label="6"></a>)</span>
-<span id="cb7-7"><a href="" aria-label="7"></a>baseline_pipeline <span class="op">=</span> Pipeline(</span>
-<span id="cb7-8"><a href="" aria-label="8"></a>    steps<span class="op">=</span>[</span>
-<span id="cb7-9"><a href="" aria-label="9"></a>        (<span class="st">"preprocessing"</span>, preprocessor),</span>
-<span id="cb7-10"><a href="" aria-label="10"></a>        (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>, random_state<span class="op">=</span>RANDOM_STATE)),</span>
-<span id="cb7-11"><a href="" aria-label="11"></a>    ]</span>
-<span id="cb7-12"><a href="" aria-label="12"></a>)</span>
-<span id="cb7-13"><a href="" aria-label="13"></a>baseline_pipeline</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># Standardize numeric features before logistic regression.</span></span>
+<span id="cb8-2"><a href="" aria-label="2"></a>numeric_features <span class="op">=</span> X.columns.tolist()</span>
+<span id="cb8-3"><a href="" aria-label="3"></a>preprocessor <span class="op">=</span> ColumnTransformer(</span>
+<span id="cb8-4"><a href="" aria-label="4"></a>    transformers<span class="op">=</span>[(<span class="st">"num"</span>, StandardScaler(), numeric_features)],</span>
+<span id="cb8-5"><a href="" aria-label="5"></a>    remainder<span class="op">=</span><span class="st">"drop"</span>,</span>
+<span id="cb8-6"><a href="" aria-label="6"></a>)</span>
+<span id="cb8-7"><a href="" aria-label="7"></a>baseline_pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb8-8"><a href="" aria-label="8"></a>    steps<span class="op">=</span>[</span>
+<span id="cb8-9"><a href="" aria-label="9"></a>        (<span class="st">"preprocessing"</span>, preprocessor),</span>
+<span id="cb8-10"><a href="" aria-label="10"></a>        (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>, random_state<span class="op">=</span>RANDOM_STATE)),</span>
+<span id="cb8-11"><a href="" aria-label="11"></a>    ]</span>
+<span id="cb8-12"><a href="" aria-label="12"></a>)</span>
+<span id="cb8-13"><a href="" aria-label="13"></a>baseline_pipeline</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="8">
-<style>.sk-global {
+<style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
   --sklearn-color-text-muted: #666;
@@ -549,7 +594,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
   --sklearn-color-fitted-level-3: cornflowerblue;
 }
 
-.sk-global.light {
+#sk-container-id-1.light {
   /* Specific color for light theme */
   --sklearn-color-text-on-default-background: black;
   --sklearn-color-background: white;
@@ -557,24 +602,25 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
   --sklearn-color-icon: #696969;
 }
 
-.sk-global.dark {
+#sk-container-id-1.dark {
   --sklearn-color-text-on-default-background: white;
   --sklearn-color-background: #111;
   --sklearn-color-border-box: white;
   --sklearn-color-icon: #878787;
 }
 
-.sk-global {
+#sk-container-id-1 {
   color: var(--sklearn-color-text);
 }
 
-.sk-global pre {
+#sk-container-id-1 pre {
   padding: 0;
 }
 
-.sk-global input.sk-hidden--visually {
+#sk-container-id-1 input.sk-hidden--visually {
   border: 0;
-  clip-path: inset(100%);
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
   height: 1px;
   margin: -1px;
   overflow: hidden;
@@ -583,7 +629,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
   width: 1px;
 }
 
-.sk-global div.sk-dashed-wrapped {
+#sk-container-id-1 div.sk-dashed-wrapped {
   border: 1px dashed var(--sklearn-color-line);
   margin: 0 0.4em 0.5em 0.4em;
   box-sizing: border-box;
@@ -591,7 +637,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
   background-color: var(--sklearn-color-background);
 }
 
-.sk-global div.sk-container {
+#sk-container-id-1 div.sk-container {
   /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
      but bootstrap.min.css set `[hidden] { display: none !important; }`
      so we also need the `!important` here to be able to override the
@@ -601,7 +647,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
   position: relative;
 }
 
-.sk-global div.sk-text-repr-fallback {
+#sk-container-id-1 div.sk-text-repr-fallback {
   display: none;
 }
 
@@ -617,14 +663,14 @@ div.sk-item {
 
 /* Parallel-specific style estimator block */
 
-.sk-global div.sk-parallel-item::after {
+#sk-container-id-1 div.sk-parallel-item::after {
   content: "";
   width: 100%;
   border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
   flex-grow: 1;
 }
 
-.sk-global div.sk-parallel {
+#sk-container-id-1 div.sk-parallel {
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -632,28 +678,28 @@ div.sk-item {
   position: relative;
 }
 
-.sk-global div.sk-parallel-item {
+#sk-container-id-1 div.sk-parallel-item {
   display: flex;
   flex-direction: column;
 }
 
-.sk-global div.sk-parallel-item:first-child::after {
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
   align-self: flex-end;
   width: 50%;
 }
 
-.sk-global div.sk-parallel-item:last-child::after {
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
   align-self: flex-start;
   width: 50%;
 }
 
-.sk-global div.sk-parallel-item:only-child::after {
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
   width: 0;
 }
 
 /* Serial-specific style estimator block */
 
-.sk-global div.sk-serial {
+#sk-container-id-1 div.sk-serial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -671,14 +717,14 @@ clickable and can be expanded/collapsed.
 
 /* Pipeline and ColumnTransformer style (default) */
 
-.sk-global div.sk-toggleable {
+#sk-container-id-1 div.sk-toggleable {
   /* Default theme specific background. It is overwritten whether we have a
   specific estimator or a Pipeline/ColumnTransformer */
   background-color: var(--sklearn-color-background);
 }
 
 /* Toggleable label */
-.sk-global label.sk-toggleable__label {
+#sk-container-id-1 label.sk-toggleable__label {
   cursor: pointer;
   display: flex;
   width: 100%;
@@ -691,13 +737,13 @@ clickable and can be expanded/collapsed.
   gap: 0.5em;
 }
 
-.sk-global label.sk-toggleable__label .caption {
+#sk-container-id-1 label.sk-toggleable__label .caption {
   font-size: 0.6rem;
   font-weight: lighter;
   color: var(--sklearn-color-text-muted);
 }
 
-.sk-global label.sk-toggleable__label-arrow:before {
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
   /* Arrow on the left of the label */
   content: "▸";
   float: left;
@@ -705,25 +751,25 @@ clickable and can be expanded/collapsed.
   color: var(--sklearn-color-icon);
 }
 
-.sk-global label.sk-toggleable__label-arrow:hover:before {
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
   color: var(--sklearn-color-text);
 }
 
 /* Toggleable content - dropdown */
 
-.sk-global div.sk-toggleable__content {
+#sk-container-id-1 div.sk-toggleable__content {
   display: none;
   text-align: left;
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-.sk-global div.sk-toggleable__content.fitted {
+#sk-container-id-1 div.sk-toggleable__content.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-.sk-global div.sk-toggleable__content pre {
+#sk-container-id-1 div.sk-toggleable__content pre {
   margin: 0.2em;
   border-radius: 0.25em;
   color: var(--sklearn-color-text);
@@ -731,78 +777,78 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-.sk-global div.sk-toggleable__content.fitted pre {
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
   /* unfitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-.sk-global input.sk-toggleable__control:checked~div.sk-toggleable__content {
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
   /* Expand drop-down */
   display: block;
   width: 100%;
   overflow: visible;
 }
 
-.sk-global input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
   content: "▾";
 }
 
 /* Pipeline/ColumnTransformer-specific style */
 
-.sk-global div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-.sk-global div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator-specific style */
 
 /* Colorize estimator box */
-.sk-global div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-.sk-global div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
-.sk-global div.sk-label label.sk-toggleable__label,
-.sk-global div.sk-label label {
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
   /* The background is the default theme color */
   color: var(--sklearn-color-text-on-default-background);
 }
 
 /* On hover, darken the color of the background */
-.sk-global div.sk-label:hover label.sk-toggleable__label {
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
 /* Label box, darken color on hover, fitted */
-.sk-global div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator label */
 
-.sk-global div.sk-label label {
+#sk-container-id-1 div.sk-label label {
   font-family: monospace;
   font-weight: bold;
   line-height: 1.2em;
 }
 
-.sk-global div.sk-label-container {
+#sk-container-id-1 div.sk-label-container {
   text-align: center;
 }
 
 /* Estimator-specific */
-.sk-global div.sk-estimator {
+#sk-container-id-1 div.sk-estimator {
   font-family: monospace;
   border: 1px dotted var(--sklearn-color-border-box);
   border-radius: 0.25em;
@@ -812,18 +858,18 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-.sk-global div.sk-estimator.fitted {
+#sk-container-id-1 div.sk-estimator.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
 /* on hover */
-.sk-global div.sk-estimator:hover {
+#sk-container-id-1 div.sk-estimator:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-.sk-global div.sk-estimator.fitted:hover {
+#sk-container-id-1 div.sk-estimator.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
@@ -914,7 +960,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 /* "?"-specific style due to the `<a>` HTML tag */
 
-.sk-global a.estimator_doc_link {
+#sk-container-id-1 a.estimator_doc_link {
   float: right;
   font-size: 1rem;
   line-height: 1em;
@@ -929,7 +975,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   border: var(--sklearn-color-unfitted-level-1) 1pt solid;
 }
 
-.sk-global a.estimator_doc_link.fitted {
+#sk-container-id-1 a.estimator_doc_link.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
@@ -937,24 +983,16 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 }
 
 /* On hover */
-.sk-global a.estimator_doc_link:hover {
+#sk-container-id-1 a.estimator_doc_link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
   color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
-.sk-global a.estimator_doc_link.fitted:hover {
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
-}
-
-.sk-top-container.sk-global {
-  /* pydata-sphinx-theme hides overflow, so scrolling is disabled.
-   We need to set it to !important and add tabindex="0" in the HTML
-   to allow keyboard-only users to navigate the display. */
-  overflow-x: scroll !important;
-  max-width: 100%;
 }
 
 .estimator-table {
@@ -990,11 +1028,11 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     background-color: #f6f6f6;
 }
 
-.estimator-table .parameters-table tr:hover td {
+.estimator-table .parameters-table tr:hover {
     background-color: #e0e0e0;
 }
 
-.estimator-table table :is(td, th) {
+.estimator-table table td {
     border: 1px solid rgba(106, 105, 104, 0.232);
 }
 
@@ -1018,7 +1056,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     background-color: transparent;
 }
 
-.default td, .estimator-table th {
+.default td {
     color: black;
     text-align: left !important;
 }
@@ -1026,10 +1064,6 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 .user-set td i,
 .default td i {
     color: black;
-}
-
-td.fitted-att-type {
-    white-space: preserve nowrap;
 }
 
 /*
@@ -1044,14 +1078,6 @@ a.param-doc-link:visited {
     color: inherit;
     display: block;
     padding: .5em;
-}
-
-@supports(anchor-name: --doc-link) {
-    a.param-doc-link,
-    a.param-doc-link:link,
-    a.param-doc-link:visited {
-    anchor-name: --doc-link;
-    }
 }
 
 /* "hack" to make the entire area of the cell containing the link clickable */
@@ -1080,14 +1106,6 @@ a.param-doc-link::before {
     border: thin solid var(--sklearn-color-unfitted-level-3);
 }
 
-@supports(position-area: center right) {
-    .param-doc-description {
-    position-area: center right;
-    position: fixed;
-    margin-left: 0;
-    }
-}
-
 /* Fitted state for parameter tooltips */
 .fitted .param-doc-description {
     /* fitted */
@@ -1108,136 +1126,8 @@ a.param-doc-link::before {
     width: 14px;
     height: 14px;
     cursor: pointer;
-    border: none;
-    padding: 0;
-    background-color: transparent;
 }
-
-.copy-paste-icon:focus-visible {
-    outline: 1px solid currentColor;
-    outline-offset: 1px;
-}
-
-.features {
-  font-family: monospace;
-  cursor: pointer;
-  background-color: var(--sklearn-color-unfitted-level-0);
-  border: 1px dotted var(--sklearn-color-border-box);
-  border-radius: .20em;
-  margin-bottom: 0.5em;
-  font-size: inherit; /* Needed for jupyter */
-}
-
-.features.fitted {
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-.features summary {
-  cursor: pointer;
-  display: flex;
-  margin-bottom: 0;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5em;
-  padding: .25em;
-}
-
-.features details[open] > summary {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-  border-radius: .20em 0 0 0;
-}
-
-.features.fitted details[open] > summary {
-  background-color: var(--sklearn-color-fitted-level-2);
-  border-radius: .20em 0 0 0;
-}
-
-.features details > summary .arrow::before {
-  content: "▸";
-  color: grey;
-}
-
-.features details[open] > summary .arrow::before {
-  content: "▾";
-}
-
-.features details:hover > summary {
-  margin: 0;
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-.features.fitted details:hover > summary {
-  margin: 0;
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-.features .features-container {
-  max-height: 10em;
-  overflow: auto;
-  scrollbar-width: thin;
-  padding: .25em 0.1rem;
-  background-color: var(--sklearn-color-unfitted-level-0);
-  border-radius: 0 0 .5em .5em;
-}
-
-.features.fitted .features-container {
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-.features .image-container {
-  block-size: 1em;
-  inline-size: 1em;
-  padding: 0;
-  margin: 0%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.features .copy-paste-icon {
-  background-size: 1em 1em;
-  width: 1em;
-  height: 1em;
-  filter: grayscale(100%) opacity(60%);
-}
-
-.features .features-container table {
-  width: 100%;
-  margin: 0.01em;
-}
-
-.features .features-container table tr:nth-child(odd) {
-  background-color: #fff;
-}
-
-.features .features-container table tr:nth-child(even) {
-  background-color: #f6f6f6;
-}
-
-.features .features-container table tr:hover {
-  background-color: #e0e0e0;
-}
-
-.features .features-container table {
-  table-layout: inherit;
-}
-
-.features .features-container table td {
-  text-align: left;
-  padding: 0 0.5em;
-  border: 1px solid rgba(106, 105, 104, 0.232);
-  white-space: nowrap;
-  color: var(--sklearn-color-text);
-}
-
-.total_features {
-  display: flex;
-  justify-content: center;
-  margin-top: 0.5em;
-}
-</style><div id="sk-container-id-1" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[('preprocessing',
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[('preprocessing',
                  ColumnTransformer(transformers=[('num', StandardScaler(),
                                                   ['feature_00', 'feature_01',
                                                    'feature_02', 'feature_03',
@@ -1247,7 +1137,7 @@ a.param-doc-link::before {
                                                    'feature_10',
                                                    'feature_11'])])),
                 ('classifier',
-                 LogisticRegression(max_iter=2000, random_state=42))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox"><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.9/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content " data-param-prefix="">
+                 LogisticRegression(max_iter=2000, random_state=42))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox"><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content " data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1260,42 +1150,36 @@ a.param-doc-link::before {
 </colgroup>
 <tbody>
 <tr class="user-set odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy steps to clipboard" onclick="copyToClipboard('steps',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=steps,-list%20of%20tuples" class="param-doc-link" style="anchor-name: --doc-link-steps;" rel="noreferrer" target="_blank">steps <span class="param-doc-description" style="position-anchor: --doc-link-steps;"> steps: list of tuples<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=steps,-list%20of%20tuples" class="param-doc-link" rel="noreferrer" target="_blank">steps <span class="param-doc-description">steps: list of tuples<br>
 <br>
 List of (name of step, estimator) tuples that are to be chained in<br>
 sequential order. To be compatible with the scikit-learn API, all steps<br>
 must define `fit`. All non-last steps must also define `transform`. See<br>
-:ref:`Combining Estimators &lt;combining_estimators&gt;` for more details.</span></a></td>
+:ref:`Combining Estimators <combining_estimators>` for more details.</combining_estimators></span></a></td>
 <td class="value">[('preprocessing', ...), ('classifier', ...)]</td>
 </tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy transform_input to clipboard" onclick="copyToClipboard('transform_input',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=transform_input,-list%20of%20str%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-transform_input;" rel="noreferrer" target="_blank">transform_input <span class="param-doc-description" style="position-anchor: --doc-link-transform_input;"> transform_input: list of str, default=None<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=transform_input,-list%20of%20str%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">transform_input <span class="param-doc-description">transform_input: list of str, default=None<br>
 <br>
 The names of the :term:`metadata` parameters that should be transformed by the<br>
 pipeline before passing it to the step consuming it.<br>
 <br>
 This enables transforming some input arguments to ``fit`` (other than ``X``)<br>
 to be transformed by the steps of the pipeline up to the step which requires<br>
-them. Requirement is defined via :ref:`metadata routing &lt;metadata_routing&gt;`.<br>
+them. Requirement is defined via :ref:`metadata routing <metadata_routing>`.<br>
 For instance, this can be used to pass a validation set through the pipeline.<br>
 <br>
 You can only set this if metadata routing is enabled, which you<br>
 can enable using ``sklearn.set_config(enable_metadata_routing=True)``.<br>
 <br>
-.. versionadded:: 1.6</span></a></td>
+.. versionadded:: 1.6</metadata_routing></span></a></td>
 <td class="value">None</td>
 </tr>
 <tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy memory to clipboard" onclick="copyToClipboard('memory',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=memory,-str%20or%20object%20with%20the%20joblib.Memory%20interface%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-memory;" rel="noreferrer" target="_blank">memory <span class="param-doc-description" style="position-anchor: --doc-link-memory;"> memory: str or object with the joblib.Memory interface, default=None<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=memory,-str%20or%20object%20with%20the%20joblib.Memory%20interface%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">memory <span class="param-doc-description">memory: str or object with the joblib.Memory interface, default=None<br>
 <br>
 Used to cache the fitted transformers of the pipeline. The last step<br>
 will never be cached, even if it is a transformer. By default, no<br>
@@ -1310,10 +1194,8 @@ for an example on how to enable caching.</span></a></td>
 <td class="value">None</td>
 </tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy verbose to clipboard" onclick="copyToClipboard('verbose',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" style="anchor-name: --doc-link-verbose;" rel="noreferrer" target="_blank">verbose <span class="param-doc-description" style="position-anchor: --doc-link-verbose;"> verbose: bool, default=False<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">verbose <span class="param-doc-description">verbose: bool, default=False<br>
 <br>
 If True, the time elapsed while fitting each step will be printed as it<br>
 is completed.</span></a></td>
@@ -1324,7 +1206,7 @@ is completed.</span></a></td>
 
             </details>
         </div>
-    </div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-2" type="checkbox"><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>preprocessing: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocessing: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__">
+    </div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox"><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>preprocessing: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocessing: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1337,10 +1219,8 @@ is completed.</span></a></td>
 </colgroup>
 <tbody>
 <tr class="user-set odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy transformers to clipboard" onclick="copyToClipboard('transformers',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformers,-list%20of%20tuples" class="param-doc-link" style="anchor-name: --doc-link-transformers;" rel="noreferrer" target="_blank">transformers <span class="param-doc-description" style="position-anchor: --doc-link-transformers;"> transformers: list of tuples<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformers,-list%20of%20tuples" class="param-doc-link" rel="noreferrer" target="_blank">transformers <span class="param-doc-description">transformers: list of tuples<br>
 <br>
 List of (name, transformer, columns) tuples specifying the<br>
 transformer objects to be applied to subsets of the data.<br>
@@ -1366,10 +1246,8 @@ above. To select multiple columns by name or dtype, you can use<br>
 <td class="value">[('num', ...)]</td>
 </tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy remainder to clipboard" onclick="copyToClipboard('remainder',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=remainder,-%7B%27drop%27%2C%20%27passthrough%27%7D%20or%20estimator%2C%20default%3D%27drop%27" class="param-doc-link" style="anchor-name: --doc-link-remainder;" rel="noreferrer" target="_blank">remainder <span class="param-doc-description" style="position-anchor: --doc-link-remainder;"> remainder: {'drop', 'passthrough'} or estimator, default='drop'<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=remainder,-%7B%27drop%27%2C%20%27passthrough%27%7D%20or%20estimator%2C%20default%3D%27drop%27" class="param-doc-link" rel="noreferrer" target="_blank">remainder <span class="param-doc-description">remainder: {'drop', 'passthrough'} or estimator, default='drop'<br>
 <br>
 By default, only the specified columns in `transformers` are<br>
 transformed and combined in the output, and the non-specified<br>
@@ -1388,10 +1266,8 @@ input at :term:`fit` and :term:`transform` have identical order.</span></a></td>
 <td class="value">'drop'</td>
 </tr>
 <tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy sparse_threshold to clipboard" onclick="copyToClipboard('sparse_threshold',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=sparse_threshold,-float%2C%20default%3D0.3" class="param-doc-link" style="anchor-name: --doc-link-sparse_threshold;" rel="noreferrer" target="_blank">sparse_threshold <span class="param-doc-description" style="position-anchor: --doc-link-sparse_threshold;"> sparse_threshold: float, default=0.3<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=sparse_threshold,-float%2C%20default%3D0.3" class="param-doc-link" rel="noreferrer" target="_blank">sparse_threshold <span class="param-doc-description">sparse_threshold: float, default=0.3<br>
 <br>
 If the output of the different transformers contains sparse matrices,<br>
 these will be stacked as a sparse matrix if the overall density is<br>
@@ -1401,22 +1277,18 @@ stacked result will be dense, and this keyword will be ignored.</span></a></td>
 <td class="value">0.3</td>
 </tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy n_jobs to clipboard" onclick="copyToClipboard('n_jobs',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=n_jobs,-int%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-n_jobs;" rel="noreferrer" target="_blank">n_jobs <span class="param-doc-description" style="position-anchor: --doc-link-n_jobs;"> n_jobs: int, default=None<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=n_jobs,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">n_jobs <span class="param-doc-description">n_jobs: int, default=None<br>
 <br>
 Number of jobs to run in parallel.<br>
 ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.<br>
-``-1`` means using all processors. See :term:`Glossary &lt;n_jobs&gt;`<br>
-for more details.</span></a></td>
+``-1`` means using all processors. See :term:`Glossary <n_jobs>`<br>
+for more details.</n_jobs></span></a></td>
 <td class="value">None</td>
 </tr>
 <tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy transformer_weights to clipboard" onclick="copyToClipboard('transformer_weights',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformer_weights,-dict%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-transformer_weights;" rel="noreferrer" target="_blank">transformer_weights <span class="param-doc-description" style="position-anchor: --doc-link-transformer_weights;"> transformer_weights: dict, default=None<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformer_weights,-dict%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">transformer_weights <span class="param-doc-description">transformer_weights: dict, default=None<br>
 <br>
 Multiplicative weights for features per transformer. The output of the<br>
 transformer is multiplied by these weights. Keys are transformer names,<br>
@@ -1424,20 +1296,16 @@ values the weights.</span></a></td>
 <td class="value">None</td>
 </tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy verbose to clipboard" onclick="copyToClipboard('verbose',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" style="anchor-name: --doc-link-verbose;" rel="noreferrer" target="_blank">verbose <span class="param-doc-description" style="position-anchor: --doc-link-verbose;"> verbose: bool, default=False<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">verbose <span class="param-doc-description">verbose: bool, default=False<br>
 <br>
 If True, the time elapsed while fitting each transformer will be<br>
 printed as it is completed.</span></a></td>
 <td class="value">False</td>
 </tr>
 <tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy verbose_feature_names_out to clipboard" onclick="copyToClipboard('verbose_feature_names_out',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose_feature_names_out,-bool%2C%20str%20or%20Callable%5B%5Bstr%2C%20str%5D%2C%20str%5D%2C%20default%3DTrue" class="param-doc-link" style="anchor-name: --doc-link-verbose_feature_names_out;" rel="noreferrer" target="_blank">verbose_feature_names_out <span class="param-doc-description" style="position-anchor: --doc-link-verbose_feature_names_out;"> verbose_feature_names_out: bool, str or Callable[[str, str], str], default=True<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose_feature_names_out,-bool%2C%20str%20or%20Callable%5B%5Bstr%2C%20str%5D%2C%20str%5D%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">verbose_feature_names_out <span class="param-doc-description">verbose_feature_names_out: bool, str or Callable[[str, str], str], default=True<br>
 <br>
 - If True, :meth:`ColumnTransformer.get_feature_names_out` will prefix<br>
 all feature names with the name of the transformer that generated that<br>
@@ -1462,12 +1330,33 @@ from the standard library for more info.<br>
 `verbose_feature_names_out` can be a callable or a string to be formatted.</span></a></td>
 <td class="value">True</td>
 </tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=force_int_remainder_cols,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">force_int_remainder_cols <span class="param-doc-description">force_int_remainder_cols: bool, default=False<br>
+<br>
+This parameter has no effect.<br>
+<br>
+.. note::<br>
+If you do not access the list of columns for the remainder columns<br>
+in the `transformers_` fitted attribute, you do not need to set<br>
+this parameter.<br>
+<br>
+.. versionadded:: 1.5<br>
+<br>
+.. versionchanged:: 1.7<br>
+The default value for `force_int_remainder_cols` will change from<br>
+`True` to `False` in version 1.7.<br>
+<br>
+.. deprecated:: 1.7<br>
+`force_int_remainder_cols` is deprecated and will be removed in 1.9.</span></a></td>
+<td class="value">'deprecated'</td>
+</tr>
 </tbody>
 </table>
 
             </details>
         </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-3" type="checkbox"><label for="sk-estimator-id-3" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>num</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>['feature_00', 'feature_01', 'feature_02', 'feature_03', 'feature_04', 'feature_05', 'feature_06', 'feature_07', 'feature_08', 'feature_09', 'feature_10', 'feature_11']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__">
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox"><label for="sk-estimator-id-3" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>num</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>['feature_00', 'feature_01', 'feature_02', 'feature_03', 'feature_04', 'feature_05', 'feature_06', 'feature_07', 'feature_08', 'feature_09', 'feature_10', 'feature_11']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1480,10 +1369,8 @@ from the standard library for more info.<br>
 </colgroup>
 <tbody>
 <tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy copy to clipboard" onclick="copyToClipboard('copy',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=copy,-bool%2C%20default%3DTrue" class="param-doc-link" style="anchor-name: --doc-link-copy;" rel="noreferrer" target="_blank">copy <span class="param-doc-description" style="position-anchor: --doc-link-copy;"> copy: bool, default=True<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=copy,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">copy <span class="param-doc-description">copy: bool, default=True<br>
 <br>
 If False, try to avoid a copy and do inplace scaling instead.<br>
 This is not guaranteed to always work inplace; e.g. if the data is<br>
@@ -1492,10 +1379,8 @@ returned.</span></a></td>
 <td class="value">True</td>
 </tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy with_mean to clipboard" onclick="copyToClipboard('with_mean',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=with_mean,-bool%2C%20default%3DTrue" class="param-doc-link" style="anchor-name: --doc-link-with_mean;" rel="noreferrer" target="_blank">with_mean <span class="param-doc-description" style="position-anchor: --doc-link-with_mean;"> with_mean: bool, default=True<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=with_mean,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">with_mean <span class="param-doc-description">with_mean: bool, default=True<br>
 <br>
 If True, center the data before scaling.<br>
 This does not work (and will raise an exception) when attempted on<br>
@@ -1505,10 +1390,8 @@ memory.</span></a></td>
 <td class="value">True</td>
 </tr>
 <tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy with_std to clipboard" onclick="copyToClipboard('with_std',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=with_std,-bool%2C%20default%3DTrue" class="param-doc-link" style="anchor-name: --doc-link-with_std;" rel="noreferrer" target="_blank">with_std <span class="param-doc-description" style="position-anchor: --doc-link-with_std;"> with_std: bool, default=True<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.StandardScaler.html#:~:text=with_std,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">with_std <span class="param-doc-description">with_std: bool, default=True<br>
 <br>
 If True, scale the data to unit variance (or equivalently,<br>
 unit standard deviation).</span></a></td>
@@ -1519,7 +1402,7 @@ unit standard deviation).</span></a></td>
 
             </details>
         </div>
-    </div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-5" type="checkbox"><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>LogisticRegression</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html">?<span>Documentation for LogisticRegression</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="classifier__">
+    </div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox"><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>LogisticRegression</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html">?<span>Documentation for LogisticRegression</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="classifier__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1531,37 +1414,15 @@ unit standard deviation).</span></a></td>
 <col style="width: 33%">
 </colgroup>
 <tbody>
-<tr class="user-set odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy random_state to clipboard" onclick="copyToClipboard('random_state',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=random_state,-int%2C%20RandomState%20instance%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-random_state;" rel="noreferrer" target="_blank">random_state <span class="param-doc-description" style="position-anchor: --doc-link-random_state;"> random_state: int, RandomState instance, default=None<br>
-<br>
-Only used for `solver` == 'sag', 'saga' or 'liblinear' to shuffle the<br>
-data. It has no effect on the other solvers.<br>
-See :term:`Glossary &lt;random_state&gt;` for details.</span></a></td>
-<td class="value">42</td>
-</tr>
-<tr class="user-set even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy max_iter to clipboard" onclick="copyToClipboard('max_iter',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=max_iter,-int%2C%20default%3D100" class="param-doc-link" style="anchor-name: --doc-link-max_iter;" rel="noreferrer" target="_blank">max_iter <span class="param-doc-description" style="position-anchor: --doc-link-max_iter;"> max_iter: int, default=100<br>
-<br>
-Maximum number of iterations taken for the solvers to converge.</span></a></td>
-<td class="value">2000</td>
-</tr>
 <tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy penalty to clipboard" onclick="copyToClipboard('penalty',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=penalty,-%7B%27l1%27%2C%20%27l2%27%2C%20%27elasticnet%27%2C%20None%7D%2C%20default%3D%27l2%27" class="param-doc-link" style="anchor-name: --doc-link-penalty;" rel="noreferrer" target="_blank">penalty <span class="param-doc-description" style="position-anchor: --doc-link-penalty;"> penalty: {'l1', 'l2', 'elasticnet', None}, default='l2'<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=penalty,-%7B%27l1%27%2C%20%27l2%27%2C%20%27elasticnet%27%2C%20None%7D%2C%20default%3D%27l2%27" class="param-doc-link" rel="noreferrer" target="_blank">penalty <span class="param-doc-description">penalty: {'l1', 'l2', 'elasticnet', None}, default='l2'<br>
 <br>
 Specify the norm of the penalty:<br>
 <br>
 - `None`: no penalty is added;<br>
-- `'l2'`: add an L2 penalty term and it is the default choice;<br>
-- `'l1'`: add an L1 penalty term;<br>
+- `'l2'`: add a L2 penalty term and it is the default choice;<br>
+- `'l1'`: add a L1 penalty term;<br>
 - `'elasticnet'`: both L1 and L2 penalty terms are added.<br>
 <br>
 .. warning::<br>
@@ -1574,16 +1435,14 @@ l1 penalty with SAGA solver (allowing 'multinomial' + L1)<br>
 <br>
 .. deprecated:: 1.8<br>
 `penalty` was deprecated in version 1.8 and will be removed in 1.10.<br>
-Use `l1_ratio` and `C` instead. `l1_ratio=0` for `penalty='l2'`,<br>
-`l1_ratio=1` for `penalty='l1'`, `l1_ratio` set to any float between 0 and 1<br>
-for `penalty='elasticnet'`, and `C=np.inf` for `penalty=None`.</span></a></td>
+Use `l1_ratio` instead. `l1_ratio=0` for `penalty='l2'`, `l1_ratio=1` for<br>
+`penalty='l1'` and `l1_ratio` set to any float between 0 and 1 for<br>
+`'penalty='elasticnet'`.</span></a></td>
 <td class="value">'deprecated'</td>
 </tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy C to clipboard" onclick="copyToClipboard('C',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=C,-float%2C%20default%3D1.0" class="param-doc-link" style="anchor-name: --doc-link-C;" rel="noreferrer" target="_blank">C <span class="param-doc-description" style="position-anchor: --doc-link-C;"> C: float, default=1.0<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=C,-float%2C%20default%3D1.0" class="param-doc-link" rel="noreferrer" target="_blank">C <span class="param-doc-description">C: float, default=1.0<br>
 <br>
 Inverse of regularization strength; must be a positive float.<br>
 Like in support vector machines, smaller values specify stronger<br>
@@ -1594,10 +1453,8 @@ with an L1 penalty, see:<br>
 <td class="value">1.0</td>
 </tr>
 <tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy l1_ratio to clipboard" onclick="copyToClipboard('l1_ratio',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=l1_ratio,-float%2C%20default%3D0.0" class="param-doc-link" style="anchor-name: --doc-link-l1_ratio;" rel="noreferrer" target="_blank">l1_ratio <span class="param-doc-description" style="position-anchor: --doc-link-l1_ratio;"> l1_ratio: float, default=0.0<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=l1_ratio,-float%2C%20default%3D0.0" class="param-doc-link" rel="noreferrer" target="_blank">l1_ratio <span class="param-doc-description">l1_ratio: float, default=0.0<br>
 <br>
 The Elastic-Net mixing parameter, with `0 &lt;= l1_ratio &lt;= 1`. Setting<br>
 `l1_ratio=1` gives a pure L1-penalty, setting `l1_ratio=0` a pure L2-penalty.<br>
@@ -1618,41 +1475,33 @@ Default value changed from None to 0.0.<br>
 <td class="value">0.0</td>
 </tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy dual to clipboard" onclick="copyToClipboard('dual',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=dual,-bool%2C%20default%3DFalse" class="param-doc-link" style="anchor-name: --doc-link-dual;" rel="noreferrer" target="_blank">dual <span class="param-doc-description" style="position-anchor: --doc-link-dual;"> dual: bool, default=False<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=dual,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">dual <span class="param-doc-description">dual: bool, default=False<br>
 <br>
 Dual (constrained) or primal (regularized, see also<br>
-:ref:`this equation &lt;regularized-logistic-loss&gt;`) formulation. Dual formulation<br>
+:ref:`this equation <regularized-logistic-loss>`) formulation. Dual formulation<br>
 is only implemented for l2 penalty with liblinear solver. Prefer `dual=False`<br>
-when n_samples &gt; n_features.</span></a></td>
+when n_samples &gt; n_features.</regularized-logistic-loss></span></a></td>
 <td class="value">False</td>
 </tr>
 <tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy tol to clipboard" onclick="copyToClipboard('tol',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=tol,-float%2C%20default%3D1e-4" class="param-doc-link" style="anchor-name: --doc-link-tol;" rel="noreferrer" target="_blank">tol <span class="param-doc-description" style="position-anchor: --doc-link-tol;"> tol: float, default=1e-4<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=tol,-float%2C%20default%3D1e-4" class="param-doc-link" rel="noreferrer" target="_blank">tol <span class="param-doc-description">tol: float, default=1e-4<br>
 <br>
 Tolerance for stopping criteria.</span></a></td>
 <td class="value">0.0001</td>
 </tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy fit_intercept to clipboard" onclick="copyToClipboard('fit_intercept',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=fit_intercept,-bool%2C%20default%3DTrue" class="param-doc-link" style="anchor-name: --doc-link-fit_intercept;" rel="noreferrer" target="_blank">fit_intercept <span class="param-doc-description" style="position-anchor: --doc-link-fit_intercept;"> fit_intercept: bool, default=True<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=fit_intercept,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">fit_intercept <span class="param-doc-description">fit_intercept: bool, default=True<br>
 <br>
 Specifies if a constant (a.k.a. bias or intercept) should be<br>
 added to the decision function.</span></a></td>
 <td class="value">True</td>
 </tr>
 <tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy intercept_scaling to clipboard" onclick="copyToClipboard('intercept_scaling',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=intercept_scaling,-float%2C%20default%3D1" class="param-doc-link" style="anchor-name: --doc-link-intercept_scaling;" rel="noreferrer" target="_blank">intercept_scaling <span class="param-doc-description" style="position-anchor: --doc-link-intercept_scaling;"> intercept_scaling: float, default=1<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=intercept_scaling,-float%2C%20default%3D1" class="param-doc-link" rel="noreferrer" target="_blank">intercept_scaling <span class="param-doc-description">intercept_scaling: float, default=1<br>
 <br>
 Useful only when the solver `liblinear` is used<br>
 and `self.fit_intercept` is set to `True`. In this case, `x` becomes<br>
@@ -1670,10 +1519,8 @@ To lessen the effect of regularization on synthetic feature weight<br>
 <td class="value">1</td>
 </tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy class_weight to clipboard" onclick="copyToClipboard('class_weight',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=class_weight,-dict%20or%20%27balanced%27%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-class_weight;" rel="noreferrer" target="_blank">class_weight <span class="param-doc-description" style="position-anchor: --doc-link-class_weight;"> class_weight: dict or 'balanced', default=None<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=class_weight,-dict%20or%20%27balanced%27%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">class_weight <span class="param-doc-description">class_weight: dict or 'balanced', default=None<br>
 <br>
 Weights associated with classes in the form ``{class_label: weight}``.<br>
 If not given, all classes are supposed to have weight one.<br>
@@ -1689,11 +1536,17 @@ through the fit method) if sample_weight is specified.<br>
 *class_weight='balanced'*</span></a></td>
 <td class="value">None</td>
 </tr>
-<tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy solver to clipboard" onclick="copyToClipboard('solver',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=solver,-%7B%27lbfgs%27%2C%20%27liblinear%27%2C%20%27newton-cg%27%2C%20%27newton-cholesky%27%2C%20%27sag%27%2C%20%27saga%27%7D%2C%20%20%20%20%20%20%20%20%20%20%20%20%20default%3D%27lbfgs%27" class="param-doc-link" style="anchor-name: --doc-link-solver;" rel="noreferrer" target="_blank">solver <span class="param-doc-description" style="position-anchor: --doc-link-solver;"> solver: {'lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga'}, default='lbfgs'<br>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=random_state,-int%2C%20RandomState%20instance%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">random_state <span class="param-doc-description">random_state: int, RandomState instance, default=None<br>
+<br>
+Used when ``solver`` == 'sag', 'saga' or 'liblinear' to shuffle the<br>
+data. See :term:`Glossary <random_state>` for details.</random_state></span></a></td>
+<td class="value">42</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=solver,-%7B%27lbfgs%27%2C%20%27liblinear%27%2C%20%27newton-cg%27%2C%20%27newton-cholesky%27%2C%20%27sag%27%2C%20%27saga%27%7D%2C%20%20%20%20%20%20%20%20%20%20%20%20%20default%3D%27lbfgs%27" class="param-doc-link" rel="noreferrer" target="_blank">solver <span class="param-doc-description">solver: {'lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga'}, default='lbfgs'<br>
 <br>
 Algorithm to use in the optimization problem. Default is 'lbfgs'.<br>
 To choose a solver, you might want to consider the following aspects:<br>
@@ -1736,9 +1589,9 @@ with approximately the same scale. You can preprocess the data with<br>
 a scaler from :mod:`sklearn.preprocessing`.<br>
 <br>
 .. seealso::<br>
-Refer to the :ref:`User Guide &lt;Logistic_regression&gt;` for more<br>
+Refer to the :ref:`User Guide <logistic_regression>` for more<br>
 information regarding :class:`LogisticRegression` and more specifically the<br>
-:ref:`Table &lt;logistic_regression_solvers&gt;`<br>
+:ref:`Table <logistic_regression_solvers>`<br>
 summarizing solver/penalty supports.<br>
 <br>
 .. versionadded:: 0.17<br>
@@ -1749,38 +1602,39 @@ SAGA solver.<br>
 .. versionchanged:: 0.22<br>
 The default solver changed from 'liblinear' to 'lbfgs' in 0.22.<br>
 .. versionadded:: 1.2<br>
-newton-cholesky solver. Multinomial support in version 1.6.</span></a></td>
+newton-cholesky solver. Multinomial support in version 1.6.</logistic_regression_solvers></logistic_regression></span></a></td>
 <td class="value">'lbfgs'</td>
 </tr>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=max_iter,-int%2C%20default%3D100" class="param-doc-link" rel="noreferrer" target="_blank">max_iter <span class="param-doc-description">max_iter: int, default=100<br>
+<br>
+Maximum number of iterations taken for the solvers to converge.</span></a></td>
+<td class="value">2000</td>
+</tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy verbose to clipboard" onclick="copyToClipboard('verbose',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=verbose,-int%2C%20default%3D0" class="param-doc-link" style="anchor-name: --doc-link-verbose;" rel="noreferrer" target="_blank">verbose <span class="param-doc-description" style="position-anchor: --doc-link-verbose;"> verbose: int, default=0<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=verbose,-int%2C%20default%3D0" class="param-doc-link" rel="noreferrer" target="_blank">verbose <span class="param-doc-description">verbose: int, default=0<br>
 <br>
 For the liblinear and lbfgs solvers set verbose to any positive<br>
 number for verbosity.</span></a></td>
 <td class="value">0</td>
 </tr>
 <tr class="default odd">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy warm_start to clipboard" onclick="copyToClipboard('warm_start',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=warm_start,-bool%2C%20default%3DFalse" class="param-doc-link" style="anchor-name: --doc-link-warm_start;" rel="noreferrer" target="_blank">warm_start <span class="param-doc-description" style="position-anchor: --doc-link-warm_start;"> warm_start: bool, default=False<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=warm_start,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">warm_start <span class="param-doc-description">warm_start: bool, default=False<br>
 <br>
 When set to True, reuse the solution of the previous call to fit as<br>
 initialization, otherwise, just erase the previous solution.<br>
-Useless for liblinear solver. See :term:`the Glossary &lt;warm_start&gt;`.<br>
+Useless for liblinear solver. See :term:`the Glossary <warm_start>`.<br>
 <br>
 .. versionadded:: 0.17<br>
-*warm_start* to support *lbfgs*, *newton-cg*, *sag*, *saga* solvers.</span></a></td>
+*warm_start* to support *lbfgs*, *newton-cg*, *sag*, *saga* solvers.</warm_start></span></a></td>
 <td class="value">False</td>
 </tr>
 <tr class="default even">
-<td><button type="button" class="copy-paste-icon" aria-label="Copy n_jobs to clipboard" onclick="copyToClipboard('n_jobs',
-                          this.parentElement.nextElementSibling)">
-</button></td>
-<td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=n_jobs,-int%2C%20default%3DNone" class="param-doc-link" style="anchor-name: --doc-link-n_jobs;" rel="noreferrer" target="_blank">n_jobs <span class="param-doc-description" style="position-anchor: --doc-link-n_jobs;"> n_jobs: int, default=None<br>
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.linear_model.LogisticRegression.html#:~:text=n_jobs,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">n_jobs <span class="param-doc-description">n_jobs: int, default=None<br>
 <br>
 Does not have any effect.<br>
 <br>
@@ -1793,11 +1647,7 @@ Does not have any effect.<br>
 
             </details>
         </div>
-    </div></div></div></div></div></div></div><script>/*  Authors: The scikit-learn developers
- SPDX-License-Identifier: BSD-3-Clause
-*/
-
-function copyToClipboard(text, element) {
+    </div></div></div></div></div></div></div><script>function copyToClipboard(text, element) {
     // Get the parameter prefix from the closest toggleable content
     const toggleableContent = element.closest('.sk-toggleable__content');
     const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
@@ -1834,13 +1684,6 @@ function copyToClipboard(text, element) {
 document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
     const toggleableContent = element.closest('.sk-toggleable__content');
     const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-
-    const parent = element.parentElement;
-    if (!parent || !parent.nextElementSibling) {
-        console.warn('Expected copy-paste icon is missing from the DOM structure');
-        return;
-    }
-
     const paramName = element.parentElement.nextElementSibling
         .textContent.trim().split(' ')[0];
     const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
@@ -1848,51 +1691,7 @@ document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
     element.setAttribute('title', fullParamName);
 });
 
-/**
- * Copy the list of feature names formatted as a Python list.
- *
- * @param {HTMLElement} element - The copy button inside a `.features` block; its siblings
- *   contain a `details` element and a table containing feature named.
- * @returns {boolean} Always returns `false` so callers can prevent the default click behavior.
- */
-function copyFeatureNamesToClipboard(element) {
-    var detailsElem = element.closest('.features').querySelector('details');
-    var wasOpen = detailsElem.open;
-    detailsElem.open = true;
-    var content = element.closest('.features').querySelector('tbody')
-                  .innerText.trim();
-    if (!wasOpen) detailsElem.open = false;
-    const rows = content.split('\n').map(row => `    "${row}"`);
-    const formattedText = `[\n${rows.join(',\n')},\n]`;
-    const originalHTML = element.innerHTML.replace('✔', '');
-    const originalStyle = element.style;
-    const copyMark = document.createElement('span');
-    copyMark.innerHTML = '✔';
-    copyMark.style.color = 'blue';
-    copyMark.style.fontSize = '1em';
 
-    navigator.clipboard.writeText(formattedText)
-        .then(() => {
-            element.style.display = 'none';
-            element.parentElement.appendChild(copyMark);
-
-            setTimeout(() => {
-                copyMark.remove();
-                element.innerHTML = originalHTML;
-                element.style = originalStyle;
-            }, 1000);
-        })
-        .catch(err => {
-            console.error('Failed to copy:', err);
-            element.style.color = 'orange';
-            element.innerHTML = "Failed!";
-            setTimeout(() => {
-                element.innerHTML = originalHTML;
-                element.style = originalStyle;
-            }, 1000);
-        });
-    return false;
-}
 /**
  * Adapted from Skrub
  * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
@@ -1967,8 +1766,9 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </div>
 </section>
-<section id="candidate-pipelines" class="slide level2">
-<h2>15. Candidate pipelines</h2>
+
+<section id="candidate-pipelines" class="title-slide slide level1 center">
+<h1>15. Candidate pipelines</h1>
 <p>We compare seven strategies (When we add a sampler such as SMOTE, random oversampling, or undersampling, we switch to <code>imblearn.pipeline.Pipeline</code>):</p>
 <ol type="1">
 <li>No imbalance treatment (baseline pipeline).</li>
@@ -1980,22 +1780,23 @@ forceTheme('sk-container-id-1');</script>
 <li>Borderline-SMOTE.</li>
 </ol>
 <p>All samplers are placed after preprocessing and before the classifier, so they are fitted only on the current training fold.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>pipelines <span class="op">=</span> {</span>
-<span id="cb8-2"><a href="" aria-label="2"></a>    <span class="st">"No treatment"</span>: Pipeline(</span>
-<span id="cb8-3"><a href="" aria-label="3"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"classifier"</span>, logistic_regression())]</span>
-<span id="cb8-4"><a href="" aria-label="4"></a>    ),</span>
-<span id="cb8-5"><a href="" aria-label="5"></a>    <span class="st">"Class weight"</span>: Pipeline(</span>
-<span id="cb8-6"><a href="" aria-label="6"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"classifier"</span>, logistic_regression(class_weight<span class="op">=</span><span class="st">"balanced"</span>))]</span>
-<span id="cb8-7"><a href="" aria-label="7"></a>    ),</span>
-<span id="cb8-8"><a href="" aria-label="8"></a>    <span class="st">"Random undersampling"</span>: ImbPipeline(</span>
-<span id="cb8-9"><a href="" aria-label="9"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"sampler"</span>, RandomUnderSampler(random_state<span class="op">=</span>RANDOM_STATE)), (<span class="st">"classifier"</span>, logistic_regression())]</span>
-<span id="cb8-10"><a href="" aria-label="10"></a>    ), <span class="co"># ...</span></span>
-<span id="cb8-11"><a href="" aria-label="11"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>pipelines <span class="op">=</span> {</span>
+<span id="cb9-2"><a href="" aria-label="2"></a>    <span class="st">"No treatment"</span>: Pipeline(</span>
+<span id="cb9-3"><a href="" aria-label="3"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"classifier"</span>, logistic_regression())]</span>
+<span id="cb9-4"><a href="" aria-label="4"></a>    ),</span>
+<span id="cb9-5"><a href="" aria-label="5"></a>    <span class="st">"Class weight"</span>: Pipeline(</span>
+<span id="cb9-6"><a href="" aria-label="6"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"classifier"</span>, logistic_regression(class_weight<span class="op">=</span><span class="st">"balanced"</span>))]</span>
+<span id="cb9-7"><a href="" aria-label="7"></a>    ),</span>
+<span id="cb9-8"><a href="" aria-label="8"></a>    <span class="st">"Random undersampling"</span>: ImbPipeline(</span>
+<span id="cb9-9"><a href="" aria-label="9"></a>        [(<span class="st">"preprocessing"</span>, preprocessor), (<span class="st">"sampler"</span>, RandomUnderSampler(random_state<span class="op">=</span>RANDOM_STATE)), (<span class="st">"classifier"</span>, logistic_regression())]</span>
+<span id="cb9-10"><a href="" aria-label="10"></a>    ), <span class="co"># ...</span></span>
+<span id="cb9-11"><a href="" aria-label="11"></a>}</span></code></pre></div>
 </section>
-<section id="stratified-cross-validation" class="slide level2">
-<h2>16. Stratified cross-validation</h2>
+
+<section id="stratified-cross-validation" class="title-slide slide level1 center">
+<h1>16. Stratified cross-validation</h1>
 <p>Loops over stratified folds. This makes it explicit that every pipeline is cloned, fitted on the training fold, and evaluated on the untouched validation fold.</p>
-<div id="5ec6d60e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:25.189128Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:25.188970Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:26.131883Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:26.131340Z&quot;}}" data-outputid="5e890a83-95c7-457a-cfa3-8f7bcf533666" data-execution_count="10">
+<div id="5ec6d60e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T15:12:31.445834Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T15:12:31.445728Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T15:12:32.052864Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T15:12:32.052461Z&quot;}}" data-outputid="5e890a83-95c7-457a-cfa3-8f7bcf533666" data-execution_count="10">
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <style scoped="">
@@ -2093,8 +1894,9 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </div>
 </section>
-<section id="comparison-table" class="slide level2">
-<h2>17. Comparison table</h2>
+
+<section id="comparison-table" class="title-slide slide level1 center">
+<h1>17. Comparison table</h1>
 <p>The table reports mean cross-validation performance and fold-to-fold variability.</p>
 <blockquote>
 
@@ -2106,7 +1908,7 @@ forceTheme('sk-container-id-1');</script>
 </ul>
 
 </blockquote>
-<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:26.135943Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:26.135073Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:26.153238Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:26.152230Z&quot;}}" data-outputid="2a2f072e-1700-4a2c-b6b0-be58bf4c7be8" data-execution_count="11">
+<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T15:12:32.056457Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T15:12:32.055903Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T15:12:32.067783Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T15:12:32.067400Z&quot;}}" data-outputid="2a2f072e-1700-4a2c-b6b0-be58bf4c7be8" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
@@ -2215,21 +2017,15 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </div>
 </section>
-<section id="confusion-matrices" class="slide level2">
-<h2>18. Confusion matrices</h2>
+
+<section id="confusion-matrices" class="title-slide slide level1 center">
+<h1>18. Confusion matrices</h1>
 <p>Here we use out-of-fold predictions. Each observation is predicted by a model that did not train on it.</p>
-<div id="1f225ec5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:26.155043Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:26.154846Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:26.465752Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:26.465004Z&quot;}}" data-outputid="3d344194-7897-4fa5-cc85-909b1a69fef0" data-execution_count="12">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="lab-01-augmentation_files/figure-revealjs/cell-13-output-1.png" width="1134" height="998"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="precision-recall-curves" class="slide level2">
-<h2>19. Precision-recall curves</h2>
+
+<img data-src="lab-01-augmentation_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"></section>
+
+<section id="precision-recall-curves" class="title-slide slide level1 center">
+<h1>19. Precision-recall curves</h1>
 <div class="columns">
 <div class="column" style="width:70%;">
 <p>The precision-recall curve shows the tradeoff between precision and recall (high precision -&gt; low false positive rate, high recall -&gt; low false negative rate)</p>
@@ -2251,8 +2047,9 @@ forceTheme('sk-container-id-1');</script>
 <p><img data-src="img/PrecisionrecallDogExample.svg.png"></p>
 </div></div>
 </section>
-<section id="precision-recall-curves-1" class="slide level2">
-<h2>Precision-recall curves</h2>
+
+<section id="precision-recall-curves-1" class="title-slide slide level1 center">
+<h1>Precision-recall curves</h1>
 <p>A precision-recall curve shows how precision and recall change as we <em>vary the classification threshold</em> for binary classification.</p>
 <ul>
 <li>Most probabilistic classifiers first produce a positive-class score, then convert it into a label with a threshold.</li>
@@ -2261,18 +2058,11 @@ forceTheme('sk-container-id-1');</script>
 <li>The horizontal baseline is the positive-class rate.</li>
 </ul>
 <p>Average precision (<span class="math inline">\(AP=\sum_n (R_n - R_{n-1}) P_n\)</span>) summarizes such a plot as the weighted mean of precisions achieved at each threshold</p>
-<div id="d8d94e76" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:26.467819Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:26.467642Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:26.619822Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:26.619168Z&quot;}}" data-outputid="77295a7e-29dc-4b20-c67d-404716454c4e" data-execution_count="13">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="lab-01-augmentation_files/figure-revealjs/cell-14-output-1.png" width="441" height="446"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="threshold-adjustment" class="slide level2">
-<h2>20. Threshold adjustment</h2>
+
+<img data-src="lab-01-augmentation_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
+
+<section id="threshold-adjustment" class="title-slide slide level1 center">
+<h1>20. Threshold adjustment</h1>
 <p><code>predict</code> usually applies a threshold of <code>0.5</code>. That threshold is not sacred: it is a decision rule, not a property of the model.</p>
 <ul>
 <li>A <strong>lower threshold</strong> produces more positive predictions. This usually reduces FN and increases recall, but it can increase FP and lower precision.</li>
@@ -2286,7 +2076,7 @@ forceTheme('sk-container-id-1');</script>
 <ul>
 <li>Threshold tuning should be evaluated with validation data, business constraints, and the metric that matches the real decision problem.</li>
 </ul>
-<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:26.621933Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:26.621764Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:26.688768Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:26.688049Z&quot;}}" data-outputid="bf5cd3d0-6d65-454a-f513-d35f52f5c284" data-execution_count="14">
+<div id="5ed5010b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T15:12:32.381348Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T15:12:32.381214Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T15:12:32.424835Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T15:12:32.424301Z&quot;}}" data-outputid="bf5cd3d0-6d65-454a-f513-d35f52f5c284" data-execution_count="14">
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <style scoped="">
@@ -2386,24 +2176,18 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </div>
 </section>
-<section id="code-plot-the-threshold-trade-off" class="slide level2">
-<h2>Code: Plot the threshold trade-off</h2>
+
+<section id="code-plot-the-threshold-trade-off" class="title-slide slide level1 center">
+<h1>Code: Plot the threshold trade-off</h1>
 <p>The plot makes the precision-recall trade-off easier to discuss than the table alone.</p>
-<div id="215df64a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:26.690477Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:26.690302Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:26.771122Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:26.770178Z&quot;}}" data-outputid="7905de55-fbd7-4f60-d8cc-b24eae570a5e" data-execution_count="15">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="lab-01-augmentation_files/figure-revealjs/cell-16-output-1.png" width="659" height="446"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="choose-a-threshold-for-high-cost-false-negatives" class="slide level2">
-<h2>21. Choose a threshold for high-cost false negatives</h2>
+
+<img data-src="lab-01-augmentation_files/figure-revealjs/cell-16-output-1.png" class="r-stretch"></section>
+
+<section id="choose-a-threshold-for-high-cost-false-negatives" class="title-slide slide level1 center">
+<h1>21. Choose a threshold for high-cost false negatives</h1>
 <p>Suppose a false negative costs 10 times as much as a false positive.</p>
 <p>This is a simple teaching cost model, not a universal decision rule. In a real application, you would estimate costs with domain experts and validate the downstream effects.</p>
-<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:26.772697Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:26.772557Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:31.377057Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:31.376105Z&quot;}}" data-outputid="e9bdd02e-c40f-4ba9-83ea-1065bc7845c6" data-execution_count="16">
+<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T15:12:32.544613Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T15:12:32.544466Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T15:12:35.242606Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T15:12:35.241967Z&quot;}}" data-outputid="e9bdd02e-c40f-4ba9-83ea-1065bc7845c6" data-execution_count="16">
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <style scoped="">
@@ -2519,14 +2303,15 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </div>
 </section>
-<section id="leakage-demonstration" class="slide level2">
-<h2>22. Leakage demonstration</h2>
+
+<section id="leakage-demonstration" class="title-slide slide level1 center">
+<h1>22. Leakage demonstration</h1>
 <p>The following example shows the wrong and right structure.</p>
 <ul>
 <li>The <strong>wrong</strong> structure applies SMOTE before cross-validation. The validation folds are no longer clean because the synthetic data was produced using information from the full dataset.</li>
 <li>The <strong>right</strong> structure places SMOTE inside an <code>imblearn</code> pipeline, so SMOTE is fitted only on each training fold.</li>
 </ul>
-<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:53:31.378925Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:53:31.378735Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:53:31.596252Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:53:31.595750Z&quot;}}" data-outputid="db4c1917-1746-43a8-cf67-5f3d65fdb70f" data-execution_count="17">
+<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T15:12:35.243810Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T15:12:35.243699Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T15:12:35.377129Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T15:12:35.375945Z&quot;}}" data-outputid="db4c1917-1746-43a8-cf67-5f3d65fdb70f" data-execution_count="17">
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
@@ -2586,8 +2371,9 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </div>
 </section>
-<section id="smote-nc-for-mixed-tabular-data" class="slide level2">
-<h2>23. SMOTE-NC for mixed tabular data</h2>
+
+<section id="smote-nc-for-mixed-tabular-data" class="title-slide slide level1 center">
+<h1>23. SMOTE-NC for mixed tabular data</h1>
 <p><code>SMOTENC</code> is useful when predictors mix numerical and categorical columns.</p>
 <ul>
 <li>The categorical feature indices must refer to the matrix seen by the sampler, so preprocessing order matters.</li>
@@ -2595,8 +2381,9 @@ forceTheme('sk-container-id-1');</script>
 <li>Be careful with plain SMOTE after one-hot encoding: interpolation can produce fractional category indicators.</li>
 </ul>
 </section>
-<section id="student-challenge" class="slide level2">
-<h2>24. Student challenge</h2>
+
+<section id="student-challenge" class="title-slide slide level1 center">
+<h1>24. Student challenge</h1>
 <p>Dataset: Credit Card Fraud Detection on Kaggle.</p>
 <p>Choose a pipeline for a high-cost false-negative scenario.</p>
 <ol type="1">
@@ -2607,6 +2394,7 @@ forceTheme('sk-container-id-1');</script>
 <li>Defend the final choice with evidence.</li>
 </ol>
 </section>
+
 <section id="references" class="title-slide slide level1 center">
 <h1>References</h1>
 
