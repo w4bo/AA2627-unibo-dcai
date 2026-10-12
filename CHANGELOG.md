@@ -1,3 +1,13 @@
+## [1.1.8](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.7...1.1.8) (2026-10-12)
+
+### Bug Fixes
+
+* remove execute from notebooks ([c15eb5c](https://github.com/w4bo/AA2627-unibo-dcai/commit/c15eb5c3f10cecc036808e444c79f829007fd98a))
+
+### General maintenance
+
+* fix typos ([a9ccca9](https://github.com/w4bo/AA2627-unibo-dcai/commit/a9ccca927a38f15bc5e07a16fd887118363ff732))
+
 ## [1.1.7](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.6...1.1.7) (2026-10-12)
 
 ### Bug Fixes
