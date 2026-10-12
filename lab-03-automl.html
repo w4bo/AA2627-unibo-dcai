@@ -411,7 +411,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>a socially sensitive target.</li>
 </ul>
 <p>Those properties make model selection more realistic than a tiny built-in dataset.</p>
-<div id="c5bedbeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:14.162752Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:14.162582Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:20.367819Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:20.366816Z&quot;}}" data-execution_count="4">
+<div id="c5bedbeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:24.615603Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:24.615406Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:33.767960Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:33.767099Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="kw">def</span> load_adult_income(n_rows<span class="op">=</span><span class="dv">8000</span>):</span>
@@ -584,7 +584,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 Name: target_share, dtype: float64</code></pre>
 </div>
 </div>
-<div id="a04db11d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:20.369609Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:20.369433Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:20.401962Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:20.400875Z&quot;}}" data-execution_count="5">
+<div id="a04db11d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:33.769622Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:33.769429Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:33.797516Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:33.796615Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>classification_target <span class="op">=</span> <span class="st">"income"</span></span>
@@ -646,7 +646,7 @@ Positive class share: 0.244</code></pre>
 <li>logistic regression predicts the income label.</li>
 </ul>
 <p>This baseline is intentionally simple, but it is strong enough to make the AutoML comparison meaningful.</p>
-<div id="42e1e10e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:20.403751Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:20.403557Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:21.437521Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:21.436921Z&quot;}}" data-execution_count="6">
+<div id="42e1e10e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:33.799033Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:33.798889Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:34.632469Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:34.630028Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>classification_preprocess <span class="op">=</span> ColumnTransformer(</span>
@@ -684,7 +684,7 @@ confusion matrix:
 <h2>4. FLAML for Classification</h2>
 <p>FLAML can work with pandas data directly, including mixed tabular inputs. We give it the same train/test split and reserve the test set for final evaluation.</p>
 <p>The first AutoML run optimizes ROC AUC for 60 seconds.</p>
-<div id="bdf746ea" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:21.445721Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:21.445352Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:21.466984Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:21.466080Z&quot;}}" data-execution_count="7">
+<div id="bdf746ea" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:34.637915Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:34.637735Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:34.665468Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:34.662023Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>X_cls_train</span></code></pre></div>
@@ -920,7 +920,7 @@ confusion matrix:
 </div>
 </div>
 </div>
-<div id="86003a33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:21.469305Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:21.469106Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:26.804371Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:26.803537Z&quot;}}" data-execution_count="8">
+<div id="86003a33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:34.669204Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:34.668995Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:39.882798Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:39.882369Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>classification_automl <span class="op">=</span> AutoML()</span>
@@ -937,7 +937,7 @@ confusion matrix:
 <span id="cb9-12"><a href="" aria-label="12"></a>)</span></code></pre></div>
 </details>
 </div>
-<div id="033c2fff" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:26.808615Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:26.808382Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:26.813745Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:26.812780Z&quot;}}" data-execution_count="9">
+<div id="033c2fff" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:39.885497Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:39.885298Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:39.889058Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:39.888593Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="ss">f"Best estimator: </span><span class="sc">{</span>classification_automl<span class="sc">.</span>best_estimator<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -948,7 +948,7 @@ confusion matrix:
 <div class="cell-output cell-output-stdout">
 <pre><code>Best estimator: xgboost
 Best validation loss: 0.080056
-Training time for best config: 0.227s</code></pre>
+Training time for best config: 0.197s</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>{'n_estimators': 79,
@@ -959,10 +959,10 @@ Training time for best config: 0.227s</code></pre>
  'colsample_bylevel': np.float64(0.968674810769053),
  'colsample_bytree': 1.0,
  'reg_alpha': np.float64(0.0016766860807409002),
- 'reg_lambda': np.float64(1.221110068606527)}</code></pre>
+ 'reg_lambda': np.float64(1.2211100686065288)}</code></pre>
 </div>
 </div>
-<div id="453ae089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:26.815483Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:26.815301Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:26.872514Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:26.871628Z&quot;}}" data-execution_count="10">
+<div id="453ae089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:39.891106Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:39.890830Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:39.934677Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:39.934120Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>classification_automl_scores <span class="op">=</span> evaluate_classifier(classification_automl, X_cls_test_flaml, y_cls_test)</span>
@@ -1067,7 +1067,7 @@ confusion matrix:
 <h2>5. Classification Metrics</h2>
 <p>On Adult Income, accuracy can look good even when the model performs poorly on the minority class.</p>
 <p>Run the same AutoML procedure with different optimization metrics and compare the final test results.</p>
-<div id="48ee15a8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:26.875097Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:26.874695Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:42.513624Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:42.512857Z&quot;}}" data-execution_count="11">
+<div id="48ee15a8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:39.936126Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:39.935964Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:55.455939Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:55.455197Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="kw">def</span> run_flaml_classification(metric<span class="op">=</span><span class="st">"roc_auc"</span>, time_budget<span class="op">=</span>time_budget):</span>
@@ -1135,7 +1135,7 @@ confusion matrix:
 <th data-quarto-table-cell-role="th">0</th>
 <td>accuracy</td>
 <td>5</td>
-<td>5.114</td>
+<td>5.090</td>
 <td>lgbm</td>
 <td>0.132</td>
 <td>0.858</td>
@@ -1146,7 +1146,7 @@ confusion matrix:
 <th data-quarto-table-cell-role="th">1</th>
 <td>roc_auc</td>
 <td>5</td>
-<td>5.316</td>
+<td>5.267</td>
 <td>xgboost</td>
 <td>0.080</td>
 <td>0.851</td>
@@ -1157,7 +1157,7 @@ confusion matrix:
 <th data-quarto-table-cell-role="th">2</th>
 <td>f1</td>
 <td>5</td>
-<td>5.123</td>
+<td>5.096</td>
 <td>xgboost</td>
 <td>0.287</td>
 <td>0.862</td>
@@ -1170,7 +1170,7 @@ confusion matrix:
 </div>
 </div>
 </div>
-<div id="0564eae9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:42.516120Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:42.515880Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:42.640789Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:42.639974Z&quot;}}" data-execution_count="12">
+<div id="0564eae9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:55.458295Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:55.457993Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:55.556219Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:55.555389Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
@@ -1197,7 +1197,7 @@ confusion matrix:
 <p>The second real dataset is California Housing, originally derived from the 1990 US census.</p>
 <p>The task is to predict median house value for California districts from demographic and geographic attributes.</p>
 <p>This gives us a second AutoML setting: regression rather than classification.</p>
-<div id="ca9020b6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:42.643217Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:42.642991Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:43.753792Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:43.752831Z&quot;}}" data-execution_count="13">
+<div id="ca9020b6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:55.557887Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:55.557729Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:56.978213Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:56.977255Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="kw">def</span> load_housing_data():</span>
@@ -1414,7 +1414,7 @@ confusion matrix:
 </div>
 </div>
 </div>
-<div id="940ac465" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:43.755721Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:43.755543Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:43.763054Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:43.762020Z&quot;}}" data-execution_count="14">
+<div id="940ac465" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:56.979848Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:56.979680Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:56.986608Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:56.985627Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>regression_target <span class="op">=</span> <span class="st">"MedHouseVal"</span> <span class="cf">if</span> <span class="st">"MedHouseVal"</span> <span class="kw">in</span> housing_df.columns <span class="cf">else</span> <span class="st">"target"</span></span>
@@ -1449,7 +1449,7 @@ Target: MedHouseVal</code></pre>
 <li>Ridge regression: simple, fast, and linear.</li>
 <li>Random forest: nonlinear and stronger, but less transparent and more expensive.</li>
 </ul>
-<div id="3ef59b1e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:43.764747Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:43.764573Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:48.905550Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:48.904754Z&quot;}}" data-execution_count="15">
+<div id="3ef59b1e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:56.988407Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:56.988238Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:55:02.318192Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:55:02.317568Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>ridge_baseline <span class="op">=</span> Pipeline(</span>
@@ -1535,7 +1535,7 @@ Random forest baseline
 <h2>8. FLAML for Regression</h2>
 <p>For regression, FLAML can optimize metrics such as RMSE, MAE, or R2.</p>
 <p>Here we optimize RMSE and compare the selected model with the two manual baselines.</p>
-<div id="439a0506" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:48.907770Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:48.907582Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:54.710254Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:54.709442Z&quot;}}" data-execution_count="16">
+<div id="439a0506" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:55:02.320214Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:55:02.320052Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:55:07.993246Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:55:07.992674Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>regression_automl <span class="op">=</span> AutoML()</span>
@@ -1552,7 +1552,7 @@ Random forest baseline
 <span id="cb23-12"><a href="" aria-label="12"></a>)</span></code></pre></div>
 </details>
 </div>
-<div id="6cab0009" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:54.715381Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:54.714909Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:54.721105Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:54.720223Z&quot;}}" data-execution_count="17">
+<div id="6cab0009" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:55:07.995601Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:55:07.995425Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:55:07.999703Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:55:07.999186Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="ss">f"Best estimator: </span><span class="sc">{</span>regression_automl<span class="sc">.</span>best_estimator<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -1563,7 +1563,7 @@ Random forest baseline
 <div class="cell-output cell-output-stdout">
 <pre><code>Best estimator: xgboost
 Best validation loss: 0.454121
-Training time for best config: 0.776s</code></pre>
+Training time for best config: 0.654s</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>{'n_estimators': 676,
@@ -1574,10 +1574,10 @@ Training time for best config: 0.776s</code></pre>
  'colsample_bylevel': np.float64(0.896142769508154),
  'colsample_bytree': np.float64(0.9993271961638156),
  'reg_alpha': np.float64(0.0014585172191691575),
- 'reg_lambda': np.float64(17.50258170562381)}</code></pre>
+ 'reg_lambda': np.float64(17.502581705623893)}</code></pre>
 </div>
 </div>
-<div id="86279864" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:54.722789Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:54.722606Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:50:54.762812Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:50:54.761870Z&quot;}}" data-execution_count="18">
+<div id="86279864" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:55:08.001527Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:55:08.001359Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:55:08.038824Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:55:08.038179Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a>regression_automl_scores <span class="op">=</span> evaluate_regressor(regression_automl, X_reg_test_flaml, y_reg_test)</span>
@@ -1683,7 +1683,7 @@ Training time for best config: 0.776s</code></pre>
 <h2>9. Budget Experiment</h2>
 <p>Repeat FLAML on the regression task with short, medium, and longer budgets.</p>
 <p>Watch whether validation loss and test-set performance move together.</p>
-<div id="a35c70af" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:50:54.764650Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:50:54.764462Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:09.175481Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:09.174410Z&quot;}}" data-execution_count="19">
+<div id="a35c70af" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:55:08.040687Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:55:08.040540Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:58:20.790302Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:58:20.789538Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a><span class="kw">def</span> run_flaml_regression(time_budget<span class="op">=</span>time_budget, metric<span class="op">=</span><span class="st">"rmse"</span>):</span>
@@ -1751,18 +1751,18 @@ Training time for best config: 0.776s</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <td>15</td>
 <td>rmse</td>
-<td>15.746</td>
+<td>16.397</td>
 <td>xgboost</td>
-<td>0.451</td>
-<td>0.443</td>
-<td>0.292</td>
-<td>0.852</td>
+<td>0.449</td>
+<td>0.440</td>
+<td>0.287</td>
+<td>0.854</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
 <td>45</td>
 <td>rmse</td>
-<td>55.286</td>
+<td>53.341</td>
 <td>xgboost</td>
 <td>0.438</td>
 <td>0.451</td>
@@ -1773,7 +1773,7 @@ Training time for best config: 0.776s</code></pre>
 <th data-quarto-table-cell-role="th">2</th>
 <td>120</td>
 <td>rmse</td>
-<td>123.045</td>
+<td>122.673</td>
 <td>lgbm</td>
 <td>0.450</td>
 <td>0.433</td>
@@ -1786,7 +1786,7 @@ Training time for best config: 0.776s</code></pre>
 </div>
 </div>
 </div>
-<div id="2abe1fb5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:09.177466Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:09.177290Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:09.291820Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:09.290698Z&quot;}}" data-execution_count="20">
+<div id="2abe1fb5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:58:20.792546Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:58:20.792196Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:58:20.876984Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:58:20.876093Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
@@ -1828,7 +1828,7 @@ Training time for best config: 0.776s</code></pre>
 <li>final test-set metrics.</li>
 </ul>
 <p>AutoML is most useful when its choices are inspectable and reproducible.</p>
-<div id="a0810061" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:54:09.293783Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:54:09.293605Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:54:09.305104Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:54:09.303962Z&quot;}}" data-execution_count="21">
+<div id="a0810061" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-12T14:58:20.878931Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-12T14:58:20.878655Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-12T14:58:20.887869Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-12T14:58:20.887076Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a>summary <span class="op">=</span> pd.DataFrame(</span>
