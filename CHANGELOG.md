@@ -1,3 +1,9 @@
+## [1.1.10](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.9...1.1.10) (2026-10-14)
+
+### Bug Fixes
+
+* update feature selection ([5e63c69](https://github.com/w4bo/AA2627-unibo-dcai/commit/5e63c6942ef425200bd90c7fb82c8c1f1b5c5463))
+
 ## [1.1.9](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.8...1.1.9) (2026-10-14)
 
 ### Bug Fixes
