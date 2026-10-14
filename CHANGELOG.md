@@ -1,3 +1,15 @@
+## [1.1.9](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.8...1.1.9) (2026-10-14)
+
+### Bug Fixes
+
+* update data augmentation ([0ae0029](https://github.com/w4bo/AA2627-unibo-dcai/commit/0ae0029eeb0f2e28a2f01faab6365530192cdaaa))
+* update data augmentation ([7c2784f](https://github.com/w4bo/AA2627-unibo-dcai/commit/7c2784fc0caf5a206c6edb2b0d6476bcbf5d9ad8))
+* update data augmentation ([0a10b76](https://github.com/w4bo/AA2627-unibo-dcai/commit/0a10b76547b24f4bfe4d9a03b212d481a55f99f5))
+
+### General maintenance
+
+* working on augmentation ([259f739](https://github.com/w4bo/AA2627-unibo-dcai/commit/259f739f2f163be0ad322e59f53d4f43bd32d059))
+
 ## [1.1.8](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.7...1.1.8) (2026-10-12)
 
 ### Bug Fixes
