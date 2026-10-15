@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="lab-04-automl_files/libs/quarto-html/tabby.min.js"></script>
-<script src="lab-04-automl_files/libs/quarto-html/popper.min.js"></script>
-<script src="lab-04-automl_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="lab-04-automl_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="lab-04-automl_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lab-04-automl_files/libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="lab-01-automl_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lab-01-automl_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab-01-automl_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lab-01-automl_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab-01-automl_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lab-01-automl_files/libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
@@ -13,8 +13,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="lab-04-automl_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="lab-04-automl_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="lab-01-automl_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lab-01-automl_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -119,13 +119,13 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="lab-04-automl_files/libs/revealjs/dist/theme/quarto-b328c055d9dc1f3c009edd90f416a34b.css">
-  <link href="lab-04-automl_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="lab-04-automl_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="lab-04-automl_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="lab-04-automl_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="lab-04-automl_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="lab-04-automl_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="lab-01-automl_files/libs/revealjs/dist/theme/quarto-b328c055d9dc1f3c009edd90f416a34b.css">
+  <link href="lab-01-automl_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lab-01-automl_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lab-01-automl_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lab-01-automl_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="lab-01-automl_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="lab-01-automl_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -236,10 +236,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section class="slide level2">
 
-<p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-04-automl.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
+<p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-01-automl.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
 </section>
-<section id="the-problem-hyperparameter-optimization" class="slide level2">
-<h2>The Problem: Hyperparameter Optimization</h2>
+<section id="the-problem-hyperparameter-optimization" class="title-slide slide level1 center">
+<h1>The Problem: Hyperparameter Optimization</h1>
 <p>A learning algorithm fits <strong>parameters</strong> (for example, regression coefficients) from data.</p>
 <p><strong>Hyperparameters</strong> configure that fitting process: regularization strength, tree depth, or learning rate. We must choose them before fitting each candidate.</p>
 <p>Given training data <span class="math inline">\(D_{\mathrm{tr}}\)</span>, a fixed learning algorithm <span class="math inline">\(A\)</span>, and a search space <span class="math inline">\(\Lambda\)</span>, hyperparameter optimization (HPO) solves</p>
@@ -247,15 +247,14 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 f(\lambda)=\mathcal{L}_{D_{\mathrm{val}}}\!\left(A_\lambda(D_{\mathrm{tr}})\right).\]</span></p>
 <p>Here <span class="math inline">\(\mathcal L\)</span> is a validation loss; for ROC AUC we can minimize <span class="math inline">\(1-\mathrm{AUC}\)</span>.</p>
 <ul>
-<li>The objective is usually an expensive, noisy black box: evaluating it requires training a model.</li>
-<li>A low training loss alone does not identify the best hyperparameters.</li>
+<li>The optimizer is usually an expensive, noisy black box: evaluating it can require training a model.</li>
 </ul>
-<p>References: <span class="citation" data-cites="feurer2019hyperparameter">(<a href="#/references" role="doc-biblioref" onclick="">Feurer and Hutter 2019</a>)</span>.</p>
 </section>
-<section id="hpo-as-an-optimizerlearning-system-loop" class="slide level2">
-<h2>HPO as an Optimizer–Learning-System Loop</h2>
 
-<img data-src="img/automl/figures/blackbox-hpo-loop.png" class="r-stretch quarto-figure-center"><p class="caption">Optimizer proposes a configuration; the learning system trains and validates it and returns a loss. Source: Hutter and Vanschoren AutoML tutorial.</p><p>The learning system fits model parameters; the optimizer changes hyperparameters. <strong>Sample efficiency</strong> asks how much validation improvement we obtain per expensive evaluation. <strong>Cost efficiency</strong> also accounts for unequal evaluation times.</p>
+<section id="hpo-as-an-optimizerlearning-system-loop" class="title-slide slide level1 center">
+<h1>HPO as an Optimizer–Learning-System Loop</h1>
+
+<img data-src="img/automl/figures/blackbox-hpo-loop.png" class="r-stretch quarto-figure-center"><p class="caption">Optimizer proposes a configuration; the learning system trains and validates it and returns a loss. Source: Hutter and Vanschoren AutoML tutorial.</p><p>The learning system fits model parameters.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -287,393 +286,28 @@ f(\lambda)=\mathcal{L}_{D_{\mathrm{val}}}\!\left(A_\lambda(D_{\mathrm{tr}})\righ
 </tr>
 </tbody>
 </table>
-<p>Some choices activate others, so practical spaces can be conditional rather than simple Cartesian products.</p>
+<p>The optimizer changes hyperparameters: the distribution and bounds encode assumptions, <strong>a poor search space can defeat any optimizer</strong>. - <strong>Sample efficiency</strong> asks how much validation improvement we obtain per expensive evaluation. - <strong>Cost efficiency</strong> also accounts for unequal evaluation times.</p>
 </section>
-<section id="define-the-evaluation-before-searching" class="slide level2">
-<h2>Define the Evaluation Before Searching</h2>
-<p>Choose the target, metric, split strategy, and hyperparameter ranges before running the optimizer. For <span class="math inline">\(K\)</span>-fold cross-validation on the development data, use</p>
-<p><span class="math display">\[\widehat f(\lambda)=\frac{1}{K}\sum_{k=1}^{K}
-\mathcal L_{D_k}\!\left(A_\lambda(D_{-k})\right).\]</span></p>
-<p>Fit scaling, imputation, feature selection, and resampling <strong>inside each training fold</strong>. Use group or temporal splits when the application requires them.</p>
-<p>This notebook uses training, validation, and test partitions. Search and classroom comparisons use training/validation data; the final test cell is run only after decisions are frozen. Repeatedly choosing from test results would turn the test set into another validation set.</p>
-</section>
-<section id="learning-outcomes" class="slide level2">
-<h2>Learning Outcomes</h2>
-<p>By the end of this 3-hour lab, you should be able to:</p>
+
+<section id="define-the-evaluation-before-searching" class="title-slide slide level1 center">
+<h1>Define the Evaluation Before Searching</h1>
+<p>Choose <em>target</em>, <em>metric</em>, <em>split strategy</em>, and <em>hyperparameter</em> ranges before running the optimizer.</p>
 <ul>
-<li>Formulate HPO and Combined Algorithm Selection and Hyperparameter optimization (CASH).</li>
-<li>Define the evaluation protocol and feature transformations before searching.</li>
-<li>Implement grid and random search and explain random search’s effective-dimension argument.</li>
-<li>Distinguish a trial budget from a time budget and interpret budget-aware search.</li>
-<li>Run the existing FLAML classification and regression examples and inspect their choices.</li>
-<li>Explain how full pipeline optimization extends learner selection.</li>
-<li>Compare human-centered, agent-based, and specification-driven automation using research papers.</li>
-<li>Run successive halving and inspect FLAML search spaces and logged anytime behavior.</li>
-<li>Translate human constraints into an executable, validation-based comparison.</li>
+<li>For <span class="math inline">\(K\)</span>-fold cross-validation on the development data, use <span class="math inline">\(\widehat f(\lambda)=\frac{1}{K}\sum_{k=1}^{K} \mathcal L_{D_k}\!\left(A_\lambda(D_{-k})\right).\)</span></li>
+</ul>
+<p>No-leakage: fit scaling, imputation, feature selection, and resampling <strong>inside each training fold</strong>.</p>
+<ul>
+<li>Use group or temporal splits when the application requires them.</li>
 </ul>
 </section>
-<section id="reading-warm-up" class="slide level2">
-<h2>Reading Warm-Up</h2>
-<p>Optional background: the <a href="https://www.automl.org/wp-content/uploads/2018/12/hutter-vanschoren-part1-2.pdf">Hutter–Vanschoren NeurIPS 2018 AutoML tutorial</a> and the AutoML book <span class="citation" data-cites="hutter2019automated">(<a href="#/references" role="doc-biblioref" onclick="">Hutter et al. 2019</a>)</span>. The explanations in this notebook are self-contained.</p>
-<p>Look for algorithm choice as a top-level hyperparameter, expensive black-box evaluations, random search as a baseline, and multi-fidelity allocation.</p>
-<p><strong>Discussion:</strong> if AutoML returns a high-scoring model, what evidence do you still need before trusting it?</p>
-</section>
-<section id="grid-search-enumerate-a-cartesian-product" class="slide level2 scrollable">
-<h2>Grid Search: Enumerate a Cartesian Product</h2>
-<p>Choose a finite set <span class="math inline">\(G_j\)</span> for each of <span class="math inline">\(d\)</span> hyperparameters. Grid search evaluates every point in</p>
-<p><span class="math display">\[G=G_1\times\cdots\times G_d,\qquad N_{\mathrm{grid}}=\prod_{j=1}^d |G_j|.\]</span></p>
-<p>For a random forest, 4 depths × 3 leaf sizes × 5 tree counts means 60 candidates, or 300 fits with 5-fold CV, before any final refit. With <span class="math inline">\(m\)</span> values in each dimension, the count grows as <span class="math inline">\(m^d\)</span>.</p>
-<p>Grid search is transparent and useful for small, carefully chosen spaces. Its resolution is fixed by the grid: values between grid points are never tried, and adding an unimportant dimension still multiplies the work.</p>
-<p>The parameter names below follow the pipeline used later. With three <code>C</code> values and three class-weight choices there are nine candidates, or 27 fits under three-fold CV, plus a refit:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>param_grid <span class="op">=</span> {</span>
-<span id="cb1-2"><a href="" aria-label="2"></a>    <span class="st">"classifier__C"</span>: [<span class="fl">0.001</span>, <span class="fl">1.0</span>, <span class="fl">1000.0</span>],</span>
-<span id="cb1-3"><a href="" aria-label="3"></a>    <span class="st">"classifier__class_weight"</span>: [<span class="va">None</span>, <span class="st">"balanced"</span>, {<span class="dv">0</span>: <span class="dv">1</span>, <span class="dv">1</span>: <span class="dv">2</span>}],</span>
-<span id="cb1-4"><a href="" aria-label="4"></a>}</span>
-<span id="cb1-5"><a href="" aria-label="5"></a>GridSearchCV(classification_baseline, param_grid, cv<span class="op">=</span><span class="dv">3</span>, scoring<span class="op">=</span><span class="st">"roc_auc"</span>)</span></code></pre></div>
-<p>The runnable comparison below additionally fixes identical stratified folds for both search methods.</p>
-</section>
-<section id="random-search-sample-configurations" class="slide level2 scrollable">
-<h2>Random Search: Sample Configurations</h2>
-<p>Choose a sampling distribution <span class="math inline">\(p(\lambda)\)</span>, draw <span class="math inline">\(N\)</span> independent candidates, evaluate each, and retain the candidate with the smallest validation loss:</p>
-<p><span class="math display">\[\lambda_1,\ldots,\lambda_N\sim p(\lambda),\qquad
-\widehat\lambda_N\in\arg\min_{\lambda_i}\widehat f(\lambda_i).\]</span></p>
-<p>Use categorical distributions for discrete choices and often log-uniform distributions for positive scale parameters such as regularization strength. The distribution and bounds encode assumptions: a poor search space can defeat any optimizer.</p>
-<p>Unlike grid search, the number of trials need not be a product of per-dimension resolutions. Random search is easy to interrupt or extend. It does not use earlier scores to propose later candidates.</p>
-<p>The corresponding nine-trial baseline samples <code>C</code> continuously on a log scale while keeping the same class-weight options:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>param_distributions <span class="op">=</span> {</span>
-<span id="cb2-2"><a href="" aria-label="2"></a>    <span class="st">"classifier__C"</span>: loguniform(<span class="fl">0.001</span>, <span class="fl">1000.0</span>),</span>
-<span id="cb2-3"><a href="" aria-label="3"></a>    <span class="st">"classifier__class_weight"</span>: [<span class="va">None</span>, <span class="st">"balanced"</span>, {<span class="dv">0</span>: <span class="dv">1</span>, <span class="dv">1</span>: <span class="dv">2</span>}],</span>
-<span id="cb2-4"><a href="" aria-label="4"></a>}</span>
-<span id="cb2-5"><a href="" aria-label="5"></a>RandomizedSearchCV(</span>
-<span id="cb2-6"><a href="" aria-label="6"></a>    classification_baseline, param_distributions, n_iter<span class="op">=</span><span class="dv">9</span>,</span>
-<span id="cb2-7"><a href="" aria-label="7"></a>    cv<span class="op">=</span><span class="dv">3</span>, scoring<span class="op">=</span><span class="st">"roc_auc"</span>, random_state<span class="op">=</span>RANDOM_STATE,</span>
-<span id="cb2-8"><a href="" aria-label="8"></a>)</span></code></pre></div>
-<p>These snippets introduce the APIs; execute the complete comparison after setup. Independent trials can be parallelized, although worker count and hardware then affect elapsed time.</p>
-</section>
-<section id="why-can-random-search-work-so-well" class="slide level2">
-<h2>Why Can Random Search Work So Well?</h2>
-<p>If only one of two hyperparameters matters, a 3 × 3 grid spends nine trials on only three values of the important parameter. Nine continuous random samples typically explore nine distinct values. The advantage grows when a high-dimensional space has only a few influential dimensions.</p>
-<p>Let a useful region have probability mass <span class="math inline">\(p\)</span> under the sampling distribution. With independent trials,</p>
-<p><span class="math display">\[P(\text{at least one useful configuration in }N\text{ trials})=1-(1-p)^N.\]</span></p>
-<p>For <span class="math inline">\(p=0.05\)</span>, 59 trials give about a 95% chance of hitting that region. This is a sampling calculation, not a guarantee of generalization or of finding the global optimum.</p>
-<p><a href="https://www.jmlr.org/papers/v13/bergstra12a.html">Bergstra and Bengio (2012), <em>Random Search for Hyper-Parameter Optimization</em></a> provide theory and experiments supporting the effective-dimension argument. Random search is a strong baseline; tiny useful regions, parameter interactions, or informative adaptive proposals can change the comparison.</p>
-<p>References: <span class="citation" data-cites="bergstra2012random">(<a href="#/references" role="doc-biblioref" onclick="">Bergstra and Bengio 2012</a>)</span>.</p>
-</section>
-<section id="visualizing-effective-dimensionality" class="slide level2">
-<h2>Visualizing Effective Dimensionality</h2>
 
-<img data-src="img/automl/figures/random-vs-grid-search.png" class="r-stretch quarto-figure-center"><p class="caption">Nine grid points cover only three values of each coordinate; nine continuous random samples usually cover nine. Source: Bergstra and Bengio via the Hutter and Vanschoren tutorial.</p><table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Independent trials</th>
-<th>Hit a region of mass 5%</th>
-<th>Hit a region of mass 1%</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>20</td>
-<td>64%</td>
-<td>18%</td>
-</tr>
-<tr class="even">
-<td>60</td>
-<td>95%</td>
-<td>45%</td>
-</tr>
-<tr class="odd">
-<td>300</td>
-<td>&gt;99.9%</td>
-<td>95%</td>
-</tr>
-</tbody>
-</table>
-<p>The probability depends on the region’s mass under the sampling distribution. A dimension-free formula does not make the distribution or the size of the useful region independent of dimensionality. Run the toy experiment after setup to see this mechanism in action.</p>
-</section>
-<section>
-<section id="the-budget-problem" class="title-slide slide level1 center">
-<h1>The Budget Problem</h1>
-
-</section>
-<section id="the-budget-is-part-of-the-problem" class="slide level2 scrollable">
-<h2>The Budget Is Part of the Problem</h2>
-<p>A <strong>trial budget</strong> limits the number of candidates. A <strong>time budget</strong> limits elapsed time. They are different: a deep forest can cost much more than a small linear model. Include CV folds, preprocessing, search overhead, and final refitting when reporting total cost.</p>
-<p>For a sequential search history <span class="math inline">\(H_N=\{(\lambda_i,r_i,\widehat f_i,c_i)\}_{i=1}^N\)</span>, a simplified resource constraint is</p>
-<p><span class="math display">\[\sum_{i=1}^N c(\lambda_i,r_i)+c_{\mathrm{overhead}}+c_{\mathrm{refit}}\le B.\]</span></p>
-<p>Here <span class="math inline">\(r_i\)</span> is fidelity (for example, sample size or epochs), <span class="math inline">\(c\)</span> is cost, and <span class="math inline">\(B\)</span> is the total budget. The optimizer chooses what to evaluate, at what fidelity, and when to stop. It returns the best observed candidate, rather than a certified global optimum.</p>
-<p>Compare methods with the same data, metric, hardware, and resource accounting. Equal trial counts do not imply equal elapsed time. Report the requested budget <strong>and measured elapsed time</strong>; a library time limit is not a hard operating-system deadline.</p>
-</section>
-<section id="anytime-performance-under-a-budget" class="slide level2">
-<h2>Anytime Performance Under a Budget</h2>
-<p>For completed trials with validation losses <span class="math inline">\(f_i\)</span> and completion times <span class="math inline">\(t_i\)</span>, define the incumbent curve</p>
-<p><span class="math display">\[f^*(\tau)=\min\{f_i:t_i\le\tau\},\qquad \tau\le B.\]</span></p>
-<p>Before the first completed trial there is no incumbent. With a fixed evaluation protocol, the best observed loss cannot increase as trials finish. Plotting this curve against elapsed time reveals how quickly an optimizer becomes useful; plotting against trial count answers a different question.</p>
-<p>Budget can also mean CPU/GPU hours, money, or energy. Wall-clock time depends on hardware and parallelism, so report the execution setting along with the curve.</p>
-</section>
-<section id="spending-the-budget-adaptation-and-fidelity" class="slide level2">
-<h2>Spending the Budget: Adaptation and Fidelity</h2>
-<p>Adaptive search uses previous evaluations to choose later candidates; Bayesian optimization is one approach. Multi-fidelity search first uses cheaper approximations and then spends more resources on promising candidates.</p>
-<p>For example, successive halving repeatedly removes weak candidates while increasing resources for survivors. <a href="https://www.jmlr.org/papers/v18/16-558.html">Li et al.&nbsp;(2018), <em>Hyperband</em></a> combine random configurations with adaptive resource allocation and early stopping.</p>
-<p>Low-fidelity rankings can be misleading: a model that learns slowly may be discarded too early. FLAML uses its own cost-aware search and resource allocation; it should not be described as simply running Hyperband.</p>
-<p>References: <span class="citation" data-cites="li2018hyperband">(<a href="#/references" role="doc-biblioref" onclick="">Li et al. 2018</a>)</span>.</p>
-</section>
-<section id="beyond-random-search-learning-where-to-search" class="slide level2">
-<h2>Beyond Random Search: Learning Where to Search</h2>
-<p>Bayesian optimization fits a surrogate to observed configuration/loss pairs and uses an acquisition function to balance exploring uncertain regions with exploiting promising ones. See <a href="https://arxiv.org/abs/1206.2944">Snoek et al.&nbsp;(2012)</a>.</p>
-<p>SMAC uses random-forest surrogates for algorithm configuration, including categorical and conditional choices; see <a href="https://doi.org/10.1007/978-3-642-25566-3_40">Hutter et al.&nbsp;(2011)</a>. Evolutionary and local-search approaches instead modify candidate configurations. These methods use search history, unlike independent random sampling.</p>
-<p>References: <span class="citation" data-cites="snoek2012practical hutter2011sequential">(<a href="#/references" role="doc-biblioref" onclick="">Snoek et al. 2012</a>; <a href="#/references" role="doc-biblioref" onclick="">Hutter et al. 2011</a>)</span>.</p>
-</section>
-<section id="successive-halving-hyperband-and-bohb" class="slide level2">
-<h2>Successive Halving, Hyperband, and BOHB</h2>
-<p><a href="https://proceedings.mlr.press/v51/jamieson16.html">Jamieson and Talwalkar (2016)</a> study allocating resources to identify promising candidates. In successive halving with reduction factor 3:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Round</th>
-<th>Candidates</th>
-<th>Resource per candidate</th>
-<th>Total resource</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>0</td>
-<td>27</td>
-<td>1 unit</td>
-<td>27 units</td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>9</td>
-<td>3 units</td>
-<td>27 units</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>3</td>
-<td>9 units</td>
-<td>27 units</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>1</td>
-<td>27 units</td>
-<td>27 units</td>
-</tr>
-</tbody>
-</table>
-<p>Hyperband varies the initial breadth/resource tradeoff across halving brackets. <a href="https://proceedings.mlr.press/v80/falkner18a.html">BOHB (Falkner et al., 2018)</a> combines model-based configuration sampling with Hyperband-style allocation. Constant work per round is an idealization: actual training cost need not grow linearly with resource, and implementations may refit promoted candidates.</p>
-<p>References: <span class="citation" data-cites="jamieson2016nonstochastic falkner2018bohb">(<a href="#/references" role="doc-biblioref" onclick="">Jamieson and Talwalkar 2016</a>; <a href="#/references" role="doc-biblioref" onclick="">Falkner et al. 2018</a>)</span>.</p>
-</section>
-<section id="multi-fidelity-and-combined-search-research-figures" class="slide level2">
-<h2>Multi-Fidelity and Combined Search: Research Figures</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/automl/figures/multifidelity-optimization.png"></p>
-<figcaption>SVM validation error at increasing MNIST sample sizes. Source: Hutter and Vanschoren AutoML tutorial.</figcaption>
-</figure>
-</div>
-<p>Low fidelity is useful when it preserves enough of the high-fidelity ranking. It can also discard slow-starting or data-hungry models.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/automl/figures/bohb-combined-search.png"></p>
-<figcaption>Regret against wall-clock time in the cited BOHB experiments. Source: Falkner et al.&nbsp;via the Hutter and Vanschoren tutorial.</figcaption>
-</figure>
-</div>
-<p>The BOHB figure illustrates the anytime/final-performance tradeoff in those experiments; it is not a universal ranking across tasks.</p>
-</section></section>
-<section>
-<section id="automl-and-cash" class="title-slide slide level1 center">
-<h1>AutoML and CASH</h1>
-
-</section>
-<section id="what-is-automl" class="slide level2">
-<h2>What Is AutoML?</h2>
-<p><strong>Automated Machine Learning (AutoML)</strong> automates choices in constructing and evaluating an ML solution, within a user-defined task, search space, metric, and budget. Depending on the system, these choices include preprocessing, features, learning algorithms, hyperparameters, and ensembles.</p>
-<p>HPO fixes the learning algorithm and tunes its settings. AutoML can also choose the algorithm and parts of the pipeline. Humans still define success, admissible data, evaluation design, and operational constraints.</p>
-<p>The next formalization captures a central AutoML subproblem: choosing a learner and its conditional hyperparameters together.</p>
-<p>References: <span class="citation" data-cites="hutter2019automated">(<a href="#/references" role="doc-biblioref" onclick="">Hutter et al. 2019</a>)</span>.</p>
-</section>
-<section id="cash-combined-algorithm-selection-and-hyperparameter-optimization" class="slide level2">
-<h2>CASH: Combined Algorithm Selection and Hyperparameter Optimization</h2>
-<p>Let <span class="math inline">\(\mathcal A=\{A_1,\ldots,A_M\}\)</span> be candidate algorithms and <span class="math inline">\(\Lambda_a\)</span> the hyperparameter space of <span class="math inline">\(A_a\)</span>. The <strong>CASH</strong> problem is</p>
-<p><span class="math display">\[ (a^*,\lambda^*)\in\arg\min_{a\in\{1,\ldots,M\},\;\lambda\in\Lambda_a}
-\frac{1}{K}\sum_{k=1}^{K}\mathcal L_{D_k}\!\left(A_{a,\lambda}(D_{-k})\right). \]</span></p>
-<p>Its domain is a conditional union <span class="math inline">\(\bigcup_a\{a\}\times\Lambda_a\)</span>, rather than one rectangular grid. A <strong>root hyperparameter</strong> selects the learner, activating only its associated space <span class="math inline">\(\Lambda_a\)</span>. A forest activates tree-related settings; logistic regression activates regularization settings. A practical solver approximates this objective under a resource budget.</p>
-<p><a href="https://arxiv.org/abs/1208.3719">Thornton et al.&nbsp;(2013), <em>Auto-WEKA: Combined Selection and Hyperparameter Optimization of Classification Algorithms</em></a> introduced this formulation. CASH is the algorithm-selection problem; computation caching is a separate implementation technique.</p>
-<p>References: <span class="citation" data-cites="thornton2013auto">(<a href="#/references" role="doc-biblioref" onclick="">Thornton et al. 2013</a>)</span>.</p>
-</section>
-<section id="cash-search-spaces-are-conditional" class="slide level2">
-<h2>CASH Search Spaces Are Conditional</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Learner selected at the root</th>
-<th>Active hyperparameters</th>
-<th>Inactive examples</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Random forest</td>
-<td>tree count, tree/leaf constraints</td>
-<td>logistic regularization strength</td>
-</tr>
-<tr class="even">
-<td>Logistic regression</td>
-<td>penalty and regularization strength</td>
-<td>forest depth and number of trees</td>
-</tr>
-<tr class="odd">
-<td>Gradient boosting</td>
-<td>learning rate, iterations, tree constraints</td>
-<td>unrelated learners’ settings</td>
-</tr>
-</tbody>
-</table>
-<p>The representation is a conditional tree or graph, not an unrestricted Cartesian product of every learner’s settings. Inactive coordinates do not define different effective models.</p>
-<p>CASH inherits HPO’s expensive evaluations and adds learner-level allocation: <strong>which algorithm deserves the next unit of budget?</strong> Different learners and configurations have different costs; the answer should depend on observed quality, cost, and remaining resources.</p>
-</section>
-<section id="two-automl-systems-auto-sklearn-and-flaml" class="slide level2">
-<h2>Two AutoML Systems: auto-sklearn and FLAML</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>System</th>
-<th>Main ideas in the cited paper</th>
-<th>Connection to this lab</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>auto-sklearn</td>
-<td>Bayesian optimization of scikit-learn pipelines, meta-learning from earlier datasets, ensemble construction</td>
-<td>Shows how CASH can include preprocessing and reuse experience</td>
-</tr>
-<tr class="even">
-<td>FLAML</td>
-<td>Cost-aware learner selection, hyperparameter search, and sample-size allocation</td>
-<td>Makes search under short time budgets easy to demonstrate</td>
-</tr>
-</tbody>
-</table>
-<p>Read <a href="https://papers.neurips.cc/paper_files/paper/2015/hash/11d0e6287202fced83f79975ec59a3a6-Abstract.html">Feurer et al.&nbsp;(2015), <em>Efficient and Robust Automated Machine Learning</em></a> and <a href="https://arxiv.org/abs/1911.04706">Wang et al.&nbsp;(2021), <em>FLAML: A Fast and Lightweight AutoML Library</em></a>.</p>
-<p>We use FLAML below, retaining the Adult Income and California Housing workflow. This is a teaching demonstration, not a benchmark establishing a winner between libraries.</p>
-<p>References: <span class="citation" data-cites="feurer2015efficient wang2021flaml">(<a href="#/references" role="doc-biblioref" onclick="">Feurer et al. 2015</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang, Wu, Weimer, et al. 2021</a>)</span>.</p>
-</section>
-<section id="auto-sklearn-pipeline-search-meta-learning-and-ensembles" class="slide level2 scrollable">
-<h2>auto-sklearn: Pipeline Search, Meta-Learning, and Ensembles</h2>
-<p>The original auto-sklearn searches a fixed template: data preprocessing → feature preprocessing → classifier. The 2015 paper reports 15 classifiers, 14 feature preprocessors, and 4 data preprocessors, giving a conditional space with 110 hyperparameters; these describe that published version, rather than the current library inventory. SMAC proposes conditional configurations, meta-learning uses experience from similar datasets to initialize search, and ensemble construction reuses evaluated models.</p>
-<p><a href="https://jmlr.org/papers/v23/21-0992.html">Feurer et al.&nbsp;(2022), <em>Auto-sklearn 2.0: Hands-free AutoML via Meta-Learning</em></a> extend this approach with a portfolio of initial configurations, successive-halving allocation, and learned selection of model-selection policies. These are version-specific design choices, rather than capabilities of every AutoML system.</p>
-<p>References: <span class="citation" data-cites="feurer2022auto">(<a href="#/references" role="doc-biblioref" onclick="">Feurer et al. 2022</a>)</span>.</p>
-</section>
-<section id="flaml-what-makes-search-economical" class="slide level2">
-<h2>FLAML: What Makes Search Economical?</h2>
-<p>FLAML coordinates learner selection with the cost and expected benefit of further search. Low-cost initial configurations and cost-related settings help it start cheaply, while sample size can serve as another resource dimension.</p>
-<p><a href="https://ojs.aaai.org/index.php/AAAI/article/view/17239">Cost-Frugal Optimization (CFO), Wu et al.&nbsp;(2021)</a> uses randomized local search starting from inexpensive configurations. <a href="https://www.microsoft.com/en-us/research/publication/economical-hyperparameter-optimization-with-blended-search-strategy/">BlendSearch, Wang et al.&nbsp;(2021)</a> blends local and global search. Search and resampling behavior depend on configuration and version: this lab explicitly fixes the holdout split and learner lists.</p>
-<p>Both auto-sklearn and FLAML offer configurable behavior. Avoid interpreting the comparison as “ensembles versus single models” or a guaranteed accuracy ranking: FLAML also supports optional ensembling.</p>
-<p>References: <span class="citation" data-cites="wu2021frugal wang2021economical">(<a href="#/references" role="doc-biblioref" onclick="">Wu et al. 2021</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang, Wu, Huang, et al. 2021</a>)</span>.</p>
-</section>
-<section id="auto-sklearn-versus-flaml" class="slide level2">
-<h2>auto-sklearn versus FLAML</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Aspect</th>
-<th>auto-sklearn</th>
-<th>FLAML</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Search scope</td>
-<td>Learners and preprocessing in a fixed template</td>
-<td>Learners and their conditional settings in our example</td>
-</tr>
-<tr class="even">
-<td>Optimization</td>
-<td>SMAC-based Bayesian optimization</td>
-<td>Cost-frugal local search / BlendSearch</td>
-</tr>
-<tr class="odd">
-<td>Prior knowledge</td>
-<td>Meta-learning and initial portfolios</td>
-<td>Low-cost initial configurations</td>
-</tr>
-<tr class="even">
-<td>Resource allocation</td>
-<td>Successive halving in version 2.0</td>
-<td>Cost-aware learner choice and sample-size allocation</td>
-</tr>
-<tr class="odd">
-<td>Typical output</td>
-<td>Ensemble of evaluated pipelines</td>
-<td>Best model; optional ensembling</td>
-</tr>
-</tbody>
-</table>
-<p>These describe the cited systems and their configurable behavior <span class="citation" data-cites="feurer2015efficient feurer2022auto wang2021flaml">(<a href="#/references" role="doc-biblioref" onclick="">Feurer et al. 2015</a>, <a href="#/references" role="doc-biblioref" onclick="">2022</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang, Wu, Weimer, et al. 2021</a>)</span>. They do not establish an accuracy ranking. Our lab fixes holdout validation, learner lists, and a short time budget so the choices remain inspectable.</p>
-</section></section>
-<section>
-<section id="practical-search-and-flaml" class="title-slide slide level1 center">
-<h1>Practical Search and FLAML</h1>
-
-</section>
-<section id="setup" class="slide level2">
-<h2>1. Setup</h2>
-<p>If you run this lab in Google Colab or a minimal Python environment, run the following cell first.</p>
-<p>The setup cell installs only missing packages. The primary datasets are real public datasets; if network access is unavailable, the notebook falls back to real built-in scikit-learn datasets so the lab remains runnable.</p>
-</section>
-<section id="demo-grid-versus-random-on-a-toy-function" class="slide level2">
-<h2>Demo: Grid versus Random on a Toy Function</h2>
-<p>The next loss depends strongly on the first coordinate and weakly on the second. Compare a fixed nine-point grid with 1,000 repetitions of nine random trials. The contour plot shows search coverage; the printed win fraction summarizes repeated random searches.</p>
-<p>This deliberately constructed example illustrates low effective dimensionality. Moving the optimum or changing the grid can change the outcome.</p>
-<div id="lab04-integrated-027" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:12:47.553498Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:12:47.553284Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:12:48.045095Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:12:48.043930Z&quot;}}" data-execution_count="4">
-<div class="cell-output cell-output-stdout">
-<pre><code>Grid search (9 trials, 3 distinct l1 values): best loss = 0.803
-Random search (9 trials, 9 distinct l1 values): median best loss = 0.096
-Random search beats the grid in 98% of the repetitions</code></pre>
-</div>
-
-</div>
-<img data-src="lab-04-automl_files/figure-revealjs/cell-5-output-2.png" class="r-stretch"></section>
-<section id="classification-dataset" class="slide level2">
-<h2>2. Classification Dataset</h2>
-<p>The first real dataset is Adult Census Income from the UCI repository, loaded through OpenML.</p>
-<p>The task is to predict whether a person earns more than 50K USD per year from demographic and work-related attributes.</p>
-</section>
-<section id="why-this-dataset-works" class="slide level2">
-<h2>Why This Dataset Works</h2>
-<p>Adult Income is a useful AutoML teaching case because it includes:</p>
+<section id="classification-dataset" class="title-slide slide level1 center">
+<h1>Classification Dataset</h1>
+<p>The first real dataset is Adult Census Income from the UCI repository, loaded through OpenML. It includes:</p>
 <ul>
-<li>mixed numerical and categorical variables;</li>
-<li>missing values;</li>
-<li>class imbalance;</li>
-<li>a socially sensitive target.</li>
+<li>mixed numerical and categorical variables, missing values, class imbalance, a socially sensitive target.</li>
 </ul>
-<p>Those properties make model selection more realistic than a tiny built-in dataset.</p>
-<p>The offline breast-cancer fallback has different features and predicts its provided benign/malignant label; the variable name <code>income</code> is retained only to reuse the workflow. Report the actual dataset and target, and adapt the discussion accordingly.</p>
-<div id="c5bedbeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:12:48.047180Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:12:48.046922Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:12:48.186933Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:12:48.186013Z&quot;}}" data-execution_count="5">
+<div id="c5bedbeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:49:03.929706Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:49:03.929575Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:49:12.628900Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:49:12.628155Z&quot;}}" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -814,7 +448,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 Name: target_share, dtype: float64</code></pre>
 </div>
 </div>
-<div id="a04db11d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:12:48.189340Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:12:48.189125Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:12:48.231906Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:12:48.230960Z&quot;}}" data-execution_count="6">
+<div id="a04db11d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:49:12.630332Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:49:12.630174Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:49:12.660873Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:49:12.660241Z&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 8000
 Features: 14
@@ -824,55 +458,150 @@ Positive class share: 0.244</code></pre>
 </div>
 </div>
 </section>
-<section id="manual-classification-baseline" class="slide level2">
-<h2>3. Manual Classification Baseline</h2>
+
+<section id="manual-classification-baseline" class="title-slide slide level1 center">
+<h1>Manual Classification Baseline</h1>
 <p>We build a baseline with explicit preprocessing:</p>
 <ul>
 <li>numeric features are scaled;</li>
 <li>categorical features are one-hot encoded;</li>
 <li>logistic regression predicts the income label.</li>
 </ul>
-<p>This baseline is intentionally simple, but it is strong enough to make the AutoML comparison meaningful.</p>
-<p>Evaluate this baseline on the <strong>validation partition</strong>. The following grid/random candidates reuse this pipeline, fitting preprocessing separately inside each CV training fold.</p>
-<div id="42e1e10e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:12:48.234394Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:12:48.234195Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:12:48.926875Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:12:48.926285Z&quot;}}" data-execution_count="7">
+<p>Evaluate this baseline on the <strong>validation partition</strong>. The following grid/random candidates fitting the pipeline inside each CV training fold.</p>
+<div id="42e1e10e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:49:12.662609Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:49:12.662472Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:49:13.250312Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:49:13.246873Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>classification_preprocess <span class="op">=</span> ColumnTransformer(</span>
-<span id="cb6-2"><a href="" aria-label="2"></a>    transformers<span class="op">=</span>[</span>
-<span id="cb6-3"><a href="" aria-label="3"></a>        (<span class="st">"num"</span>, StandardScaler(), numeric_cls),</span>
-<span id="cb6-4"><a href="" aria-label="4"></a>        (<span class="st">"cat"</span>, make_one_hot_encoder(), categorical_cls),</span>
-<span id="cb6-5"><a href="" aria-label="5"></a>    ]</span>
-<span id="cb6-6"><a href="" aria-label="6"></a>)</span>
-<span id="cb6-7"><a href="" aria-label="7"></a></span>
-<span id="cb6-8"><a href="" aria-label="8"></a>classification_baseline <span class="op">=</span> Pipeline(</span>
-<span id="cb6-9"><a href="" aria-label="9"></a>    steps<span class="op">=</span>[</span>
-<span id="cb6-10"><a href="" aria-label="10"></a>        (<span class="st">"preprocess"</span>, classification_preprocess),</span>
-<span id="cb6-11"><a href="" aria-label="11"></a>        (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>, random_state<span class="op">=</span>RANDOM_STATE)),</span>
-<span id="cb6-12"><a href="" aria-label="12"></a>    ]</span>
-<span id="cb6-13"><a href="" aria-label="13"></a>)</span>
-<span id="cb6-14"><a href="" aria-label="14"></a></span>
-<span id="cb6-15"><a href="" aria-label="15"></a>classification_baseline.fit(X_cls_train, y_cls_train)</span>
-<span id="cb6-16"><a href="" aria-label="16"></a>classification_baseline_scores <span class="op">=</span> evaluate_classifier(classification_baseline, X_cls_val, y_cls_val)</span>
-<span id="cb6-17"><a href="" aria-label="17"></a>display_scores(<span class="st">"Manual classification baseline"</span>, classification_baseline_scores)</span>
-<span id="cb6-18"><a href="" aria-label="18"></a><span class="bu">print</span>(<span class="st">"confusion matrix:"</span>)</span>
-<span id="cb6-19"><a href="" aria-label="19"></a><span class="bu">print</span>(confusion_matrix(y_cls_val, classification_baseline.predict(X_cls_val)))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>classification_preprocess <span class="op">=</span> ColumnTransformer(</span>
+<span id="cb3-2"><a href="" aria-label="2"></a>    transformers<span class="op">=</span>[</span>
+<span id="cb3-3"><a href="" aria-label="3"></a>        (<span class="st">"num"</span>, StandardScaler(), numeric_cls),</span>
+<span id="cb3-4"><a href="" aria-label="4"></a>        (<span class="st">"cat"</span>, make_one_hot_encoder(), categorical_cls),</span>
+<span id="cb3-5"><a href="" aria-label="5"></a>    ]</span>
+<span id="cb3-6"><a href="" aria-label="6"></a>)</span>
+<span id="cb3-7"><a href="" aria-label="7"></a>classification_baseline <span class="op">=</span> Pipeline(</span>
+<span id="cb3-8"><a href="" aria-label="8"></a>    steps<span class="op">=</span>[</span>
+<span id="cb3-9"><a href="" aria-label="9"></a>        (<span class="st">"preprocess"</span>, classification_preprocess),</span>
+<span id="cb3-10"><a href="" aria-label="10"></a>        (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>, random_state<span class="op">=</span>RANDOM_STATE)),</span>
+<span id="cb3-11"><a href="" aria-label="11"></a>    ]</span>
+<span id="cb3-12"><a href="" aria-label="12"></a>)</span>
+<span id="cb3-13"><a href="" aria-label="13"></a>classification_baseline.fit(X_cls_train, y_cls_train)</span>
+<span id="cb3-14"><a href="" aria-label="14"></a>classification_baseline_scores <span class="op">=</span> evaluate_classifier(classification_baseline, X_cls_val, y_cls_val)</span>
+<span id="cb3-15"><a href="" aria-label="15"></a>classification_baseline_scores</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Manual classification baseline
-  accuracy: 0.866
-  roc_auc : 0.908
-  f1      : 0.685
-confusion matrix:
-[[1153   57]
- [ 157  233]]</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>{'accuracy': 0.86625, 'roc_auc': 0.9082475100656918, 'f1': 0.6852941176470588}</code></pre>
 </div>
 </div>
 </section>
-<section id="hands-on-grid-search-and-random-search" class="slide level2 scrollable">
-<h2>Hands-On: Grid Search and Random Search</h2>
+
+<section id="grid-search-enumerate-a-cartesian-product" class="title-slide slide level1 scrollable center">
+<h1>Grid Search: Enumerate a Cartesian Product</h1>
+<p>Choose a finite set <span class="math inline">\(G_j\)</span> for each of <span class="math inline">\(d\)</span> hyperparameters. <strong>Grid search</strong> evaluates every point in</p>
+<p><span class="math display">\[G=G_1\times\cdots\times G_d,\qquad N_{\mathrm{grid}}=\prod_{j=1}^d |G_j|.\]</span></p>
+<p>For a random forest, 4 depths × 3 leaf sizes × 5 tree counts means 60 candidates, or 300 fits with 5-fold CV, before any final refit.</p>
+<ul>
+<li>With <span class="math inline">\(m\)</span> values in each dimension, the count grows as <span class="math inline">\(m^d\)</span>.</li>
+</ul>
+<p>Grid search is transparent and useful for small, carefully chosen spaces.</p>
+<ul>
+<li>Its resolution is fixed by the grid: values between grid points are never tried, and adding an unimportant dimension still multiplies the work.</li>
+<li>… additionally fixes identical stratified folds for both search methods.</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>param_grid <span class="op">=</span> {</span>
+<span id="cb5-2"><a href="" aria-label="2"></a>    <span class="st">"classifier__C"</span>: [<span class="fl">0.001</span>, <span class="fl">1.0</span>, <span class="fl">1000.0</span>],</span>
+<span id="cb5-3"><a href="" aria-label="3"></a>    <span class="st">"classifier__class_weight"</span>: [<span class="va">None</span>, <span class="st">"balanced"</span>, {<span class="dv">0</span>: <span class="dv">1</span>, <span class="dv">1</span>: <span class="dv">2</span>}],</span>
+<span id="cb5-4"><a href="" aria-label="4"></a>}</span>
+<span id="cb5-5"><a href="" aria-label="5"></a>GridSearchCV(classification_baseline, param_grid, cv<span class="op">=</span><span class="dv">3</span>, scoring<span class="op">=</span><span class="st">"roc_auc"</span>)</span></code></pre></div>
+</section>
+
+<section id="random-search-sample-configurations" class="title-slide slide level1 scrollable center">
+<h1>Random Search: Sample Configurations</h1>
+<p>Choose a sampling distribution <span class="math inline">\(p(\lambda)\)</span>, draw <span class="math inline">\(N\)</span> independent candidates, evaluate each, and retain the candidate with the smallest validation loss:</p>
+<p><span class="math display">\[\lambda_1,\ldots,\lambda_N\sim p(\lambda),\qquad \widehat\lambda_N\in\arg\min_{\lambda_i}\widehat f(\lambda_i).\]</span></p>
+<p>Unlike grid search, the number of trials need not be a product of per-dimension resolutions.</p>
+<ul>
+<li>Random search is easy to interrupt or extend.</li>
+<li>It does not use earlier scores to propose later candidates. <em>Pros</em>? <em>Cons</em>?</li>
+</ul>
+<details>
+<summary>
+Answer
+</summary>
+Independent trials can be parallelized. Previous evaluations are ignored, so the search may waste time in unpromising regions.
+</details>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>param_distributions <span class="op">=</span> {</span>
+<span id="cb6-2"><a href="" aria-label="2"></a>    <span class="st">"classifier__C"</span>: loguniform(<span class="fl">0.001</span>, <span class="fl">1000.0</span>),</span>
+<span id="cb6-3"><a href="" aria-label="3"></a>    <span class="st">"classifier__class_weight"</span>: [<span class="va">None</span>, <span class="st">"balanced"</span>, {<span class="dv">0</span>: <span class="dv">1</span>, <span class="dv">1</span>: <span class="dv">2</span>}],</span>
+<span id="cb6-4"><a href="" aria-label="4"></a>}</span>
+<span id="cb6-5"><a href="" aria-label="5"></a>RandomizedSearchCV(</span>
+<span id="cb6-6"><a href="" aria-label="6"></a>    classification_baseline, param_distributions, n_iter<span class="op">=</span><span class="dv">9</span>, cv<span class="op">=</span><span class="dv">3</span>, scoring<span class="op">=</span><span class="st">"roc_auc"</span>, random_state<span class="op">=</span>RANDOM_STATE,</span>
+<span id="cb6-7"><a href="" aria-label="7"></a>)</span></code></pre></div>
+</section>
+
+<section id="why-can-random-search-work-so-well" class="title-slide slide level1 center">
+<h1>Why Can Random Search Work So Well?</h1>
+<p>If only one of two hyperparameters matters, a 3 × 3 grid spends nine trials on only three values of the important parameter.</p>
+<ul>
+<li>Nine continuous random samples typically explore nine distinct values.</li>
+<li>The advantage grows when a high-dimensional space has only a few influential dimensions.</li>
+</ul>
+<p>Let a useful region have probability mass <span class="math inline">\(p\)</span> under the sampling distribution <span class="citation" data-cites="bergstra2012random">(<a href="#/references" role="doc-biblioref" onclick="">Bergstra and Bengio 2012</a>)</span>. With independent trials</p>
+<p><span class="math display">\[P(\text{at least one useful configuration in }N\text{ trials})=1-(1-p)^N.\]</span></p>
+<ul>
+<li>For <span class="math inline">\(p=0.05\)</span>, 59 trials give about a 95% chance of hitting that region.</li>
+<li>This is a sampling calculation, not a guarantee of generalization or of finding the global optimum.</li>
+</ul>
+</section>
+
+<section id="visualizing-effective-dimensionality" class="title-slide slide level1 center">
+<h1>Visualizing Effective Dimensionality</h1>
+<p>The probability depends on the region’s mass under the sampling distribution.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Independent trials</th>
+<th>Hit a region of mass 5%</th>
+<th>Hit a region of mass 1%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>20</td>
+<td>64%</td>
+<td>18%</td>
+</tr>
+<tr class="even">
+<td>60</td>
+<td>95%</td>
+<td>45%</td>
+</tr>
+<tr class="odd">
+<td>300</td>
+<td>&gt;99.9%</td>
+<td>95%</td>
+</tr>
+</tbody>
+</table>
+<p>The example depends strongly on the first coordinate. Compare a fixed nine-point grid with 1,000 repetitions of nine random trials.</p>
+<div id="lab04-integrated-027" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:49:13.255073Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:49:13.254888Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:49:13.725604Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:49:13.724923Z&quot;}}" data-execution_count="7">
+<div class="cell-output cell-output-stdout">
+<pre><code>Grid (9 trials, 3 distinct l1 values): loss = 0.803. Random (9 trials, 9 distinct l1 values): median loss = 0.096
+Random search beats the grid in 98% of the repetitions</code></pre>
+</div>
+
+</div>
+<img data-src="lab-01-automl_files/figure-revealjs/cell-8-output-2.png" class="r-stretch"></section>
+
+<section>
+<section id="hands-on-grid-search-and-random-search" class="title-slide slide level1 scrollable center">
+<h1>Hands-On: Grid Search and Random Search</h1>
 <p>Reuse the manual logistic-regression <strong>pipeline</strong>, so preprocessing is fitted inside each CV fold. Both searches perform nine candidates × three identical stratified folds, plus a refit. The grid uses three regularization strengths and three class-weight choices; random search draws regularization strengths on a log scale.</p>
 <p>This is an equal-trial comparison, not an equal-time benchmark. Record both CV ROC AUC and elapsed time. FLAML below uses a holdout objective, so its <code>best_loss</code> is not directly comparable to these CV scores. A single run need not show random search winning.</p>
-<div id="lab04-025" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:12:48.935197Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:12:48.932668Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:12:53.168563Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:12:53.167753Z&quot;}}" data-execution_count="8">
+<div id="lab04-025" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:49:13.727182Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:49:13.727044Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:49:17.016316Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:49:17.013082Z&quot;}}" data-execution_count="8">
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <style scoped="">
@@ -907,7 +636,7 @@ confusion matrix:
 <td>grid</td>
 <td>9</td>
 <td>0.898523</td>
-<td>2.269993</td>
+<td>1.805581</td>
 <td>0.908294</td>
 <td>{'classifier__C': 1.0, 'classifier__class_weig...</td>
 </tr>
@@ -916,7 +645,7 @@ confusion matrix:
 <td>random</td>
 <td>9</td>
 <td>0.898599</td>
-<td>1.853948</td>
+<td>1.392279</td>
 <td>0.908277</td>
 <td>{'classifier__C': 0.1767016940294795, 'classif...</td>
 </tr>
@@ -926,15 +655,17 @@ confusion matrix:
 </div>
 </div>
 </div>
-<h3 id="explain-the-search-results">Explain the Search Results</h3>
+</section>
+<section id="explain-the-search-results" class="slide level2">
+<h2>Explain the Search Results</h2>
 <p>How many distinct <code>C</code> values did each method try? Which search spent more time? Does the best CV score agree with the external validation score? Explain why this experiment illustrates search behavior without proving a universal ranking of methods.</p>
 <p>The next experiment makes the dimensionality issue more visible by varying four boosting hyperparameters. It supplements the compact logistic-regression example.</p>
-</section>
-<section id="extended-demo-four-parameter-gradient-boosting-search" class="slide level2 scrollable">
-<h2>Extended Demo: Four-Parameter Gradient Boosting Search</h2>
+</section></section>
+<section id="extended-demo-four-parameter-gradient-boosting-search" class="title-slide slide level1 scrollable center">
+<h1>Extended Demo: Four-Parameter Gradient Boosting Search</h1>
 <p>Reuse the fold-safe preprocessing with a histogram gradient boosting classifier. A two-value grid over four hyperparameters gives 16 candidates; random search draws 16 configurations over the same bounded domain. Both use three fixed stratified CV folds and one process for the CV search.</p>
 <p>For integer settings, <code>randint</code> excludes its upper bound, so the code includes the grid’s upper endpoints by adding one. Inspect CV quality, external validation quality, and elapsed time. The test set remains sealed. This demonstration costs more than the compact logistic-regression search.</p>
-<div id="lab04-integrated-038" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:12:53.171969Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:12:53.171742Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:13:34.655298Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:13:34.654461Z&quot;}}" data-execution_count="9">
+<div id="lab04-integrated-038" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:49:17.021797Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:49:17.021596Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:49:50.231332Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:49:50.230600Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>hgb_pipeline <span class="op">=</span> Pipeline(</span>
@@ -1008,7 +739,7 @@ confusion matrix:
 <th data-quarto-table-cell-role="th">0</th>
 <td>grid</td>
 <td>16</td>
-<td>19.2655</td>
+<td>15.5811</td>
 <td>0.9064</td>
 <td>0.9333</td>
 </tr>
@@ -1016,7 +747,7 @@ confusion matrix:
 <th data-quarto-table-cell-role="th">1</th>
 <td>random</td>
 <td>16</td>
-<td>22.1688</td>
+<td>17.5936</td>
 <td>0.9042</td>
 <td>0.9268</td>
 </tr>
@@ -1026,7 +757,7 @@ confusion matrix:
 </div>
 </div>
 </div>
-<div id="lab04-integrated-039" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:13:34.657671Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:13:34.657465Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:13:34.779316Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:13:34.778214Z&quot;}}" data-execution_count="10">
+<div id="lab04-integrated-039" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:49:50.233250Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:49:50.233103Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:49:50.315141Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:49:50.314524Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="fl">3.5</span>))</span>
@@ -1041,12 +772,149 @@ confusion matrix:
 </details>
 
 </div>
-<img data-src="lab-04-automl_files/figure-revealjs/cell-11-output-1.png" class="r-stretch"></section>
-<section id="demo-successive-halving-on-the-same-boosting-space" class="slide level2 scrollable">
-<h2>Demo: Successive Halving on the Same Boosting Space</h2>
+<img data-src="lab-01-automl_files/figure-revealjs/cell-11-output-1.png" class="r-stretch"></section>
+
+<section id="beyond-random-search-learning-where-to-search" class="title-slide slide level1 center">
+<h1>Beyond Random Search: Learning Where to Search</h1>
+<p>Bayesian optimization fits a surrogate to observed configuration/loss pairs and uses an acquisition function to balance exploring uncertain regions with exploiting promising ones. See <a href="https://arxiv.org/abs/1206.2944">Snoek et al.&nbsp;(2012)</a>.</p>
+<p>SMAC uses random-forest surrogates for algorithm configuration, including categorical and conditional choices; see <a href="https://doi.org/10.1007/978-3-642-25566-3_40">Hutter et al.&nbsp;(2011)</a>. Evolutionary and local-search approaches instead modify candidate configurations. These methods use search history, unlike independent random sampling.</p>
+<p>References: <span class="citation" data-cites="snoek2012practical hutter2011sequential">(<a href="#/references" role="doc-biblioref" onclick="">Snoek et al. 2012</a>; <a href="#/references" role="doc-biblioref" onclick="">Hutter et al. 2011</a>)</span>.</p>
+</section>
+
+<section id="the-budget-problem" class="title-slide slide level1 center">
+<h1>The Budget Problem</h1>
+
+</section>
+
+<section id="the-budget-is-part-of-the-problem" class="title-slide slide level1 scrollable center">
+<h1>The Budget Is Part of the Problem</h1>
+<p>Budget:</p>
+<ul>
+<li>A <strong>trial/instance budget</strong> limits the number of candidates.</li>
+<li>A <strong>time budget</strong> limits elapsed time. Include CV folds, preprocessing, search overhead, and final refitting when reporting total cost.</li>
+</ul>
+<p>They are different: a deep forest can cost much more than a small linear model.</p>
+<p>For a sequential search history <span class="math inline">\(H_N=\{(\lambda_i,r_i,\widehat f_i,c_i)\}_{i=1}^N\)</span>, a simplified resource constraint is</p>
+<p><span class="math display">\[\sum_{i=1}^N c(\lambda_i,r_i)+c_{\mathrm{overhead}}+c_{\mathrm{refit}}\le B.\]</span></p>
+<p>Here <span class="math inline">\(r_i\)</span> is fidelity (for example, sample size or epochs), <span class="math inline">\(c\)</span> is cost, and <span class="math inline">\(B\)</span> is the total budget. The optimizer chooses what to evaluate, at what fidelity, and when to stop. It returns the best observed candidate, rather than a certified global optimum.</p>
+<p>Compare methods with the same data, metric, hardware, and resource accounting.</p>
+<ul>
+<li>Equal trial counts do not imply equal elapsed time.</li>
+<li>Report the requested budget <strong>and measured elapsed time</strong>.</li>
+</ul>
+</section>
+
+<section id="spending-the-budget-adaptation-and-fidelity" class="title-slide slide level1 center">
+<h1>Spending the Budget: Adaptation and Fidelity</h1>
+<p>Adaptive search uses previous evaluations to choose later candidates; Bayesian optimization is one approach. Multi-fidelity search first uses cheaper approximations and then spends more resources on promising candidates.</p>
+<p>For example, successive halving repeatedly removes weak candidates while increasing resources for survivors. <a href="https://www.jmlr.org/papers/v18/16-558.html">Li et al.&nbsp;(2018), <em>Hyperband</em></a> combine random configurations with adaptive resource allocation and early stopping.</p>
+<p>Low-fidelity rankings can be misleading: a model that learns slowly may be discarded too early. FLAML uses its own cost-aware search and resource allocation; it should not be described as simply running Hyperband.</p>
+<p>References: <span class="citation" data-cites="li2018hyperband">(<a href="#/references" role="doc-biblioref" onclick="">Li et al. 2018</a>)</span>.</p>
+</section>
+
+<section id="multi-fidelity-search" class="title-slide slide level1 center">
+<h1>Multi-Fidelity Search</h1>
+<p>A multi-fidelity strategy evaluates many configurations cheaply, then spends more resources on promising ones.</p>
+</section>
+
+<section id="fidelity-means-resource-level" class="title-slide slide level1 center">
+<h1>Fidelity Means Resource Level</h1>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Low fidelity</th>
+<th>Higher fidelity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>fewer rows</td>
+<td>more rows</td>
+</tr>
+<tr class="even">
+<td>fewer trees</td>
+<td>more trees</td>
+</tr>
+<tr class="odd">
+<td>fewer epochs</td>
+<td>more epochs</td>
+</tr>
+<tr class="even">
+<td>shorter training</td>
+<td>longer training</td>
+</tr>
+</tbody>
+</table>
+<p>FLAML’s design is in the same spirit: good anytime behavior matters because the search may be stopped by a fixed budget.</p>
+</section>
+
+<section id="successive-halving-hyperband-and-bohb" class="title-slide slide level1 center">
+<h1>Successive Halving, Hyperband, and BOHB</h1>
+<p><a href="https://proceedings.mlr.press/v51/jamieson16.html">Jamieson and Talwalkar (2016)</a> study allocating resources to identify promising candidates. In successive halving with reduction factor 3:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Round</th>
+<th>Candidates</th>
+<th>Resource per candidate</th>
+<th>Total resource</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>27</td>
+<td>1 unit</td>
+<td>27 units</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>9</td>
+<td>3 units</td>
+<td>27 units</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>3</td>
+<td>9 units</td>
+<td>27 units</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>1</td>
+<td>27 units</td>
+<td>27 units</td>
+</tr>
+</tbody>
+</table>
+<p>Hyperband varies the initial breadth/resource tradeoff across halving brackets. <a href="https://proceedings.mlr.press/v80/falkner18a.html">BOHB (Falkner et al., 2018)</a> combines model-based configuration sampling with Hyperband-style allocation. Constant work per round is an idealization: actual training cost need not grow linearly with resource, and implementations may refit promoted candidates.</p>
+<p>References: <span class="citation" data-cites="jamieson2016nonstochastic falkner2018bohb">(<a href="#/references" role="doc-biblioref" onclick="">Jamieson and Talwalkar 2016</a>; <a href="#/references" role="doc-biblioref" onclick="">Falkner et al. 2018</a>)</span>.</p>
+</section>
+
+<section id="multi-fidelity-and-combined-search-research-figures" class="title-slide slide level1 center">
+<h1>Multi-Fidelity and Combined Search: Research Figures</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/automl/figures/multifidelity-optimization.png"></p>
+<figcaption>SVM validation error at increasing MNIST sample sizes. Source: Hutter and Vanschoren AutoML tutorial.</figcaption>
+</figure>
+</div>
+<p>Low fidelity is useful when it preserves enough of the high-fidelity ranking. It can also discard slow-starting or data-hungry models.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/automl/figures/bohb-combined-search.png"></p>
+<figcaption>Regret against wall-clock time in the cited BOHB experiments. Source: Falkner et al.&nbsp;via the Hutter and Vanschoren tutorial.</figcaption>
+</figure>
+</div>
+<p>The BOHB figure illustrates the anytime/final-performance tradeoff in those experiments; it is not a universal ranking across tasks.</p>
+</section>
+
+<section>
+<section id="demo-successive-halving-on-the-same-boosting-space" class="title-slide slide level1 scrollable center">
+<h1>Demo: Successive Halving on the Same Boosting Space</h1>
 <p>Use training-row count as fidelity and start with 27 candidates. The initial sample size adapts to the dataset, including the smaller offline fallback. Inspect the actual <code>n_resources_</code> and <code>n_candidates_</code> schedule rather than assuming four rounds.</p>
 <p>The final table distinguishes initial configurations from configuration/fidelity evaluations: promoted candidates are evaluated again. Its best CV scores can reflect different resource levels, so use the shared external validation partition for the final classroom comparison. This is not an equal-time benchmark.</p>
-<div id="lab04-integrated-041" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:13:34.781392Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:13:34.781194Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:13:53.199960Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:13:53.199081Z&quot;}}" data-execution_count="11">
+<div id="lab04-integrated-041" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:49:50.317165Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:49:50.316997Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:50:04.079013Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:50:04.078313Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>halving <span class="op">=</span> HalvingRandomSearchCV(</span>
@@ -1163,7 +1031,7 @@ confusion matrix:
 <th data-quarto-table-cell-role="th">0</th>
 <td>grid</td>
 <td>16</td>
-<td>19.2655</td>
+<td>15.5811</td>
 <td>0.9064</td>
 <td>0.9333</td>
 <td>16</td>
@@ -1172,7 +1040,7 @@ confusion matrix:
 <th data-quarto-table-cell-role="th">1</th>
 <td>random</td>
 <td>16</td>
-<td>22.1688</td>
+<td>17.5936</td>
 <td>0.9042</td>
 <td>0.9268</td>
 <td>16</td>
@@ -1181,7 +1049,7 @@ confusion matrix:
 <th data-quarto-table-cell-role="th">2</th>
 <td>successive halving</td>
 <td>27</td>
-<td>18.3887</td>
+<td>13.7394</td>
 <td>0.8918</td>
 <td>0.9252</td>
 <td>39</td>
@@ -1192,7 +1060,9 @@ confusion matrix:
 </div>
 </div>
 </div>
-<h3 id="budget-questions">Budget Questions</h3>
+</section>
+<section id="budget-questions" class="slide level2">
+<h2>Budget Questions</h2>
 <ol type="1">
 <li>How many initial configurations and how many candidate/fidelity evaluations did halving use?</li>
 <li>How do its actual runtime and validation score compare with grid/random search?</li>
@@ -1200,13 +1070,130 @@ confusion matrix:
 <li>When could early rankings on a small sample discard the eventual best candidate?</li>
 <li>Why does the grid’s arbitrary enumeration order affect its anytime curve?</li>
 </ol>
+</section></section>
+<section id="automl-and-cash" class="title-slide slide level1 center">
+<h1>AutoML and CASH</h1>
+
 </section>
-<section id="flaml-for-classification" class="slide level2 scrollable">
-<h2>4. FLAML for Classification</h2>
+
+<section id="what-is-automl" class="title-slide slide level1 center">
+<h1>What Is AutoML?</h1>
+<p><strong>Automated Machine Learning (AutoML)</strong> automates choices in constructing and evaluating an ML solution, within a user-defined task, search space, metric, and budget. Depending on the system, these choices include preprocessing, features, learning algorithms, hyperparameters, and ensembles.</p>
+<p>HPO fixes the learning algorithm and tunes its settings. AutoML can also choose the algorithm and parts of the pipeline. Humans still define success, admissible data, evaluation design, and operational constraints.</p>
+<p>The next formalization captures a central AutoML subproblem: choosing a learner and its conditional hyperparameters together.</p>
+<p>References: <span class="citation" data-cites="hutter2019automated">(<a href="#/references" role="doc-biblioref" onclick="">Hutter et al. 2019</a>)</span>.</p>
+</section>
+
+<section id="cash-combined-algorithm-selection-and-hyperparameter-optimization" class="title-slide slide level1 center">
+<h1>CASH: Combined Algorithm Selection and Hyperparameter Optimization</h1>
+<p>Let <span class="math inline">\(\mathcal A=\{A_1,\ldots,A_M\}\)</span> be candidate algorithms and <span class="math inline">\(\Lambda_a\)</span> the hyperparameter space of <span class="math inline">\(A_a\)</span>. The <strong>CASH</strong> problem is</p>
+<p><span class="math display">\[ (a^*,\lambda^*)\in\arg\min_{a\in\{1,\ldots,M\},\;\lambda\in\Lambda_a}
+\frac{1}{K}\sum_{k=1}^{K}\mathcal L_{D_k}\!\left(A_{a,\lambda}(D_{-k})\right). \]</span></p>
+<p>Its domain is a conditional union <span class="math inline">\(\bigcup_a\{a\}\times\Lambda_a\)</span>, rather than one rectangular grid. A <strong>root hyperparameter</strong> selects the learner, activating only its associated space <span class="math inline">\(\Lambda_a\)</span>. A forest activates tree-related settings; logistic regression activates regularization settings. A practical solver approximates this objective under a resource budget.</p>
+<p><a href="https://arxiv.org/abs/1208.3719">Thornton et al.&nbsp;(2013), <em>Auto-WEKA: Combined Selection and Hyperparameter Optimization of Classification Algorithms</em></a> introduced this formulation. CASH is the algorithm-selection problem; computation caching is a separate implementation technique.</p>
+<p>References: <span class="citation" data-cites="thornton2013auto">(<a href="#/references" role="doc-biblioref" onclick="">Thornton et al. 2013</a>)</span>.</p>
+</section>
+
+<section id="two-automl-systems-auto-sklearn-and-flaml" class="title-slide slide level1 center">
+<h1>Two AutoML Systems: auto-sklearn and FLAML</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>System</th>
+<th>Main ideas in the cited paper</th>
+<th>Connection to this lab</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>auto-sklearn</td>
+<td>Bayesian optimization of scikit-learn pipelines, meta-learning from earlier datasets, ensemble construction</td>
+<td>Shows how CASH can include preprocessing and reuse experience</td>
+</tr>
+<tr class="even">
+<td>FLAML</td>
+<td>Cost-aware learner selection, hyperparameter search, and sample-size allocation</td>
+<td>Makes search under short time budgets easy to demonstrate</td>
+</tr>
+</tbody>
+</table>
+<p>Read <a href="https://papers.neurips.cc/paper_files/paper/2015/hash/11d0e6287202fced83f79975ec59a3a6-Abstract.html">Feurer et al.&nbsp;(2015), <em>Efficient and Robust Automated Machine Learning</em></a> and <a href="https://arxiv.org/abs/1911.04706">Wang et al.&nbsp;(2021), <em>FLAML: A Fast and Lightweight AutoML Library</em></a>.</p>
+<p>We use FLAML below, retaining the Adult Income and California Housing workflow. This is a teaching demonstration, not a benchmark establishing a winner between libraries.</p>
+<p>References: <span class="citation" data-cites="feurer2015efficient wang2021flaml">(<a href="#/references" role="doc-biblioref" onclick="">Feurer et al. 2015</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang, Wu, Weimer, et al. 2021</a>)</span>.</p>
+</section>
+
+<section id="auto-sklearn-pipeline-search-meta-learning-and-ensembles" class="title-slide slide level1 scrollable center">
+<h1>auto-sklearn: Pipeline Search, Meta-Learning, and Ensembles</h1>
+<p>The original auto-sklearn searches a fixed template: data preprocessing → feature preprocessing → classifier. The 2015 paper reports 15 classifiers, 14 feature preprocessors, and 4 data preprocessors, giving a conditional space with 110 hyperparameters; these describe that published version, rather than the current library inventory. SMAC proposes conditional configurations, meta-learning uses experience from similar datasets to initialize search, and ensemble construction reuses evaluated models.</p>
+<p><a href="https://jmlr.org/papers/v23/21-0992.html">Feurer et al.&nbsp;(2022), <em>Auto-sklearn 2.0: Hands-free AutoML via Meta-Learning</em></a> extend this approach with a portfolio of initial configurations, successive-halving allocation, and learned selection of model-selection policies. These are version-specific design choices, rather than capabilities of every AutoML system.</p>
+<p>References: <span class="citation" data-cites="feurer2022auto">(<a href="#/references" role="doc-biblioref" onclick="">Feurer et al. 2022</a>)</span>.</p>
+</section>
+
+<section id="flaml-what-makes-search-economical" class="title-slide slide level1 center">
+<h1>FLAML: What Makes Search Economical?</h1>
+<p>FLAML coordinates learner selection with the cost and expected benefit of further search. Low-cost initial configurations and cost-related settings help it start cheaply, while sample size can serve as another resource dimension.</p>
+<p><a href="https://ojs.aaai.org/index.php/AAAI/article/view/17239">Cost-Frugal Optimization (CFO), Wu et al.&nbsp;(2021)</a> uses randomized local search starting from inexpensive configurations. <a href="https://www.microsoft.com/en-us/research/publication/economical-hyperparameter-optimization-with-blended-search-strategy/">BlendSearch, Wang et al.&nbsp;(2021)</a> blends local and global search. Search and resampling behavior depend on configuration and version: this lab explicitly fixes the holdout split and learner lists.</p>
+<p>Both auto-sklearn and FLAML offer configurable behavior. Avoid interpreting the comparison as “ensembles versus single models” or a guaranteed accuracy ranking: FLAML also supports optional ensembling.</p>
+<p>References: <span class="citation" data-cites="wu2021frugal wang2021economical">(<a href="#/references" role="doc-biblioref" onclick="">Wu et al. 2021</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang, Wu, Huang, et al. 2021</a>)</span>.</p>
+</section>
+
+<section id="auto-sklearn-versus-flaml" class="title-slide slide level1 center">
+<h1>auto-sklearn versus FLAML</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>auto-sklearn</th>
+<th>FLAML</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Search scope</td>
+<td>Learners and preprocessing in a fixed template</td>
+<td>Learners and their conditional settings in our example</td>
+</tr>
+<tr class="even">
+<td>Optimization</td>
+<td>SMAC-based Bayesian optimization</td>
+<td>Cost-frugal local search / BlendSearch</td>
+</tr>
+<tr class="odd">
+<td>Prior knowledge</td>
+<td>Meta-learning and initial portfolios</td>
+<td>Low-cost initial configurations</td>
+</tr>
+<tr class="even">
+<td>Resource allocation</td>
+<td>Successive halving in version 2.0</td>
+<td>Cost-aware learner choice and sample-size allocation</td>
+</tr>
+<tr class="odd">
+<td>Typical output</td>
+<td>Ensemble of evaluated pipelines</td>
+<td>Best model; optional ensembling</td>
+</tr>
+</tbody>
+</table>
+<p>These describe the cited systems and their configurable behavior <span class="citation" data-cites="feurer2015efficient feurer2022auto wang2021flaml">(<a href="#/references" role="doc-biblioref" onclick="">Feurer et al. 2015</a>, <a href="#/references" role="doc-biblioref" onclick="">2022</a>; <a href="#/references" role="doc-biblioref" onclick="">Wang, Wu, Weimer, et al. 2021</a>)</span>. They do not establish an accuracy ranking. Our lab fixes holdout validation, learner lists, and a short time budget so the choices remain inspectable.</p>
+</section>
+
+<section id="flaml-for-classification" class="title-slide slide level1 scrollable center">
+<h1>FLAML for Classification</h1>
 <p>We pass an explicit validation partition and the learner list <code>CLASSIFIERS</code>. <code>retrain_full=False</code> keeps validation rows out of fitting when we compare scores. The test partition stays sealed until the final evaluation. <code>time_budget</code> is defined in setup and recorded in the log filename.</p>
 <p>Our existing helper maps categories to integer codes using <strong>training data only</strong>, reusing that map on validation/test data and assigning unseen values a distinct code. These codes impose an arbitrary ordering; they are a fixed teaching choice, not automated feature engineering. The manual baseline uses one-hot encoding, so the comparison changes both preprocessing and model search.</p>
 <p>FLAML minimizes <code>1 - ROC AUC</code> for <code>metric="roc_auc"</code>; <code>best_loss</code> is a validation loss, not a test score. See the <a href="https://microsoft.github.io/FLAML/docs/Use-Cases/Task-Oriented-AutoML/">FLAML task-oriented AutoML documentation</a>.</p>
-<div id="86003a33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:13:53.202161Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:13:53.201933Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:14:23.201213Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:14:23.200510Z&quot;}}" data-execution_count="12">
+<div id="86003a33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:50:04.080715Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:50:04.080553Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:50:34.099625Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:50:34.099014Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>classification_automl <span class="op">=</span> AutoML()</span>
@@ -1231,7 +1218,7 @@ confusion matrix:
 <span id="cb11-20"><a href="" aria-label="20"></a>classification_elapsed <span class="op">=</span> time.perf_counter() <span class="op">-</span> classification_started_at</span></code></pre></div>
 </details>
 </div>
-<div id="033c2fff" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:14:23.204399Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:14:23.204183Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:14:23.209677Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:14:23.208971Z&quot;}}" data-execution_count="13">
+<div id="033c2fff" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:50:34.101595Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:50:34.101443Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:50:34.105547Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:50:34.104955Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="ss">f"Best estimator: </span><span class="sc">{</span>classification_automl<span class="sc">.</span>best_estimator<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -1241,17 +1228,17 @@ confusion matrix:
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Best estimator: rf
-Best validation loss: 0.085716
-Training time for best config: 0.849s</code></pre>
+Best validation loss: 0.085389
+Training time for best config: 2.458s</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>{'n_estimators': 140,
- 'max_features': np.float64(0.5133340406611441),
- 'max_leaves': 56,
+<pre><code>{'n_estimators': 481,
+ 'max_features': np.float64(0.5474533553524207),
+ 'max_leaves': 55,
  'criterion': np.str_('entropy')}</code></pre>
 </div>
 </div>
-<div id="453ae089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:14:23.211877Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:14:23.211468Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:14:23.318764Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:14:23.317590Z&quot;}}" data-execution_count="14">
+<div id="453ae089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:50:34.106985Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:50:34.106843Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:50:34.271451Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:50:34.270806Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>classification_automl_scores <span class="op">=</span> evaluate_classifier(classification_automl, X_cls_val_flaml, y_cls_val)</span>
@@ -1267,11 +1254,11 @@ Training time for best config: 0.849s</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>FLAML classification model
   accuracy: 0.866
-  roc_auc : 0.914
-  f1      : 0.662
+  roc_auc : 0.915
+  f1      : 0.659
 confusion matrix:
-[[1176   34]
- [ 180  210]]</code></pre>
+[[1177   33]
+ [ 182  208]]</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
@@ -1308,8 +1295,8 @@ confusion matrix:
 <tr class="even">
 <th data-quarto-table-cell-role="th">flaml</th>
 <td>0.866</td>
-<td>0.914</td>
-<td>0.662</td>
+<td>0.915</td>
+<td>0.659</td>
 </tr>
 </tbody>
 </table>
@@ -1318,11 +1305,49 @@ confusion matrix:
 </div>
 </div>
 </section>
-<section id="inspect-flamls-conditional-cash-space" class="slide level2">
-<h2>Inspect FLAML’s Conditional CASH Space</h2>
+
+<section id="cash-search-spaces-are-conditional" class="title-slide slide level1 center">
+<h1>CASH Search Spaces Are Conditional</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Learner selected at the root</th>
+<th>Active hyperparameters</th>
+<th>Inactive examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Random forest</td>
+<td>tree count, tree/leaf constraints</td>
+<td>logistic regularization strength</td>
+</tr>
+<tr class="even">
+<td>Logistic regression</td>
+<td>penalty and regularization strength</td>
+<td>forest depth and number of trees</td>
+</tr>
+<tr class="odd">
+<td>Gradient boosting</td>
+<td>learning rate, iterations, tree constraints</td>
+<td>unrelated learners’ settings</td>
+</tr>
+</tbody>
+</table>
+<p>The representation is a conditional tree or graph, not an unrestricted Cartesian product of every learner’s settings. Inactive coordinates do not define different effective models.</p>
+<p>CASH inherits HPO’s expensive evaluations and adds learner-level allocation: <strong>which algorithm deserves the next unit of budget?</strong> Different learners and configurations have different costs; the answer should depend on observed quality, cost, and remaining resources.</p>
+</section>
+
+<section id="inspect-flamls-conditional-cash-space" class="title-slide slide level1 center">
+<h1>Inspect FLAML’s Conditional CASH Space</h1>
 <p>The configured learner list defines allowed algorithms; <code>best_config_per_estimator</code> reports learners with recorded results, which can be fewer under a tight budget. Inspect the random-forest space used in our lab, including its default and low-cost initial values.</p>
 <p>This is an inspection of a learner’s declared space, not an exhaustive record of all settings actually visited.</p>
-<div id="lab04-integrated-048" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:14:23.320606Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:14:23.320417Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:14:23.330839Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:14:23.329944Z&quot;}}" data-execution_count="15">
+<div id="lab04-integrated-048" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:50:34.272965Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:50:34.272820Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:50:34.280194Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:50:34.279615Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="im">from</span> flaml.automl.model <span class="im">import</span> RandomForestEstimator</span>
@@ -1418,11 +1443,20 @@ Learners with results: ['rf', 'extra_tree', 'lrl2']</code></pre>
 </div>
 </div>
 </section>
-<section id="flaml-anytime-behavior-from-its-log" class="slide level2">
-<h2>FLAML Anytime Behavior from Its Log</h2>
+
+<section id="anytime-performance-under-a-budget" class="title-slide slide level1 center">
+<h1>Anytime Performance Under a Budget</h1>
+<p>For completed trials with validation losses <span class="math inline">\(f_i\)</span> and completion times <span class="math inline">\(t_i\)</span>, define the incumbent curve</p>
+<p><span class="math display">\[f^*(\tau)=\min\{f_i:t_i\le\tau\},\qquad \tau\le B.\]</span></p>
+<p>Before the first completed trial there is no incumbent. With a fixed evaluation protocol, the best observed loss cannot increase as trials finish. Plotting this curve against elapsed time reveals how quickly an optimizer becomes useful; plotting against trial count answers a different question.</p>
+<p>Budget can also mean CPU/GPU hours, money, or energy. Wall-clock time depends on hardware and parallelism, so report the execution setting along with the curve.</p>
+</section>
+
+<section id="flaml-anytime-behavior-from-its-log" class="title-slide slide level1 center">
+<h1>FLAML Anytime Behavior from Its Log</h1>
 <p>Read the main classification run’s own log, which has a distinct filename from the metric-comparison runs. Plot logged validation results per learner and the overall incumbent against elapsed time. For ROC AUC, transform loss back to score with <code>1 - loss</code>.</p>
 <p>Default logs need not contain every attempted configuration; counts below describe logged records, not the total number of evaluations. Inspect a full trial log if you need complete accounting.</p>
-<div id="lab04-integrated-050" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:14:23.332743Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:14:23.332557Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:14:23.467296Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:14:23.466329Z&quot;}}" data-execution_count="16">
+<div id="lab04-integrated-050" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:50:34.281536Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:50:34.281400Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:50:34.369954Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:50:34.369307Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="im">from</span> flaml.automl.data <span class="im">import</span> get_output_from_log</span>
@@ -1445,16 +1479,18 @@ Learners with results: ['rf', 'extra_tree', 'lrl2']</code></pre>
 </details>
 
 <div class="cell-output cell-output-display">
-<pre><code>rf    13
+<pre><code>rf    14
 Name: logged records per learner, dtype: int64</code></pre>
 </div>
 </div>
-<img data-src="lab-04-automl_files/figure-revealjs/cell-17-output-1.png" class="r-stretch"></section>
-<section id="classification-metrics" class="slide level2">
-<h2>5. Classification Metrics</h2>
+<img data-src="lab-01-automl_files/figure-revealjs/cell-17-output-1.png" class="r-stretch"></section>
+
+<section>
+<section id="classification-metrics" class="title-slide slide level1 center">
+<h1>Classification Metrics</h1>
 <p>On Adult Income, accuracy can look good even when the model performs poorly on the minority class.</p>
 <p>Run the same AutoML procedure with different optimization metrics and compare the validation results; choose the objective before opening the test set.</p>
-<div id="48ee15a8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:14:23.470004Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:14:23.469596Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:15:53.585523Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:15:53.584215Z&quot;}}" data-execution_count="17">
+<div id="48ee15a8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:50:34.371655Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:50:34.371503Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:52:04.554634Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:52:04.553973Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a><span class="kw">def</span> run_flaml_classification(metric<span class="op">=</span><span class="st">"roc_auc"</span>, time_budget<span class="op">=</span>time_budget):</span>
@@ -1528,7 +1564,7 @@ Name: logged records per learner, dtype: int64</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <td>accuracy</td>
 <td>30</td>
-<td>29.993</td>
+<td>30.000</td>
 <td>rf</td>
 <td>0.120</td>
 <td>0.880</td>
@@ -1539,18 +1575,18 @@ Name: logged records per learner, dtype: int64</code></pre>
 <th data-quarto-table-cell-role="th">1</th>
 <td>roc_auc</td>
 <td>30</td>
-<td>30.013</td>
+<td>30.037</td>
 <td>rf</td>
-<td>0.086</td>
+<td>0.085</td>
 <td>0.866</td>
-<td>0.914</td>
-<td>0.662</td>
+<td>0.915</td>
+<td>0.659</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
 <td>f1</td>
 <td>30</td>
-<td>29.992</td>
+<td>30.000</td>
 <td>rf</td>
 <td>0.311</td>
 <td>0.870</td>
@@ -1563,7 +1599,7 @@ Name: logged records per learner, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="0564eae9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:15:53.587452Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:15:53.587258Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:15:53.695416Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:15:53.694360Z&quot;}}" data-execution_count="18">
+<div id="0564eae9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:52:04.556433Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:52:04.556240Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:52:04.626677Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:52:04.625964Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
@@ -1577,20 +1613,22 @@ Name: logged records per learner, dtype: int64</code></pre>
 </details>
 
 </div>
-<img data-src="lab-04-automl_files/figure-revealjs/cell-19-output-1.png" class="r-stretch"><h3 id="classification-questions">Classification Questions</h3>
+<img data-src="lab-01-automl_files/figure-revealjs/cell-19-output-1.png" class="r-stretch"></section>
+<section id="classification-questions" class="slide level2">
+<h2>Classification Questions</h2>
 <ol type="1">
 <li>Which metric selected the strongest model for ROC AUC?</li>
 <li>Which metric selected the strongest model for F1?</li>
 <li>Which errors are more costly in this task?</li>
 <li>What additional fairness or governance checks would you run before deployment?</li>
 </ol>
-</section>
-<section id="regression-dataset-california-housing" class="slide level2">
-<h2>6. Regression Dataset: California Housing</h2>
+</section></section>
+<section id="regression-dataset-california-housing" class="title-slide slide level1 center">
+<h1>Regression Dataset: California Housing</h1>
 <p>The second real dataset is California Housing, originally derived from the 1990 US census.</p>
 <p>The task is to predict median house value for California districts from demographic and geographic attributes.</p>
 <p>This gives us a second AutoML setting: regression rather than classification.</p>
-<div id="ca9020b6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:15:53.697364Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:15:53.697181Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:15:53.741388Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:15:53.740259Z&quot;}}" data-execution_count="19">
+<div id="ca9020b6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:52:04.628202Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:52:04.628054Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:52:06.025120Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:52:06.024452Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="kw">def</span> load_housing_data():</span>
@@ -1807,7 +1845,7 @@ Name: logged records per learner, dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="940ac465" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:15:53.743303Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:15:53.743080Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:15:53.753549Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:15:53.752566Z&quot;}}" data-execution_count="20">
+<div id="940ac465" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:52:06.026631Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:52:06.026499Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:52:06.033474Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:52:06.032842Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>regression_target <span class="op">=</span> <span class="st">"MedHouseVal"</span> <span class="cf">if</span> <span class="st">"MedHouseVal"</span> <span class="kw">in</span> housing_df.columns <span class="cf">else</span> <span class="st">"target"</span></span>
@@ -1840,14 +1878,15 @@ Target: MedHouseVal</code></pre>
 </div>
 </div>
 </section>
-<section id="manual-regression-baselines" class="slide level2">
-<h2>7. Manual Regression Baselines</h2>
+
+<section id="manual-regression-baselines" class="title-slide slide level1 center">
+<h1>Manual Regression Baselines</h1>
 <p>We compare FLAML against two common baselines:</p>
 <ul>
 <li>Ridge regression: simple, fast, and linear.</li>
 <li>Random forest: nonlinear and stronger, but less transparent and more expensive.</li>
 </ul>
-<div id="3ef59b1e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:15:53.755700Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:15:53.755495Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:15:57.820115Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:15:57.819220Z&quot;}}" data-execution_count="21">
+<div id="3ef59b1e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:52:06.035085Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:52:06.034850Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:52:09.376273Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:52:09.375723Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a>ridge_baseline <span class="op">=</span> Pipeline(</span>
@@ -1929,11 +1968,12 @@ Random forest baseline
 </div>
 </div>
 </section>
-<section id="flaml-for-regression" class="slide level2">
-<h2>8. FLAML for Regression</h2>
+
+<section id="flaml-for-regression" class="title-slide slide level1 center">
+<h1>FLAML for Regression</h1>
 <p>For regression, FLAML can optimize metrics such as RMSE, MAE, or R2.</p>
 <p>Here we optimize RMSE and compare the selected model with the two manual baselines.</p>
-<div id="439a0506" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:15:57.822307Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:15:57.822108Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:16:26.189959Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:16:26.189011Z&quot;}}" data-execution_count="22">
+<div id="439a0506" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:52:09.378094Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:52:09.377936Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:52:39.445323Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:52:39.444712Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a>regression_automl <span class="op">=</span> AutoML()</span>
@@ -1958,7 +1998,7 @@ Random forest baseline
 <span id="cb29-20"><a href="" aria-label="20"></a>regression_elapsed <span class="op">=</span> time.perf_counter() <span class="op">-</span> regression_started_at</span></code></pre></div>
 </details>
 </div>
-<div id="6cab0009" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:16:26.192588Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:16:26.192385Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:16:26.197722Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:16:26.196763Z&quot;}}" data-execution_count="23">
+<div id="6cab0009" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:52:39.447458Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:52:39.447217Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:52:39.451169Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:52:39.450434Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="ss">f"Best estimator: </span><span class="sc">{</span>regression_automl<span class="sc">.</span>best_estimator<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -1969,7 +2009,7 @@ Random forest baseline
 <div class="cell-output cell-output-stdout">
 <pre><code>Best estimator: rf
 Best validation loss: 0.500325
-Training time for best config: 7.253s</code></pre>
+Training time for best config: 6.042s</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>{'n_estimators': 271,
@@ -1977,7 +2017,7 @@ Training time for best config: 7.253s</code></pre>
  'max_leaves': 1593}</code></pre>
 </div>
 </div>
-<div id="86279864" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:16:26.199605Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:16:26.199419Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:16:26.384408Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:16:26.383350Z&quot;}}" data-execution_count="24">
+<div id="86279864" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:52:39.452495Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:52:39.452356Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:52:39.606030Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:52:39.605277Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a>regression_automl_scores <span class="op">=</span> evaluate_regressor(regression_automl, X_reg_val_flaml, y_reg_val)</span>
@@ -2045,45 +2085,12 @@ Training time for best config: 7.253s</code></pre>
 </div>
 </div>
 </section>
-<section id="multi-fidelity-search" class="slide level2">
-<h2>Multi-Fidelity Search</h2>
-<p>A multi-fidelity strategy evaluates many configurations cheaply, then spends more resources on promising ones.</p>
-</section>
-<section id="fidelity-means-resource-level" class="slide level2">
-<h2>Fidelity Means Resource Level</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Low fidelity</th>
-<th>Higher fidelity</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>fewer rows</td>
-<td>more rows</td>
-</tr>
-<tr class="even">
-<td>fewer trees</td>
-<td>more trees</td>
-</tr>
-<tr class="odd">
-<td>fewer epochs</td>
-<td>more epochs</td>
-</tr>
-<tr class="even">
-<td>shorter training</td>
-<td>longer training</td>
-</tr>
-</tbody>
-</table>
-<p>FLAML’s design is in the same spirit: good anytime behavior matters because the search may be stopped by a fixed budget.</p>
-</section>
-<section id="budget-experiment" class="slide level2">
-<h2>9. Budget Experiment</h2>
+
+<section id="budget-experiment" class="title-slide slide level1 center">
+<h1>Budget Experiment</h1>
 <p>Repeat FLAML on regression using <code>budget_values</code> from setup. All runs use the same validation partition and learner list. Record elapsed time and validation RMSE; do not choose a budget by inspecting test results.</p>
 <p>These are independent restarts, not checkpoints of one search. Longer budgets need not yield monotonically better results because search paths and runtime vary. For a stronger experiment, repeat across seeds and report score/time variability. The budget covers each <code>fit</code> call; data loading and the manual baselines are additional costs.</p>
-<div id="a35c70af" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:16:26.386417Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:16:26.386230Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:17:15.013573Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:17:15.012647Z&quot;}}" data-execution_count="25">
+<div id="a35c70af" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:52:39.607484Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:52:39.607346Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:53:29.573874Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:53:29.573235Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb35-1"><a href="" aria-label="1"></a><span class="kw">def</span> run_flaml_regression(time_budget<span class="op">=</span>time_budget, metric<span class="op">=</span><span class="st">"rmse"</span>):</span>
@@ -2157,7 +2164,7 @@ Training time for best config: 7.253s</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <td>5</td>
 <td>rmse</td>
-<td>4.992</td>
+<td>4.924</td>
 <td>rf</td>
 <td>0.574</td>
 <td>0.574</td>
@@ -2168,18 +2175,18 @@ Training time for best config: 7.253s</code></pre>
 <th data-quarto-table-cell-role="th">1</th>
 <td>15</td>
 <td>rmse</td>
-<td>14.995</td>
+<td>14.694</td>
 <td>rf</td>
-<td>0.510</td>
-<td>0.510</td>
-<td>0.348</td>
-<td>0.811</td>
+<td>0.507</td>
+<td>0.507</td>
+<td>0.346</td>
+<td>0.813</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
 <td>30</td>
 <td>rmse</td>
-<td>28.390</td>
+<td>30.129</td>
 <td>rf</td>
 <td>0.500</td>
 <td>0.500</td>
@@ -2192,7 +2199,7 @@ Training time for best config: 7.253s</code></pre>
 </div>
 </div>
 </div>
-<div id="2abe1fb5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:17:15.015613Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:17:15.015413Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:17:15.235087Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:17:15.234217Z&quot;}}" data-execution_count="26">
+<div id="2abe1fb5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:53:29.575497Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:53:29.575356Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:53:29.779386Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:53:29.778724Z&quot;}}" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb36-1"><a href="" aria-label="1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
@@ -2207,136 +2214,27 @@ Training time for best config: 7.253s</code></pre>
 </details>
 
 </div>
-<img data-src="lab-04-automl_files/figure-revealjs/cell-27-output-1.png" class="r-stretch"></section>
-<section id="interpreting-the-budget-experiment" class="slide level2">
-<h2>Interpreting the Budget Experiment</h2>
+<img data-src="lab-01-automl_files/figure-revealjs/cell-27-output-1.png" class="r-stretch"></section>
+
+<section id="interpreting-the-budget-experiment" class="title-slide slide level1 center">
+<h1>Interpreting the Budget Experiment</h1>
 <p>Increasing a budget changes the search opportunity, not the task definition. Explain the observed tradeoff using validation quality, elapsed time, and selected estimator. If two budgets give similar validation scores, discuss whether the extra compute is justified.</p>
 <p>Within one run, the best observed loss on a fixed validation objective cannot increase as more completed trials are added. This does not guarantee that independent runs, low-fidelity scores, or final test performance improve monotonically.</p>
 </section>
-<section id="budget-is-a-modeling-decision" class="slide level2">
-<h2>Budget Is a Modeling Decision</h2>
+
+<section id="budget-is-a-modeling-decision" class="title-slide slide level1 center">
+<h1>Budget Is a Modeling Decision</h1>
 <p>A system that is excellent after two hours may not be the best choice for an interactive workflow that allows only two minutes.</p>
 <p>When reporting AutoML results, always state the time budget together with the chosen metric and selected model.</p>
 </section>
-<section id="inspect-freeze-then-evaluate" class="slide level2">
-<h2>10. Inspect, Freeze, Then Evaluate</h2>
-<p>Inspect <code>best_estimator</code>, <code>best_config</code>, <code>best_loss</code>, and the saved logs. Explain which parts of the search were fixed by us and which FLAML selected. Freeze the two main runs before executing the final test cell below.</p>
-<p>The earlier baseline and search tables contain validation scores. The final table contains test scores for the two pre-specified FLAML runs. Keep that distinction explicit in the report.</p>
-</section>
-<section id="reproducibility-checklist" class="slide level2">
-<h2>Reproducibility Checklist</h2>
-<ul>
-<li>dataset name and version;</li>
-<li>feature preprocessing and missing-value handling;</li>
-<li>training/validation/test splits and random seed;</li>
-<li>task type and optimized metric;</li>
-<li>requested time budget and measured elapsed time;</li>
-<li>library versions and available hardware/parallelism;</li>
-<li>selected learner;</li>
-<li>best validation loss;</li>
-<li>best configuration;</li>
-<li>final test-set metrics.</li>
-</ul>
-<p>AutoML is most useful when its choices are inspectable and reproducible.</p>
-<div id="a0810061" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:17:15.237515Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:17:15.237318Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:17:15.480598Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:17:15.479748Z&quot;}}" data-execution_count="27">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb37-1"><a href="" aria-label="1"></a><span class="co"># Final evaluation: run only after fixing the metric, search space, and budget.</span></span>
-<span id="cb37-2"><a href="" aria-label="2"></a><span class="co"># Report these two pre-specified main runs; do not select another run from test scores.</span></span>
-<span id="cb37-3"><a href="" aria-label="3"></a>classification_final_scores <span class="op">=</span> evaluate_classifier(classification_automl, X_cls_test_flaml, y_cls_test)</span>
-<span id="cb37-4"><a href="" aria-label="4"></a>regression_final_scores <span class="op">=</span> evaluate_regressor(regression_automl, X_reg_test_flaml, y_reg_test)</span>
-<span id="cb37-5"><a href="" aria-label="5"></a>summary <span class="op">=</span> pd.DataFrame([</span>
-<span id="cb37-6"><a href="" aria-label="6"></a>    {<span class="st">"task"</span>: <span class="st">"classification"</span>, <span class="st">"dataset"</span>: adult_source, <span class="st">"optimized_metric"</span>: <span class="st">"roc_auc"</span>,</span>
-<span id="cb37-7"><a href="" aria-label="7"></a>     <span class="st">"budget_seconds"</span>: time_budget, <span class="st">"elapsed_seconds"</span>: classification_elapsed, <span class="st">"best_estimator"</span>: classification_automl.best_estimator,</span>
-<span id="cb37-8"><a href="" aria-label="8"></a>     <span class="st">"validation_loss"</span>: classification_automl.best_loss, <span class="op">**</span>classification_final_scores},</span>
-<span id="cb37-9"><a href="" aria-label="9"></a>    {<span class="st">"task"</span>: <span class="st">"regression"</span>, <span class="st">"dataset"</span>: housing_source, <span class="st">"optimized_metric"</span>: <span class="st">"rmse"</span>,</span>
-<span id="cb37-10"><a href="" aria-label="10"></a>     <span class="st">"budget_seconds"</span>: time_budget, <span class="st">"elapsed_seconds"</span>: regression_elapsed, <span class="st">"best_estimator"</span>: regression_automl.best_estimator,</span>
-<span id="cb37-11"><a href="" aria-label="11"></a>     <span class="st">"validation_loss"</span>: regression_automl.best_loss, <span class="op">**</span>regression_final_scores},</span>
-<span id="cb37-12"><a href="" aria-label="12"></a>])</span>
-<span id="cb37-13"><a href="" aria-label="13"></a>summary.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="27">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">task</th>
-<th data-quarto-table-cell-role="th">dataset</th>
-<th data-quarto-table-cell-role="th">optimized_metric</th>
-<th data-quarto-table-cell-role="th">budget_seconds</th>
-<th data-quarto-table-cell-role="th">elapsed_seconds</th>
-<th data-quarto-table-cell-role="th">best_estimator</th>
-<th data-quarto-table-cell-role="th">validation_loss</th>
-<th data-quarto-table-cell-role="th">accuracy</th>
-<th data-quarto-table-cell-role="th">roc_auc</th>
-<th data-quarto-table-cell-role="th">f1</th>
-<th data-quarto-table-cell-role="th">rmse</th>
-<th data-quarto-table-cell-role="th">mae</th>
-<th data-quarto-table-cell-role="th">r2</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>classification</td>
-<td>OpenML Adult Census Income</td>
-<td>roc_auc</td>
-<td>30</td>
-<td>29.996</td>
-<td>rf</td>
-<td>0.086</td>
-<td>0.852</td>
-<td>0.901</td>
-<td>0.644</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>regression</td>
-<td>California Housing</td>
-<td>rmse</td>
-<td>30</td>
-<td>28.364</td>
-<td>rf</td>
-<td>0.500</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>NaN</td>
-<td>0.505</td>
-<td>0.334</td>
-<td>0.806</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</section></section>
-<section>
 <section id="end-to-end-pipeline-optimization" class="title-slide slide level1 center">
 <h1>End-to-End Pipeline Optimization</h1>
 
 </section>
-<section id="from-cash-to-end-to-end-pipeline-optimization" class="slide level2 scrollable">
-<h2>11. From CASH to End-to-End Pipeline Optimization</h2>
+
+<section id="from-cash-to-end-to-end-pipeline-optimization" class="title-slide slide level1 scrollable center">
+<h1>From CASH to End-to-End Pipeline Optimization</h1>
 <p>So far, we fixed data cleaning, category encoding, feature availability, and validation design, then searched over learners. End-to-end pipeline optimization also searches over the <strong>structure and operations</strong> that turn raw data into predictions.</p>
 <p>Let <span class="math inline">\(s\)</span> denote a pipeline structure, <span class="math inline">\(\theta\in\Theta_s\)</span> its conditional settings, and <span class="math inline">\(\mathcal S(C)\)</span> the structures allowed by human constraints <span class="math inline">\(C\)</span>:</p>
 <p><span class="math display">\[ (s^*,\theta^*)\in\arg\min_{s\in\mathcal S(C),\;\theta\in\Theta_s}
@@ -2344,8 +2242,9 @@ Training time for best config: 7.253s</code></pre>
 \qquad c_{\mathrm{search}}\le B. \]</span></p>
 <p>The pipeline may choose imputation → encoding → feature construction/selection → resampling → learner → calibration. Structure can be a sequence or a graph; changing an early step changes the meaning and cost of later choices.</p>
 </section>
-<section id="why-full-pipeline-search-is-harder" class="slide level2 scrollable">
-<h2>Why Full Pipeline Search Is Harder</h2>
+
+<section id="why-full-pipeline-search-is-harder" class="title-slide slide level1 scrollable center">
+<h1>Why Full Pipeline Search Is Harder</h1>
 <ul>
 <li><strong>Dependencies:</strong> scaling matters for some learners; SMOTE must follow a suitable representation and stay inside training folds.</li>
 <li><strong>Data quality:</strong> deletion, imputation, and feature construction can change who is represented and what the model learns.</li>
@@ -2357,8 +2256,9 @@ Training time for best config: 7.253s</code></pre>
 <p>Even before selecting operators, allowing each of <span class="math inline">\(s\)</span> step types at most once gives <span class="math inline">\(\sum_{m=0}^{s} s!/(s-m)!\)</span> ordered structures: 326 when <span class="math inline">\(s=5\)</span>. This is an illustrative unrestricted count; type and domain constraints remove many structures. Scaling before a tree is often unnecessary, rather than invalid. <a href="https://arxiv.org/abs/1603.06212">TPOT</a> explores pipeline structures using genetic programming, illustrating a different scope from fixed-template search.</p>
 <p>References: <span class="citation" data-cites="olson2016evaluation">(<a href="#/references" role="doc-biblioref" onclick="">Olson et al. 2016</a>)</span>.</p>
 </section>
-<section id="preprocessing-order-is-a-search-decision" class="slide level2">
-<h2>Preprocessing Order Is a Search Decision</h2>
+
+<section id="preprocessing-order-is-a-search-decision" class="title-slide slide level1 center">
+<h1>Preprocessing Order Is a Search Decision</h1>
 <p><a href="https://ceur-ws.org/Vol-2840/paper1.pdf">Giovanelli, Bilalli, and Abelló (2021), <em>Effective data pre-processing for AutoML</em></a> study transformations and combinations of transformations as <strong>pipeline prototypes</strong> <span class="citation" data-cites="giovanelli2021effective">(<a href="#/references" role="doc-biblioref" onclick="">Giovanelli et al. 2021</a>)</span>. Choosing a promising prototype comes before tuning the operators that instantiate it.</p>
 <p>Distinguish three decisions:</p>
 <ol type="1">
@@ -2369,8 +2269,9 @@ Training time for best config: 7.253s</code></pre>
 <p>For example, feature selection can change the neighborhood on which later resampling operates; reversing the steps changes the data seen by the selector. Both choices must still fit selection and resampling strictly inside training folds.</p>
 <p><strong>Exercise:</strong> propose two admissible orders for feature selection and resampling, identify an assumption behind each, and explain how you would compare them under one budget and evaluation protocol.</p>
 </section>
-<section id="hamlet-human-knowledge-shapes-the-search" class="slide level2 scrollable">
-<h2>HAMLET: Human Knowledge Shapes the Search</h2>
+
+<section id="hamlet-human-knowledge-shapes-the-search" class="title-slide slide level1 scrollable center">
+<h1>HAMLET: Human Knowledge Shapes the Search</h1>
 <p><a href="https://www.sciencedirect.com/science/article/pii/S0167739X22004393">Francia et al.&nbsp;(2023), <em>HAMLET: A framework for Human-centered AutoML via Structured Argumentation</em></a> connects AutoML with explicit human knowledge and constraints. The data scientist expresses constraints in a logical knowledge base, represented through a Problem Graph. Structured argumentation makes conflicts between rules and pipeline choices explicit when deriving the admissible search space. <a href="https://cris.unibo.it/handle/11585/913288">Author repository</a>.</p>
 <p>The teaching question shifts from “Which model won?” to “Which alternatives were allowed, and why?” In our lab, consider a rule requiring interpretable learners or prohibiting a feature. Where should that rule enter the search, and how should its effect be explained?</p>
 <p><strong>Discussion:</strong> distinguish a hard admissibility constraint from a preference that can trade off against predictive performance.</p>
@@ -2378,22 +2279,25 @@ Training time for best config: 7.253s</code></pre>
 <p>An iterative workflow makes the human role concrete: encode rules → derive an admissible space → search → inspect evidence → revise rules. Separate data constraints (forbidden features), ordering constraints (which preprocessing step may follow another), and learner requirements (such as suitable scaling for distance-based methods).</p>
 <p>References: <span class="citation" data-cites="francia2023hamlet">(<a href="#/references" role="doc-biblioref" onclick="">Francia et al. 2023</a>)</span>.</p>
 </section>
-<section id="mlzero-agents-build-and-repair-ml-workflows" class="slide level2 scrollable">
-<h2>MLZero: Agents Build and Repair ML Workflows</h2>
+
+<section id="mlzero-agents-build-and-repair-ml-workflows" class="title-slide slide level1 scrollable center">
+<h1>MLZero: Agents Build and Repair ML Workflows</h1>
 <p><a href="https://neurips.cc/virtual/2025/poster/119504">Fang et al.&nbsp;(NeurIPS 2025), <em>MLZero: A Multi-Agent System for End-to-end Machine Learning Automation</em></a> uses LLM-powered agents to automate workflows across data modalities. A perception module turns raw multimodal inputs into task context. Agents generate code, execute it, inspect failures, and revise the workflow. Semantic memory supplies reusable knowledge, while episodic memory retains earlier attempts and errors to help reduce hallucinated or outdated API calls.</p>
 <p>This expands the action space beyond choosing values in a prewritten estimator configuration: agents generate and revise executable workflows. The paper evaluates MLE-Bench Lite and a 25-task multimodal AutoML agent benchmark, and also reports experiments with a compact 8B LLM; those results do not establish reliability on every deployment task.</p>
 <p><strong>Discussion:</strong> if an agent writes preprocessing code for Adult Income, which execution checks and independent validation would detect leakage, invalid assumptions, or an apparently successful but wrong solution?</p>
 <p>References: <span class="citation" data-cites="fang2025mlzero">(<a href="#/references" role="doc-biblioref" onclick="">Fang et al. 2025</a>)</span>.</p>
 </section>
-<section id="age-ml-specifications-for-data-centric-automl" class="slide level2">
-<h2>AGE-ML: Specifications for Data-Centric AutoML</h2>
+
+<section id="age-ml-specifications-for-data-centric-automl" class="title-slide slide level1 center">
+<h1>AGE-ML: Specifications for Data-Centric AutoML</h1>
 <p><a href="https://adbis26.sciencesconf.org/753016">Matteini et al.&nbsp;(ADBIS 2026), <em>Agentic Architecture for Data-Centric AutoML</em></a> presents AGE-ML, a specification-driven architecture. Human-readable assumptions, constraints, evaluation criteria, and preferences define a pipeline search space; an LLM agent loop generates and validates pipelines and provides structured explanations.</p>
 <p>The linked conference abstract emphasizes controllability, traceability, reproducibility, and iterative refinement. Use it as an architectural research reference; it does not provide enough detail on that page to reproduce the experiments or infer numerical improvements.</p>
 <p><strong>Discussion:</strong> write a specification for our classification task: target, permitted features, missing-value policy, split protocol, objective, budget, and explanation requirements. Which parts could a validator check automatically?</p>
 <p>References: <span class="citation" data-cites="matteini2026agentic">(<a href="#/references" role="doc-biblioref" onclick="">Matteini et al. 2026</a>)</span>.</p>
 </section>
-<section id="compare-the-boundaries-of-automation" class="slide level2 scrollable">
-<h2>Compare the Boundaries of Automation</h2>
+
+<section id="compare-the-boundaries-of-automation" class="title-slide slide level1 scrollable center">
+<h1>Compare the Boundaries of Automation</h1>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -2443,46 +2347,48 @@ Training time for best config: 7.253s</code></pre>
 <p>These approaches address different aspects of automation. This table compares their scope; it is not a performance ranking.</p>
 <p>Also compare the risks: fixed search spaces can exclude useful solutions; rule-based systems require knowledge engineering; code-generating agents need execution checks; specification-driven systems depend on the quality of the specification. Which evidence and human controls would you require in a lending application? Adult Income itself is an income-prediction dataset, not a creditworthiness label.</p>
 </section>
-<section id="demo-human-constraints-shape-an-executable-search" class="slide level2 scrollable">
-<h2>Demo: Human Constraints Shape an Executable Search</h2>
+
+<section>
+<section id="demo-human-constraints-shape-an-executable-search" class="title-slide slide level1 scrollable center">
+<h1>Demo: Human Constraints Shape an Executable Search</h1>
 <p>Turn a small human-readable specification into a feature filter and FLAML settings. Compare a reference specification with an otherwise identical specification that forbids <code>sex</code>, <code>race</code>, and <code>native_country</code>. Both use F1, the same learner list, budget, seed, and validation partition, so the intended changed factor is feature admissibility. Runtime-limited searches can still follow different paths.</p>
 <p>This is an illustration of applying a specification, not an implementation of HAMLET or an LLM agent. Attribute removal does not guarantee fairness: proxies and unequal error rates can remain. On the offline fallback, these attributes are absent, so the feature restriction is a no-op; adapt it to a relevant feature to study a real intervention.</p>
-<div id="lab04-integrated-081" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:17:15.483210Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:17:15.482983Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:18:15.603552Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:18:15.602440Z&quot;}}" data-execution_count="28">
+<div id="lab04-integrated-081" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:53:29.781637Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:53:29.781456Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:54:29.858143Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:54:29.857450Z&quot;}}" data-execution_count="27">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb38-1"><a href="" aria-label="1"></a>reference_spec <span class="op">=</span> {</span>
-<span id="cb38-2"><a href="" aria-label="2"></a>    <span class="st">"forbidden_features"</span>: [], <span class="st">"learners"</span>: CLASSIFIERS.copy(),</span>
-<span id="cb38-3"><a href="" aria-label="3"></a>    <span class="st">"metric"</span>: <span class="st">"f1"</span>, <span class="st">"time_budget"</span>: time_budget,</span>
-<span id="cb38-4"><a href="" aria-label="4"></a>}</span>
-<span id="cb38-5"><a href="" aria-label="5"></a>restricted_spec <span class="op">=</span> {<span class="op">**</span>reference_spec, <span class="st">"forbidden_features"</span>: [<span class="st">"sex"</span>, <span class="st">"race"</span>, <span class="st">"native_country"</span>]}</span>
-<span id="cb38-6"><a href="" aria-label="6"></a></span>
-<span id="cb38-7"><a href="" aria-label="7"></a><span class="kw">def</span> run_flaml_from_spec(spec, label):</span>
-<span id="cb38-8"><a href="" aria-label="8"></a>    kept <span class="op">=</span> [name <span class="cf">for</span> name <span class="kw">in</span> X_cls_train.columns <span class="cf">if</span> name <span class="kw">not</span> <span class="kw">in</span> spec[<span class="st">"forbidden_features"</span>]]</span>
-<span id="cb38-9"><a href="" aria-label="9"></a>    <span class="cf">if</span> <span class="kw">not</span> kept:</span>
-<span id="cb38-10"><a href="" aria-label="10"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"The specification must retain at least one feature."</span>)</span>
-<span id="cb38-11"><a href="" aria-label="11"></a>    kept_cat <span class="op">=</span> [name <span class="cf">for</span> name <span class="kw">in</span> categorical_cls <span class="cf">if</span> name <span class="kw">in</span> kept]</span>
-<span id="cb38-12"><a href="" aria-label="12"></a>    X_tr, maps <span class="op">=</span> prepare_flaml_frame(X_cls_train[kept], kept_cat)</span>
-<span id="cb38-13"><a href="" aria-label="13"></a>    X_va, _ <span class="op">=</span> prepare_flaml_frame(X_cls_val[kept], kept_cat, maps)</span>
-<span id="cb38-14"><a href="" aria-label="14"></a>    model <span class="op">=</span> AutoML()</span>
-<span id="cb38-15"><a href="" aria-label="15"></a>    started_at <span class="op">=</span> time.perf_counter()</span>
-<span id="cb38-16"><a href="" aria-label="16"></a>    model.fit(</span>
-<span id="cb38-17"><a href="" aria-label="17"></a>        X_train<span class="op">=</span>X_tr, y_train<span class="op">=</span>y_cls_train, X_val<span class="op">=</span>X_va, y_val<span class="op">=</span>y_cls_val,</span>
-<span id="cb38-18"><a href="" aria-label="18"></a>        eval_method<span class="op">=</span><span class="st">"holdout"</span>, retrain_full<span class="op">=</span><span class="va">False</span>, task<span class="op">=</span><span class="st">"classification"</span>,</span>
-<span id="cb38-19"><a href="" aria-label="19"></a>        metric<span class="op">=</span>spec[<span class="st">"metric"</span>], estimator_list<span class="op">=</span>spec[<span class="st">"learners"</span>], n_jobs<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb38-20"><a href="" aria-label="20"></a>        time_budget<span class="op">=</span>spec[<span class="st">"time_budget"</span>], seed<span class="op">=</span>RANDOM_STATE, verbose<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb38-21"><a href="" aria-label="21"></a>        log_file_name<span class="op">=</span><span class="ss">f"flaml_spec_</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>spec[<span class="st">'time_budget'</span>]<span class="sc">}</span><span class="ss">s.log"</span>,</span>
-<span id="cb38-22"><a href="" aria-label="22"></a>    )</span>
-<span id="cb38-23"><a href="" aria-label="23"></a>    <span class="cf">return</span> {<span class="st">"run"</span>: label, <span class="st">"n_features"</span>: <span class="bu">len</span>(kept),</span>
-<span id="cb38-24"><a href="" aria-label="24"></a>            <span class="st">"removed_features"</span>: [name <span class="cf">for</span> name <span class="kw">in</span> X_cls_train.columns <span class="cf">if</span> name <span class="kw">not</span> <span class="kw">in</span> kept],</span>
-<span id="cb38-25"><a href="" aria-label="25"></a>            <span class="st">"budget_seconds"</span>: spec[<span class="st">"time_budget"</span>], <span class="st">"elapsed_seconds"</span>: time.perf_counter() <span class="op">-</span> started_at,</span>
-<span id="cb38-26"><a href="" aria-label="26"></a>            <span class="st">"best_estimator"</span>: model.best_estimator, <span class="st">"best_loss"</span>: model.best_loss,</span>
-<span id="cb38-27"><a href="" aria-label="27"></a>            <span class="op">**</span>evaluate_classifier(model, X_va, y_cls_val)}</span>
-<span id="cb38-28"><a href="" aria-label="28"></a></span>
-<span id="cb38-29"><a href="" aria-label="29"></a>spec_results <span class="op">=</span> pd.DataFrame([</span>
-<span id="cb38-30"><a href="" aria-label="30"></a>    run_flaml_from_spec(reference_spec, <span class="st">"reference"</span>),</span>
-<span id="cb38-31"><a href="" aria-label="31"></a>    run_flaml_from_spec(restricted_spec, <span class="st">"restricted"</span>),</span>
-<span id="cb38-32"><a href="" aria-label="32"></a>])</span>
-<span id="cb38-33"><a href="" aria-label="33"></a>display(spec_results.<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb37-1"><a href="" aria-label="1"></a>reference_spec <span class="op">=</span> {</span>
+<span id="cb37-2"><a href="" aria-label="2"></a>    <span class="st">"forbidden_features"</span>: [], <span class="st">"learners"</span>: CLASSIFIERS.copy(),</span>
+<span id="cb37-3"><a href="" aria-label="3"></a>    <span class="st">"metric"</span>: <span class="st">"f1"</span>, <span class="st">"time_budget"</span>: time_budget,</span>
+<span id="cb37-4"><a href="" aria-label="4"></a>}</span>
+<span id="cb37-5"><a href="" aria-label="5"></a>restricted_spec <span class="op">=</span> {<span class="op">**</span>reference_spec, <span class="st">"forbidden_features"</span>: [<span class="st">"sex"</span>, <span class="st">"race"</span>, <span class="st">"native_country"</span>]}</span>
+<span id="cb37-6"><a href="" aria-label="6"></a></span>
+<span id="cb37-7"><a href="" aria-label="7"></a><span class="kw">def</span> run_flaml_from_spec(spec, label):</span>
+<span id="cb37-8"><a href="" aria-label="8"></a>    kept <span class="op">=</span> [name <span class="cf">for</span> name <span class="kw">in</span> X_cls_train.columns <span class="cf">if</span> name <span class="kw">not</span> <span class="kw">in</span> spec[<span class="st">"forbidden_features"</span>]]</span>
+<span id="cb37-9"><a href="" aria-label="9"></a>    <span class="cf">if</span> <span class="kw">not</span> kept:</span>
+<span id="cb37-10"><a href="" aria-label="10"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"The specification must retain at least one feature."</span>)</span>
+<span id="cb37-11"><a href="" aria-label="11"></a>    kept_cat <span class="op">=</span> [name <span class="cf">for</span> name <span class="kw">in</span> categorical_cls <span class="cf">if</span> name <span class="kw">in</span> kept]</span>
+<span id="cb37-12"><a href="" aria-label="12"></a>    X_tr, maps <span class="op">=</span> prepare_flaml_frame(X_cls_train[kept], kept_cat)</span>
+<span id="cb37-13"><a href="" aria-label="13"></a>    X_va, _ <span class="op">=</span> prepare_flaml_frame(X_cls_val[kept], kept_cat, maps)</span>
+<span id="cb37-14"><a href="" aria-label="14"></a>    model <span class="op">=</span> AutoML()</span>
+<span id="cb37-15"><a href="" aria-label="15"></a>    started_at <span class="op">=</span> time.perf_counter()</span>
+<span id="cb37-16"><a href="" aria-label="16"></a>    model.fit(</span>
+<span id="cb37-17"><a href="" aria-label="17"></a>        X_train<span class="op">=</span>X_tr, y_train<span class="op">=</span>y_cls_train, X_val<span class="op">=</span>X_va, y_val<span class="op">=</span>y_cls_val,</span>
+<span id="cb37-18"><a href="" aria-label="18"></a>        eval_method<span class="op">=</span><span class="st">"holdout"</span>, retrain_full<span class="op">=</span><span class="va">False</span>, task<span class="op">=</span><span class="st">"classification"</span>,</span>
+<span id="cb37-19"><a href="" aria-label="19"></a>        metric<span class="op">=</span>spec[<span class="st">"metric"</span>], estimator_list<span class="op">=</span>spec[<span class="st">"learners"</span>], n_jobs<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb37-20"><a href="" aria-label="20"></a>        time_budget<span class="op">=</span>spec[<span class="st">"time_budget"</span>], seed<span class="op">=</span>RANDOM_STATE, verbose<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb37-21"><a href="" aria-label="21"></a>        log_file_name<span class="op">=</span><span class="ss">f"flaml_spec_</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>spec[<span class="st">'time_budget'</span>]<span class="sc">}</span><span class="ss">s.log"</span>,</span>
+<span id="cb37-22"><a href="" aria-label="22"></a>    )</span>
+<span id="cb37-23"><a href="" aria-label="23"></a>    <span class="cf">return</span> {<span class="st">"run"</span>: label, <span class="st">"n_features"</span>: <span class="bu">len</span>(kept),</span>
+<span id="cb37-24"><a href="" aria-label="24"></a>            <span class="st">"removed_features"</span>: [name <span class="cf">for</span> name <span class="kw">in</span> X_cls_train.columns <span class="cf">if</span> name <span class="kw">not</span> <span class="kw">in</span> kept],</span>
+<span id="cb37-25"><a href="" aria-label="25"></a>            <span class="st">"budget_seconds"</span>: spec[<span class="st">"time_budget"</span>], <span class="st">"elapsed_seconds"</span>: time.perf_counter() <span class="op">-</span> started_at,</span>
+<span id="cb37-26"><a href="" aria-label="26"></a>            <span class="st">"best_estimator"</span>: model.best_estimator, <span class="st">"best_loss"</span>: model.best_loss,</span>
+<span id="cb37-27"><a href="" aria-label="27"></a>            <span class="op">**</span>evaluate_classifier(model, X_va, y_cls_val)}</span>
+<span id="cb37-28"><a href="" aria-label="28"></a></span>
+<span id="cb37-29"><a href="" aria-label="29"></a>spec_results <span class="op">=</span> pd.DataFrame([</span>
+<span id="cb37-30"><a href="" aria-label="30"></a>    run_flaml_from_spec(reference_spec, <span class="st">"reference"</span>),</span>
+<span id="cb37-31"><a href="" aria-label="31"></a>    run_flaml_from_spec(restricted_spec, <span class="st">"restricted"</span>),</span>
+<span id="cb37-32"><a href="" aria-label="32"></a>])</span>
+<span id="cb37-33"><a href="" aria-label="33"></a>display(spec_results.<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -2523,7 +2429,7 @@ Training time for best config: 7.253s</code></pre>
 <td>14</td>
 <td>[]</td>
 <td>30</td>
-<td>29.999</td>
+<td>29.986</td>
 <td>rf</td>
 <td>0.311</td>
 <td>0.870</td>
@@ -2536,7 +2442,7 @@ Training time for best config: 7.253s</code></pre>
 <td>11</td>
 <td>[race, sex, native_country]</td>
 <td>30</td>
-<td>30.000</td>
+<td>30.001</td>
 <td>extra_tree</td>
 <td>0.310</td>
 <td>0.865</td>
@@ -2549,7 +2455,9 @@ Training time for best config: 7.253s</code></pre>
 </div>
 </div>
 </div>
-<h3 id="pipeline-questions">Pipeline Questions</h3>
+</section>
+<section id="pipeline-questions" class="slide level2">
+<h2>Pipeline Questions</h2>
 <ol type="1">
 <li>Which requirements constrain the data, and which constrain the model or evaluation?</li>
 <li>Which proxies could retain information about an excluded attribute?</li>
@@ -2557,7 +2465,9 @@ Training time for best config: 7.253s</code></pre>
 <li>What would an agent need to inspect to generate a valid pipeline without leakage?</li>
 <li>How would experiment tracking show that a pipeline complied with its specification?</li>
 </ol>
-<h3 id="design-exercise-automate-one-more-decision">Design Exercise: Automate One More Decision</h3>
+</section>
+<section id="design-exercise-automate-one-more-decision" class="slide level2">
+<h2>Design Exercise: Automate One More Decision</h2>
 <p>Starting from our FLAML example, choose one currently manual operation: missing-value handling, encoding, feature selection, or resampling.</p>
 <ol type="1">
 <li>Define two admissible alternatives and their conditional parameters.</li>
@@ -2568,13 +2478,127 @@ Training time for best config: 7.253s</code></pre>
 </ol>
 <p>A design and pseudocode are sufficient; implementing an agent system is outside this lab’s practical scope.</p>
 </section></section>
-<section>
+<section id="inspect-freeze-then-evaluate" class="title-slide slide level1 center">
+<h1>Inspect, Freeze, Then Evaluate</h1>
+<p>Inspect <code>best_estimator</code>, <code>best_config</code>, <code>best_loss</code>, and the saved logs. Explain which parts of the search were fixed by us and which FLAML selected. Freeze the two main runs before executing the final test cell below.</p>
+<p>The earlier baseline and search tables contain validation scores. The final table contains test scores for the two pre-specified FLAML runs. Keep that distinction explicit in the report.</p>
+</section>
+
+<section id="reproducibility-checklist" class="title-slide slide level1 center">
+<h1>Reproducibility Checklist</h1>
+<ul>
+<li>dataset name and version;</li>
+<li>feature preprocessing and missing-value handling;</li>
+<li>training/validation/test splits and random seed;</li>
+<li>task type and optimized metric;</li>
+<li>requested time budget and measured elapsed time;</li>
+<li>library versions and available hardware/parallelism;</li>
+<li>selected learner;</li>
+<li>best validation loss;</li>
+<li>best configuration;</li>
+<li>final test-set metrics.</li>
+</ul>
+<p>AutoML is most useful when its choices are inspectable and reproducible.</p>
+<div id="a0810061" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:54:29.860253Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:54:29.860081Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:54:30.126032Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:54:30.125399Z&quot;}}" data-execution_count="28">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb38-1"><a href="" aria-label="1"></a><span class="co"># Final evaluation: run only after fixing the metric, search space, and budget.</span></span>
+<span id="cb38-2"><a href="" aria-label="2"></a><span class="co"># Report these two pre-specified main runs; do not select another run from test scores.</span></span>
+<span id="cb38-3"><a href="" aria-label="3"></a>classification_final_scores <span class="op">=</span> evaluate_classifier(classification_automl, X_cls_test_flaml, y_cls_test)</span>
+<span id="cb38-4"><a href="" aria-label="4"></a>regression_final_scores <span class="op">=</span> evaluate_regressor(regression_automl, X_reg_test_flaml, y_reg_test)</span>
+<span id="cb38-5"><a href="" aria-label="5"></a>summary <span class="op">=</span> pd.DataFrame([</span>
+<span id="cb38-6"><a href="" aria-label="6"></a>    {<span class="st">"task"</span>: <span class="st">"classification"</span>, <span class="st">"dataset"</span>: adult_source, <span class="st">"optimized_metric"</span>: <span class="st">"roc_auc"</span>,</span>
+<span id="cb38-7"><a href="" aria-label="7"></a>     <span class="st">"budget_seconds"</span>: time_budget, <span class="st">"elapsed_seconds"</span>: classification_elapsed, <span class="st">"best_estimator"</span>: classification_automl.best_estimator,</span>
+<span id="cb38-8"><a href="" aria-label="8"></a>     <span class="st">"validation_loss"</span>: classification_automl.best_loss, <span class="op">**</span>classification_final_scores},</span>
+<span id="cb38-9"><a href="" aria-label="9"></a>    {<span class="st">"task"</span>: <span class="st">"regression"</span>, <span class="st">"dataset"</span>: housing_source, <span class="st">"optimized_metric"</span>: <span class="st">"rmse"</span>,</span>
+<span id="cb38-10"><a href="" aria-label="10"></a>     <span class="st">"budget_seconds"</span>: time_budget, <span class="st">"elapsed_seconds"</span>: regression_elapsed, <span class="st">"best_estimator"</span>: regression_automl.best_estimator,</span>
+<span id="cb38-11"><a href="" aria-label="11"></a>     <span class="st">"validation_loss"</span>: regression_automl.best_loss, <span class="op">**</span>regression_final_scores},</span>
+<span id="cb38-12"><a href="" aria-label="12"></a>])</span>
+<span id="cb38-13"><a href="" aria-label="13"></a>summary.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">task</th>
+<th data-quarto-table-cell-role="th">dataset</th>
+<th data-quarto-table-cell-role="th">optimized_metric</th>
+<th data-quarto-table-cell-role="th">budget_seconds</th>
+<th data-quarto-table-cell-role="th">elapsed_seconds</th>
+<th data-quarto-table-cell-role="th">best_estimator</th>
+<th data-quarto-table-cell-role="th">validation_loss</th>
+<th data-quarto-table-cell-role="th">accuracy</th>
+<th data-quarto-table-cell-role="th">roc_auc</th>
+<th data-quarto-table-cell-role="th">f1</th>
+<th data-quarto-table-cell-role="th">rmse</th>
+<th data-quarto-table-cell-role="th">mae</th>
+<th data-quarto-table-cell-role="th">r2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>classification</td>
+<td>OpenML Adult Census Income</td>
+<td>roc_auc</td>
+<td>30</td>
+<td>30.016</td>
+<td>rf</td>
+<td>0.085</td>
+<td>0.854</td>
+<td>0.902</td>
+<td>0.645</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>regression</td>
+<td>California Housing</td>
+<td>rmse</td>
+<td>30</td>
+<td>30.064</td>
+<td>rf</td>
+<td>0.500</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.505</td>
+<td>0.334</td>
+<td>0.806</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
 <section id="wrap-up" class="title-slide slide level1 center">
 <h1>Wrap-Up</h1>
 
 </section>
-<section id="what-automl-automates" class="slide level2">
-<h2>What AutoML Automates</h2>
+
+<section id="what-automl-automates" class="title-slide slide level1 center">
+<h1>What AutoML Automates</h1>
 <p>AutoML can automate repetitive parts of modeling:</p>
 <ul>
 <li>trying candidate learners;</li>
@@ -2583,8 +2607,9 @@ Training time for best config: 7.253s</code></pre>
 <li>returning a strong baseline.</li>
 </ul>
 </section>
-<section id="what-automl-does-not-automate" class="slide level2">
-<h2>What AutoML Does Not Automate</h2>
+
+<section id="what-automl-does-not-automate" class="title-slide slide level1 center">
+<h1>What AutoML Does Not Automate</h1>
 <p>AutoML does not remove the data-science responsibility for:</p>
 <ul>
 <li>problem formulation;</li>
@@ -2596,13 +2621,15 @@ Training time for best config: 7.253s</code></pre>
 </ul>
 <p>A good AutoML report explains both the machine-selected model and the human choices that shaped the search.</p>
 </section>
-<section id="final-exercise-automl-audit-memo" class="slide level2">
-<h2>Final Exercise: AutoML Audit Memo</h2>
+
+<section id="final-exercise-automl-audit-memo" class="title-slide slide level1 center">
+<h1>Final Exercise: AutoML Audit Memo</h1>
 <p>Write a one-page audit memo for one FLAML model from this notebook.</p>
 <p>Your memo should help a reader decide whether the model is a useful baseline, a deployable model, or only an exploratory result.</p>
 </section>
-<section id="audit-memo-prompts" class="slide level2">
-<h2>Audit Memo Prompts</h2>
+
+<section id="audit-memo-prompts" class="title-slide slide level1 center">
+<h1>Audit Memo Prompts</h1>
 <p>Answer these questions:</p>
 <ol type="1">
 <li>What exact task, metric, and time budget did FLAML optimize, and how long did it actually run?</li>
@@ -2612,12 +2639,14 @@ Training time for best config: 7.253s</code></pre>
 <li>Which human modeling choice had the largest effect on the conclusion?</li>
 </ol>
 </section>
-<section id="deliverables" class="slide level2">
-<h2>Deliverables</h2>
+
+<section id="deliverables" class="title-slide slide level1 center">
+<h1>Deliverables</h1>
 <p>Submit a short lab report with the core experimental results and your interpretation.</p>
 </section>
-<section id="report-checklist" class="slide level2 scrollable">
-<h2>Report Checklist</h2>
+
+<section id="report-checklist" class="title-slide slide level1 scrollable center">
+<h1>Report Checklist</h1>
 <ol type="1">
 <li>HPO and CASH objectives, including their search spaces and evaluation protocol.</li>
 <li>Grid/random-search results: candidate counts, CV scores, validation scores, and elapsed times; explain why random search can work.</li>
@@ -2630,8 +2659,9 @@ Training time for best config: 7.253s</code></pre>
 </ol>
 <p>Explain what was automated, what was fixed manually, and which evidence remains missing.</p>
 </section>
-<section id="extension-tasks" class="slide level2">
-<h2>Extension Tasks</h2>
+
+<section id="extension-tasks" class="title-slide slide level1 center">
+<h1>Extension Tasks</h1>
 <p>Choose one if you finish early:</p>
 <ul>
 <li>Add <code>estimator_list=["lgbm", "xgboost", "rf", "extra_tree"]</code> after installing the optional learners.</li>
@@ -2642,8 +2672,9 @@ Training time for best config: 7.253s</code></pre>
 <li>Extend the specification demo with a fold-safe imputation or resampling choice; express it as a custom pipeline objective for <code>flaml.tune</code>.</li>
 </ul>
 </section>
-<section id="more-extension-tasks" class="slide level2">
-<h2>More Extension Tasks</h2>
+
+<section id="more-extension-tasks" class="title-slide slide level1 center">
+<h1>More Extension Tasks</h1>
 <ul>
 <li>Create a custom metric that penalizes false negatives more heavily than false positives.</li>
 <li>Repeat the budget experiment across several seeds and report score/runtime variability.</li>
@@ -2651,8 +2682,9 @@ Training time for best config: 7.253s</code></pre>
 <li>Summarize how the selected learner changes as the budget increases.</li>
 </ul>
 </section>
-<section id="references" class="slide level2 scrollable smaller">
-<h2>References</h2>
+
+<section id="references" class="title-slide slide level1 scrollable smaller">
+<h1>References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-bergstra2012random" class="csl-entry" role="listitem">
 Bergstra, James, and Yoshua Bengio. 2012. <span>“Random Search for Hyper-Parameter Optimization.”</span> <em>Journal of Machine Learning Research</em> 13 (10): 281–305.
@@ -2665,9 +2697,6 @@ Fang, Haoyang, Boran Han, Nick Erickson, et al. 2025. <span>“<span>MLZero</spa
 </div>
 <div id="ref-feurer2022auto" class="csl-entry" role="listitem">
 Feurer, Matthias, Katharina Eggensperger, Stefan Falkner, Marius Lindauer, and Frank Hutter. 2022. <span>“Auto-Sklearn 2.0: Hands-Free Automl via Meta-Learning.”</span> <em>Journal of Machine Learning Research</em> 23 (261): 1–61.
-</div>
-<div id="ref-feurer2019hyperparameter" class="csl-entry" role="listitem">
-Feurer, Matthias, and Frank Hutter. 2019. <span>“Hyperparameter Optimization.”</span> In <em>Automated Machine Learning: Methods, Systems, Challenges</em>, edited by Frank Hutter, Lars Kotthoff, and Joaquin Vanschoren. Springer.
 </div>
 <div id="ref-feurer2015efficient" class="csl-entry" role="listitem">
 Feurer, Matthias, Aaron Klein, Katharina Eggensperger, Jost Springenberg, Manuel Blum, and Frank Hutter. 2015. <span>“Efficient and Robust Automated Machine Learning.”</span> <em>Advances in Neural Information Processing Systems</em> 28: 2962–70.
@@ -2713,17 +2742,18 @@ Wu, Qingyun, Chi Wang, and Silu Huang. 2021. <span>“Frugal Optimization for Co
 </div>
 </div>
 </section>
-<section id="practical-resources" class="slide level2">
-<h2>Practical Resources</h2>
+
+<section id="practical-resources" class="title-slide slide level1 center">
+<h1>Practical Resources</h1>
 <ul>
 <li><a href="https://microsoft.github.io/FLAML/docs/Use-Cases/Task-Oriented-AutoML/">FLAML: Task-Oriented AutoML</a>.</li>
 <li><a href="https://scikit-learn.org/stable/modules/grid_search.html">scikit-learn: hyperparameter search</a>.</li>
 <li><a href="https://archive.ics.uci.edu/dataset/2/adult">UCI Adult dataset</a>.</li>
 <li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html">scikit-learn California Housing</a>.</li>
 </ul>
-<p>The bibliography uses the same <code>refs/refs.bib</code> and Quarto/Pandoc citation mechanism as Lab 03. Research figures retain their source attribution to the Hutter–Vanschoren tutorial and the cited papers. Direct paper links remain in the explanations for notebook readers.</p>
+<p>The bibliography uses <code>refs/refs.bib</code> and Quarto/Pandoc citations. Research figures retain their source attribution to the Hutter–Vanschoren tutorial and the cited papers. Direct paper links remain in the explanations for notebook readers.</p>
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -2732,20 +2762,20 @@ Wu, Qingyun, Chi Wang, and Silu Huang. 2021. <span>“Frugal Optimization for Co
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="lab-04-automl_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="lab-01-automl_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="lab-04-automl_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="lab-04-automl_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="lab-04-automl_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="lab-04-automl_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="lab-04-automl_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="lab-04-automl_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="lab-01-automl_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lab-01-automl_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lab-01-automl_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lab-01-automl_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lab-01-automl_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="lab-01-automl_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="lab-04-automl_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="lab-04-automl_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="lab-04-automl_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="lab-04-automl_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="lab-01-automl_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lab-01-automl_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lab-01-automl_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="lab-01-automl_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

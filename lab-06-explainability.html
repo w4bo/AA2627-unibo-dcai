@@ -9,7 +9,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
-  <title>Model Explainability with SHAP</title>
+  <title>Explainability for Data-Centric AI</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -33,7 +33,92 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="lab-06-explainability_files/libs/revealjs/dist/theme/quarto-b328c055d9dc1f3c009edd90f416a34b.css">
   <link href="lab-06-explainability_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="lab-06-explainability_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -137,7 +222,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Model Explainability with SHAP</h1>
+  <h1 class="title">Explainability for Data-Centric AI</h1>
   <p class="subtitle">Data-Centric AI (Module II)</p>
 
 <div class="quarto-title-authors">
@@ -151,8 +236,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section class="slide level2">
 
-<p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/03-explainability.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
-<div id="explainability-imports" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:20:50.646408Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:20:50.646218Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:20:53.948720Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:20:53.947699Z&quot;}}" data-execution_count="1">
+<p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-06-explainability.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
+<div id="cell-002" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:16.464078Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:16.463892Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:18.785050Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:18.784391Z&quot;}}" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-yellow-fg">WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.</span><span class="ansi-yellow-fg">
@@ -172,14 +257,68 @@ Note: you may need to restart the kernel to use updated packages.
 </section>
 <section id="learning-outcomes" class="title-slide slide level1 center">
 <h1>Learning outcomes</h1>
-<p>By the end of this notebook, you should be able to:</p>
+<p>By the end of this 3-hour lab, you should be able to:</p>
 <ul>
-<li>Explain the SHAP baseline and feature contributions.</li>
-<li>Describe how SHAP treats known and unknown features.</li>
-<li>Calculate a Shapley value in a two-feature example.</li>
-<li>Distinguish SHAP explanation from wrapper feature selection.</li>
-<li>Interpret global and local SHAP results.</li>
+<li>Explain the SHAP baseline, the value function <span class="math inline">\(v(S)\)</span>, and feature contributions.</li>
+<li>Compute exact Shapley values by brute force and check them against the <code>shap</code> library.</li>
+<li>Interpret global and local SHAP results, and compare SHAP with permutation importance.</li>
+<li>Use explanations to detect <strong>leakage</strong>, <strong>shortcuts</strong>, and <strong>proxies</strong> in a real dataset.</li>
+<li>Detect <strong>label errors</strong> with out-of-fold predictions and inspect them with local explanations.</li>
+<li>Value training data with <strong>KNN-Shapley</strong> and test the value by removing data.</li>
+<li>Generate simple <strong>counterfactual</strong> explanations and spot proxy-based recourse.</li>
 </ul>
+</section>
+
+<section id="lab-plan" class="title-slide slide level1 center">
+<h1>Lab plan</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>Part</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0:00-0:50</td>
+<td>Part A: SHAP from first principles on a small flight-delay model</td>
+</tr>
+<tr class="even">
+<td>0:50-1:30</td>
+<td>Part B: a dirty Adult Income dataset; find leakage and shortcuts with explanations</td>
+</tr>
+<tr class="odd">
+<td>1:30-1:40</td>
+<td>Break</td>
+</tr>
+<tr class="even">
+<td>1:40-2:10</td>
+<td>Part C: label errors</td>
+</tr>
+<tr class="odd">
+<td>2:10-2:40</td>
+<td>Part D: data valuation with KNN-Shapley</td>
+</tr>
+<tr class="even">
+<td>2:40-2:55</td>
+<td>Part E: counterfactuals and proxies</td>
+</tr>
+<tr class="odd">
+<td>2:55-3:00</td>
+<td>Data bug report</td>
+</tr>
+</tbody>
+</table>
+<p>The theory is in the slides <em>Explainable AI for Data-Centric AI</em> <span class="citation" data-cites="lundberg2017unified molnar2022interpretable">(<a href="#/references" role="doc-biblioref" onclick=""><strong>lundberg2017unified?</strong></a>; <a href="#/references" role="doc-biblioref" onclick=""><strong>molnar2022interpretable?</strong></a>)</span>.</p>
+</section>
+
+<section id="part-a-shap-from-first-principles" class="title-slide slide level1 center">
+<h1>Part A: SHAP from first principles</h1>
+
 </section>
 
 <section id="global-and-local-explanations" class="title-slide slide level1 center">
@@ -192,11 +331,11 @@ Note: you may need to restart the kernel to use updated packages.
 <p>SHAP connects these views by calculating a contribution for every feature and every observation.</p>
 </section>
 
-<section id="a-fitted-flight-delay-model" class="title-slide slide level1 center">
+<section id="a-fitted-flight-delay-model" class="title-slide slide level1 scrollable center">
 <h1>2. A fitted flight-delay model</h1>
 <p>The example uses a decision tree trained on five synthetic flight features. The model remains fixed throughout the SHAP analysis.</p>
 <p>The synthetic data keeps the example reproducible. The SHAP procedure is the same for a tree trained on real flight data.</p>
-<div id="explainability-model-code" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:20:53.951708Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:20:53.951368Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:20:53.979471Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:20:53.978440Z&quot;}}" data-execution_count="2">
+<div id="cell-008" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:18.787421Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:18.787133Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:18.813205Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:18.812528Z&quot;}}" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 <style scoped="">
@@ -343,8 +482,174 @@ Note: you may need to restart the kernel to use updated packages.
 <p>With <span class="math inline">\(M\)</span> features, each feature has <span class="math inline">\(2^{M-1}\)</span> possible subsets of the other features. For 10 features this is 512 subsets per feature. For 20 features it is 524,288. Direct enumeration quickly becomes impractical.</p>
 </section>
 
+<section id="exact-shapley-values-by-brute-force" class="title-slide slide level1 scrollable center">
+<h1>8. Exact Shapley values by brute force</h1>
+<p>With only five features we <em>can</em> enumerate all <span class="math inline">\(2^5 = 32\)</span> coalitions. We use the <strong>interventional</strong> value function: features in <span class="math inline">\(S\)</span> are fixed to the explained flight, the others are taken from each background flight, and predictions are averaged:</p>
+<p><span class="math display">\[v_x(S) = \frac{1}{|B|}\sum_{z \in B} f(x_S, z_{\bar S})\]</span></p>
+<p>Then we apply the Shapley formula directly.</p>
+<div id="cell-015" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:18.814858Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:18.814699Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:18.851125Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:18.850486Z&quot;}}" data-execution_count="3">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>background <span class="op">=</span> X_train.sample(<span class="dv">100</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
+<span id="cb1-2"><a href="" aria-label="2"></a>x_explain <span class="op">=</span> X_test.iloc[<span class="dv">0</span>]</span>
+<span id="cb1-3"><a href="" aria-label="3"></a>features <span class="op">=</span> <span class="bu">list</span>(X.columns)</span>
+<span id="cb1-4"><a href="" aria-label="4"></a>M <span class="op">=</span> <span class="bu">len</span>(features)</span>
+<span id="cb1-5"><a href="" aria-label="5"></a></span>
+<span id="cb1-6"><a href="" aria-label="6"></a></span>
+<span id="cb1-7"><a href="" aria-label="7"></a><span class="kw">def</span> predict_delay(frame):</span>
+<span id="cb1-8"><a href="" aria-label="8"></a>    frame <span class="op">=</span> frame <span class="cf">if</span> <span class="bu">isinstance</span>(frame, pd.DataFrame) <span class="cf">else</span> pd.DataFrame(frame, columns<span class="op">=</span>features)</span>
+<span id="cb1-9"><a href="" aria-label="9"></a>    <span class="cf">return</span> tree.predict_proba(frame[features])[:, <span class="dv">1</span>]</span>
+<span id="cb1-10"><a href="" aria-label="10"></a></span>
+<span id="cb1-11"><a href="" aria-label="11"></a></span>
+<span id="cb1-12"><a href="" aria-label="12"></a><span class="kw">def</span> value(coalition):</span>
+<span id="cb1-13"><a href="" aria-label="13"></a>    <span class="co">"""Expected prediction when the features in `coalition` are known."""</span></span>
+<span id="cb1-14"><a href="" aria-label="14"></a>    hybrid <span class="op">=</span> background.copy()</span>
+<span id="cb1-15"><a href="" aria-label="15"></a>    <span class="cf">for</span> feature <span class="kw">in</span> coalition:</span>
+<span id="cb1-16"><a href="" aria-label="16"></a>        hybrid[feature] <span class="op">=</span> x_explain[feature]</span>
+<span id="cb1-17"><a href="" aria-label="17"></a>    <span class="cf">return</span> predict_delay(hybrid).mean()</span>
+<span id="cb1-18"><a href="" aria-label="18"></a></span>
+<span id="cb1-19"><a href="" aria-label="19"></a></span>
+<span id="cb1-20"><a href="" aria-label="20"></a>v <span class="op">=</span> {<span class="bu">frozenset</span>(s): value(s) <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(M <span class="op">+</span> <span class="dv">1</span>) <span class="cf">for</span> s <span class="kw">in</span> combinations(features, k)}</span>
+<span id="cb1-21"><a href="" aria-label="21"></a></span>
+<span id="cb1-22"><a href="" aria-label="22"></a>exact_phi <span class="op">=</span> {}</span>
+<span id="cb1-23"><a href="" aria-label="23"></a><span class="cf">for</span> j <span class="kw">in</span> features:</span>
+<span id="cb1-24"><a href="" aria-label="24"></a>    others <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> features <span class="cf">if</span> f <span class="op">!=</span> j]</span>
+<span id="cb1-25"><a href="" aria-label="25"></a>    exact_phi[j] <span class="op">=</span> <span class="bu">sum</span>(</span>
+<span id="cb1-26"><a href="" aria-label="26"></a>        factorial(<span class="bu">len</span>(s)) <span class="op">*</span> factorial(M <span class="op">-</span> <span class="bu">len</span>(s) <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> factorial(M)</span>
+<span id="cb1-27"><a href="" aria-label="27"></a>        <span class="op">*</span> (v[<span class="bu">frozenset</span>(s) <span class="op">|</span> {j}] <span class="op">-</span> v[<span class="bu">frozenset</span>(s)])</span>
+<span id="cb1-28"><a href="" aria-label="28"></a>        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(M) <span class="cf">for</span> s <span class="kw">in</span> combinations(others, k)</span>
+<span id="cb1-29"><a href="" aria-label="29"></a>    )</span>
+<span id="cb1-30"><a href="" aria-label="30"></a></span>
+<span id="cb1-31"><a href="" aria-label="31"></a><span class="bu">print</span>(<span class="ss">f"coalitions evaluated: </span><span class="sc">{</span><span class="bu">len</span>(v)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-32"><a href="" aria-label="32"></a><span class="bu">print</span>(<span class="ss">f"baseline v(empty) = </span><span class="sc">{</span>v[<span class="bu">frozenset</span>()]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-33"><a href="" aria-label="33"></a><span class="bu">print</span>(<span class="ss">f"prediction f(x)   = </span><span class="sc">{</span>predict_delay(x_explain.to_frame().T)[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-34"><a href="" aria-label="34"></a><span class="bu">print</span>(<span class="ss">f"baseline + sum(phi) = </span><span class="sc">{</span>v[<span class="bu">frozenset</span>()] <span class="op">+</span> <span class="bu">sum</span>(exact_phi.values())<span class="sc">:.4f}</span><span class="ss">  (efficiency)"</span>)</span>
+<span id="cb1-35"><a href="" aria-label="35"></a>pd.Series(exact_phi, name<span class="op">=</span><span class="st">"exact_phi"</span>).<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>coalitions evaluated: 32
+baseline v(empty) = 0.4357
+prediction f(x)   = 0.2363
+baseline + sum(phi) = 0.2363  (efficiency)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>bad_weather              -0.1166
+late_departure           -0.0739
+departure_hour           -0.0070
+is_holiday                0.0000
+scheduled_duration_min   -0.0020
+Name: exact_phi, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+
+<section id="the-library-gives-the-same-numbers" class="title-slide slide level1 scrollable center">
+<h1>9. The library gives the same numbers</h1>
+<p><code>TreeExplainer</code> with the same background data and <code>feature_perturbation="interventional"</code> computes the same game exactly, using the tree structure instead of enumeration <span class="citation" data-cites="lundberg2020local">(<a href="#/references" role="doc-biblioref" onclick=""><strong>lundberg2020local?</strong></a>)</span>. Model-agnostic explainers <em>estimate</em> it from samples <span class="citation" data-cites="strumbelj2014explaining">(<a href="#/references" role="doc-biblioref" onclick=""><strong>strumbelj2014explaining?</strong></a>)</span>.</p>
+<div id="cell-017" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:18.852867Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:18.852708Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:19.076052Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:19.075127Z&quot;}}" data-execution_count="4">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="im">import</span> shap</span>
+<span id="cb4-2"><a href="" aria-label="2"></a></span>
+<span id="cb4-3"><a href="" aria-label="3"></a>tree_explainer <span class="op">=</span> shap.TreeExplainer(tree, data<span class="op">=</span>background, feature_perturbation<span class="op">=</span><span class="st">"interventional"</span>,</span>
+<span id="cb4-4"><a href="" aria-label="4"></a>                                    model_output<span class="op">=</span><span class="st">"probability"</span>)</span>
+<span id="cb4-5"><a href="" aria-label="5"></a>tree_phi <span class="op">=</span> np.asarray(tree_explainer.shap_values(x_explain.to_frame().T))</span>
+<span id="cb4-6"><a href="" aria-label="6"></a>tree_phi <span class="op">=</span> tree_phi[..., <span class="dv">1</span>].ravel() <span class="cf">if</span> tree_phi.ndim <span class="op">==</span> <span class="dv">3</span> <span class="cf">else</span> tree_phi.ravel()</span>
+<span id="cb4-7"><a href="" aria-label="7"></a></span>
+<span id="cb4-8"><a href="" aria-label="8"></a>permutation_explainer <span class="op">=</span> shap.PermutationExplainer(predict_delay, background)</span>
+<span id="cb4-9"><a href="" aria-label="9"></a>perm_phi <span class="op">=</span> permutation_explainer(x_explain.to_frame().T, max_evals<span class="op">=</span><span class="dv">200</span>).values.ravel()</span>
+<span id="cb4-10"><a href="" aria-label="10"></a></span>
+<span id="cb4-11"><a href="" aria-label="11"></a>kernel_explainer <span class="op">=</span> shap.KernelExplainer(predict_delay, background)</span>
+<span id="cb4-12"><a href="" aria-label="12"></a>kernel_phi <span class="op">=</span> np.asarray(kernel_explainer.shap_values(x_explain.to_frame().T, nsamples<span class="op">=</span><span class="dv">64</span>, silent<span class="op">=</span><span class="va">True</span>)).ravel()</span>
+<span id="cb4-13"><a href="" aria-label="13"></a></span>
+<span id="cb4-14"><a href="" aria-label="14"></a>pd.DataFrame({</span>
+<span id="cb4-15"><a href="" aria-label="15"></a>    <span class="st">"brute force"</span>: pd.Series(exact_phi),</span>
+<span id="cb4-16"><a href="" aria-label="16"></a>    <span class="st">"TreeSHAP (interventional)"</span>: tree_phi,</span>
+<span id="cb4-17"><a href="" aria-label="17"></a>    <span class="st">"PermutationExplainer"</span>: perm_phi,</span>
+<span id="cb4-18"><a href="" aria-label="18"></a>    <span class="st">"KernelSHAP"</span>: kernel_phi,</span>
+<span id="cb4-19"><a href="" aria-label="19"></a>}, index<span class="op">=</span>features).<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">brute force</th>
+<th data-quarto-table-cell-role="th">TreeSHAP (interventional)</th>
+<th data-quarto-table-cell-role="th">PermutationExplainer</th>
+<th data-quarto-table-cell-role="th">KernelSHAP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">bad_weather</th>
+<td>-0.1166</td>
+<td>-0.1166</td>
+<td>-0.1158</td>
+<td>-0.1166</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">late_departure</th>
+<td>-0.0739</td>
+<td>-0.0739</td>
+<td>-0.0739</td>
+<td>-0.0739</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">departure_hour</th>
+<td>-0.0070</td>
+<td>-0.0070</td>
+<td>-0.0081</td>
+<td>-0.0070</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">is_holiday</th>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">scheduled_duration_min</th>
+<td>-0.0020</td>
+<td>-0.0020</td>
+<td>-0.0016</td>
+<td>-0.0020</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="checkpoint-shapley-computations" class="title-slide slide level1 center">
+<h1>Checkpoint: Shapley computations</h1>
+<ol type="1">
+<li>Why do brute force and TreeSHAP agree exactly, while the sampling explainers may differ slightly?</li>
+<li>Replace <code>background</code> with 100 flights that all had bad weather. How do the baseline and <span class="math inline">\(\phi_{\text{bad weather}}\)</span> change? Why?</li>
+<li>How many coalitions would brute force need for the 14 features of Adult Income?</li>
+</ol>
+</section>
+
 <section id="how-the-shap-library-performs-the-calculation" class="title-slide slide level1 center">
-<h1>8. How the SHAP library performs the calculation</h1>
+<h1>10. How the SHAP library performs the calculation</h1>
 <p>SHAP normally keeps the fitted model fixed. It does <strong>not retrain one model for every feature subset</strong>.</p>
 <ul>
 <li><code>TreeExplainer</code> uses the fitted tree’s paths and stored sample counts to calculate contributions efficiently.</li>
@@ -355,12 +660,12 @@ Note: you may need to restart the kernel to use updated packages.
 <p>The reference data still matters: changing the background population can change the baseline and the SHAP contributions.</p>
 </section>
 
-<section id="global-shap-importance" class="title-slide slide level1 center">
-<h1>9. Global SHAP importance</h1>
+<section id="global-shap-importance" class="title-slide slide level1 scrollable center">
+<h1>11. Global SHAP importance</h1>
 <p>A local SHAP value explains one prediction. Global importance averages the absolute local contributions over many observations:</p>
 <p><span class="math display">\[I_j = \frac{1}{n}\sum_{i=1}^{n}|\phi_{ij}|\]</span></p>
 <p>Absolute values prevent positive and negative effects from cancelling. The result measures how strongly the fitted model uses each feature on average.</p>
-<div id="shap-global" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:20:53.981858Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:20:53.981653Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:20:54.445481Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:20:54.444507Z&quot;}}" data-execution_count="3">
+<div id="cell-021" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:19.078105Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:19.077883Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:19.203347Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:19.202709Z&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>SHAP baseline for the delayed class: 0.500</code></pre>
 </div>
@@ -421,17 +726,104 @@ Note: you may need to restart the kernel to use updated packages.
 </div>
 
 </div>
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-4-output-3.png" class="r-stretch"></section>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-6-output-3.png" class="r-stretch"></section>
 
-<section id="local-shap-explanation" class="title-slide slide level1 center">
-<h1>10. Local SHAP explanation</h1>
+<section id="beeswarm-direction-and-spread" class="title-slide slide level1 scrollable center">
+<h1>12. Beeswarm: direction and spread</h1>
+<p>The bar chart hides <strong>direction</strong>. The beeswarm plot shows every <span class="math inline">\(\phi_{ij}\)</span>, coloured by the feature value: red points on the right mean “high values push the prediction up”.</p>
+<div id="cell-023" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:19.205154Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:19.204986Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:19.367158Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:19.366578Z&quot;}}" data-execution_count="6">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>shap.summary_plot(shap_values_positive_class, X_shap, show<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-2"><a href="" aria-label="2"></a>plt.title(<span class="st">"SHAP values for the delayed class"</span>)</span>
+<span id="cb6-3"><a href="" aria-label="3"></a>plt.tight_layout()</span>
+<span id="cb6-4"><a href="" aria-label="4"></a>plt.show()</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"></section>
+
+<section id="shap-importance-vs-permutation-importance" class="title-slide slide level1 scrollable center">
+<h1>13. SHAP importance vs permutation importance</h1>
+<p>Permutation importance measures the <strong>drop in performance</strong> when a feature is shuffled <span class="citation" data-cites="breiman2001random fisher2019all">(<a href="#/references" role="doc-biblioref" onclick="">Breiman 2001</a>; <a href="#/references" role="doc-biblioref" onclick=""><strong>fisher2019all?</strong></a>)</span>; SHAP importance measures how much the <strong>output</strong> moves. They usually agree on the top features but answer different questions.</p>
+<div id="cell-025" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:19.369022Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:19.368869Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:19.447998Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:19.447174Z&quot;}}" data-execution_count="7">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>perm <span class="op">=</span> permutation_importance(tree, X_test, y_test, scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>,</span>
+<span id="cb7-2"><a href="" aria-label="2"></a>                              n_repeats<span class="op">=</span><span class="dv">10</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
+<span id="cb7-3"><a href="" aria-label="3"></a>comparison <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb7-4"><a href="" aria-label="4"></a>    <span class="st">"mean_abs_shap"</span>: pd.Series(np.<span class="bu">abs</span>(shap_values_positive_class).mean(axis<span class="op">=</span><span class="dv">0</span>), index<span class="op">=</span>X_shap.columns),</span>
+<span id="cb7-5"><a href="" aria-label="5"></a>    <span class="st">"permutation_importance"</span>: pd.Series(perm.importances_mean, index<span class="op">=</span>X_test.columns),</span>
+<span id="cb7-6"><a href="" aria-label="6"></a>}).sort_values(<span class="st">"mean_abs_shap"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-7"><a href="" aria-label="7"></a>comparison.<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean_abs_shap</th>
+<th data-quarto-table-cell-role="th">permutation_importance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">bad_weather</th>
+<td>0.2223</td>
+<td>0.1765</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">late_departure</th>
+<td>0.0974</td>
+<td>0.0320</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">scheduled_duration_min</th>
+<td>0.0292</td>
+<td>0.0081</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">departure_hour</th>
+<td>0.0194</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">is_holiday</th>
+<td>0.0000</td>
+<td>0.0000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="local-shap-explanation" class="title-slide slide level1 scrollable center">
+<h1>14. Local SHAP explanation</h1>
 <p>Global importance summarizes many predictions.</p>
 <ul>
 <li>A local SHAP explanation focuses on one row and shows which selected features pushed the model toward or away from the delayed-flight class.</li>
 <li>Positive SHAP values increase the delayed-class output for this observation.</li>
 <li>Negative SHAP values decrease it.</li>
 </ul>
-<div id="shap-local" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:20:54.447491Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:20:54.447305Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:20:54.462963Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:20:54.462202Z&quot;}}" data-execution_count="4">
+<div id="cell-027" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:19.449576Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:19.449410Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:19.460879Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:19.460213Z&quot;}}" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -482,7 +874,7 @@ Note: you may need to restart the kernel to use updated packages.
 
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -542,6 +934,1165 @@ Note: you may need to restart the kernel to use updated packages.
 </table>
 
 </div>
+</div>
+</div>
+<div id="cell-028" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:19.462645Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:19.462478Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:19.721019Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:19.720275Z&quot;}}" data-execution_count="9">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>explanation <span class="op">=</span> shap.Explanation(</span>
+<span id="cb8-2"><a href="" aria-label="2"></a>    values<span class="op">=</span>shap_values_positive_class[row_id],</span>
+<span id="cb8-3"><a href="" aria-label="3"></a>    base_values<span class="op">=</span>baseline_positive_class,</span>
+<span id="cb8-4"><a href="" aria-label="4"></a>    data<span class="op">=</span>X_shap.iloc[row_id].to_numpy(),</span>
+<span id="cb8-5"><a href="" aria-label="5"></a>    feature_names<span class="op">=</span><span class="bu">list</span>(X_shap.columns),</span>
+<span id="cb8-6"><a href="" aria-label="6"></a>)</span>
+<span id="cb8-7"><a href="" aria-label="7"></a>shap.plots.waterfall(explanation, show<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-8"><a href="" aria-label="8"></a>plt.title(<span class="st">"Local explanation of one flight"</span>)</span>
+<span id="cb8-9"><a href="" aria-label="9"></a>plt.tight_layout()</span>
+<span id="cb8-10"><a href="" aria-label="10"></a>plt.show()</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
+
+<section id="part-b-explanations-as-data-debugging-tools" class="title-slide slide level1 center">
+<h1>Part B: explanations as data-debugging tools</h1>
+
+</section>
+
+<section id="a-dirty-adult-income-dataset" class="title-slide slide level1 scrollable center">
+<h1>15. A dirty Adult Income dataset</h1>
+<p>A colleague hands you an extended version of Adult Income (predict income &gt; 50K) with two extra columns collected by the data team:</p>
+<ul>
+<li><code>income_band_code</code>: a code from the payroll system;</li>
+<li><code>form_version</code>: which version of the survey form was used.</li>
+</ul>
+<p>The model will be used on <strong>new survey respondents</strong> (the <em>deployment</em> set). The next cell prepares the data and <strong>injects hidden problems</strong>: try not to read it before finishing Part B.</p>
+</section>
+
+<section id="encode-and-train" class="title-slide slide level1 scrollable center">
+<h1>16. Encode and train</h1>
+<p>Categorical columns are mapped to integer codes using the <strong>training</strong> data only (unseen categories get a separate code), so that trees and <code>TreeExplainer</code> work directly on the encoded frame.</p>
+<div id="cell-033" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:19.835434Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:19.835239Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:20.270575Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:20.269804Z&quot;}}" data-execution_count="11">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>target <span class="op">=</span> <span class="st">"income_observed"</span></span>
+<span id="cb9-2"><a href="" aria-label="2"></a>feature_cols <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> train_df.columns <span class="cf">if</span> c <span class="op">!=</span> target]</span>
+<span id="cb9-3"><a href="" aria-label="3"></a>categorical_cols <span class="op">=</span> train_df[feature_cols].select_dtypes(exclude<span class="op">=</span><span class="st">"number"</span>).columns.tolist()</span>
+<span id="cb9-4"><a href="" aria-label="4"></a>category_maps <span class="op">=</span> {c: {v: i <span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">sorted</span>(train_df[c].astype(<span class="bu">str</span>).unique()))} <span class="cf">for</span> c <span class="kw">in</span> categorical_cols}</span>
+<span id="cb9-5"><a href="" aria-label="5"></a></span>
+<span id="cb9-6"><a href="" aria-label="6"></a></span>
+<span id="cb9-7"><a href="" aria-label="7"></a><span class="kw">def</span> encode(frame, columns):</span>
+<span id="cb9-8"><a href="" aria-label="8"></a>    out <span class="op">=</span> frame[columns].copy()</span>
+<span id="cb9-9"><a href="" aria-label="9"></a>    <span class="cf">for</span> c <span class="kw">in</span> categorical_cols:</span>
+<span id="cb9-10"><a href="" aria-label="10"></a>        <span class="cf">if</span> c <span class="kw">in</span> out:</span>
+<span id="cb9-11"><a href="" aria-label="11"></a>            out[c] <span class="op">=</span> out[c].astype(<span class="bu">str</span>).<span class="bu">map</span>(category_maps[c]).fillna(<span class="bu">len</span>(category_maps[c])).astype(<span class="bu">int</span>)</span>
+<span id="cb9-12"><a href="" aria-label="12"></a>    <span class="cf">return</span> out</span>
+<span id="cb9-13"><a href="" aria-label="13"></a></span>
+<span id="cb9-14"><a href="" aria-label="14"></a></span>
+<span id="cb9-15"><a href="" aria-label="15"></a><span class="kw">def</span> fit_forest(X_fit, y_fit):</span>
+<span id="cb9-16"><a href="" aria-label="16"></a>    model <span class="op">=</span> RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">200</span>, min_samples_leaf<span class="op">=</span><span class="dv">5</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
+<span id="cb9-17"><a href="" aria-label="17"></a>    <span class="cf">return</span> model.fit(X_fit, y_fit)</span>
+<span id="cb9-18"><a href="" aria-label="18"></a></span>
+<span id="cb9-19"><a href="" aria-label="19"></a></span>
+<span id="cb9-20"><a href="" aria-label="20"></a><span class="kw">def</span> scores(model, X_eval, y_eval):</span>
+<span id="cb9-21"><a href="" aria-label="21"></a>    proba <span class="op">=</span> model.predict_proba(X_eval)[:, <span class="dv">1</span>]</span>
+<span id="cb9-22"><a href="" aria-label="22"></a>    pred <span class="op">=</span> (proba <span class="op">&gt;=</span> <span class="fl">0.5</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb9-23"><a href="" aria-label="23"></a>    <span class="cf">return</span> {<span class="st">"balanced_accuracy"</span>: balanced_accuracy_score(y_eval, pred),</span>
+<span id="cb9-24"><a href="" aria-label="24"></a>            <span class="st">"roc_auc"</span>: roc_auc_score(y_eval, proba), <span class="st">"f1"</span>: f1_score(y_eval, pred)}</span>
+<span id="cb9-25"><a href="" aria-label="25"></a></span>
+<span id="cb9-26"><a href="" aria-label="26"></a></span>
+<span id="cb9-27"><a href="" aria-label="27"></a>X_tr, X_va, X_de <span class="op">=</span> (encode(d, feature_cols) <span class="cf">for</span> d <span class="kw">in</span> (train_df, valid_df, deploy_df))</span>
+<span id="cb9-28"><a href="" aria-label="28"></a>y_tr, y_va, y_de <span class="op">=</span> train_df[target], valid_df[target], deploy_df[target]</span>
+<span id="cb9-29"><a href="" aria-label="29"></a></span>
+<span id="cb9-30"><a href="" aria-label="30"></a>dirty_model <span class="op">=</span> fit_forest(X_tr, y_tr)</span>
+<span id="cb9-31"><a href="" aria-label="31"></a>pd.DataFrame({<span class="st">"validation"</span>: scores(dirty_model, X_va, y_va),</span>
+<span id="cb9-32"><a href="" aria-label="32"></a>              <span class="st">"deployment"</span>: scores(dirty_model, X_de, y_de)}).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">validation</th>
+<th data-quarto-table-cell-role="th">deployment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">balanced_accuracy</th>
+<td>0.965</td>
+<td>0.511</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">roc_auc</th>
+<td>0.990</td>
+<td>0.746</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">f1</th>
+<td>0.949</td>
+<td>0.044</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="checkpoint-something-is-wrong" class="title-slide slide level1 center">
+<h1>Checkpoint: something is wrong</h1>
+<p>Validation looks excellent, deployment collapses. Before reading on, write down <strong>two hypotheses</strong> about the data that could explain the gap.</p>
+</section>
+
+<section id="explain-the-model-to-debug-the-data" class="title-slide slide level1 scrollable center">
+<h1>17. Explain the model to debug the data</h1>
+<p>Compute global SHAP importance and permutation importance <strong>on the validation set</strong>. Which features dominate? Do they make sense for predicting income from a survey?</p>
+<div id="cell-036" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:20.272250Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:20.272090Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:32.432009Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:32.431320Z&quot;}}" data-execution_count="12">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>explain_rows <span class="op">=</span> X_va.sample(<span class="dv">500</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
+<span id="cb10-2"><a href="" aria-label="2"></a>dirty_explainer <span class="op">=</span> shap.TreeExplainer(dirty_model)</span>
+<span id="cb10-3"><a href="" aria-label="3"></a>dirty_phi <span class="op">=</span> np.asarray(dirty_explainer.shap_values(explain_rows))</span>
+<span id="cb10-4"><a href="" aria-label="4"></a>dirty_phi <span class="op">=</span> dirty_phi[..., <span class="dv">1</span>] <span class="cf">if</span> dirty_phi.ndim <span class="op">==</span> <span class="dv">3</span> <span class="cf">else</span> dirty_phi</span>
+<span id="cb10-5"><a href="" aria-label="5"></a></span>
+<span id="cb10-6"><a href="" aria-label="6"></a>dirty_perm <span class="op">=</span> permutation_importance(dirty_model, X_va, y_va, scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>,</span>
+<span id="cb10-7"><a href="" aria-label="7"></a>                                    n_repeats<span class="op">=</span><span class="dv">5</span>, random_state<span class="op">=</span>RANDOM_STATE, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb10-8"><a href="" aria-label="8"></a>pd.DataFrame({</span>
+<span id="cb10-9"><a href="" aria-label="9"></a>    <span class="st">"mean_abs_shap"</span>: pd.Series(np.<span class="bu">abs</span>(dirty_phi).mean(axis<span class="op">=</span><span class="dv">0</span>), index<span class="op">=</span>X_va.columns),</span>
+<span id="cb10-10"><a href="" aria-label="10"></a>    <span class="st">"permutation_importance"</span>: pd.Series(dirty_perm.importances_mean, index<span class="op">=</span>X_va.columns),</span>
+<span id="cb10-11"><a href="" aria-label="11"></a>}).sort_values(<span class="st">"mean_abs_shap"</span>, ascending<span class="op">=</span><span class="va">False</span>).<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean_abs_shap</th>
+<th data-quarto-table-cell-role="th">permutation_importance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">income_band_code</th>
+<td>0.1721</td>
+<td>0.3723</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">form_version</th>
+<td>0.0738</td>
+<td>0.0364</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">relationship</th>
+<td>0.0306</td>
+<td>0.0084</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">education_num</th>
+<td>0.0217</td>
+<td>0.0032</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">age</th>
+<td>0.0190</td>
+<td>0.0096</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">capital_gain</th>
+<td>0.0162</td>
+<td>0.0019</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">marital_status</th>
+<td>0.0150</td>
+<td>0.0052</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">hours_per_week</th>
+<td>0.0106</td>
+<td>0.0017</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">fnlwgt</th>
+<td>0.0077</td>
+<td>0.0005</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">occupation</th>
+<td>0.0063</td>
+<td>0.0003</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">education</th>
+<td>0.0053</td>
+<td>0.0004</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">race</th>
+<td>0.0042</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">sex</th>
+<td>0.0038</td>
+<td>0.0016</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">workclass</th>
+<td>0.0030</td>
+<td>0.0003</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">native_country</th>
+<td>0.0017</td>
+<td>0.0002</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">capital_loss</th>
+<td>0.0013</td>
+<td>0.0000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-037" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:32.433874Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:32.433687Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:32.645139Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:32.644512Z&quot;}}" data-execution_count="13">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>shap.summary_plot(dirty_phi, explain_rows, max_display<span class="op">=</span><span class="dv">10</span>, show<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb11-2"><a href="" aria-label="2"></a>plt.title(<span class="st">"Dirty model: SHAP values on validation rows"</span>)</span>
+<span id="cb11-3"><a href="" aria-label="3"></a>plt.tight_layout()</span>
+<span id="cb11-4"><a href="" aria-label="4"></a>plt.show()</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
+
+<section id="diagnose" class="title-slide slide level1 scrollable center">
+<h1>18. Diagnose</h1>
+<p>Investigate the two suspicious features with <strong>data questions</strong>, not model questions <span class="citation" data-cites="kaufman2012leakage geirhos2020shortcut">(<a href="#/references" role="doc-biblioref" onclick=""><strong>kaufman2012leakage?</strong></a>; <a href="#/references" role="doc-biblioref" onclick=""><strong>geirhos2020shortcut?</strong></a>)</span>:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th><code>income_band_code</code></th>
+<th><code>form_version</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>When is it recorded, before or after the outcome?</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr class="even">
+<td>Is it available, with the same meaning, for new respondents?</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr class="odd">
+<td>Does its relation with the label hold outside the historical data?</td>
+<td>?</td>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+<p>The next cell compares each feature’s agreement with the label in validation and deployment.</p>
+<div id="cell-039" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:32.647160Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:32.646984Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:32.667048Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:32.666318Z&quot;}}" data-execution_count="14">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="cf">for</span> column <span class="kw">in</span> [<span class="st">"income_band_code"</span>, <span class="st">"form_version"</span>]:</span>
+<span id="cb12-2"><a href="" aria-label="2"></a>    <span class="bu">print</span>(column)</span>
+<span id="cb12-3"><a href="" aria-label="3"></a>    <span class="bu">print</span>(<span class="st">"  validation:"</span>, pd.crosstab(valid_df[column], valid_df[target], normalize<span class="op">=</span><span class="st">"index"</span>).<span class="bu">round</span>(<span class="dv">2</span>).to_dict(<span class="st">"index"</span>))</span>
+<span id="cb12-4"><a href="" aria-label="4"></a>    <span class="bu">print</span>(<span class="st">"  deployment:"</span>, pd.crosstab(deploy_df[column], deploy_df[target], normalize<span class="op">=</span><span class="st">"index"</span>).<span class="bu">round</span>(<span class="dv">2</span>).to_dict(<span class="st">"index"</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>income_band_code
+  validation: {0: {0: 0.99, 1: 0.01}, 1: {0: 0.12, 1: 0.88}}
+  deployment: {-1: {0: 0.76, 1: 0.24}}
+form_version
+  validation: {0: {0: 0.95, 1: 0.05}, 1: {0: 0.34, 1: 0.66}}
+  deployment: {0: {0: 0.77, 1: 0.23}, 1: {0: 0.74, 1: 0.26}}</code></pre>
+</div>
+</div>
+</section>
+
+<section id="fix-the-data-not-the-model" class="title-slide slide level1 scrollable center">
+<h1>19. Fix the data, not the model</h1>
+<p><code>income_band_code</code> is <strong>leakage</strong> (recorded after the outcome, unavailable at prediction time). <code>form_version</code> is a <strong>shortcut</strong> (an artifact of how the historical data was collected). Remove both and retrain.</p>
+<div id="cell-041" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:32.668674Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:32.668437Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:33.159276Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:33.158570Z&quot;}}" data-execution_count="15">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>clean_cols <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> feature_cols <span class="cf">if</span> c <span class="kw">not</span> <span class="kw">in</span> (<span class="st">"income_band_code"</span>, <span class="st">"form_version"</span>)]</span>
+<span id="cb14-2"><a href="" aria-label="2"></a>X_tr_c, X_va_c, X_de_c <span class="op">=</span> X_tr[clean_cols], X_va[clean_cols], X_de[clean_cols]</span>
+<span id="cb14-3"><a href="" aria-label="3"></a></span>
+<span id="cb14-4"><a href="" aria-label="4"></a>clean_model <span class="op">=</span> fit_forest(X_tr_c, y_tr)</span>
+<span id="cb14-5"><a href="" aria-label="5"></a>pd.DataFrame({</span>
+<span id="cb14-6"><a href="" aria-label="6"></a>    (<span class="st">"dirty"</span>, <span class="st">"validation"</span>): scores(dirty_model, X_va, y_va),</span>
+<span id="cb14-7"><a href="" aria-label="7"></a>    (<span class="st">"dirty"</span>, <span class="st">"deployment"</span>): scores(dirty_model, X_de, y_de),</span>
+<span id="cb14-8"><a href="" aria-label="8"></a>    (<span class="st">"clean"</span>, <span class="st">"validation"</span>): scores(clean_model, X_va_c, y_va),</span>
+<span id="cb14-9"><a href="" aria-label="9"></a>    (<span class="st">"clean"</span>, <span class="st">"deployment"</span>): scores(clean_model, X_de_c, y_de),</span>
+<span id="cb14-10"><a href="" aria-label="10"></a>}).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th colspan="2" data-quarto-table-cell-role="th" data-halign="left">dirty</th>
+<th colspan="2" data-quarto-table-cell-role="th" data-halign="left">clean</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">validation</th>
+<th data-quarto-table-cell-role="th">deployment</th>
+<th data-quarto-table-cell-role="th">validation</th>
+<th data-quarto-table-cell-role="th">deployment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">balanced_accuracy</th>
+<td>0.965</td>
+<td>0.511</td>
+<td>0.750</td>
+<td>0.775</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">roc_auc</th>
+<td>0.990</td>
+<td>0.746</td>
+<td>0.899</td>
+<td>0.907</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">f1</th>
+<td>0.949</td>
+<td>0.044</td>
+<td>0.641</td>
+<td>0.682</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="checkpoint-leakage-and-shortcuts" class="title-slide slide level1 center">
+<h1>Checkpoint: leakage and shortcuts</h1>
+<ol type="1">
+<li>Validation got <em>worse</em> after the fix. Why is this the better model?</li>
+<li>Which explanation (SHAP or permutation importance) made the problem easier to see?</li>
+<li>Write one data-collection rule that would have prevented each problem.</li>
+</ol>
+</section>
+
+<section id="part-c-label-errors" class="title-slide slide level1 center">
+<h1>Part C: label errors</h1>
+
+</section>
+
+<section id="out-of-fold-predictions-flag-suspicious-labels" class="title-slide slide level1 scrollable center">
+<h1>20. Out-of-fold predictions flag suspicious labels</h1>
+<p>Confident learning compares <strong>out-of-sample</strong> predicted probabilities with the given labels <span class="citation" data-cites="northcutt2021confident">(<a href="#/references" role="doc-biblioref" onclick=""><strong>northcutt2021confident?</strong></a>)</span>. A simple version: compute the out-of-fold probability of the <em>observed</em> label (<em>self-confidence</em>) and inspect the least confident examples. (The <code>cleanlab</code> library implements the full method.)</p>
+<div id="cell-045" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:33.161054Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:33.160881Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:34.823070Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:34.822372Z&quot;}}" data-execution_count="16">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
+<span id="cb15-2"><a href="" aria-label="2"></a>oof_proba <span class="op">=</span> cross_val_predict(</span>
+<span id="cb15-3"><a href="" aria-label="3"></a>    RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">200</span>, min_samples_leaf<span class="op">=</span><span class="dv">5</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
+<span id="cb15-4"><a href="" aria-label="4"></a>    X_tr_c, y_tr, cv<span class="op">=</span>cv, method<span class="op">=</span><span class="st">"predict_proba"</span>,</span>
+<span id="cb15-5"><a href="" aria-label="5"></a>)</span>
+<span id="cb15-6"><a href="" aria-label="6"></a>self_confidence <span class="op">=</span> oof_proba[np.arange(<span class="bu">len</span>(y_tr)), y_tr.to_numpy()]</span>
+<span id="cb15-7"><a href="" aria-label="7"></a></span>
+<span id="cb15-8"><a href="" aria-label="8"></a>n_flag <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.10</span> <span class="op">*</span> <span class="bu">len</span>(y_tr))</span>
+<span id="cb15-9"><a href="" aria-label="9"></a>flag_idx <span class="op">=</span> np.argsort(self_confidence)[:n_flag]</span>
+<span id="cb15-10"><a href="" aria-label="10"></a>flagged <span class="op">=</span> np.zeros(<span class="bu">len</span>(y_tr), dtype<span class="op">=</span><span class="bu">bool</span>)</span>
+<span id="cb15-11"><a href="" aria-label="11"></a>flagged[flag_idx] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb15-12"><a href="" aria-label="12"></a></span>
+<span id="cb15-13"><a href="" aria-label="13"></a><span class="co"># The planted flips are known only because we injected them.</span></span>
+<span id="cb15-14"><a href="" aria-label="14"></a>precision <span class="op">=</span> (flagged <span class="op">&amp;</span> flipped).<span class="bu">sum</span>() <span class="op">/</span> flagged.<span class="bu">sum</span>()</span>
+<span id="cb15-15"><a href="" aria-label="15"></a>recall <span class="op">=</span> (flagged <span class="op">&amp;</span> flipped).<span class="bu">sum</span>() <span class="op">/</span> flipped.<span class="bu">sum</span>()</span>
+<span id="cb15-16"><a href="" aria-label="16"></a><span class="bu">print</span>(<span class="ss">f"flagged </span><span class="sc">{</span>flagged<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss"> of </span><span class="sc">{</span><span class="bu">len</span>(y_tr)<span class="sc">}</span><span class="ss"> training rows"</span>)</span>
+<span id="cb15-17"><a href="" aria-label="17"></a><span class="bu">print</span>(<span class="ss">f"precision vs planted flips: </span><span class="sc">{</span>precision<span class="sc">:.2f}</span><span class="ss">   recall: </span><span class="sc">{</span>recall<span class="sc">:.2f}</span><span class="ss">   (random flagging: </span><span class="sc">{</span>flipped<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">)"</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>flagged 400 of 4000 training rows
+precision vs planted flips: 0.61   recall: 0.64   (random flagging: 0.10)</code></pre>
+</div>
+</div>
+</section>
+
+<section id="inspect-a-flagged-example" class="title-slide slide level1 scrollable center">
+<h1>21. Inspect a flagged example</h1>
+<p>A local explanation helps decide whether the <strong>label</strong> or the <strong>model</strong> is wrong: sensible attributions that strongly contradict the label suggest a label error.</p>
+<div id="cell-047" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:34.825037Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:34.824863Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:35.023786Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:35.023049Z&quot;}}" data-execution_count="17">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>clean_explainer <span class="op">=</span> shap.TreeExplainer(clean_model)</span>
+<span id="cb17-2"><a href="" aria-label="2"></a>example <span class="op">=</span> flag_idx[<span class="dv">0</span>]</span>
+<span id="cb17-3"><a href="" aria-label="3"></a>example_phi <span class="op">=</span> np.asarray(clean_explainer.shap_values(X_tr_c.iloc[[example]]))</span>
+<span id="cb17-4"><a href="" aria-label="4"></a>example_phi <span class="op">=</span> (example_phi[..., <span class="dv">1</span>] <span class="cf">if</span> example_phi.ndim <span class="op">==</span> <span class="dv">3</span> <span class="cf">else</span> example_phi).ravel()</span>
+<span id="cb17-5"><a href="" aria-label="5"></a>base <span class="op">=</span> np.asarray(clean_explainer.expected_value)</span>
+<span id="cb17-6"><a href="" aria-label="6"></a>base <span class="op">=</span> <span class="bu">float</span>(base[<span class="dv">1</span>] <span class="cf">if</span> base.size <span class="op">&gt;</span> <span class="dv">1</span> <span class="cf">else</span> base.item())</span>
+<span id="cb17-7"><a href="" aria-label="7"></a></span>
+<span id="cb17-8"><a href="" aria-label="8"></a><span class="bu">print</span>(<span class="ss">f"observed label: </span><span class="sc">{</span>y_tr<span class="sc">.</span>iloc[example]<span class="sc">}</span><span class="ss">   out-of-fold P(observed label) = </span><span class="sc">{</span>self_confidence[example]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb17-9"><a href="" aria-label="9"></a>shap.plots.waterfall(shap.Explanation(values<span class="op">=</span>example_phi, base_values<span class="op">=</span>base,</span>
+<span id="cb17-10"><a href="" aria-label="10"></a>                                      data<span class="op">=</span>train_df.loc[example, clean_cols].to_numpy(),</span>
+<span id="cb17-11"><a href="" aria-label="11"></a>                                      feature_names<span class="op">=</span>clean_cols), max_display<span class="op">=</span><span class="dv">8</span>, show<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-12"><a href="" aria-label="12"></a>plt.tight_layout()</span>
+<span id="cb17-13"><a href="" aria-label="13"></a>plt.show()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>observed label: 1   out-of-fold P(observed label) = 0.03</code></pre>
+</div>
+
+</div>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-18-output-2.png" class="r-stretch"></section>
+
+<section id="clean-the-labels-and-retrain" class="title-slide slide level1 scrollable center">
+<h1>22. Clean the labels and retrain</h1>
+<div id="cell-049" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:35.025422Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:35.025228Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:36.405127Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:36.404475Z&quot;}}" data-execution_count="18">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>keep <span class="op">=</span> <span class="op">~</span>flagged</span>
+<span id="cb19-2"><a href="" aria-label="2"></a>relabeled <span class="op">=</span> y_tr.copy()</span>
+<span id="cb19-3"><a href="" aria-label="3"></a>relabeled[flagged] <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> relabeled[flagged]</span>
+<span id="cb19-4"><a href="" aria-label="4"></a></span>
+<span id="cb19-5"><a href="" aria-label="5"></a>label_results <span class="op">=</span> {</span>
+<span id="cb19-6"><a href="" aria-label="6"></a>    <span class="st">"noisy labels"</span>: scores(fit_forest(X_tr_c, y_tr), X_de_c, y_de),</span>
+<span id="cb19-7"><a href="" aria-label="7"></a>    <span class="st">"drop flagged"</span>: scores(fit_forest(X_tr_c[keep], y_tr[keep]), X_de_c, y_de),</span>
+<span id="cb19-8"><a href="" aria-label="8"></a>    <span class="st">"relabel flagged"</span>: scores(fit_forest(X_tr_c, relabeled), X_de_c, y_de),</span>
+<span id="cb19-9"><a href="" aria-label="9"></a>    <span class="st">"true labels (oracle)"</span>: scores(fit_forest(X_tr_c, true_train_labels), X_de_c, y_de),</span>
+<span id="cb19-10"><a href="" aria-label="10"></a>}</span>
+<span id="cb19-11"><a href="" aria-label="11"></a>pd.DataFrame(label_results).T.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">balanced_accuracy</th>
+<th data-quarto-table-cell-role="th">roc_auc</th>
+<th data-quarto-table-cell-role="th">f1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">noisy labels</th>
+<td>0.775</td>
+<td>0.907</td>
+<td>0.682</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">drop flagged</th>
+<td>0.768</td>
+<td>0.909</td>
+<td>0.672</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">relabel flagged</th>
+<td>0.765</td>
+<td>0.910</td>
+<td>0.669</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">true labels (oracle)</th>
+<td>0.768</td>
+<td>0.911</td>
+<td>0.673</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="checkpoint-label-noise" class="title-slide slide level1 center">
+<h1>Checkpoint: label noise</h1>
+<p>Random forests are fairly robust to 10% symmetric noise, so the gain may be small. When would label errors matter more? (Think of systematic errors in one subgroup, small datasets, or evaluation labels.)</p>
+</section>
+
+<section id="part-d-data-valuation-with-knn-shapley" class="title-slide slide level1 center">
+<h1>Part D: data valuation with KNN-Shapley</h1>
+
+</section>
+
+<section id="shapley-values-for-training-points" class="title-slide slide level1 scrollable center">
+<h1>23. Shapley values for training points</h1>
+<p>Data Shapley treats <strong>training points as players</strong> and model performance as the payout <span class="citation" data-cites="ghorbani2019data">(<a href="#/references" role="doc-biblioref" onclick=""><strong>ghorbani2019data?</strong></a>)</span>. For a <span class="math inline">\(K\)</span>-nearest-neighbour classifier, exact values follow from a recursion <span class="citation" data-cites="jia2019efficient">(<a href="#/references" role="doc-biblioref" onclick=""><strong>jia2019efficient?</strong></a>)</span>. For one validation point, sort the <span class="math inline">\(N\)</span> training points by distance (<span class="math inline">\(\alpha_1\)</span> closest):</p>
+<p><span class="math display">\[
+s_{\alpha_N} = \frac{\mathbb{1}[y_{\alpha_N} = y]}{N}, \qquad
+s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1}[y_{\alpha_{i+1}} = y]}{K}\cdot\frac{\min(K, i)}{i}
+\]</span></p>
+<p>The value of a training point is the average over validation points.</p>
+<div id="cell-053" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:36.407034Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:36.406860Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:37.472176Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:37.471449Z&quot;}}" data-execution_count="19">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="kw">def</span> knn_shapley(X_train_arr, y_train_arr, X_valid_arr, y_valid_arr, k<span class="op">=</span><span class="dv">10</span>):</span>
+<span id="cb20-2"><a href="" aria-label="2"></a>    n <span class="op">=</span> <span class="bu">len</span>(y_train_arr)</span>
+<span id="cb20-3"><a href="" aria-label="3"></a>    values <span class="op">=</span> np.zeros(n)</span>
+<span id="cb20-4"><a href="" aria-label="4"></a>    <span class="cf">for</span> x_v, y_v <span class="kw">in</span> <span class="bu">zip</span>(X_valid_arr, y_valid_arr):</span>
+<span id="cb20-5"><a href="" aria-label="5"></a>        order <span class="op">=</span> np.argsort(((X_train_arr <span class="op">-</span> x_v) <span class="op">**</span> <span class="dv">2</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb20-6"><a href="" aria-label="6"></a>        match <span class="op">=</span> (y_train_arr[order] <span class="op">==</span> y_v).astype(<span class="bu">float</span>)</span>
+<span id="cb20-7"><a href="" aria-label="7"></a>        s <span class="op">=</span> np.zeros(n)</span>
+<span id="cb20-8"><a href="" aria-label="8"></a>        s[n <span class="op">-</span> <span class="dv">1</span>] <span class="op">=</span> match[n <span class="op">-</span> <span class="dv">1</span>] <span class="op">/</span> n</span>
+<span id="cb20-9"><a href="" aria-label="9"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">-</span> <span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb20-10"><a href="" aria-label="10"></a>            s[i] <span class="op">=</span> s[i <span class="op">+</span> <span class="dv">1</span>] <span class="op">+</span> (match[i] <span class="op">-</span> match[i <span class="op">+</span> <span class="dv">1</span>]) <span class="op">/</span> k <span class="op">*</span> <span class="bu">min</span>(k, i <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> (i <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb20-11"><a href="" aria-label="11"></a>        values[order] <span class="op">+=</span> s</span>
+<span id="cb20-12"><a href="" aria-label="12"></a>    <span class="cf">return</span> values <span class="op">/</span> <span class="bu">len</span>(y_valid_arr)</span>
+<span id="cb20-13"><a href="" aria-label="13"></a></span>
+<span id="cb20-14"><a href="" aria-label="14"></a></span>
+<span id="cb20-15"><a href="" aria-label="15"></a><span class="co"># Standardize numeric features and one-hot encode categoricals for meaningful distances.</span></span>
+<span id="cb20-16"><a href="" aria-label="16"></a>design <span class="op">=</span> pd.get_dummies(pd.concat([train_df[clean_cols], valid_df[clean_cols]]), dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb20-17"><a href="" aria-label="17"></a>design <span class="op">=</span> (design <span class="op">-</span> design.iloc[: <span class="bu">len</span>(train_df)].mean()) <span class="op">/</span> (design.iloc[: <span class="bu">len</span>(train_df)].std() <span class="op">+</span> <span class="fl">1e-9</span>)</span>
+<span id="cb20-18"><a href="" aria-label="18"></a>D_tr, D_va <span class="op">=</span> design.iloc[: <span class="bu">len</span>(train_df)].to_numpy(), design.iloc[<span class="bu">len</span>(train_df):].to_numpy()</span>
+<span id="cb20-19"><a href="" aria-label="19"></a></span>
+<span id="cb20-20"><a href="" aria-label="20"></a>valuation_idx <span class="op">=</span> np.random.default_rng(RANDOM_STATE).choice(<span class="bu">len</span>(D_va), <span class="dv">400</span>, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-21"><a href="" aria-label="21"></a>data_values <span class="op">=</span> knn_shapley(D_tr, y_tr.to_numpy(), D_va[valuation_idx], y_va.to_numpy()[valuation_idx])</span>
+<span id="cb20-22"><a href="" aria-label="22"></a></span>
+<span id="cb20-23"><a href="" aria-label="23"></a>pd.DataFrame({<span class="st">"mean value"</span>: [data_values[<span class="op">~</span>flipped].mean(), data_values[flipped].mean()],</span>
+<span id="cb20-24"><a href="" aria-label="24"></a>              <span class="st">"share with negative value"</span>: [(data_values[<span class="op">~</span>flipped] <span class="op">&lt;</span> <span class="dv">0</span>).mean(), (data_values[flipped] <span class="op">&lt;</span> <span class="dv">0</span>).mean()]},</span>
+<span id="cb20-25"><a href="" aria-label="25"></a>             index<span class="op">=</span>[<span class="st">"correct label"</span>, <span class="st">"flipped label"</span>]).<span class="bu">round</span>(<span class="dv">5</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean value</th>
+<th data-quarto-table-cell-role="th">share with negative value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">correct label</th>
+<td>0.00025</td>
+<td>0.18192</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">flipped label</th>
+<td>-0.00041</td>
+<td>0.68407</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="do-low-value-points-really-hurt" class="title-slide slide level1 scrollable center">
+<h1>24. Do low-value points really hurt?</h1>
+<p>Remove an increasing fraction of training points, retrain the random forest, and measure deployment performance. Three strategies:</p>
+<ul>
+<li><strong>lowest value (global)</strong>: remove the lowest-valued points overall;</li>
+<li><strong>lowest value per class</strong>: remove the same fraction of lowest-valued points <em>within each class</em>;</li>
+<li><strong>random</strong>: remove random points.</li>
+</ul>
+<div id="cell-055" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:37.473694Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:37.473543Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:43.735362Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:43.734597Z&quot;}}" data-execution_count="20">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>fractions <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.05</span>, <span class="fl">0.10</span>, <span class="fl">0.15</span>, <span class="fl">0.20</span>, <span class="fl">0.30</span>]</span>
+<span id="cb21-2"><a href="" aria-label="2"></a>labels <span class="op">=</span> y_tr.to_numpy()</span>
+<span id="cb21-3"><a href="" aria-label="3"></a></span>
+<span id="cb21-4"><a href="" aria-label="4"></a></span>
+<span id="cb21-5"><a href="" aria-label="5"></a><span class="kw">def</span> removal_set(strategy, frac):</span>
+<span id="cb21-6"><a href="" aria-label="6"></a>    <span class="cf">if</span> strategy <span class="op">==</span> <span class="st">"lowest value (global)"</span>:</span>
+<span id="cb21-7"><a href="" aria-label="7"></a>        <span class="cf">return</span> np.argsort(data_values)[: <span class="bu">int</span>(frac <span class="op">*</span> <span class="bu">len</span>(data_values))]</span>
+<span id="cb21-8"><a href="" aria-label="8"></a>    <span class="cf">if</span> strategy <span class="op">==</span> <span class="st">"lowest value per class"</span>:</span>
+<span id="cb21-9"><a href="" aria-label="9"></a>        removed <span class="op">=</span> []</span>
+<span id="cb21-10"><a href="" aria-label="10"></a>        <span class="cf">for</span> cls <span class="kw">in</span> np.unique(labels):</span>
+<span id="cb21-11"><a href="" aria-label="11"></a>            ids <span class="op">=</span> np.where(labels <span class="op">==</span> cls)[<span class="dv">0</span>]</span>
+<span id="cb21-12"><a href="" aria-label="12"></a>            removed.extend(ids[np.argsort(data_values[ids])[: <span class="bu">int</span>(frac <span class="op">*</span> <span class="bu">len</span>(ids))]])</span>
+<span id="cb21-13"><a href="" aria-label="13"></a>        <span class="cf">return</span> np.array(removed, dtype<span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb21-14"><a href="" aria-label="14"></a>    <span class="cf">return</span> np.random.default_rng(RANDOM_STATE).permutation(<span class="bu">len</span>(data_values))[: <span class="bu">int</span>(frac <span class="op">*</span> <span class="bu">len</span>(data_values))]</span>
+<span id="cb21-15"><a href="" aria-label="15"></a></span>
+<span id="cb21-16"><a href="" aria-label="16"></a></span>
+<span id="cb21-17"><a href="" aria-label="17"></a>rows <span class="op">=</span> []</span>
+<span id="cb21-18"><a href="" aria-label="18"></a><span class="cf">for</span> frac <span class="kw">in</span> fractions:</span>
+<span id="cb21-19"><a href="" aria-label="19"></a>    <span class="cf">for</span> name <span class="kw">in</span> [<span class="st">"lowest value (global)"</span>, <span class="st">"lowest value per class"</span>, <span class="st">"random"</span>]:</span>
+<span id="cb21-20"><a href="" aria-label="20"></a>        removed_idx <span class="op">=</span> removal_set(name, frac)</span>
+<span id="cb21-21"><a href="" aria-label="21"></a>        keep_idx <span class="op">=</span> np.setdiff1d(np.arange(<span class="bu">len</span>(data_values)), removed_idx)</span>
+<span id="cb21-22"><a href="" aria-label="22"></a>        model <span class="op">=</span> fit_forest(X_tr_c.iloc[keep_idx], y_tr.iloc[keep_idx])</span>
+<span id="cb21-23"><a href="" aria-label="23"></a>        rows.append({<span class="st">"removed"</span>: frac, <span class="st">"strategy"</span>: name,</span>
+<span id="cb21-24"><a href="" aria-label="24"></a>                     <span class="st">"positives_in_removed"</span>: labels[removed_idx].mean() <span class="cf">if</span> <span class="bu">len</span>(removed_idx) <span class="cf">else</span> np.nan,</span>
+<span id="cb21-25"><a href="" aria-label="25"></a>                     <span class="st">"flipped_in_removed"</span>: flipped[removed_idx].mean() <span class="cf">if</span> <span class="bu">len</span>(removed_idx) <span class="cf">else</span> np.nan,</span>
+<span id="cb21-26"><a href="" aria-label="26"></a>                     <span class="op">**</span>scores(model, X_de_c, y_de)})</span>
+<span id="cb21-27"><a href="" aria-label="27"></a>removal <span class="op">=</span> pd.DataFrame(rows)</span>
+<span id="cb21-28"><a href="" aria-label="28"></a></span>
+<span id="cb21-29"><a href="" aria-label="29"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb21-30"><a href="" aria-label="30"></a><span class="cf">for</span> name, group <span class="kw">in</span> removal.groupby(<span class="st">"strategy"</span>):</span>
+<span id="cb21-31"><a href="" aria-label="31"></a>    ax.plot(group[<span class="st">"removed"</span>], group[<span class="st">"balanced_accuracy"</span>], marker<span class="op">=</span><span class="st">"o"</span>, label<span class="op">=</span>name)</span>
+<span id="cb21-32"><a href="" aria-label="32"></a>ax.set_xlabel(<span class="st">"fraction of training data removed"</span>)</span>
+<span id="cb21-33"><a href="" aria-label="33"></a>ax.set_ylabel(<span class="st">"deployment balanced accuracy"</span>)</span>
+<span id="cb21-34"><a href="" aria-label="34"></a>ax.set_title(<span class="st">"Removing low-value data vs random data"</span>)</span>
+<span id="cb21-35"><a href="" aria-label="35"></a>ax.legend()</span>
+<span id="cb21-36"><a href="" aria-label="36"></a>plt.show()</span>
+<span id="cb21-37"><a href="" aria-label="37"></a>removal.<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+</details>
+
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">removed</th>
+<th data-quarto-table-cell-role="th">strategy</th>
+<th data-quarto-table-cell-role="th">positives_in_removed</th>
+<th data-quarto-table-cell-role="th">flipped_in_removed</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy</th>
+<th data-quarto-table-cell-role="th">roc_auc</th>
+<th data-quarto-table-cell-role="th">f1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>0.00</td>
+<td>lowest value (global)</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.775</td>
+<td>0.907</td>
+<td>0.682</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>0.00</td>
+<td>lowest value per class</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.775</td>
+<td>0.907</td>
+<td>0.682</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>0.00</td>
+<td>random</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.775</td>
+<td>0.907</td>
+<td>0.682</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>0.05</td>
+<td>lowest value (global)</td>
+<td>0.985</td>
+<td>0.450</td>
+<td>0.758</td>
+<td>0.899</td>
+<td>0.661</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>0.05</td>
+<td>lowest value per class</td>
+<td>0.290</td>
+<td>0.350</td>
+<td>0.787</td>
+<td>0.906</td>
+<td>0.692</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>0.05</td>
+<td>random</td>
+<td>0.280</td>
+<td>0.100</td>
+<td>0.772</td>
+<td>0.908</td>
+<td>0.677</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>0.10</td>
+<td>lowest value (global)</td>
+<td>0.985</td>
+<td>0.378</td>
+<td>0.752</td>
+<td>0.876</td>
+<td>0.653</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>0.10</td>
+<td>lowest value per class</td>
+<td>0.290</td>
+<td>0.255</td>
+<td>0.787</td>
+<td>0.901</td>
+<td>0.690</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>0.10</td>
+<td>random</td>
+<td>0.300</td>
+<td>0.105</td>
+<td>0.766</td>
+<td>0.905</td>
+<td>0.667</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>0.15</td>
+<td>lowest value (global)</td>
+<td>0.987</td>
+<td>0.330</td>
+<td>0.701</td>
+<td>0.853</td>
+<td>0.567</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>0.15</td>
+<td>lowest value per class</td>
+<td>0.290</td>
+<td>0.217</td>
+<td>0.779</td>
+<td>0.896</td>
+<td>0.678</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>0.15</td>
+<td>random</td>
+<td>0.305</td>
+<td>0.097</td>
+<td>0.774</td>
+<td>0.907</td>
+<td>0.682</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>0.20</td>
+<td>lowest value (global)</td>
+<td>0.968</td>
+<td>0.300</td>
+<td>0.636</td>
+<td>0.851</td>
+<td>0.431</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">13</th>
+<td>0.20</td>
+<td>lowest value per class</td>
+<td>0.290</td>
+<td>0.196</td>
+<td>0.770</td>
+<td>0.886</td>
+<td>0.665</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">14</th>
+<td>0.20</td>
+<td>random</td>
+<td>0.305</td>
+<td>0.091</td>
+<td>0.767</td>
+<td>0.907</td>
+<td>0.671</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">15</th>
+<td>0.30</td>
+<td>lowest value (global)</td>
+<td>0.897</td>
+<td>0.258</td>
+<td>0.532</td>
+<td>0.849</td>
+<td>0.126</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">16</th>
+<td>0.30</td>
+<td>lowest value per class</td>
+<td>0.290</td>
+<td>0.171</td>
+<td>0.767</td>
+<td>0.859</td>
+<td>0.658</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">17</th>
+<td>0.30</td>
+<td>random</td>
+<td>0.307</td>
+<td>0.090</td>
+<td>0.773</td>
+<td>0.907</td>
+<td>0.681</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-21-output-1.png" class="r-stretch"></section>
+
+<section id="checkpoint-data-values" class="title-slide slide level1 center">
+<h1>Checkpoint: data values</h1>
+<ol type="1">
+<li>Are flipped labels concentrated among the lowest-valued points? Why does a KNN utility detect them?</li>
+<li>Why does global removal hurt? Look at <code>positives_in_removed</code>: the minority class has lower KNN values, so global removal deletes positives. What does this say about valuing data under class imbalance?</li>
+<li>The values come from a KNN model but we retrain a random forest: what could go wrong?</li>
+<li>How would you use data values to decide <strong>which new data to collect</strong>?</li>
+</ol>
+</section>
+
+<section id="part-e-counterfactuals-and-proxies" class="title-slide slide level1 center">
+<h1>Part E: counterfactuals and proxies</h1>
+
+</section>
+
+<section id="a-minimal-counterfactual-search" class="title-slide slide level1 scrollable center">
+<h1>25. A minimal counterfactual search</h1>
+<p>For a respondent predicted at most 50K, search the smallest change to <strong>actionable</strong> features that flips the prediction <span class="citation" data-cites="wachter2017counterfactual mothilal2020explaining">(<a href="#/references" role="doc-biblioref" onclick=""><strong>wachter2017counterfactual?</strong></a>; <a href="#/references" role="doc-biblioref" onclick=""><strong>mothilal2020explaining?</strong></a>)</span>. Here: weekly hours (+0 to +20) and years of education (+0 to +4).</p>
+<div id="cell-059" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:43.737488Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:43.737275Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:49.271180Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:49.270616Z&quot;}}" data-execution_count="21">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>deploy_pred <span class="op">=</span> clean_model.predict(X_de_c)</span>
+<span id="cb22-2"><a href="" aria-label="2"></a>candidates <span class="op">=</span> np.where((deploy_pred <span class="op">==</span> <span class="dv">0</span>) <span class="op">&amp;</span> (deploy_df[<span class="st">"age"</span>] <span class="op">&lt;</span> <span class="dv">50</span>))[<span class="dv">0</span>]</span>
+<span id="cb22-3"><a href="" aria-label="3"></a></span>
+<span id="cb22-4"><a href="" aria-label="4"></a></span>
+<span id="cb22-5"><a href="" aria-label="5"></a><span class="kw">def</span> counterfactual(row):</span>
+<span id="cb22-6"><a href="" aria-label="6"></a>    grid <span class="op">=</span> [(e, h) <span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">5</span>) <span class="cf">for</span> h <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">21</span>, <span class="dv">2</span>)]</span>
+<span id="cb22-7"><a href="" aria-label="7"></a>    variants <span class="op">=</span> pd.DataFrame([row] <span class="op">*</span> <span class="bu">len</span>(grid)).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-8"><a href="" aria-label="8"></a>    variants[<span class="st">"education_num"</span>] <span class="op">=</span> [<span class="bu">min</span>(<span class="dv">16</span>, row[<span class="st">"education_num"</span>] <span class="op">+</span> e) <span class="cf">for</span> e, _ <span class="kw">in</span> grid]</span>
+<span id="cb22-9"><a href="" aria-label="9"></a>    variants[<span class="st">"hours_per_week"</span>] <span class="op">=</span> [<span class="bu">min</span>(<span class="dv">99</span>, row[<span class="st">"hours_per_week"</span>] <span class="op">+</span> h) <span class="cf">for</span> _, h <span class="kw">in</span> grid]</span>
+<span id="cb22-10"><a href="" aria-label="10"></a>    flips <span class="op">=</span> clean_model.predict(variants) <span class="op">==</span> <span class="dv">1</span></span>
+<span id="cb22-11"><a href="" aria-label="11"></a>    <span class="cf">if</span> <span class="kw">not</span> flips.<span class="bu">any</span>():</span>
+<span id="cb22-12"><a href="" aria-label="12"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb22-13"><a href="" aria-label="13"></a>    costs <span class="op">=</span> [e <span class="op">/</span> <span class="dv">4</span> <span class="op">+</span> h <span class="op">/</span> <span class="dv">20</span> <span class="cf">if</span> f <span class="cf">else</span> np.inf <span class="cf">for</span> (e, h), f <span class="kw">in</span> <span class="bu">zip</span>(grid, flips)]</span>
+<span id="cb22-14"><a href="" aria-label="14"></a>    best <span class="op">=</span> <span class="bu">int</span>(np.argmin(costs))</span>
+<span id="cb22-15"><a href="" aria-label="15"></a>    <span class="cf">return</span> costs[best], grid[best][<span class="dv">0</span>], grid[best][<span class="dv">1</span>]</span>
+<span id="cb22-16"><a href="" aria-label="16"></a></span>
+<span id="cb22-17"><a href="" aria-label="17"></a></span>
+<span id="cb22-18"><a href="" aria-label="18"></a>found <span class="op">=</span> []</span>
+<span id="cb22-19"><a href="" aria-label="19"></a><span class="cf">for</span> i <span class="kw">in</span> candidates[:<span class="dv">200</span>]:</span>
+<span id="cb22-20"><a href="" aria-label="20"></a>    result <span class="op">=</span> counterfactual(X_de_c.iloc[i])</span>
+<span id="cb22-21"><a href="" aria-label="21"></a>    <span class="cf">if</span> result <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb22-22"><a href="" aria-label="22"></a>        found.append({<span class="st">"respondent"</span>: i, <span class="st">"extra_education_years"</span>: result[<span class="dv">1</span>], <span class="st">"extra_weekly_hours"</span>: result[<span class="dv">2</span>]})</span>
+<span id="cb22-23"><a href="" aria-label="23"></a><span class="bu">print</span>(<span class="ss">f"counterfactual found for </span><span class="sc">{</span><span class="bu">len</span>(found)<span class="sc">}</span><span class="ss"> of </span><span class="sc">{</span><span class="bu">min</span>(<span class="dv">200</span>, <span class="bu">len</span>(candidates))<span class="sc">}</span><span class="ss"> respondents"</span>)</span>
+<span id="cb22-24"><a href="" aria-label="24"></a>pd.DataFrame(found).head(<span class="dv">8</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>counterfactual found for 50 of 200 respondents</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">respondent</th>
+<th data-quarto-table-cell-role="th">extra_education_years</th>
+<th data-quarto-table-cell-role="th">extra_weekly_hours</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1</td>
+<td>0</td>
+<td>14</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>13</td>
+<td>4</td>
+<td>14</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>20</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>25</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>26</td>
+<td>1</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>33</td>
+<td>3</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>43</td>
+<td>0</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="proxy-check-what-if-only-marital-status-changed" class="title-slide slide level1 scrollable center">
+<h1>26. Proxy check: what if only marital status changed?</h1>
+<p><code>marital_status</code> and <code>relationship</code> are not actionable, and they are strongly associated with sex (<code>Husband</code> is 100% male, <code>Wife</code> 100% female). If changing them alone flips decisions, the model relies on <strong>proxies</strong>, and counterfactuals built on them are not acceptable recourse.</p>
+<div id="cell-061" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:49.273143Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:49.272970Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:49.321018Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:49.320319Z&quot;}}" data-execution_count="22">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>married_code <span class="op">=</span> category_maps[<span class="st">"marital_status"</span>].get(<span class="st">"Married-civ-spouse"</span>)</span>
+<span id="cb24-2"><a href="" aria-label="2"></a>husband_code <span class="op">=</span> category_maps[<span class="st">"relationship"</span>].get(<span class="st">"Husband"</span>)</span>
+<span id="cb24-3"><a href="" aria-label="3"></a>rejected <span class="op">=</span> X_de_c.iloc[candidates[:<span class="dv">200</span>]].copy()</span>
+<span id="cb24-4"><a href="" aria-label="4"></a>what_if <span class="op">=</span> rejected.copy()</span>
+<span id="cb24-5"><a href="" aria-label="5"></a>what_if[<span class="st">"marital_status"</span>] <span class="op">=</span> married_code</span>
+<span id="cb24-6"><a href="" aria-label="6"></a>what_if[<span class="st">"relationship"</span>] <span class="op">=</span> husband_code</span>
+<span id="cb24-7"><a href="" aria-label="7"></a>flip_rate <span class="op">=</span> clean_model.predict(what_if).mean()</span>
+<span id="cb24-8"><a href="" aria-label="8"></a><span class="bu">print</span>(<span class="ss">f"Share of rejected respondents whose prediction flips when only marital status/relationship change: </span><span class="sc">{</span>flip_rate<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb24-9"><a href="" aria-label="9"></a>display(pd.crosstab(train_df[<span class="st">"relationship"</span>], train_df[<span class="st">"sex"</span>], normalize<span class="op">=</span><span class="st">"index"</span>).<span class="bu">round</span>(<span class="dv">2</span>))</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Share of rejected respondents whose prediction flips when only marital status/relationship change: 0.07</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">Female</th>
+<th data-quarto-table-cell-role="th">Male</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">relationship</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Husband</th>
+<td>0.00</td>
+<td>1.00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Not-in-family</th>
+<td>0.45</td>
+<td>0.55</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Other-relative</th>
+<td>0.46</td>
+<td>0.54</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Own-child</th>
+<td>0.44</td>
+<td>0.56</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Unmarried</th>
+<td>0.74</td>
+<td>0.26</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Wife</th>
+<td>1.00</td>
+<td>0.00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="checkpoint-counterfactuals" class="title-slide slide level1 center">
+<h1>Checkpoint: counterfactuals</h1>
+<ol type="1">
+<li>Which counterfactuals are <em>plausible</em> and <em>actionable</em> for a real person?</li>
+<li>What does the proxy check tell you about the data, and how does it connect to the fairness lab?</li>
+</ol>
+</section>
+
+<section id="deliverable-a-data-bug-report" class="title-slide slide level1 center">
+<h1>Deliverable: a data bug report</h1>
+<p>For each problem you found (leakage, shortcut, label errors, proxies), write:</p>
+<ol type="1">
+<li><strong>Symptom</strong>: what you observed (metrics, attributions, data values).</li>
+<li><strong>Explanation used</strong>: which method revealed it, and why it worked.</li>
+<li><strong>Root cause in the data</strong>: how the data was collected or recorded.</li>
+<li><strong>Fix</strong>: what you changed in the data, and the effect on deployment performance.</li>
+<li><strong>Residual risk</strong>: what the explanations <em>cannot</em> tell you.</li>
+</ol>
+</section>
+
+<section id="extension-tasks" class="title-slide slide level1 center">
+<h1>Extension tasks</h1>
+<ul>
+<li>Replace the random forest with a logistic regression and compare <code>LinearExplainer</code> values with <span class="math inline">\(\beta_j (x_j - E[X_j])\)</span>.</li>
+<li>Compute SHAP interaction values (<code>shap_interaction_values</code>) for the flight tree and find the strongest pair.</li>
+<li>Run <code>cleanlab.find_label_issues</code> and compare it with the self-confidence ranking.</li>
+<li>Compute KNN-Shapley values separately for men and women: is low-value data concentrated in one group?</li>
+<li>Use <code>dice-ml</code> to generate diverse counterfactuals and compare them with the grid search.</li>
+</ul>
+</section>
+
+<section id="references" class="title-slide slide level1 scrollable smaller">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-breiman2001random" class="csl-entry" role="listitem">
+Breiman, Leo. 2001. <span>“Random Forests.”</span> <em>Machine Learning</em> 45 (1): 5–32. <a href="https://doi.org/10.1023/A:1010933404324">https://doi.org/10.1023/A:1010933404324</a>.
 </div>
 </div>
 
