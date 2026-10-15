@@ -152,7 +152,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section class="slide level2">
 
 <p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/03-explainability.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
-<div id="explainability-imports" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T15:38:11.438832Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-14T15:38:11.438662Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-14T15:38:14.737278Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T15:38:14.736242Z&quot;}}" data-execution_count="1">
+<div id="explainability-imports" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:12:32.478780Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:12:32.478594Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:12:35.645431Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:12:35.644449Z&quot;}}" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-yellow-fg">WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.</span><span class="ansi-yellow-fg">
@@ -196,7 +196,7 @@ Note: you may need to restart the kernel to use updated packages.
 <h1>2. A fitted flight-delay model</h1>
 <p>The example uses a decision tree trained on five synthetic flight features. The model remains fixed throughout the SHAP analysis.</p>
 <p>The synthetic data keeps the example reproducible. The SHAP procedure is the same for a tree trained on real flight data.</p>
-<div id="explainability-model-code" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T15:38:14.739638Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-14T15:38:14.739261Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-14T15:38:14.763570Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T15:38:14.762596Z&quot;}}" data-execution_count="2">
+<div id="explainability-model-code" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:12:35.648127Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:12:35.647819Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:12:35.675871Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:12:35.674741Z&quot;}}" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 <style scoped="">
@@ -360,7 +360,7 @@ Note: you may need to restart the kernel to use updated packages.
 <p>A local SHAP value explains one prediction. Global importance averages the absolute local contributions over many observations:</p>
 <p><span class="math display">\[I_j = \frac{1}{n}\sum_{i=1}^{n}|\phi_{ij}|\]</span></p>
 <p>Absolute values prevent positive and negative effects from cancelling. The result measures how strongly the fitted model uses each feature on average.</p>
-<div id="shap-global" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T15:38:14.765573Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-14T15:38:14.765368Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-14T15:38:15.183196Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T15:38:15.182322Z&quot;}}" data-execution_count="3">
+<div id="shap-global" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:12:35.677943Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:12:35.677763Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:12:36.136315Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:12:36.135439Z&quot;}}" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>SHAP baseline for the delayed class: 0.500</code></pre>
 </div>
@@ -431,7 +431,7 @@ Note: you may need to restart the kernel to use updated packages.
 <li>Positive SHAP values increase the delayed-class output for this observation.</li>
 <li>Negative SHAP values decrease it.</li>
 </ul>
-<div id="shap-local" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-14T15:38:15.185535Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-14T15:38:15.185204Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-14T15:38:15.199160Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-14T15:38:15.198461Z&quot;}}" data-execution_count="4">
+<div id="shap-local" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:12:36.138583Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:12:36.138348Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:12:36.153244Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:12:36.152360Z&quot;}}" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
