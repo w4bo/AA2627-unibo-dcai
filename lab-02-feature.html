@@ -1,0 +1,3143 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="lab-02-feature_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lab-02-feature_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab-02-feature_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lab-02-feature_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab-02-feature_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lab-02-feature_files/libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.19">
+
+  <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
+  <title>From Domain Features to Automated Feature Selection</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="lab-02-feature_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lab-02-feature_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="lab-02-feature_files/libs/revealjs/dist/theme/quarto-b328c055d9dc1f3c009edd90f416a34b.css">
+  <link href="lab-02-feature_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lab-02-feature_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lab-02-feature_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lab-02-feature_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="lab-02-feature_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="lab-02-feature_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">From Domain Features to Automated Feature Selection</h1>
+  <p class="subtitle">Data-Centric AI (Module II)</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
+</div>
+</div>
+</div>
+
+</section>
+<section class="slide level2">
+
+<p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-02-feature.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
+</section>
+<section id="learning-outcomes" class="title-slide slide level1 center">
+<h1>Learning outcomes</h1>
+<p>By the end of this notebook, you should be able to:</p>
+<ul>
+<li>Create reproducible manual features.</li>
+<li>Integrate feature construction into a pipeline.</li>
+<li>Distinguish feature engineering from feature selection.</li>
+<li>Compare filter and wrapper selection methods.</li>
+<li>Evaluate predictive performance, stability, and computational cost.</li>
+</ul>
+</section>
+
+<section id="feature-engineering-versus-feature-selection" class="title-slide slide level1 center">
+<h1>1. Feature engineering versus feature selection</h1>
+<p><strong>Feature engineering</strong> introduces hypotheses about the problem by creating candidate inputs for a model.</p>
+<ul>
+<li>It turns domain knowledge into measurable variables: ratios, differences, nonlinear transformations, and aggregations.</li>
+</ul>
+<p><strong>Feature selection</strong> controls complexityby choosing a subset of candidate inputs.</p>
+<ul>
+<li>It tries to keep signal while removing redundancy, noise, and sources of overfitting.</li>
+</ul>
+<p>A useful feature usually has at least one of these properties:</p>
+<ul>
+<li>It carries <strong>signal</strong> about the target.</li>
+<li>It is not just a duplicate of another feature.</li>
+<li>It is stable across samples, folds, and time periods.</li>
+<li>It is available at the moment the model is used.</li>
+<li>It does not encode the answer through leakage.</li>
+</ul>
+</section>
+
+<section id="flight-delay-prediction" class="title-slide slide level1 center">
+<h1>2. Flight delay prediction</h1>
+<p>Use this dataset to predict whether a flight arrives at least 15 minutes late.</p>
+<div id="750a7c46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:02.899739Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:02.899507Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:02.916227Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:02.915211Z&quot;}}" data-outputid="9262426d-6a15-41c6-c5b6-a7a17cf88863" data-execution_count="3">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>X.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">scheduled_departure</th>
+<th data-quarto-table-cell-role="th">scheduled_arrival</th>
+<th data-quarto-table-cell-role="th">carrier</th>
+<th data-quarto-table-cell-role="th">origin</th>
+<th data-quarto-table-cell-role="th">destination</th>
+<th data-quarto-table-cell-role="th">distance_km</th>
+<th data-quarto-table-cell-role="th">weather_wind1</th>
+<th data-quarto-table-cell-role="th">weather_wind2</th>
+<th data-quarto-table-cell-role="th">weather_rain1</th>
+<th data-quarto-table-cell-role="th">weather_rain2</th>
+<th data-quarto-table-cell-role="th">noise_1</th>
+<th data-quarto-table-cell-role="th">noise_2</th>
+<th data-quarto-table-cell-role="th">noise_3</th>
+<th data-quarto-table-cell-role="th">scheduled_duration_min</th>
+<th data-quarto-table-cell-role="th">actual_departure</th>
+<th data-quarto-table-cell-role="th">actual_arrival</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2025-02-02 04:15:00</td>
+<td>2025-02-02 06:03:00</td>
+<td>UA</td>
+<td>ATL</td>
+<td>SFO</td>
+<td>918</td>
+<td>4.76</td>
+<td>5.09</td>
+<td>0.56</td>
+<td>0.00</td>
+<td>0.4405</td>
+<td>0.2071</td>
+<td>83</td>
+<td>108</td>
+<td>2025-02-02 04:39:00</td>
+<td>2025-02-02 06:45:00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2025-10-10 00:10:00</td>
+<td>2025-10-10 03:11:00</td>
+<td>AA</td>
+<td>JFK</td>
+<td>LAX</td>
+<td>1826</td>
+<td>26.43</td>
+<td>26.82</td>
+<td>0.84</td>
+<td>0.00</td>
+<td>1.8638</td>
+<td>0.7937</td>
+<td>27</td>
+<td>181</td>
+<td>2025-10-10 00:06:00</td>
+<td>2025-10-10 03:10:00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2025-08-27 15:30:00</td>
+<td>2025-08-27 19:18:00</td>
+<td>B6</td>
+<td>JFK</td>
+<td>BOS</td>
+<td>2409</td>
+<td>2.80</td>
+<td>0.83</td>
+<td>13.91</td>
+<td>12.32</td>
+<td>1.1118</td>
+<td>-0.6341</td>
+<td>29</td>
+<td>228</td>
+<td>2025-08-27 16:23:00</td>
+<td>2025-08-27 20:40:00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="4540b3a7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:02.918303Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:02.918083Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:02.923006Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:02.922211Z&quot;}}" data-outputid="0631b593-0cf9-4d8c-f604-d4f8b7ca848e" data-execution_count="4">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>y.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>0    1
+1    0
+2    1
+Name: arrival_delay_15min, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+
+<section id="data-understanding" class="title-slide slide level1 center">
+<h1>3. Data understanding</h1>
+<div id="567a731f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:02.925222Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:02.924988Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:02.935252Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:02.934307Z&quot;}}" data-execution_count="5">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>X.info()</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 5000 entries, 0 to 4999
+Data columns (total 16 columns):
+ #   Column                  Non-Null Count  Dtype         
+---  ------                  --------------  -----         
+ 0   scheduled_departure     5000 non-null   datetime64[us]
+ 1   scheduled_arrival       5000 non-null   datetime64[us]
+ 2   carrier                 5000 non-null   str           
+ 3   origin                  5000 non-null   str           
+ 4   destination             5000 non-null   str           
+ 5   distance_km             5000 non-null   int64         
+ 6   weather_wind1           5000 non-null   float64       
+ 7   weather_wind2           5000 non-null   float64       
+ 8   weather_rain1           5000 non-null   float64       
+ 9   weather_rain2           5000 non-null   float64       
+ 10  noise_1                 5000 non-null   float64       
+ 11  noise_2                 5000 non-null   float64       
+ 12  noise_3                 5000 non-null   int64         
+ 13  scheduled_duration_min  5000 non-null   int64         
+ 14  actual_departure        5000 non-null   datetime64[us]
+ 15  actual_arrival          5000 non-null   datetime64[us]
+dtypes: datetime64[us](4), float64(6), int64(3), str(3)
+memory usage: 625.1 KB</code></pre>
+</div>
+</div>
+</section>
+
+<section id="data-understanding-1" class="title-slide slide level1 center">
+<h1>4. Data understanding</h1>
+<div id="e2fd1889" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:02.937138Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:02.936886Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:02.941957Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:02.941213Z&quot;}}" data-outputid="e74c6a7e-f6f8-48f2-a6de-3b2a1f609454" data-execution_count="6">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>y.value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>arrival_delay_15min
+0    0.6068
+1    0.3932
+Name: proportion, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+
+<section id="manual-feature-engineering" class="title-slide slide level1 center">
+<h1>5. Manual feature engineering</h1>
+<p>Create domain-inspired features from raw columns to encode hypotheses and help the model:</p>
+<ul>
+<li><code>departure_hour</code>, <code>day_of_week</code>, <code>month</code>, <code>is_holiday</code>: scheduled date/time decomposition.</li>
+<li><code>airport_*</code>: fixed airport-presence indicators for airports appearing in either origin or destination.</li>
+<li>Other?</li>
+</ul>
+</section>
+
+<section id="are-features-known-at-prediction-time" class="title-slide slide level1 center">
+<h1>Are features known at prediction time?</h1>
+<div id="110bf60c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:02.954304Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:02.954093Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:03.055583Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:03.054718Z&quot;}}" data-outputid="18b357f7-25ab-4b25-bd9e-6d805aad8ec0" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">feature</th>
+<th data-quarto-table-cell-role="th">dtype</th>
+<th data-quarto-table-cell-role="th">source</th>
+<th data-quarto-table-cell-role="th">availability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>scheduled_departure</td>
+<td>datetime64[us]</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>scheduled_arrival</td>
+<td>datetime64[us]</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>carrier</td>
+<td>str</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>origin</td>
+<td>str</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>destination</td>
+<td>str</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>distance_km</td>
+<td>int64</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>weather_wind1</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>weather_wind2</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>weather_rain1</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>weather_rain2</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>noise_1</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>noise_2</td>
+<td>float64</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>noise_3</td>
+<td>int64</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">13</th>
+<td>scheduled_duration_min</td>
+<td>int64</td>
+<td>raw</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">14</th>
+<td>actual_departure</td>
+<td>datetime64[us]</td>
+<td>raw</td>
+<td>after departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">15</th>
+<td>actual_arrival</td>
+<td>datetime64[us]</td>
+<td>raw</td>
+<td>after arrival</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="are-features-known-at-prediction-time-1" class="title-slide slide level1 center">
+<h1>Are features known at prediction time?</h1>
+<div id="fdc896e9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:03.057938Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:03.057720Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:03.067579Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:03.066662Z&quot;}}" data-outputid="e64b1793-aa40-4dbb-b9b8-380d6467e4dc" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">feature</th>
+<th data-quarto-table-cell-role="th">dtype</th>
+<th data-quarto-table-cell-role="th">source</th>
+<th data-quarto-table-cell-role="th">availability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">21</th>
+<td>departure_hour</td>
+<td>int32</td>
+<td>engineered</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">22</th>
+<td>day_of_week</td>
+<td>int32</td>
+<td>engineered</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">23</th>
+<td>month</td>
+<td>int32</td>
+<td>engineered</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">24</th>
+<td>is_weekend</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">25</th>
+<td>is_holiday</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">26</th>
+<td>airport_ATL</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">27</th>
+<td>airport_BOS</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">28</th>
+<td>airport_JFK</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">29</th>
+<td>airport_LAX</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">30</th>
+<td>airport_SFO</td>
+<td>int64</td>
+<td>engineered</td>
+<td>before departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">16</th>
+<td>actual_departure_hour</td>
+<td>int32</td>
+<td>engineered</td>
+<td>after departure</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">18</th>
+<td>actual_departure_delay_min</td>
+<td>float64</td>
+<td>engineered</td>
+<td>after departure</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">17</th>
+<td>actual_arrival_hour</td>
+<td>int32</td>
+<td>engineered</td>
+<td>after arrival</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">19</th>
+<td>actual_arrival_delay_min</td>
+<td>float64</td>
+<td>engineered</td>
+<td>after arrival</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">20</th>
+<td>actual_elapsed_min</td>
+<td>float64</td>
+<td>engineered</td>
+<td>after arrival</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="data-understanding-and-visualization" class="title-slide slide level1 center">
+<h1>Data understanding and visualization</h1>
+<div id="bd353dd5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:03.182992Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:03.182802Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:03.973855Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:03.972677Z&quot;}}" data-outputid="5d37dd4c-0a45-42d6-88d7-0683d68c2646" data-execution_count="11">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>check_correlations(X, y)</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-02-feature_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
+
+<section id="data-understanding-and-visualization-1" class="title-slide slide level1 center">
+<h1>Data understanding and visualization</h1>
+<div id="a3a8c98c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:03.975816Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:03.975607Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:04.498878Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:04.497742Z&quot;}}" data-outputid="395f5a31-e679-4154-fd39-3342c975bf76" data-execution_count="12">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>check_correlations(X, y, include_actual_times<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+</details>
+
+</div>
+<img data-src="lab-02-feature_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"></section>
+
+<section id="pipeline-generation" class="title-slide slide level1 center">
+<h1>6. Pipeline generation</h1>
+<div id="f6b0e58a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:04.500953Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:04.500721Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:04.537922Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:04.536945Z&quot;}}" data-outputid="193d445c-9813-4ff1-f978-9c59c2296717" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="13">
+<style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+}
+
+#sk-container-id-1.light {
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: black;
+  --sklearn-color-background: white;
+  --sklearn-color-border-box: black;
+  --sklearn-color-icon: #696969;
+}
+
+#sk-container-id-1.dark {
+  --sklearn-color-text-on-default-background: white;
+  --sklearn-color-background: #111;
+  --sklearn-color-border-box: white;
+  --sklearn-color-icon: #878787;
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+#sk-container-id-1 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  display: none;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-3) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3) 1pt solid;
+  color: var(--sklearn-color-fitted-level-3);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-0);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-fitted-level-0);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.estimator-table {
+    font-family: monospace;
+}
+
+.estimator-table summary {
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.estimator-table summary::marker {
+    font-size: 0.7rem;
+}
+
+.estimator-table details[open] {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.3rem;
+}
+
+.estimator-table .parameters-table {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0;
+}
+
+.estimator-table .parameters-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.estimator-table .parameters-table tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+.estimator-table .parameters-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+.estimator-table table td {
+    border: 1px solid rgba(106, 105, 104, 0.232);
+}
+
+/*
+    `table td`is set in notebook with right text-align.
+    We need to overwrite it.
+*/
+.estimator-table table td.param {
+    text-align: left;
+    position: relative;
+    padding: 0;
+}
+
+.user-set td {
+    color:rgb(255, 94, 0);
+    text-align: left !important;
+}
+
+.user-set td.value {
+    color:rgb(255, 94, 0);
+    background-color: transparent;
+}
+
+.default td {
+    color: black;
+    text-align: left !important;
+}
+
+.user-set td i,
+.default td i {
+    color: black;
+}
+
+/*
+    Styles for parameter documentation links
+    We need styling for visited so jupyter doesn't overwrite it
+*/
+a.param-doc-link,
+a.param-doc-link:link,
+a.param-doc-link:visited {
+    text-decoration: underline dashed;
+    text-underline-offset: .3em;
+    color: inherit;
+    display: block;
+    padding: .5em;
+}
+
+/* "hack" to make the entire area of the cell containing the link clickable */
+a.param-doc-link::before {
+    position: absolute;
+    content: "";
+    inset: 0;
+}
+
+.param-doc-description {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    padding: .5ex;
+    margin-left: 1.5em;
+    color: var(--sklearn-color-text);
+    box-shadow: .3em .3em .4em #999;
+    width: max-content;
+    text-align: left;
+    max-height: 10em;
+    overflow-y: auto;
+
+    /* unfitted */
+    background: var(--sklearn-color-unfitted-level-0);
+    border: thin solid var(--sklearn-color-unfitted-level-3);
+}
+
+/* Fitted state for parameter tooltips */
+.fitted .param-doc-description {
+    /* fitted */
+    background: var(--sklearn-color-fitted-level-0);
+    border: thin solid var(--sklearn-color-fitted-level-3);
+}
+
+.param-doc-link:hover .param-doc-description {
+    display: block;
+}
+
+.copy-paste-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[('feature_engineering',
+                 FlightFeatureEngineer(add_manual_features=False)),
+                ('preprocessing',
+                 ColumnTransformer(transformers=[('num',
+                                                  Pipeline(steps=[('variance',
+                                                                   VarianceThreshold())]),
+                                                  &lt;function numeric_columns at 0x710c02df92d0&gt;),
+                                                 ('cat',
+                                                  OneHotEncoder(handle_unknown='ignore',
+                                                                sparse_output=False),
+                                                  &lt;function categorical_columns at 0x710c03395170&gt;)],
+                                   verbose_feature_names_out=False)),
+                ('classifier',
+                 DecisionTreeClassifier(class_weight='balanced', max_depth=5,
+                                        random_state=42))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox"><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content " data-param-prefix="">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=steps,-list%20of%20tuples" class="param-doc-link" rel="noreferrer" target="_blank">steps <span class="param-doc-description">steps: list of tuples<br>
+<br>
+List of (name of step, estimator) tuples that are to be chained in<br>
+sequential order. To be compatible with the scikit-learn API, all steps<br>
+must define `fit`. All non-last steps must also define `transform`. See<br>
+:ref:`Combining Estimators <combining_estimators>` for more details.</combining_estimators></span></a></td>
+<td class="value">[('feature_engineering', ...), ('preprocessing', ...), ...]</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=transform_input,-list%20of%20str%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">transform_input <span class="param-doc-description">transform_input: list of str, default=None<br>
+<br>
+The names of the :term:`metadata` parameters that should be transformed by the<br>
+pipeline before passing it to the step consuming it.<br>
+<br>
+This enables transforming some input arguments to ``fit`` (other than ``X``)<br>
+to be transformed by the steps of the pipeline up to the step which requires<br>
+them. Requirement is defined via :ref:`metadata routing <metadata_routing>`.<br>
+For instance, this can be used to pass a validation set through the pipeline.<br>
+<br>
+You can only set this if metadata routing is enabled, which you<br>
+can enable using ``sklearn.set_config(enable_metadata_routing=True)``.<br>
+<br>
+.. versionadded:: 1.6</metadata_routing></span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=memory,-str%20or%20object%20with%20the%20joblib.Memory%20interface%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">memory <span class="param-doc-description">memory: str or object with the joblib.Memory interface, default=None<br>
+<br>
+Used to cache the fitted transformers of the pipeline. The last step<br>
+will never be cached, even if it is a transformer. By default, no<br>
+caching is performed. If a string is given, it is the path to the<br>
+caching directory. Enabling caching triggers a clone of the transformers<br>
+before fitting. Therefore, the transformer instance given to the<br>
+pipeline cannot be inspected directly. Use the attribute ``named_steps``<br>
+or ``steps`` to inspect estimators within the pipeline. Caching the<br>
+transformers is advantageous when fitting is time consuming. See<br>
+:ref:`sphx_glr_auto_examples_neighbors_plot_caching_nearest_neighbors.py`<br>
+for an example on how to enable caching.</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">verbose <span class="param-doc-description">verbose: bool, default=False<br>
+<br>
+If True, the time elapsed while fitting each step will be printed as it<br>
+is completed.</span></a></td>
+<td class="value">False</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox"><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>FlightFeatureEngineer</div></div></label><div class="sk-toggleable__content " data-param-prefix="feature_engineering__">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<tbody>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param">add_manual_features</td>
+<td class="value">False</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param">include_actual_times</td>
+<td class="value">False</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param">drop_datetime</td>
+<td class="value">True</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox"><label for="sk-estimator-id-3" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>preprocessing: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocessing: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformers,-list%20of%20tuples" class="param-doc-link" rel="noreferrer" target="_blank">transformers <span class="param-doc-description">transformers: list of tuples<br>
+<br>
+List of (name, transformer, columns) tuples specifying the<br>
+transformer objects to be applied to subsets of the data.<br>
+<br>
+name : str<br>
+Like in Pipeline and FeatureUnion, this allows the transformer and<br>
+its parameters to be set using ``set_params`` and searched in grid<br>
+search.<br>
+transformer : {'drop', 'passthrough'} or estimator<br>
+Estimator must support :term:`fit` and :term:`transform`.<br>
+Special-cased strings 'drop' and 'passthrough' are accepted as<br>
+well, to indicate to drop the columns or to pass them through<br>
+untransformed, respectively.<br>
+columns : str, array-like of str, int, array-like of int, array-like of bool, slice or callable<br>
+Indexes the data on its second axis. Integers are interpreted as<br>
+positional columns, while strings can reference DataFrame columns<br>
+by name. A scalar string or int should be used where<br>
+``transformer`` expects X to be a 1d array-like (vector),<br>
+otherwise a 2d array will be passed to the transformer.<br>
+A callable is passed the input data `X` and can return any of the<br>
+above. To select multiple columns by name or dtype, you can use<br>
+:obj:`make_column_selector`.</span></a></td>
+<td class="value">[('num', ...), ('cat', ...)]</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=remainder,-%7B%27drop%27%2C%20%27passthrough%27%7D%20or%20estimator%2C%20default%3D%27drop%27" class="param-doc-link" rel="noreferrer" target="_blank">remainder <span class="param-doc-description">remainder: {'drop', 'passthrough'} or estimator, default='drop'<br>
+<br>
+By default, only the specified columns in `transformers` are<br>
+transformed and combined in the output, and the non-specified<br>
+columns are dropped. (default of ``'drop'``).<br>
+By specifying ``remainder='passthrough'``, all remaining columns that<br>
+were not specified in `transformers`, but present in the data passed<br>
+to `fit` will be automatically passed through. This subset of columns<br>
+is concatenated with the output of the transformers. For dataframes,<br>
+extra columns not seen during `fit` will be excluded from the output<br>
+of `transform`.<br>
+By setting ``remainder`` to be an estimator, the remaining<br>
+non-specified columns will use the ``remainder`` estimator. The<br>
+estimator must support :term:`fit` and :term:`transform`.<br>
+Note that using this feature requires that the DataFrame columns<br>
+input at :term:`fit` and :term:`transform` have identical order.</span></a></td>
+<td class="value">'drop'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=sparse_threshold,-float%2C%20default%3D0.3" class="param-doc-link" rel="noreferrer" target="_blank">sparse_threshold <span class="param-doc-description">sparse_threshold: float, default=0.3<br>
+<br>
+If the output of the different transformers contains sparse matrices,<br>
+these will be stacked as a sparse matrix if the overall density is<br>
+lower than this value. Use ``sparse_threshold=0`` to always return<br>
+dense. When the transformed output consists of all dense data, the<br>
+stacked result will be dense, and this keyword will be ignored.</span></a></td>
+<td class="value">0.3</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=n_jobs,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">n_jobs <span class="param-doc-description">n_jobs: int, default=None<br>
+<br>
+Number of jobs to run in parallel.<br>
+``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.<br>
+``-1`` means using all processors. See :term:`Glossary <n_jobs>`<br>
+for more details.</n_jobs></span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=transformer_weights,-dict%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">transformer_weights <span class="param-doc-description">transformer_weights: dict, default=None<br>
+<br>
+Multiplicative weights for features per transformer. The output of the<br>
+transformer is multiplied by these weights. Keys are transformer names,<br>
+values the weights.</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">verbose <span class="param-doc-description">verbose: bool, default=False<br>
+<br>
+If True, the time elapsed while fitting each transformer will be<br>
+printed as it is completed.</span></a></td>
+<td class="value">False</td>
+</tr>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=verbose_feature_names_out,-bool%2C%20str%20or%20Callable%5B%5Bstr%2C%20str%5D%2C%20str%5D%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">verbose_feature_names_out <span class="param-doc-description">verbose_feature_names_out: bool, str or Callable[[str, str], str], default=True<br>
+<br>
+- If True, :meth:`ColumnTransformer.get_feature_names_out` will prefix<br>
+all feature names with the name of the transformer that generated that<br>
+feature. It is equivalent to setting<br>
+`verbose_feature_names_out="{transformer_name}__{feature_name}"`.<br>
+- If False, :meth:`ColumnTransformer.get_feature_names_out` will not<br>
+prefix any feature names and will error if feature names are not<br>
+unique.<br>
+- If ``Callable[[str, str], str]``,<br>
+:meth:`ColumnTransformer.get_feature_names_out` will rename all the features<br>
+using the name of the transformer. The first argument of the callable is the<br>
+transformer name and the second argument is the feature name. The returned<br>
+string will be the new feature name.<br>
+- If ``str``, it must be a string ready for formatting. The given string will<br>
+be formatted using two field names: ``transformer_name`` and ``feature_name``.<br>
+e.g. ``"{feature_name}__{transformer_name}"``. See :meth:`str.format` method<br>
+from the standard library for more info.<br>
+<br>
+.. versionadded:: 1.0<br>
+<br>
+.. versionchanged:: 1.6<br>
+`verbose_feature_names_out` can be a callable or a string to be formatted.</span></a></td>
+<td class="value">False</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.compose.ColumnTransformer.html#:~:text=force_int_remainder_cols,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">force_int_remainder_cols <span class="param-doc-description">force_int_remainder_cols: bool, default=False<br>
+<br>
+This parameter has no effect.<br>
+<br>
+.. note::<br>
+If you do not access the list of columns for the remainder columns<br>
+in the `transformers_` fitted attribute, you do not need to set<br>
+this parameter.<br>
+<br>
+.. versionadded:: 1.5<br>
+<br>
+.. versionchanged:: 1.7<br>
+The default value for `force_int_remainder_cols` will change from<br>
+`True` to `False` in version 1.7.<br>
+<br>
+.. deprecated:: 1.7<br>
+`force_int_remainder_cols` is deprecated and will be removed in 1.9.</span></a></td>
+<td class="value">'deprecated'</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>num</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>&lt;function numeric_columns at 0x710c02df92d0&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox"><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>VarianceThreshold</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.feature_selection.VarianceThreshold.html">?<span>Documentation for VarianceThreshold</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__variance__">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.feature_selection.VarianceThreshold.html#:~:text=threshold,-float%2C%20default%3D0" class="param-doc-link" rel="noreferrer" target="_blank">threshold <span class="param-doc-description">threshold: float, default=0<br>
+<br>
+Features with a training-set variance lower than this threshold will<br>
+be removed. The default is to keep all features with non-zero variance,<br>
+i.e. remove the features that have the same value in all samples.</span></a></td>
+<td class="value">0.0</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox"><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>cat</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__"><pre>&lt;function categorical_columns at 0x710c03395170&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox"><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=categories,-%27auto%27%20or%20a%20list%20of%20array-like%2C%20default%3D%27auto%27" class="param-doc-link" rel="noreferrer" target="_blank">categories <span class="param-doc-description">categories: 'auto' or a list of array-like, default='auto'<br>
+<br>
+Categories (unique values) per feature:<br>
+<br>
+- 'auto' : Determine categories automatically from the training data.<br>
+- list : ``categories[i]`` holds the categories expected in the ith<br>
+column. The passed categories should not mix strings and numeric<br>
+values within a single feature, and should be sorted in case of<br>
+numeric values.<br>
+<br>
+The used categories can be found in the ``categories_`` attribute.<br>
+<br>
+.. versionadded:: 0.20</span></a></td>
+<td class="value">'auto'</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=drop,-%7B%27first%27%2C%20%27if_binary%27%7D%20or%20an%20array-like%20of%20shape%20%28n_features%2C%29%2C%20%20%20%20%20%20%20%20%20%20%20%20%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">drop <span class="param-doc-description">drop: {'first', 'if_binary'} or an array-like of shape (n_features,), default=None<br>
+<br>
+Specifies a methodology to use to drop one of the categories per<br>
+feature. This is useful in situations where perfectly collinear<br>
+features cause problems, such as when feeding the resulting data<br>
+into an unregularized linear regression model.<br>
+<br>
+However, dropping one category breaks the symmetry of the original<br>
+representation and can therefore induce a bias in downstream models,<br>
+for instance for penalized linear classification or regression models.<br>
+<br>
+- None : retain all features (the default).<br>
+- 'first' : drop the first category in each feature. If only one<br>
+category is present, the feature will be dropped entirely.<br>
+- 'if_binary' : drop the first category in each feature with two<br>
+categories. Features with 1 or more than 2 categories are<br>
+left intact.<br>
+- array : ``drop[i]`` is the category in feature ``X[:, i]`` that<br>
+should be dropped.<br>
+<br>
+When `max_categories` or `min_frequency` is configured to group<br>
+infrequent categories, the dropping behavior is handled after the<br>
+grouping.<br>
+<br>
+.. versionadded:: 0.21<br>
+The parameter `drop` was added in 0.21.<br>
+<br>
+.. versionchanged:: 0.23<br>
+The option `drop='if_binary'` was added in 0.23.<br>
+<br>
+.. versionchanged:: 1.1<br>
+Support for dropping infrequent categories.</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=sparse_output,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">sparse_output <span class="param-doc-description">sparse_output: bool, default=True<br>
+<br>
+When ``True``, it returns a :class:`scipy.sparse.csr_matrix`,<br>
+i.e. a sparse matrix in "Compressed Sparse Row" (CSR) format.<br>
+<br>
+.. versionadded:: 1.2<br>
+`sparse` was renamed to `sparse_output`</span></a></td>
+<td class="value">False</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=dtype,-number%20type%2C%20default%3Dnp.float64" class="param-doc-link" rel="noreferrer" target="_blank">dtype <span class="param-doc-description">dtype: number type, default=np.float64<br>
+<br>
+Desired dtype of output.</span></a></td>
+<td class="value">&lt;class 'numpy.float64'&gt;</td>
+</tr>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=handle_unknown,-%7B%27error%27%2C%20%27ignore%27%2C%20%27infrequent_if_exist%27%2C%20%27warn%27%7D%2C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20default%3D%27error%27" class="param-doc-link" rel="noreferrer" target="_blank">handle_unknown <span class="param-doc-description">handle_unknown: {'error', 'ignore', 'infrequent_if_exist', 'warn'}, default='error'<br>
+<br>
+Specifies the way unknown categories are handled during :meth:`transform`.<br>
+<br>
+- 'error' : Raise an error if an unknown category is present during transform.<br>
+- 'ignore' : When an unknown category is encountered during<br>
+transform, the resulting one-hot encoded columns for this feature<br>
+will be all zeros. In the inverse transform, an unknown category<br>
+will be denoted as None.<br>
+- 'infrequent_if_exist' : When an unknown category is encountered<br>
+during transform, the resulting one-hot encoded columns for this<br>
+feature will map to the infrequent category if it exists. The<br>
+infrequent category will be mapped to the last position in the<br>
+encoding. During inverse transform, an unknown category will be<br>
+mapped to the category denoted `'infrequent'` if it exists. If the<br>
+`'infrequent'` category does not exist, then :meth:`transform` and<br>
+:meth:`inverse_transform` will handle an unknown category as with<br>
+`handle_unknown='ignore'`. Infrequent categories exist based on<br>
+`min_frequency` and `max_categories`. Read more in the<br>
+:ref:`User Guide <encoder_infrequent_categories>`.<br>
+- 'warn' : When an unknown category is encountered during transform<br>
+a warning is issued, and the encoding then proceeds as described for<br>
+`handle_unknown="infrequent_if_exist"`.<br>
+<br>
+.. versionchanged:: 1.1<br>
+`'infrequent_if_exist'` was added to automatically handle unknown<br>
+categories and infrequent categories.<br>
+<br>
+.. versionadded:: 1.6<br>
+The option `"warn"` was added in 1.6.</encoder_infrequent_categories></span></a></td>
+<td class="value">'ignore'</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=min_frequency,-int%20or%20float%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">min_frequency <span class="param-doc-description">min_frequency: int or float, default=None<br>
+<br>
+Specifies the minimum frequency below which a category will be<br>
+considered infrequent.<br>
+<br>
+- If `int`, categories with a smaller cardinality will be considered<br>
+infrequent.<br>
+<br>
+- If `float`, categories with a smaller cardinality than<br>
+`min_frequency * n_samples` will be considered infrequent.<br>
+<br>
+.. versionadded:: 1.1<br>
+Read more in the :ref:`User Guide <encoder_infrequent_categories>`.</encoder_infrequent_categories></span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=max_categories,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">max_categories <span class="param-doc-description">max_categories: int, default=None<br>
+<br>
+Specifies an upper limit to the number of output features for each input<br>
+feature when considering infrequent categories. If there are infrequent<br>
+categories, `max_categories` includes the category representing the<br>
+infrequent categories along with the frequent categories. If `None`,<br>
+there is no limit to the number of output features.<br>
+<br>
+.. versionadded:: 1.1<br>
+Read more in the :ref:`User Guide <encoder_infrequent_categories>`.</encoder_infrequent_categories></span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html#:~:text=feature_name_combiner,-%22concat%22%20or%20callable%2C%20default%3D%22concat%22" class="param-doc-link" rel="noreferrer" target="_blank">feature_name_combiner <span class="param-doc-description">feature_name_combiner: "concat" or callable, default="concat"<br>
+<br>
+Callable with signature `def callable(input_feature, category)` that returns a<br>
+string. This is used to create feature names to be returned by<br>
+:meth:`get_feature_names_out`.<br>
+<br>
+`"concat"` concatenates encoded feature name and category with<br>
+`feature + "_" + str(category)`.E.g. feature X with values 1, 6, 7 create<br>
+feature names `X_1, X_6, X_7`.<br>
+<br>
+.. versionadded:: 1.3</span></a></td>
+<td class="value">'concat'</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox"><label for="sk-estimator-id-8" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>DecisionTreeClassifier</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html">?<span>Documentation for DecisionTreeClassifier</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="classifier__">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=criterion,-%7B%22gini%22%2C%20%22entropy%22%2C%20%22log_loss%22%7D%2C%20default%3D%22gini%22" class="param-doc-link" rel="noreferrer" target="_blank">criterion <span class="param-doc-description">criterion: {"gini", "entropy", "log_loss"}, default="gini"<br>
+<br>
+The function to measure the quality of a split. Supported criteria are<br>
+"gini" for the Gini impurity and "log_loss" and "entropy" both for the<br>
+Shannon information gain, see :ref:`tree_mathematical_formulation`.</span></a></td>
+<td class="value">'gini'</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=splitter,-%7B%22best%22%2C%20%22random%22%7D%2C%20default%3D%22best%22" class="param-doc-link" rel="noreferrer" target="_blank">splitter <span class="param-doc-description">splitter: {"best", "random"}, default="best"<br>
+<br>
+The strategy used to choose the split at each node. Supported<br>
+strategies are "best" to choose the best split and "random" to choose<br>
+the best random split.</span></a></td>
+<td class="value">'best'</td>
+</tr>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=max_depth,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">max_depth <span class="param-doc-description">max_depth: int, default=None<br>
+<br>
+The maximum depth of the tree. If None, then nodes are expanded until<br>
+all leaves are pure or until all leaves contain less than<br>
+min_samples_split samples.</span></a></td>
+<td class="value">5</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_samples_split,-int%20or%20float%2C%20default%3D2" class="param-doc-link" rel="noreferrer" target="_blank">min_samples_split <span class="param-doc-description">min_samples_split: int or float, default=2<br>
+<br>
+The minimum number of samples required to split an internal node:<br>
+<br>
+- If int, then consider `min_samples_split` as the minimum number.<br>
+- If float, then `min_samples_split` is a fraction and<br>
+`ceil(min_samples_split * n_samples)` are the minimum<br>
+number of samples for each split.<br>
+<br>
+.. versionchanged:: 0.18<br>
+Added float values for fractions.</span></a></td>
+<td class="value">2</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_samples_leaf,-int%20or%20float%2C%20default%3D1" class="param-doc-link" rel="noreferrer" target="_blank">min_samples_leaf <span class="param-doc-description">min_samples_leaf: int or float, default=1<br>
+<br>
+The minimum number of samples required to be at a leaf node.<br>
+A split point at any depth will only be considered if it leaves at<br>
+least ``min_samples_leaf`` training samples in each of the left and<br>
+right branches. This may have the effect of smoothing the model,<br>
+especially in regression.<br>
+<br>
+- If int, then consider `min_samples_leaf` as the minimum number.<br>
+- If float, then `min_samples_leaf` is a fraction and<br>
+`ceil(min_samples_leaf * n_samples)` are the minimum<br>
+number of samples for each node.<br>
+<br>
+.. versionchanged:: 0.18<br>
+Added float values for fractions.</span></a></td>
+<td class="value">1</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_weight_fraction_leaf,-float%2C%20default%3D0.0" class="param-doc-link" rel="noreferrer" target="_blank">min_weight_fraction_leaf <span class="param-doc-description">min_weight_fraction_leaf: float, default=0.0<br>
+<br>
+The minimum weighted fraction of the sum total of weights (of all<br>
+the input samples) required to be at a leaf node. Samples have<br>
+equal weight when sample_weight is not provided.</span></a></td>
+<td class="value">0.0</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=max_features,-int%2C%20float%20or%20%7B%22sqrt%22%2C%20%22log2%22%7D%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">max_features <span class="param-doc-description">max_features: int, float or {"sqrt", "log2"}, default=None<br>
+<br>
+The number of features to consider when looking for the best split:<br>
+<br>
+- If int, then consider `max_features` features at each split.<br>
+- If float, then `max_features` is a fraction and<br>
+`max(1, int(max_features * n_features_in_))` features are considered at<br>
+each split.<br>
+- If "sqrt", then `max_features=sqrt(n_features)`.<br>
+- If "log2", then `max_features=log2(n_features)`.<br>
+- If None, then `max_features=n_features`.<br>
+<br>
+.. note::<br>
+<br>
+The search for a split does not stop until at least one<br>
+valid partition of the node samples is found, even if it requires to<br>
+effectively inspect more than ``max_features`` features.</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="user-set even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=random_state,-int%2C%20RandomState%20instance%20or%20None%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">random_state <span class="param-doc-description">random_state: int, RandomState instance or None, default=None<br>
+<br>
+Controls the randomness of the estimator. The features are always<br>
+randomly permuted at each split, even if ``splitter`` is set to<br>
+``"best"``. When ``max_features &lt; n_features``, the algorithm will<br>
+select ``max_features`` at random at each split before finding the best<br>
+split among them. But the best found split may vary across different<br>
+runs, even if ``max_features=n_features``. That is the case, if the<br>
+improvement of the criterion is identical for several splits and one<br>
+split has to be selected at random. To obtain a deterministic behaviour<br>
+during fitting, ``random_state`` has to be fixed to an integer.<br>
+See :term:`Glossary <random_state>` for details.</random_state></span></a></td>
+<td class="value">42</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=max_leaf_nodes,-int%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">max_leaf_nodes <span class="param-doc-description">max_leaf_nodes: int, default=None<br>
+<br>
+Grow a tree with ``max_leaf_nodes`` in best-first fashion.<br>
+Best nodes are defined as relative reduction in impurity.<br>
+If None then unlimited number of leaf nodes.</span></a></td>
+<td class="value">None</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=min_impurity_decrease,-float%2C%20default%3D0.0" class="param-doc-link" rel="noreferrer" target="_blank">min_impurity_decrease <span class="param-doc-description">min_impurity_decrease: float, default=0.0<br>
+<br>
+A node will be split if this split induces a decrease of the impurity<br>
+greater than or equal to this value.<br>
+<br>
+The weighted impurity decrease equation is the following::<br>
+<br>
+N_t / N * (impurity - N_t_R / N_t * right_impurity<br>
+- N_t_L / N_t * left_impurity)<br>
+<br>
+where ``N`` is the total number of samples, ``N_t`` is the number of<br>
+samples at the current node, ``N_t_L`` is the number of samples in the<br>
+left child, and ``N_t_R`` is the number of samples in the right child.<br>
+<br>
+``N``, ``N_t``, ``N_t_R`` and ``N_t_L`` all refer to the weighted sum,<br>
+if ``sample_weight`` is passed.<br>
+<br>
+.. versionadded:: 0.19</span></a></td>
+<td class="value">0.0</td>
+</tr>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=class_weight,-dict%2C%20list%20of%20dict%20or%20%22balanced%22%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">class_weight <span class="param-doc-description">class_weight: dict, list of dict or "balanced", default=None<br>
+<br>
+Weights associated with classes in the form ``{class_label: weight}``.<br>
+If None, all classes are supposed to have weight one. For<br>
+multi-output problems, a list of dicts can be provided in the same<br>
+order as the columns of y.<br>
+<br>
+Note that for multioutput (including multilabel) weights should be<br>
+defined for each class of every column in its own dict. For example,<br>
+for four-class multilabel classification weights should be<br>
+[{0: 1, 1: 1}, {0: 1, 1: 5}, {0: 1, 1: 1}, {0: 1, 1: 1}] instead of<br>
+[{1:1}, {2:5}, {3:1}, {4:1}].<br>
+<br>
+The "balanced" mode uses the values of y to automatically adjust<br>
+weights inversely proportional to class frequencies in the input data<br>
+as ``n_samples / (n_classes * np.bincount(y))``<br>
+<br>
+For multi-output, the weights of each column of y will be multiplied.<br>
+<br>
+Note that these weights will be multiplied with sample_weight (passed<br>
+through the fit method) if sample_weight is specified.</span></a></td>
+<td class="value">'balanced'</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=ccp_alpha,-non-negative%20float%2C%20default%3D0.0" class="param-doc-link" rel="noreferrer" target="_blank">ccp_alpha <span class="param-doc-description">ccp_alpha: non-negative float, default=0.0<br>
+<br>
+Complexity parameter used for Minimal Cost-Complexity Pruning. The<br>
+subtree with the largest cost complexity that is smaller than<br>
+``ccp_alpha`` will be chosen. By default, no pruning is performed. See<br>
+:ref:`minimal_cost_complexity_pruning` for details. See<br>
+:ref:`sphx_glr_auto_examples_tree_plot_cost_complexity_pruning.py`<br>
+for an example of such pruning.<br>
+<br>
+.. versionadded:: 0.22</span></a></td>
+<td class="value">0.0</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.tree.DecisionTreeClassifier.html#:~:text=monotonic_cst,-array-like%20of%20int%20of%20shape%20%28n_features%29%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">monotonic_cst <span class="param-doc-description">monotonic_cst: array-like of int of shape (n_features), default=None<br>
+<br>
+Indicates the monotonicity constraint to enforce on each feature.<br>
+- 1: monotonic increase<br>
+- 0: no constraint<br>
+- -1: monotonic decrease<br>
+<br>
+If monotonic_cst is None, no constraints are applied.<br>
+<br>
+Monotonicity constraints are not supported for:<br>
+- multiclass classifications (i.e. when `n_classes &gt; 2`),<br>
+- multioutput classifications (i.e. when `n_outputs_ &gt; 1`),<br>
+- classifications trained on data with missing values.<br>
+<br>
+The constraints hold over the probability of the positive class.<br>
+<br>
+Read more in the :ref:`User Guide <monotonic_cst_gbdt>`.<br>
+<br>
+.. versionadded:: 1.4</monotonic_cst_gbdt></span></a></td>
+<td class="value">None</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div></div></div></div></div><script>function copyToClipboard(text, element) {
+    // Get the parameter prefix from the closest toggleable content
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
+
+    const originalStyle = element.style;
+    const computedStyle = window.getComputedStyle(element);
+    const originalWidth = computedStyle.width;
+    const originalHTML = element.innerHTML.replace('Copied!', '');
+
+    navigator.clipboard.writeText(fullParamName)
+        .then(() => {
+            element.style.width = originalWidth;
+            element.style.color = 'green';
+            element.innerHTML = "Copied!";
+
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'red';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        });
+    return false;
+}
+
+document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const paramName = element.parentElement.nextElementSibling
+        .textContent.trim().split(' ')[0];
+    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
+
+    element.setAttribute('title', fullParamName);
+});
+
+
+/**
+ * Adapted from Skrub
+ * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
+ * @returns "light" or "dark"
+ */
+function detectTheme(element) {
+    const body = document.querySelector('body');
+
+    // Check VSCode theme
+    const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
+    const themeNameAttr = body.getAttribute('data-vscode-theme-name');
+
+    if (themeKindAttr && themeNameAttr) {
+        const themeKind = themeKindAttr.toLowerCase();
+        const themeName = themeNameAttr.toLowerCase();
+
+        if (themeKind.includes("dark") || themeName.includes("dark")) {
+            return "dark";
+        }
+        if (themeKind.includes("light") || themeName.includes("light")) {
+            return "light";
+        }
+    }
+
+    // Check Jupyter theme
+    if (body.getAttribute('data-jp-theme-light') === 'false') {
+        return 'dark';
+    } else if (body.getAttribute('data-jp-theme-light') === 'true') {
+        return 'light';
+    }
+
+    // Guess based on a parent element's color
+    const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
+    const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
+    if (match) {
+        const [r, g, b] = [
+            parseFloat(match[1]),
+            parseFloat(match[2]),
+            parseFloat(match[3])
+        ];
+
+        // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
+        const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+
+        if (luma > 180) {
+            // If the text is very bright we have a dark theme
+            return 'dark';
+        }
+        if (luma < 75) {
+            // If the text is very dark we have a light theme
+            return 'light';
+        }
+        // Otherwise fall back to the next heuristic.
+    }
+
+    // Fallback to system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+
+function forceTheme(elementId) {
+    const estimatorElement = document.querySelector(`#${elementId}`);
+    if (estimatorElement === null) {
+        console.error(`Element with id ${elementId} not found.`);
+    } else {
+        const theme = detectTheme(estimatorElement);
+        estimatorElement.classList.add(theme);
+    }
+}
+
+forceTheme('sk-container-id-1');</script>
+</div>
+</div>
+</section>
+
+<section id="actual-departure-and-arrival-times-keep-or-drop" class="title-slide slide level1 center">
+<h1>7. Actual departure and arrival times: keep or drop?</h1>
+<p>Prediction time matters:</p>
+<ul>
+<li><em>Ticket sale</em>: route, carrier, scheduled times, and planned distance/duration.</li>
+<li><em>Morning of travel</em>: forecasts and known schedule pressure.</li>
+<li><em>Gate before departure</em>: current weather and operational status that is already known.</li>
+<li><em>After departure</em>: actual departure time and departure delay may be inferred.</li>
+<li><em>After landing</em>: actual arrival time and arrival delay are known.</li>
+</ul>
+<div id="2e1613f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:04.539782Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:04.539592Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:07.665080Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:07.664112Z&quot;}}" data-outputid="f221860c-dfee-4159-852a-22b67ea3376f" data-execution_count="14">
+<div class="cell-output cell-output-display">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">experiment</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_mean</th>
+<th data-quarto-table-cell-role="th">f1_mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Raw data - no feature engineering</td>
+<td>0.757657</td>
+<td>0.702503</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Feature engineering</td>
+<td>0.790393</td>
+<td>0.745900</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Leaky feature engineering</td>
+<td>1.000000</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="automated-feature-selection" class="title-slide slide level1 center">
+<h1>8. Automated feature selection</h1>
+
+<img data-src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Filter_Methode.png?utm_source=en.wikipedia.org&amp;utm_campaign=imageinfo&amp;utm_content=thumbnail_unscaled" class="r-stretch quarto-figure-center"><p class="caption">Filter Methods</p><p><strong>Filter methods</strong> rank features using a statistical criterion independent of the final model.</p>
+<ul>
+<li>Filter methods are usually faster. <em>Why?</em></li>
+<li>We use mutual information with <code>SelectKBest</code>.</li>
+</ul>
+</section>
+
+<section id="automated-feature-selection-1" class="title-slide slide level1 center">
+<h1>8. Automated feature selection</h1>
+
+<img data-src="https://upload.wikimedia.org/wikipedia/commons/0/04/Feature_selection_Wrapper_Method.png?utm_source=en.wikipedia.org&amp;utm_campaign=imageinfo&amp;utm_content=thumbnail_unscaled" class="r-stretch quarto-figure-center"><p class="caption">Wrapper Methods</p><p><strong>Wrapper methods</strong> search for a subset by repeatedly fitting a model.</p>
+<ul>
+<li>Wrapper methods can capture model-specific usefulness, but they are more computationally expensive. <em>Why?</em></li>
+<li>Here we use <code>SequentialFeatureSelector</code> and <code>RFE</code>.</li>
+</ul>
+</section>
+
+<section id="filter-selectkbest" class="title-slide slide level1 center">
+<h1>Filter: <code>SelectKBest</code></h1>
+<p><code>SelectKBest</code> sorts features by the score returned by <code>score_func</code> and keeps the top <code>k</code>.</p>
+<ul>
+<li>Each feature is scored one at a time. I.e., it can miss features that are useful only together, and it may keep redundant features. <em>Why</em>?</li>
+<li>With <code>mutual_info_classif</code>, select the features with the highest estimated Mutual Information with the class label.
+<ul>
+<li>MI is non-negative: 0 means the feature and target are almost independent; a larger score means the feature reduces uncertainty about the label.</li>
+</ul></li>
+<li>This does <strong>not</strong> mean the selected features are causal.</li>
+<li>It only means they had the largest training-fold association with <code>y</code> according to the mutual-information estimator.</li>
+</ul>
+<p>We still need to choose <code>k</code>. <strong>Elbow method</strong>: evaluate several values of <code>k</code> and choose the point after which extra features give diminishing returns.</p>
+<div id="a391528c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:07.667432Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:07.667235Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:18.829831Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:18.828977Z&quot;}}" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">k</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_mean</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_std</th>
+<th data-quarto-table-cell-role="th">elbow_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>5</td>
+<td>0.728</td>
+<td>0.033</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>8</td>
+<td>0.754</td>
+<td>0.031</td>
+<td>0.230</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>12</td>
+<td>0.767</td>
+<td>0.013</td>
+<td>0.303</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>16</td>
+<td>0.778</td>
+<td>0.025</td>
+<td>0.339</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>20</td>
+<td>0.782</td>
+<td>0.019</td>
+<td>0.304</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>24</td>
+<td>0.781</td>
+<td>0.018</td>
+<td>0.221</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>28</td>
+<td>0.782</td>
+<td>0.020</td>
+<td>0.146</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>32</td>
+<td>0.786</td>
+<td>0.020</td>
+<td>0.110</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>36</td>
+<td>0.790</td>
+<td>0.021</td>
+<td>0.081</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>40</td>
+<td>0.790</td>
+<td>0.021</td>
+<td>0.000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="NuaGvoQqrwWY" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:18.831908Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:18.831668Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:18.835005Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:18.834101Z&quot;}}" data-execution_count="16">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># Score each preprocessed feature by estimated mutual information with y.</span></span>
+<span id="cb10-2"><a href="" aria-label="2"></a><span class="co"># Keep the fixed teaching choice of k highest-scoring features inside each training fold.</span></span>
+<span id="cb10-3"><a href="" aria-label="3"></a>filter_selector <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>mutual_info_reproducible, k<span class="op">=</span>n_features_to_select)</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="wrapper-sequentialfeatureselector" class="title-slide slide level1 center">
+<h1>Wrapper: <code>SequentialFeatureSelector</code></h1>
+<p>Forward-SFS is a greedy procedure that iteratively finds the best new feature to add to the set of selected features.</p>
+<ul>
+<li>Start with zero features and find the one feature that maximizes a cross-validated score when an estimator is trained on this single feature.</li>
+<li>Once that first feature is selected, repeat the procedure by adding a new feature to the set of selected features.</li>
+<li>Stop when the desired number of selected features is reached.</li>
+</ul>
+<p>Backward-SFS follows the same idea but works in the opposite direction.</p>
+<ul>
+<li>It starts with all features and removes one feature at a time. -In sklearn this is obtained with <code>SequentialFeatureSelector(direction="backward")</code>.</li>
+</ul>
+<div id="2b471f3e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:18.836833Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:18.836639Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:18.840083Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:18.839199Z&quot;}}" data-execution_count="17">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>sfs_selector <span class="op">=</span> SequentialFeatureSelector(estimator<span class="op">=</span>make_tree(), n_features_to_select<span class="op">=</span>n_features_to_select, direction<span class="op">=</span><span class="st">"forward"</span>, scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>, cv<span class="op">=</span><span class="dv">3</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="wrapper-rfe" class="title-slide slide level1 center">
+<h1>Wrapper: <code>RFE</code></h1>
+<p>Given an external estimator that assigns weights to features (e.g., the coefficients of a linear model), recursive feature elimination (RFE) selects features by recursively considering smaller and smaller sets of features.</p>
+<ul>
+<li>First, the estimator is trained on the initial set of features and the importance of each feature is obtained either through any specific attribute (such as coef_, feature_importances_).</li>
+<li>Then, the least important features are pruned from the current set of features.</li>
+<li>That procedure is recursively repeated on the pruned set until the desired number of features to select is eventually reached.</li>
+</ul>
+<div id="93b0ce4c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:18.841845Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:18.841654Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:18.844797Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:18.843961Z&quot;}}" data-execution_count="18">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>rfe_selector <span class="op">=</span> RFE(estimator<span class="op">=</span>make_tree(), n_features_to_select<span class="op">=</span>n_features_to_select, step<span class="op">=</span><span class="fl">0.2</span>)</span></code></pre></div>
+</details>
+</div>
+<p><code>RFE</code> vs backward <code>SequentialFeatureSelector</code>: both methods remove features until the desired subset size is reached.</p>
+<ul>
+<li><strong>RFE</strong> fits the estimator and removes the least important features according to the estimator’s internal importance signal. With logistic regression, this usually means small coefficient magnitudes; with trees, it may mean feature importances.
+<ul>
+<li>asks <em>which feature does the fitted model currently consider weakest?</em></li>
+</ul></li>
+<li><strong>Backward <code>SequentialFeatureSelector</code></strong> tries candidate removals and evaluates the resulting model with a scoring metric, here balanced accuracy. At each step, it removes the feature whose removal gives the best cross-validated score, or hurts the score least.
+<ul>
+<li>asks <em>which feature can I remove while preserving validation performance?</em></li>
+</ul></li>
+<li>RFE is usually faster; backward SFS is usually more expensive but more directly tied to the chosen evaluation metric.</li>
+</ul>
+</section>
+
+<section id="compare-raw-engineered-and-selected-feature-sets" class="title-slide slide level1 center">
+<h1>9. Compare raw, engineered, and selected feature sets</h1>
+<div id="A1xoT8hfrwWa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:18.846712Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:18.846536Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:38.946853Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:38.945963Z&quot;}}" data-outputid="39211e1f-175a-4dde-f984-d0e94d3cd594" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">experiment</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_mean</th>
+<th data-quarto-table-cell-role="th">balanced_accuracy_std</th>
+<th data-quarto-table-cell-role="th">f1_mean</th>
+<th data-quarto-table-cell-role="th">f1_std</th>
+<th data-quarto-table-cell-role="th">selection_stability_jaccard</th>
+<th data-quarto-table-cell-role="th">features_mean</th>
+<th data-quarto-table-cell-role="th">features_std</th>
+<th data-quarto-table-cell-role="th">fit_time_total_sec</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>fe + wrapper (SFS)</td>
+<td>0.790669</td>
+<td>0.020160</td>
+<td>0.746013</td>
+<td>0.024517</td>
+<td>0.423168</td>
+<td>10.0</td>
+<td>0.0</td>
+<td>18.189646</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>fe</td>
+<td>0.790393</td>
+<td>0.020539</td>
+<td>0.745900</td>
+<td>0.024867</td>
+<td>NaN</td>
+<td>34.0</td>
+<td>0.0</td>
+<td>0.203445</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>fe + wrapper (RFE)</td>
+<td>0.790139</td>
+<td>0.019587</td>
+<td>0.745617</td>
+<td>0.023693</td>
+<td>0.760606</td>
+<td>10.0</td>
+<td>0.0</td>
+<td>0.403366</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>fe + filter (SelectKBest)</td>
+<td>0.763695</td>
+<td>0.014702</td>
+<td>0.716002</td>
+<td>0.016303</td>
+<td>0.455311</td>
+<td>10.0</td>
+<td>0.0</td>
+<td>1.116445</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>raw</td>
+<td>0.757657</td>
+<td>0.021914</td>
+<td>0.702503</td>
+<td>0.027969</td>
+<td>NaN</td>
+<td>24.0</td>
+<td>0.0</td>
+<td>0.159717</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="selection-stability-across-folds" class="title-slide slide level1 center">
+<h1>10. Selection stability across folds</h1>
+<p>A selector is more trustworthy when it keeps similar features across folds.</p>
+<ul>
+<li>Instability does not always mean the selector is wrong: correlated features may be interchangeable.</li>
+<li>But instability should make us cautious when interpreting selected variables as domain truth.</li>
+</ul>
+<p>Stability is an interpretation check: selected features that change across folds should be discussed cautiously.</p>
+<div id="Pyu6mZoGrwWa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:38.949292Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:38.949009Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:38.963631Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:38.962533Z&quot;}}" data-outputid="265ddcb3-bde4-41e9-f43c-77974e2ee267" data-execution_count="20">
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">experiment</th>
+<th data-quarto-table-cell-role="th">mean_jaccard_similarity</th>
+<th data-quarto-table-cell-role="th">example_selected_features</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>fe + wrapper (RFE)</td>
+<td>0.760606</td>
+<td>[airport_SFO, departure_hour, distance_km, is_...</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>fe + filter (SelectKBest)</td>
+<td>0.455311</td>
+<td>[airport_LAX, airport_SFO, carrier_AA, destina...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>fe + wrapper (SFS)</td>
+<td>0.423168</td>
+<td>[airport_ATL, airport_JFK, airport_SFO, carrie...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="performance-versus-number-of-features" class="title-slide slide level1 center">
+<h1>11. Performance versus number of features</h1>
+<p>A useful visualization is a performance-versus-number-of-features curve.</p>
+<ul>
+<li>We already used this curve to select <code>k</code> with the elbow method.</li>
+<li>A good choice is not necessarily the highest possible balanced accuracy: we may prefer a smaller model when the performance loss is negligible.</li>
+<li>The vertical line marks the selected elbow value.</li>
+</ul>
+
+<img data-src="lab-02-feature_files/figure-revealjs/cell-22-output-1.png" class="r-stretch"></section>
+
+<section id="interpretability-check" class="title-slide slide level1 center">
+<h1>12. Interpretability check</h1>
+<div id="15_19AAMrwWb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:39.100006Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:39.099784Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:45.281217Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:45.280281Z&quot;}}" data-outputid="88a879af-205a-4134-96fc-0326f3593c09" data-execution_count="22">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>chosen_pipeline <span class="op">=</span> make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>, selector<span class="op">=</span>sfs_selector)</span>
+<span id="cb13-2"><a href="" aria-label="2"></a>chosen_pipeline.fit(X, y)</span>
+<span id="cb13-3"><a href="" aria-label="3"></a>selected_feature_names_for_tree <span class="op">=</span> selected_feature_names_ordered(chosen_pipeline)</span>
+<span id="cb13-4"><a href="" aria-label="4"></a>tree <span class="op">=</span> chosen_pipeline.named_steps[<span class="st">"classifier"</span>]</span>
+<span id="cb13-5"><a href="" aria-label="5"></a>pd.DataFrame({<span class="st">"selected_feature"</span>: selected_feature_names_for_tree})</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">selected_feature</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>weather_rain1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>scheduled_duration_min</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>departure_hour</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>month</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>is_weekend</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>is_holiday</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>airport_ATL</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>airport_BOS</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>airport_SFO</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>origin_SFO</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="plotting-the-tree" class="title-slide slide level1 center">
+<h1>Plotting the tree</h1>
+
+<img data-src="lab-02-feature_files/figure-revealjs/cell-24-output-1.png" class="r-stretch"></section>
+
+<section id="checking-tree-feature-importance" class="title-slide slide level1 center">
+<h1>Checking tree feature importance</h1>
+<div id="3064a126" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:46.338716Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:46.338515Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:46.346772Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:46.345826Z&quot;}}" data-outputid="8f40c776-998c-4e7c-ce63-22b1e908ded6" data-execution_count="24">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>pd.DataFrame({</span>
+<span id="cb14-2"><a href="" aria-label="2"></a>    <span class="st">"feature"</span>: selected_feature_names_for_tree,</span>
+<span id="cb14-3"><a href="" aria-label="3"></a>    <span class="st">"importance"</span>: tree.feature_importances_,</span>
+<span id="cb14-4"><a href="" aria-label="4"></a>}).sort_values(<span class="st">"importance"</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">feature</th>
+<th data-quarto-table-cell-role="th">importance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>weather_rain1</td>
+<td>0.349957</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>airport_SFO</td>
+<td>0.259653</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>scheduled_duration_min</td>
+<td>0.184063</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>departure_hour</td>
+<td>0.107511</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>is_holiday</td>
+<td>0.093707</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>month</td>
+<td>0.004678</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>is_weekend</td>
+<td>0.000431</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>airport_ATL</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>airport_BOS</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>origin_SFO</td>
+<td>0.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="permutation-importance" class="title-slide slide level1 center">
+<h1>13. Permutation importance</h1>
+<div id="eE84MYZmrwWd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:06:46.348609Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:06:46.348428Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:06:46.491445Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:06:46.490345Z&quot;}}" data-outputid="d6351adb-9d2f-4495-9858-42561252d048" data-execution_count="25">
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">tree_feature</th>
+<th data-quarto-table-cell-role="th">importance_mean</th>
+<th data-quarto-table-cell-role="th">importance_std</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>airport_SFO</td>
+<td>0.140687</td>
+<td>0.004698</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>weather_rain1</td>
+<td>0.104646</td>
+<td>0.003097</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>scheduled_duration_min</td>
+<td>0.071498</td>
+<td>0.003194</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>is_holiday</td>
+<td>0.042902</td>
+<td>0.002224</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>departure_hour</td>
+<td>0.033005</td>
+<td>0.002502</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>is_weekend</td>
+<td>0.000899</td>
+<td>0.000292</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>month</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">6</th>
+<td>airport_ATL</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>airport_BOS</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>origin_SFO</td>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="student-challenge" class="title-slide slide level1 center">
+<h1>14. Student challenge</h1>
+<p>Run feature engineering and selection on the California housing dataset from Kaggle.</p>
+<ul>
+<li>Which features are most predictive of median house value? Compare filter and wrapper methods, and evaluate predictive performance, stability, and computational cost.</li>
+</ul>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="lab-02-feature_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="lab-02-feature_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lab-02-feature_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lab-02-feature_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lab-02-feature_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lab-02-feature_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="lab-02-feature_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="lab-02-feature_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lab-02-feature_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lab-02-feature_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="lab-02-feature_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': true,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
