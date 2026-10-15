@@ -1,0 +1,519 @@
+---
+title: "Explainable AI for Data-Centric AI"
+execute:
+  enabled: true
+---
+
+```{python}
+#| label: xai-setup
+#| echo: false
+#| output: false
+from itertools import combinations, permutations
+from math import comb, factorial
+
+# Toy value function for a flight: W = bad weather, L = late departure, H = holiday.
+# v(S) is the expected model output when the features in S are known.
+V = {
+    frozenset(): 0.30,
+    frozenset("W"): 0.50,
+    frozenset("L"): 0.40,
+    frozenset("H"): 0.34,
+    frozenset("WL"): 0.70,
+    frozenset("WH"): 0.56,
+    frozenset("LH"): 0.46,
+    frozenset("WLH"): 0.76,
+}
+PLAYERS = ["W", "L", "H"]
+
+
+def shapley_by_subsets(player, players, v):
+    others = [p for p in players if p != player]
+    m = len(players)
+    total = 0.0
+    for k in range(len(others) + 1):
+        for subset in combinations(others, k):
+            s = frozenset(subset)
+            weight = factorial(k) * factorial(m - k - 1) / factorial(m)
+            total += weight * (v[s | {player}] - v[s])
+    return total
+
+
+def shapley_by_orders(player, players, v):
+    orders = list(permutations(players))
+    total = 0.0
+    for order in orders:
+        before = frozenset(order[: order.index(player)])
+        total += v[before | {player}] - v[before]
+    return total / len(orders)
+```
+
+# Why explain a model?
+
+A model that is accurate on a test set can still be **right for the wrong reasons**.
+
+- *Debugging*: is the model using leaked, spurious, or proxy information?
+- *Trust and adoption*: can a domain expert check the reasoning?
+- *Accountability*: can an affected person understand and contest a decision?
+- *Science*: what has the model learned about the data-generating process?
+
+::: {.fragment}
+In data-centric AI the most useful question is often not "why did the model predict this?" but **"what in the data made the model behave this way, and what should we fix?"**
+:::
+
+# Interpretability and explainability
+
+The terms are used loosely; a workable distinction [@doshivelez2017towards; @lipton2018mythos]:
+
+| Term | Meaning |
+|---|---|
+| Interpretability | A human can understand how the model maps inputs to outputs (by design) |
+| Explainability | We produce an *explanation* of a (possibly opaque) model after training |
+| Explanation | An answer to a *why*-question, for a given audience and purpose |
+
+Explanations are social: people prefer **contrastive** ("why P rather than Q?"), **selective** (few causes), and **plausible** answers [@miller2019explanation].
+
+::: {.fragment}
+There is no explanation "in general": always ask *who* needs it and *for what decision*.
+:::
+
+# Regulation asks for explanations
+
+- **GDPR** (art. 13-15, 22, recital 71): information about the "logic involved" in automated decisions. Whether this amounts to a *right to explanation* is debated [@goodman2017european; @wachter2017right].
+- **EU AI Act** [@euaiact2024]:
+  - art. 13: high-risk systems must be transparent enough for deployers to interpret their output;
+  - art. 86: a person affected by a decision based on a high-risk system has a *right to an explanation* of the role of the system in the decision.
+
+::: {.fragment}
+Legal duties are about *understandable, actionable* information, not about a specific algorithm such as SHAP.
+:::
+
+# A taxonomy of explanation methods
+
+| Axis | Options |
+|---|---|
+| When | **intrinsic** (interpretable by design) vs **post-hoc** (explain a trained model) |
+| Scope | **global** (the whole model) vs **local** (one prediction) |
+| Access | **model-specific** (uses internals) vs **model-agnostic** (only `predict`) |
+| Output | feature attributions, rules, examples, counterfactuals, training-data attributions |
+
+The rest of the lecture follows this map, from interpretable models to Shapley values, and then from *features* to *data*.
+
+# Interpretable models
+
+Some models are explanations of themselves [@molnar2022interpretable]:
+
+- **Linear / logistic regression**: $f(x) = \beta_0 + \sum_j \beta_j x_j$; coefficients are effects *holding other features fixed* (scale-dependent, distorted by correlation).
+- **Decision trees and rule lists**: a prediction is a readable path of conditions (only if shallow).
+- **Generalized additive models (GAMs)**: $g(E[y]) = \beta_0 + \sum_j s_j(x_j)$, with shape functions $s_j$ that can be plotted [@lou2012intelligible]; Explainable Boosting Machines learn them with boosting [@nori2019interpretml].
+
+::: {.fragment}
+For high-stakes decisions, @rudin2019stop argues we should **prefer interpretable models** over explaining black boxes, because post-hoc explanations can be unfaithful. On tabular data, the accuracy gap is often small.
+:::
+
+# Global post-hoc: permutation importance
+
+Shuffle feature $j$ in the evaluation data, breaking its link with the target, and measure the performance drop [@breiman2001random; @fisher2019all]:
+
+$$
+PI_j = \text{score}(f, X, y) - \frac{1}{R}\sum_{r=1}^{R} \text{score}(f, X^{(\pi_r, j)}, y)
+$$
+
+- Model-agnostic, cheap, measured in units of the metric.
+- Computed on **held-out** data it measures what the model needs to *generalize*; on training data it can reward overfitting.
+- With **correlated** features, shuffling creates unrealistic rows, and importance is split or hidden between correlated features.
+
+# Global post-hoc: partial dependence, ICE, ALE
+
+**Partial dependence (PDP)** shows the average prediction as a function of one feature [@friedman2001greedy]:
+
+$$
+PD_j(z) = \frac{1}{n}\sum_{i=1}^{n} f(z, x_{i,-j})
+$$
+
+- **ICE** curves plot one line per instance instead of the average, revealing heterogeneous effects and interactions [@goldstein2015peeking].
+- **ALE** plots average *local* changes within intervals of $x_j$, avoiding unrealistic combinations when features are correlated [@apley2020visualizing].
+
+::: {.fragment}
+A flat PDP does not imply "no effect": opposite effects in subgroups can cancel out. Always look at ICE curves too.
+:::
+
+# Local post-hoc: LIME
+
+LIME explains one prediction with a simple surrogate $g$ (e.g., sparse linear) fitted on perturbed samples around $x$ [@ribeiro2016should]:
+
+$$
+\xi(x) = \mathop{\arg\min}\limits_{g \in G} \; \mathcal{L}(f, g, \pi_x) + \Omega(g)
+$$
+
+- $\pi_x$ weights samples by proximity to $x$; $\Omega(g)$ penalizes complexity (number of features).
+- Intuitive and model-agnostic, but the result depends on the perturbation distribution, kernel width, and random seed.
+
+::: {.fragment}
+The famous *husky vs wolf* example: the classifier relied on **snow in the background**, a property of the *data collection*, not of the animals [@ribeiro2016should].
+:::
+
+# From surrogates to a principled attribution
+
+We want to split a prediction among features:
+
+$$
+f(x) = \phi_0 + \sum_{j=1}^{M} \phi_j
+$$
+
+Which split is "fair"? Cooperative game theory answered this question in 1953 [@shapley1953value]:
+
+- **players** cooperate in a coalition and produce a payout;
+- the **Shapley value** divides the payout according to each player's average marginal contribution.
+
+::: {.fragment}
+SHAP maps **features to players** and **the prediction to the payout** [@lundberg2017unified].
+:::
+
+# Cooperative games
+
+A cooperative game is a set of players $N = \{1, \dots, M\}$ and a **value function** $v: 2^N \rightarrow \mathbb{R}$ with $v(\varnothing) = 0$ or a baseline.
+
+- $v(S)$ is the payout that coalition $S$ obtains on its own.
+- The **marginal contribution** of player $j$ to coalition $S$ (with $j \notin S$) is $v(S \cup \{j\}) - v(S)$.
+
+The marginal contribution depends on who is already in the coalition: two features may be useful only *together* (interaction), or *redundant* (each useful alone, not both).
+
+# The Shapley value
+
+The Shapley value of player $j$ averages its marginal contribution over all coalitions of the other players:
+
+$$
+\phi_j(v) = \sum_{S \subseteq N \setminus \{j\}} \frac{|S|!\,(M-|S|-1)!}{M!} \big[v(S \cup \{j\}) - v(S)\big]
+$$
+
+Equivalent **permutation** view: order the players at random, add them one by one, and record what $j$ adds when it joins:
+
+$$
+\phi_j(v) = \frac{1}{M!} \sum_{\sigma \in \Pi(N)} \big[v(\text{Pre}_j(\sigma) \cup \{j\}) - v(\text{Pre}_j(\sigma))\big]
+$$
+
+The weight $\frac{|S|!(M-|S|-1)!}{M!}$ is exactly the fraction of orderings in which the players before $j$ are $S$.
+
+# The Shapley axioms
+
+The Shapley value is the **unique** attribution satisfying [@shapley1953value]:
+
+| Axiom | Meaning for features |
+|---|---|
+| Efficiency | $\sum_j \phi_j = v(N) - v(\varnothing)$: contributions add up to prediction minus baseline |
+| Symmetry | two features that contribute equally to every coalition get the same value |
+| Dummy (null player) | a feature that never changes $v$ gets $\phi_j = 0$ |
+| Additivity | for $v = v_1 + v_2$ (e.g., an ensemble), $\phi_j(v) = \phi_j(v_1) + \phi_j(v_2)$ |
+
+::: {.fragment}
+Uniqueness is the key argument for Shapley-based attributions: if you accept the axioms, there is no other choice.
+:::
+
+# Worked example: three features
+
+A flight with bad weather (W), late departure (L), and a holiday (H). Baseline $v(\varnothing) = 0.30$, prediction $v(\{W,L,H\}) = 0.76$:
+
+```{python}
+#| echo: false
+#| output: asis
+rows = ["| Coalition $S$ | $v(S)$ |", "|---|---:|"]
+for k in range(4):
+    for subset in combinations(PLAYERS, k):
+        name = "{" + ", ".join(subset) + "}" if subset else "$\\varnothing$"
+        rows.append(f"| {name} | {V[frozenset(subset)]:.2f} |")
+print("\n".join(rows))
+```
+
+# Worked example: the Shapley values
+
+Each feature joins in $3! = 6$ orders; we average its marginal contributions:
+
+```{python}
+#| echo: false
+#| output: asis
+rows = ["| Feature | $\\phi_j$ (subset formula) | $\\phi_j$ (average over orders) |", "|---|---:|---:|"]
+total = 0.0
+for p in PLAYERS:
+    a, b = shapley_by_subsets(p, PLAYERS, V), shapley_by_orders(p, PLAYERS, V)
+    total += a
+    rows.append(f"| {p} | {a:.3f} | {b:.3f} |")
+rows.append(f"| **sum** | **{total:.3f}** | $= v(N) - v(\\varnothing) = {V[frozenset('WLH')] - V[frozenset()]:.2f}$ |")
+print("\n".join(rows))
+```
+
+Efficiency holds: $0.30 + \sum_j \phi_j = 0.76$. Weather gets the largest share, partly because it **interacts** with late departure ($v(W,L) - v(L) > v(W) - v(\varnothing)$).
+
+# From games to models: what is $v(S)$?
+
+For a model $f$ and an instance $x$, SHAP defines the value of a set of "known" features $S$ as the expected prediction when the other features are unknown [@lundberg2017unified]:
+
+$$
+v_x(S) = E\big[f(X) \mid X_S = x_S\big] \quad \text{(observational / conditional)}
+$$
+
+$$
+v_x(S) = E_{X_{\bar S}}\big[f(x_S, X_{\bar S})\big] \quad \text{(interventional / marginal)}
+$$
+
+- $v_x(\varnothing) = E[f(X)]$ is the **baseline**, computed over a **background** (reference) dataset.
+- $v_x(N) = f(x)$ is the prediction, so by efficiency $f(x) = E[f(X)] + \sum_j \phi_j$.
+
+::: {.fragment}
+"Unknown" never means "set to zero": unknown features are **averaged over the background data**.
+:::
+
+# Conditional or interventional?
+
+| | Interventional (marginal) | Observational (conditional) |
+|---|---|---|
+| Unknown features | sampled independently of $x_S$ | sampled consistently with $x_S$ |
+| Question answered | how does the **model** use each input? | how informative is each input **in the data**? |
+| Correlated features | may evaluate unrealistic rows | credit spreads to correlated features, even unused ones |
+| Default in `shap` | `TreeExplainer(data=...)`, `KernelExplainer` | `TreeExplainer` path-dependent (approximately) |
+
+The choice is "true to the model or true to the data" [@chen2020true]; @janzing2020feature argue the interventional version is the right one to describe the model's mechanism.
+
+# SHAP: additive feature attribution
+
+@lundberg2017unified define a class of explanations $g(z') = \phi_0 + \sum_j \phi_j z'_j$ with $z' \in \{0,1\}^M$ (feature present or absent), and show that only Shapley values satisfy:
+
+- **Local accuracy**: $f(x) = g(x') = \phi_0 + \sum_j \phi_j$;
+- **Missingness**: absent features get $\phi_j = 0$;
+- **Consistency**: if a model changes so that a feature's marginal contribution never decreases, its attribution does not decrease.
+
+LIME, DeepLIFT, and Layer-wise Relevance Propagation also fit this additive form, but they violate some of these properties.
+
+# Computing SHAP values: the cost problem
+
+Exact Shapley values need $v(S)$ for every subset: $2^M$ coalitions, each an expectation over the background data.
+
+| Features $M$ | Coalitions $2^M$ |
+|---:|---:|
+| 10 | 1,024 |
+| 20 | 1,048,576 |
+| 40 | $\approx 10^{12}$ |
+
+Three families of solutions:
+
+1. **Sampling**: estimate the permutation average with random orderings [@strumbelj2014explaining].
+2. **KernelSHAP**: solve a weighted regression that recovers Shapley values [@lundberg2017unified].
+3. **Model-specific exact algorithms**: TreeSHAP, LinearSHAP [@lundberg2020local].
+
+# Permutation sampling
+
+Monte Carlo estimate of the permutation formula [@strumbelj2014explaining]:
+
+1. Draw a random ordering $\sigma$ and a background row $z$.
+2. Build two hybrid rows: features before $j$ in $\sigma$ (and $j$ itself) from $x$, the rest from $z$, with and without $j$.
+3. Record the difference in predictions; average over $K$ samples.
+
+- Unbiased; error decreases as $1/\sqrt{K}$.
+- Each sample needs only two model calls: model-agnostic and parallel.
+- The `shap` `PermutationExplainer` walks each sampled ordering forward and backward, so the estimated values always add up exactly to $f(x) - E[f(X)]$.
+
+# KernelSHAP
+
+Sample coalitions $z' \in \{0,1\}^M$, evaluate $v_x(z')$ by replacing absent features with background values, and fit a weighted linear model:
+
+$$
+\min_{\phi} \sum_{z'} \pi_x(z') \Big[v_x(z') - \phi_0 - \sum_j \phi_j z'_j\Big]^2,
+\qquad
+\pi_x(z') = \frac{M-1}{\binom{M}{|z'|}\,|z'|\,(M-|z'|)}
+$$
+
+With this **Shapley kernel**, the regression solution equals the Shapley values [@lundberg2017unified]. Coalitions that are almost empty or almost full get the largest weight, because they isolate individual effects:
+
+```{python}
+#| echo: false
+#| output: asis
+M = 6
+rows = ["| $|z'|$ (features present, $M=6$) | 1 | 2 | 3 | 4 | 5 |", "|---|---:|---:|---:|---:|---:|"]
+weights = [(M - 1) / (comb(M, s) * s * (M - s)) for s in range(1, M)]
+rows.append("| kernel weight $\\pi$ | " + " | ".join(f"{w:.3f}" for w in weights) + " |")
+print("\n".join(rows))
+```
+
+# TreeSHAP and LinearSHAP
+
+**TreeSHAP** computes exact Shapley values for tree ensembles in polynomial time, $O(T L D^2)$ for $T$ trees with $L$ leaves and depth $D$, by pushing all subsets through the tree simultaneously [@lundberg2020local].
+
+- *path-dependent* mode uses the training counts stored in the tree nodes (no background data needed);
+- *interventional* mode uses an explicit background dataset.
+
+**LinearSHAP**: for $f(x) = \beta_0 + \sum_j \beta_j x_j$ with independent features,
+
+$$
+\phi_j = \beta_j \big(x_j - E[X_j]\big)
+$$
+
+Both keep the trained model **fixed**: SHAP never retrains a model per feature subset.
+
+# From local to global explanations
+
+SHAP gives a matrix $\Phi \in \mathbb{R}^{n \times M}$: one row per explained instance, one column per feature.
+
+| View | Computed as | Answers |
+|---|---|---|
+| Local (waterfall / force plot) | one row $\phi_{i\cdot}$ | why this prediction differs from the baseline |
+| Global importance | $I_j = \frac{1}{n}\sum_i \lvert\phi_{ij}\rvert$ | which features the model uses most |
+| Summary (beeswarm) | all $\phi_{ij}$ coloured by $x_{ij}$ | direction and spread of effects |
+| Dependence plot | $\phi_{ij}$ vs $x_{ij}$ | shape of the effect, interactions |
+| Interaction values | $\phi_{i,jk}$ | pairwise effects beyond the sum [@lundberg2020local] |
+
+Global SHAP importance is built **bottom-up** from consistent local explanations, unlike permutation importance, which measures loss of accuracy.
+
+# Pitfalls of feature attributions
+
+- **Not causal**: SHAP explains the *model*, not the world. A large $\phi_j$ does not mean that changing $x_j$ changes the outcome.
+- **Background matters**: a different reference population gives a different baseline and different values.
+- **Correlated features**: unrealistic hybrid rows (interventional) or credit given to unused features (conditional).
+- **Can be fooled**: a model can behave discriminatorily on real data while looking innocent to perturbation-based explainers [@slack2020fooling].
+- **Disagreement**: LIME, SHAP, and gradients often disagree on the top features of the same prediction [@krishna2022disagreement].
+- **Sanity checks**: an explanation that does not change when the model is randomized explains nothing about the model [@adebayo2018sanity].
+
+# Counterfactual explanations
+
+A counterfactual answers "what is the smallest change to $x$ that changes the decision?" [@wachter2017counterfactual]:
+
+$$
+x' = \mathop{\arg\min}\limits_{x'} \; \lambda \big(f(x') - y'\big)^2 + d(x, x')
+$$
+
+- Contrastive and actionable: "with 6 more hours of work per week, the prediction would be > 50K".
+- Must be **plausible** (close to the data manifold) and **actionable** (do not ask people to change age or sex).
+- Several *diverse* counterfactuals give a fuller picture [@mothilal2020explaining].
+
+::: {.fragment}
+Data-centric warning: a counterfactual that relies on a **proxy** (e.g., marital status for sex) reveals a data problem, not a useful recourse.
+:::
+
+# The data-centric turn
+
+So far: explain **predictions in terms of features**. Data-centric AI adds two questions:
+
+1. **Explanations as data-debugging tools**: what do attributions reveal about *leakage*, *shortcuts*, *proxies*, and *label errors*?
+2. **Explanations in terms of data**: which **training examples** are responsible for a prediction, and which examples help or hurt the model?
+
+::: {.fragment}
+The same Shapley machinery works for both: players can be **features** (SHAP) or **training points** (Data Shapley).
+:::
+
+# Debugging data with attributions: leakage
+
+**Leakage** is information in the training data that will not be available, or will not mean the same thing, at prediction time [@kaufman2012leakage].
+
+Typical symptoms in explanations:
+
+- one feature dominates global importance far more than domain knowledge suggests;
+- the feature is recorded *after* the outcome (e.g., "number of follow-up visits" when predicting readmission);
+- validation accuracy is suspiciously high and collapses after deployment.
+
+::: {.fragment}
+Fix the **data**, not the model: remove or re-time the feature, and rebuild the split so that information flows only from past to future.
+:::
+
+# Debugging data: shortcuts and spurious correlations
+
+**Shortcut learning**: the model solves the benchmark with a decision rule that does not transfer to the intended task [@geirhos2020shortcut].
+
+| Domain | Shortcut in the data |
+|---|---|
+| Image classification | background (snow, grass), watermarks |
+| Medical imaging | hospital-specific tokens or scanner artifacts |
+| Tabular data | data-entry codes, form versions, IDs correlated with the label |
+
+Attributions reveal shortcuts when an *irrelevant* feature receives large, consistent contributions. The fix is data-centric: collect counter-examples, rebalance, or remove the artifact.
+
+# Debugging data: proxies and label errors
+
+**Proxies**: removing a sensitive attribute is not enough if other features encode it (zip code, relationship status). Attributions and dependence plots show where the information flows (see the fairness lab).
+
+**Label errors**: real datasets contain mislabeled examples [@northcutt2021confident].
+
+- *Confident learning* compares out-of-sample predicted probabilities with the given labels and flags examples whose label is unlikely.
+- Local explanations help decide whether a disagreement is a **model error** (strange attributions) or a **label error** (sensible attributions, wrong label).
+
+# Explaining with examples
+
+Humans often explain with cases: "this loan resembles these approved ones".
+
+- **Prototypes and criticisms**: representative examples of the data, and examples poorly represented by the prototypes [@kim2016examples].
+- **Nearest neighbours** in the model's representation space.
+- **Counterfactual examples** (previous slides).
+
+Criticisms are a data-quality tool: they surface rare subgroups, outliers, and possibly mislabeled rows.
+
+# Training-data attribution
+
+Which training points are responsible for a prediction?
+
+- **Leave-one-out**: retrain without point $i$ and measure the change. Exact but expensive.
+- **Influence functions** approximate leave-one-out with a first-order expansion around the optimum [@koh2017understanding]:
+
+$$
+\mathcal{I}(z_i, z_{test}) = -\nabla_\theta L(z_{test}, \hat\theta)^\top H_{\hat\theta}^{-1} \nabla_\theta L(z_i, \hat\theta)
+$$
+
+- **TracIn** sums gradient dot-products over training checkpoints [@pruthi2020estimating].
+- **Datamodels** learn a (linear) map from training subsets to predictions [@ilyas2022datamodels].
+
+Uses: find mislabeled or harmful training examples, explain a prediction by its "supporting" data.
+
+# Data Shapley: valuing training data
+
+Treat **training points as players** and **model performance as the payout** [@ghorbani2019data]:
+
+$$
+\phi_i = \frac{1}{n} \sum_{S \subseteq D \setminus \{i\}} \binom{n-1}{|S|}^{-1} \big[U(S \cup \{i\}) - U(S)\big]
+$$
+
+where $U(S)$ is the validation performance of a model **trained on** $S$.
+
+| | SHAP | Data Shapley |
+|---|---|---|
+| Players | features of one instance | training examples |
+| Value function | expected prediction of a **fixed** model | performance of a model **retrained** on a subset |
+| Use | explain a prediction | find harmful data, prioritize cleaning and collection |
+
+# Computing data values
+
+Exact Data Shapley requires retraining on exponentially many subsets. Practical approaches:
+
+- **Truncated Monte Carlo**: sample permutations of the training set and stop when adding points no longer changes performance [@ghorbani2019data].
+- **KNN-Shapley**: for a $K$-nearest-neighbour utility, exact values follow from a recursion over training points sorted by distance, in $O(n \log n)$ per test point [@jia2019efficient].
+
+::: {.fragment}
+Low or negative values point to **noisy labels, outliers, or out-of-distribution data**. Removing the lowest-valued points should hurt performance less than removing random ones, or even improve it.
+:::
+
+# Documentation is explainability for data
+
+Explanations of a model are incomplete without explanations of its data:
+
+- **Datasheets for datasets**: motivation, composition, collection process, preprocessing, uses, distribution, maintenance [@gebru2021datasheets].
+- **Model cards**: intended use, evaluation data, metrics disaggregated by group, limitations [@mitchell2019model].
+
+These documents answer questions no attribution method can: *who* collected the data, *why*, and *what* it should not be used for.
+
+# A data-centric explainability workflow
+
+1. **Before training**: document the data (datasheet), check provenance and timing of every feature.
+2. **After training**: global attributions (permutation importance, SHAP) and ICE/ALE plots; compare with domain knowledge.
+3. **Suspicious feature?** Check for leakage, shortcuts, proxies; fix the data, retrain, and compare.
+4. **Suspicious examples?** Confident learning, data valuation, influence; relabel, remove, or collect more data.
+5. **Per decision**: local SHAP and counterfactuals for the affected person, avoiding proxy-based recourse.
+6. **Report**: model card with disaggregated metrics and the limitations of the explanations themselves.
+
+# Summary
+
+- Interpretable models first, post-hoc explanations when needed, and never one explanation for every audience.
+- Shapley values are the unique fair attribution under four axioms; SHAP applies them to features with a background-based value function.
+- Exact computation is exponential: sampling, KernelSHAP, and TreeSHAP make it practical.
+- Global SHAP importance is the average magnitude of local explanations.
+- Explanations explain models, not the world; check them against domain knowledge and sanity tests.
+- In data-centric AI, explanations are a **diagnostic for the data**: leakage, shortcuts, proxies, label errors, and data value.
+
+# References {.scrollable}
+
+::: {#refs}
+:::
