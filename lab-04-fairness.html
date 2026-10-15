@@ -510,7 +510,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h2>2. Setup</h2>
 <p>Run this cell in Colab or in a fresh environment. It installs only missing packages.</p>
 <p>Fairlearn provides the datasets and mitigation algorithms used in this lab, including <code>fetch_adult</code>, <code>fetch_diabetes_hospital</code>, <code>MetricFrame</code>, <code>ThresholdOptimizer</code>, and <code>ExponentiatedGradient</code>.</p>
-<div id="aa574d37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:55:40.610725Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:55:40.610592Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:55:42.221840Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:55:42.221078Z&quot;}}" data-execution_count="1">
+<div id="aa574d37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:18.826078Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:18.825929Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:20.087584Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:20.087011Z&quot;}}" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">import</span> importlib.util</span>
@@ -529,7 +529,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <pre><code>Ready</code></pre>
 </div>
 </div>
-<div id="f02d0fbd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:55:42.223498Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:55:42.223226Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:55:43.370370Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:55:43.369590Z&quot;}}" data-execution_count="2">
+<div id="f02d0fbd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:20.089009Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:20.088879Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:21.035882Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:21.035253Z&quot;}}" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="im">import</span> warnings</span>
@@ -569,7 +569,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="helper-functions" class="slide level2">
 <h2>Helper Functions</h2>
 <p>These functions keep the lab focused on interpretation rather than repeated plotting code.</p>
-<div id="cc380d44" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:55:43.372166Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:55:43.371904Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:55:43.377589Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:55:43.377022Z&quot;}}" data-execution_count="3">
+<div id="cc380d44" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:21.037379Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:21.037156Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:21.041982Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:21.041507Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="kw">def</span> clean_adult_missing_values(df):</span>
@@ -646,7 +646,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h2>3. Adult Income Dataset: Understand the Data First</h2>
 <p>The Adult dataset is a real census-derived tabular dataset commonly used for fairness tutorials. The prediction task is whether annual income exceeds 50K USD.</p>
 <p>Sensitive attributes often audited in this dataset include <code>sex</code> and <code>race</code>. We will begin with <code>sex</code>, then inspect intersectional groups.</p>
-<div id="20309655" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:55:43.379073Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:55:43.378938Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:57:57.319819Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:57:57.319030Z&quot;}}" data-execution_count="4">
+<div id="20309655" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:21.043006Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:21.042904Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:26.706251Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:26.705748Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>adult <span class="op">=</span> fetch_adult(as_frame<span class="op">=</span><span class="va">True</span>)</span>
@@ -798,7 +798,7 @@ Rows: 48842 Columns: 15</code></pre>
 </div>
 </div>
 </div>
-<div id="932798e4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:57:57.321301Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:57:57.321124Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:57:57.329557Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:57:57.328828Z&quot;}}" data-execution_count="5">
+<div id="932798e4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:26.707515Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:26.707387Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:26.713769Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:26.713285Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>adult_df.info()</span></code></pre></div>
@@ -837,7 +837,7 @@ memory usage: 3.0 MB</code></pre>
 <li>Which features might act as proxies for protected attributes?</li>
 <li>Is income above 50K a neutral construct, or does it already reflect historical labor-market inequality?</li>
 </ul>
-<div id="f69b0b5c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:57:57.331006Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:57:57.330852Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:57:57.336432Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:57:57.335828Z&quot;}}" data-execution_count="6">
+<div id="f69b0b5c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:26.714889Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:26.714770Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:26.718771Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:26.718302Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>missing <span class="op">=</span> adult_df.isna().mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
@@ -850,7 +850,7 @@ native-country    0.017546
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="79807f8e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:57:57.337876Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:57:57.337723Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:57:57.351392Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:57:57.350887Z&quot;}}" data-execution_count="7">
+<div id="79807f8e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:26.719858Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:26.719757Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:26.729457Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:26.729000Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>display(describe_by_group(adult_df, <span class="st">"sex"</span>, <span class="st">"income_gt_50k"</span>))</span>
@@ -973,7 +973,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="7de0bc5e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:57:57.353162Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:57:57.352999Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:57:57.545571Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:57:57.544834Z&quot;}}" data-execution_count="8">
+<div id="7de0bc5e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:26.730557Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:26.730446Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:26.862691Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:26.862088Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">4</span>))</span>
@@ -1009,7 +1009,7 @@ dtype: float64</code></pre>
 <p>The Adult task predicts observed income, but observed income is not a neutral measurement of skill or worth.</p>
 <p><img data-src="img/fairness/inequality.png" style="width:55.0%" alt="Inequality illustration showing unequal starting positions."></p>
 <p>Before changing the model, ask whether the target variable already contains the social inequality the model will learn to reproduce.</p>
-<div id="230eb891" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:57:57.547184Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:57:57.547018Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:57:57.889985Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:57:57.889313Z&quot;}}" data-execution_count="9">
+<div id="230eb891" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:26.863913Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:26.863806Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:27.096491Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:27.095979Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>sensitive_sex <span class="op">=</span> X_adult_raw[<span class="st">"sex"</span>]</span>
@@ -1042,7 +1042,7 @@ Balanced accuracy: 0.764
 ROC AUC: 0.905</code></pre>
 </div>
 </div>
-<div id="f76d3aa3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:57:57.891578Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:57:57.891427Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:57:58.331351Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:57:58.330664Z&quot;}}" data-execution_count="10">
+<div id="f76d3aa3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:27.097749Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:27.097596Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:27.434974Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:27.434188Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>mf_sex_base <span class="op">=</span> fairness_report(y_test, y_pred_base, sensitive_features<span class="op">=</span>sex_test)</span></code></pre></div>
@@ -1166,7 +1166,7 @@ ROC AUC: 0.905</code></pre>
 Equalized odds difference: 0.075</code></pre>
 </div>
 </div>
-<div id="3eb7fcd2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:57:58.332933Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:57:58.332767Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:57:58.454088Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:57:58.453413Z&quot;}}" data-execution_count="11">
+<div id="3eb7fcd2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:27.436187Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:27.436051Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:27.518948Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:27.518547Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>plot_group_metric(mf_sex_base, <span class="st">"selection_rate"</span>, <span class="st">"Baseline selection rate by sex"</span>)</span>
@@ -1201,7 +1201,7 @@ Equalized odds difference: 0.075</code></pre>
 <section id="intersectional-auditing" class="slide level2">
 <h2>5. Intersectional Auditing</h2>
 <p>Auditing only one sensitive attribute can hide smaller groups. Fairlearn allows sensitive features to be a DataFrame, so we can audit intersections such as sex by race.</p>
-<div id="28a0491d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:57:58.455792Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:57:58.455610Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:57:58.679943Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:57:58.679251Z&quot;}}" data-execution_count="12">
+<div id="28a0491d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:27.520494Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:27.520302Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:27.690828Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:27.690336Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>intersection_test <span class="op">=</span> pd.DataFrame({<span class="st">"sex"</span>: sex_test, <span class="st">"race"</span>: race_test})</span>
@@ -1347,7 +1347,7 @@ Equalized odds difference: 0.075</code></pre>
 <h2>6. Mitigation A: Postprocessing with ThresholdOptimizer</h2>
 <p><code>ThresholdOptimizer</code> changes decision thresholds by sensitive group after a model is trained. This is useful when scores are available and the deployment decision is threshold-based.</p>
 <p>Here we enforce demographic parity. That means selection rates are pushed closer together. Whether this is desirable depends on the application.</p>
-<div id="05fe8a49" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:57:58.681635Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:57:58.681482Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:57:59.515201Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:57:59.514556Z&quot;}}" data-execution_count="13">
+<div id="05fe8a49" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:27.692274Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:27.692149Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:28.321453Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:28.320928Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>threshold_dp <span class="op">=</span> ThresholdOptimizer(</span>
@@ -1388,19 +1388,19 @@ Equalized odds difference: 0.075</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">accuracy</th>
-<td>0.785163</td>
+<td>0.785095</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">balanced_accuracy</th>
-<td>0.781665</td>
+<td>0.781523</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">selection_rate</th>
-<td>0.346414</td>
+<td>0.346345</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">true_positive_rate</th>
-<td>0.774957</td>
+<td>0.774672</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">false_positive_rate</th>
@@ -1408,7 +1408,7 @@ Equalized odds difference: 0.075</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">false_negative_rate</th>
-<td>0.225043</td>
+<td>0.225328</td>
 </tr>
 </tbody>
 </table>
@@ -1455,21 +1455,21 @@ Equalized odds difference: 0.075</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Female</th>
-<td>0.739551</td>
-<td>0.828616</td>
-<td>0.361540</td>
+<td>0.739757</td>
+<td>0.828732</td>
+<td>0.361334</td>
 <td>0.943942</td>
-<td>0.286710</td>
+<td>0.286478</td>
 <td>0.056058</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Male</th>
-<td>0.807779</td>
-<td>0.789455</td>
+<td>0.807575</td>
+<td>0.789213</td>
 <td>0.338914</td>
-<td>0.743312</td>
-<td>0.164402</td>
-<td>0.256688</td>
+<td>0.742973</td>
+<td>0.164548</td>
+<td>0.257027</td>
 </tr>
 </tbody>
 </table>
@@ -1477,14 +1477,14 @@ Equalized odds difference: 0.075</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Demographic parity difference: 0.023
+<pre><code>Demographic parity difference: 0.022
 Equalized odds difference: 0.201</code></pre>
 </div>
 </div>
 <h3 id="mitigation-b-reductions-with-exponentiatedgradient">Mitigation B: Reductions with ExponentiatedGradient</h3>
 <p><code>ExponentiatedGradient</code> trains a randomized classifier subject to a fairness constraint. Unlike thresholding, it changes the training objective.</p>
 <p>We use an <code>EqualizedOdds</code> constraint because the COMPAS discussion in the PDF is fundamentally about error rates: who is incorrectly marked high risk and who is incorrectly marked low risk.</p>
-<div id="c018170e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:57:59.517042Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:57:59.516880Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:58:10.511216Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:58:10.510571Z&quot;}}" data-execution_count="14">
+<div id="c018170e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:28.322674Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:28.322544Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:36.201364Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:36.200865Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>base_for_reduction <span class="op">=</span> make_tabular_pipeline(X_train)</span>
@@ -1526,27 +1526,27 @@ Equalized odds difference: 0.201</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">accuracy</th>
-<td>0.839965</td>
+<td>0.838873</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">balanced_accuracy</th>
-<td>0.730973</td>
+<td>0.727811</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">selection_rate</th>
-<td>0.170545</td>
+<td>0.168225</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">true_positive_rate</th>
-<td>0.521962</td>
+<td>0.514832</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">false_positive_rate</th>
-<td>0.060016</td>
+<td>0.059209</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">false_negative_rate</th>
-<td>0.478038</td>
+<td>0.485168</td>
 </tr>
 </tbody>
 </table>
@@ -1593,21 +1593,21 @@ Equalized odds difference: 0.201</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Female</th>
-<td>0.903850</td>
-<td>0.755843</td>
-<td>0.110768</td>
-<td>0.564195</td>
-<td>0.052509</td>
-<td>0.435805</td>
+<td>0.901585</td>
+<td>0.741957</td>
+<td>0.106444</td>
+<td>0.535262</td>
+<td>0.051348</td>
+<td>0.464738</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Male</th>
-<td>0.808289</td>
-<td>0.724658</td>
-<td>0.200184</td>
-<td>0.514054</td>
-<td>0.064738</td>
-<td>0.485946</td>
+<td>0.807779</td>
+<td>0.723426</td>
+<td>0.198857</td>
+<td>0.511006</td>
+<td>0.064153</td>
+<td>0.488994</td>
 </tr>
 </tbody>
 </table>
@@ -1615,11 +1615,11 @@ Equalized odds difference: 0.201</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Demographic parity difference: 0.089
-Equalized odds difference: 0.05</code></pre>
+<pre><code>Demographic parity difference: 0.092
+Equalized odds difference: 0.024</code></pre>
 </div>
 </div>
-<div id="d13dadcc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:58:10.512969Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:58:10.512814Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:58:11.016653Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:58:11.016018Z&quot;}}" data-execution_count="15">
+<div id="d13dadcc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:36.202792Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:36.202663Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:36.596073Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:36.595558Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>comparison <span class="op">=</span> pd.DataFrame(</span>
@@ -1690,16 +1690,16 @@ Equalized odds difference: 0.05</code></pre>
 <td>threshold_demographic_parity</td>
 <td>0.785</td>
 <td>0.782</td>
-<td>0.023</td>
+<td>0.022</td>
 <td>0.201</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
 <td>reduction_equalized_odds</td>
-<td>0.840</td>
-<td>0.731</td>
-<td>0.089</td>
-<td>0.050</td>
+<td>0.839</td>
+<td>0.728</td>
+<td>0.092</td>
+<td>0.024</td>
 </tr>
 </tbody>
 </table>
@@ -1719,7 +1719,7 @@ Equalized odds difference: 0.05</code></pre>
 <li>minimize equalized odds difference.</li>
 </ul>
 <p>This is not a full fairness intervention by itself, but it makes the multi-objective nature of fairness visible before we introduce group-aware mitigation.</p>
-<div id="9e490efa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:58:11.018449Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:58:11.018298Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:58:15.237396Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:58:15.236733Z&quot;}}" data-execution_count="16">
+<div id="9e490efa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:36.597601Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:36.597468Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:39.909253Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:39.908734Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="kw">def</span> is_dominated(row, frame, maximize, minimize):</span>
@@ -2009,7 +2009,7 @@ Equalized odds difference: 0.05</code></pre>
 </div>
 </div>
 </div>
-<div id="3e9ce4cb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:58:15.239136Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:58:15.238986Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:58:15.355930Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:58:15.355144Z&quot;}}" data-execution_count="17">
+<div id="3e9ce4cb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:39.910516Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:39.910392Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:39.983367Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:39.982866Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
@@ -2036,7 +2036,7 @@ Equalized odds difference: 0.05</code></pre>
 </div>
 </div>
 </div>
-<div id="59eea3fc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:58:15.357505Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:58:15.357346Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:58:15.503496Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:58:15.502782Z&quot;}}" data-execution_count="18">
+<div id="59eea3fc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:39.984794Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:39.984650Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:40.079137Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:40.078576Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a>frontier <span class="op">=</span> threshold_sweep[threshold_sweep[<span class="st">"pareto_candidate"</span>]].copy()</span>
@@ -2084,7 +2084,7 @@ Equalized odds difference: 0.05</code></pre>
 <li><strong>Frontier review</strong>: “I keep these candidates and reject dominated ones, then make a policy decision.”</li>
 </ul>
 <p>Then explain what data-centric action could move the frontier itself, not merely choose a different point on it.</p>
-<div id="048d8b6d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:58:15.505067Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:58:15.504918Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:58:15.613581Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:58:15.612944Z&quot;}}" data-execution_count="19">
+<div id="048d8b6d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:40.080380Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:40.080253Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:40.154227Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:40.153757Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
@@ -2142,7 +2142,7 @@ Equalized odds difference: 0.05</code></pre>
 <li><strong>Proxy targets</strong>: a label can look objective while measuring the wrong thing. A healthcare example makes this concrete: predicting cost can appear to predict illness while actually reflecting unequal access and spending.</li>
 </ul>
 <p>That is why the Diabetes readmission case asks whether <code>readmitted_30_days</code> measures patient need, hospital behavior, patient access, or some mixture of all three.</p>
-<div id="291a891b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:58:15.615470Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:58:15.615297Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:58:15.629158Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:58:15.628480Z&quot;}}" data-execution_count="20">
+<div id="291a891b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:40.155625Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:40.155420Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:40.165825Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:40.165425Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb28-1"><a href="" aria-label="1"></a><span class="co"># Exercise: inspect possible proxy features for sex.</span></span>
@@ -2218,7 +2218,7 @@ Equalized odds difference: 0.05</code></pre>
 </div>
 </div>
 </div>
-<div id="55edb038" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:58:15.630666Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:58:15.630517Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:58:16.291805Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:58:16.291210Z&quot;}}" data-execution_count="21">
+<div id="55edb038" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:40.166902Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:40.166783Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:40.657879Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:40.657420Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a><span class="co"># Exercise: remove one suspected proxy and rerun the baseline.</span></span>
@@ -2353,7 +2353,7 @@ Equalized odds difference: 0.05</code></pre>
 Equalized odds difference: 0.162</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="21">
-<pre><code>&lt;fairlearn.metrics._metric_frame.MetricFrame at 0x7e79ff386650&gt;</code></pre>
+<pre><code>&lt;fairlearn.metrics._metric_frame.MetricFrame at 0x727e950ad550&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -2361,7 +2361,7 @@ Equalized odds difference: 0.162</code></pre>
 <h2>8. Second Case: Diabetes Hospital Readmission</h2>
 <p>The Diabetes 130-Hospitals dataset contains hospital admissions for patients diagnosed with diabetes. The target is whether the patient was readmitted within 30 days.</p>
 <p>This is a different fairness problem from Adult income. A positive prediction can trigger extra care, but it can also trigger burdensome interventions. The right fairness metric depends on the action attached to the prediction.</p>
-<div id="ba97d282" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:58:16.293558Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:58:16.293416Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:58:58.995750Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:58:58.995116Z&quot;}}" data-execution_count="22">
+<div id="ba97d282" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:40.659173Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:40.659063Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:48.478745Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:48.478268Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a>diabetes <span class="op">=</span> fetch_diabetes_hospital(as_frame<span class="op">=</span><span class="va">True</span>)</span>
@@ -2552,7 +2552,7 @@ Equalized odds difference: 0.162</code></pre>
 </div>
 </div>
 </div>
-<div id="7fe95590" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:58:58.997552Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:58:58.997386Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:58:59.001530Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:58:59.000784Z&quot;}}" data-execution_count="23">
+<div id="7fe95590" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:48.480349Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:48.480200Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:48.483528Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:48.483065Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-label="1"></a>diab_df.columns.tolist()</span></code></pre></div>
@@ -2587,7 +2587,7 @@ Equalized odds difference: 0.162</code></pre>
 </div>
 <h3 id="choose-a-sensitive-feature">Choose a Sensitive Feature</h3>
 <p>This dataset includes demographic and clinical variables. We will audit <code>race</code> when available. If the local Fairlearn version exposes a different schema, inspect the columns above and choose another demographic column such as age.</p>
-<div id="c5bc22c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:58:59.002947Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:58:59.002799Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:58:59.016158Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:58:59.015420Z&quot;}}" data-execution_count="24">
+<div id="c5bc22c0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:48.484650Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:48.484534Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:48.494525Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:48.494097Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb36-1"><a href="" aria-label="1"></a>sensitive_col <span class="op">=</span> <span class="st">"race"</span> <span class="cf">if</span> <span class="st">"race"</span> <span class="kw">in</span> X_diab_raw.columns <span class="cf">else</span> <span class="st">"age"</span></span>
@@ -2672,7 +2672,7 @@ Equalized odds difference: 0.162</code></pre>
 </div>
 </div>
 </div>
-<div id="9c8d45b6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:58:59.017603Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:58:59.017448Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:00.007253Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:00.006561Z&quot;}}" data-execution_count="25">
+<div id="9c8d45b6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:48.495664Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:48.495551Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:49.239814Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:49.239265Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb38-1"><a href="" aria-label="1"></a>X_diab <span class="op">=</span> X_diab_raw.drop(columns<span class="op">=</span>[sensitive_col])</span>
@@ -2871,7 +2871,7 @@ Equalized odds difference: 0.0</code></pre>
 <li>Are diagnostic codes and procedures measured consistently across hospitals and groups?</li>
 <li>Does the dataset encode treatment history, or only outcomes after unequal treatment has already occurred?</li>
 </ul>
-<div id="ff009bf7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T10:59:00.008905Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T10:59:00.008739Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T10:59:00.568775Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T10:59:00.568058Z&quot;}}" data-execution_count="26">
+<div id="ff009bf7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-15T14:53:49.241158Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-15T14:53:49.241027Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-15T14:53:49.683243Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-15T14:53:49.682746Z&quot;}}" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb40-1"><a href="" aria-label="1"></a><span class="co"># Exercise: focus the audit on groups with enough support.</span></span>
