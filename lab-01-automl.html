@@ -240,6 +240,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section id="the-problem-hyperparameter-optimization" class="title-slide slide level1 center">
 <h1>The Problem: Hyperparameter Optimization</h1>
+
+<img data-src="img/hpo.png" class="r-stretch quarto-figure-center"><p class="caption">Optimizer proposes a configuration; the learning system trains and validates it and returns a loss. Source: Hutter and Vanschoren AutoML tutorial.</p></section>
+
+<section id="the-problem-hyperparameter-optimization-1" class="title-slide slide level1 center">
+<h1>The Problem: Hyperparameter Optimization</h1>
 <p>A learning algorithm fits <strong>parameters</strong> (for example, regression coefficients) from data.</p>
 <p><strong>Hyperparameters</strong> configure that fitting process: regularization strength, tree depth, or learning rate. We must choose them before fitting each candidate.</p>
 <p>Given training data <span class="math inline">\(D_{\mathrm{tr}}\)</span>, a fixed learning algorithm <span class="math inline">\(A\)</span>, and a search space <span class="math inline">\(\Lambda\)</span>, hyperparameter optimization (HPO) solves</p>
@@ -280,7 +285,7 @@ f(\lambda)=\mathcal{L}_{D_{\mathrm{val}}}\!\left(A_\lambda(D_{\mathrm{tr}})\righ
 <section id="classification-dataset" class="title-slide slide level1 center">
 <h1>Classification Dataset</h1>
 <p>The first real dataset is Adult Census Income from the UCI repository, loaded through OpenML.</p>
-<div id="c5bedbeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:05:20.562375Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:05:20.562203Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:05:43.058953Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:05:43.058320Z&quot;}}" data-execution_count="4">
+<div id="c5bedbeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:18:13.949171Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:18:13.949028Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:18:23.066397Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:18:23.065802Z&quot;}}" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -425,7 +430,7 @@ Name: target_share, dtype: float64</code></pre>
 
 <section id="data-profiling" class="title-slide slide level1 center">
 <h1>Data profiling</h1>
-<div id="80b56180" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:05:43.060684Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:05:43.060534Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:05:43.067555Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:05:43.066916Z&quot;}}" data-execution_count="5">
+<div id="80b56180" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:18:23.068034Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:18:23.067887Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:18:23.074926Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:18:23.074263Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>adult_df.info()</span></code></pre></div>
@@ -477,7 +482,7 @@ memory usage: 504.1 KB</code></pre>
 <li>numeric features are scaled, categorical features are one-hot encoded, and logistic regression predicts the income label.</li>
 </ul>
 <p>Evaluate this baseline on the <strong>validation partition</strong>. The following grid/random candidates fitting the pipeline inside each CV training fold.</p>
-<div id="42e1e10e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:05:43.101900Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:05:43.101739Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:05:43.678125Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:05:43.677651Z&quot;}}" data-execution_count="7">
+<div id="42e1e10e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:18:23.106907Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:18:23.106737Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:18:23.595103Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:18:23.592545Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>classification_preprocess <span class="op">=</span> ColumnTransformer(</span>
@@ -605,7 +610,7 @@ Independent trials can be parallelized. Previous evaluations are ignored, so the
 </tbody>
 </table>
 <p>The example depends strongly on the first coordinate. Compare a fixed nine-point grid with 1,000 repetitions of nine random trials.</p>
-<div id="lab04-integrated-027" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:05:43.683627Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:05:43.683438Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:05:44.248514Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:05:44.247710Z&quot;}}" data-execution_count="8">
+<div id="lab04-integrated-027" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:18:23.604314Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:18:23.604121Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:18:23.960147Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:18:23.959544Z&quot;}}" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>Grid (9 trials, 3 distinct l1 values): loss = 0.803. Random (9 trials, 9 distinct l1 values): median loss = 0.096
 Random search beats the grid in 98% of the repetitions</code></pre>
@@ -621,7 +626,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <li>Grid: three depths × three leaf sizes.</li>
 <li>Random: nine independently sampled depth/leaf configurations within the declared bounds.</li>
 </ul>
-<div id="lab04-025" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:05:44.250050Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:05:44.249902Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:05:44.254338Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:05:44.253617Z&quot;}}" data-execution_count="9">
+<div id="lab04-025" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:18:23.962010Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:18:23.961820Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:18:23.966109Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:18:23.965522Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">3</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
@@ -641,7 +646,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <span id="cb9-15"><a href="" aria-label="15"></a>}</span></code></pre></div>
 </details>
 </div>
-<div id="b5492641" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:05:44.255611Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:05:44.255477Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:05:50.528967Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:05:50.528194Z&quot;}}" data-execution_count="10">
+<div id="b5492641" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:18:23.967481Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:18:23.967342Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:18:30.165105Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:18:30.164401Z&quot;}}" data-execution_count="10">
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <style scoped="">
@@ -676,7 +681,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <td>grid</td>
 <td>9</td>
 <td>0.812663</td>
-<td>3.011979</td>
+<td>2.988457</td>
 <td>0.817779</td>
 <td>{'clf__max_depth': 24, 'clf__min_samples_leaf'...</td>
 </tr>
@@ -685,7 +690,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <td>random</td>
 <td>9</td>
 <td>0.810803</td>
-<td>3.226068</td>
+<td>3.174536</td>
 <td>0.811295</td>
 <td>{'clf__max_depth': 13, 'clf__min_samples_leaf'...</td>
 </tr>
@@ -715,7 +720,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <li>Random search draws 16 configurations, including intermediate settings, on the same bounded domain.</li>
 </ul>
 <p>Both use the same folds, learner seed, preprocessing, and balanced-accuracy scorer.</p>
-<div id="lab04-integrated-038" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:05:50.530450Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:05:50.530304Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:06:15.016172Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:06:15.015490Z&quot;}}" data-execution_count="11">
+<div id="lab04-integrated-038" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:18:30.166713Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:18:30.166566Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:18:54.375721Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:18:54.375099Z&quot;}}" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
@@ -749,7 +754,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <td>grid</td>
 <td>16</td>
-<td>12.0042</td>
+<td>11.8355</td>
 <td>0.8111</td>
 <td>0.8228</td>
 <td>{'clf__max_depth': 24, 'clf__max_features': 1....</td>
@@ -758,7 +763,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <th data-quarto-table-cell-role="th">1</th>
 <td>random</td>
 <td>16</td>
-<td>12.4416</td>
+<td>12.3351</td>
 <td>0.8160</td>
 <td>0.8270</td>
 <td>{'clf__max_depth': 16, 'clf__max_features': 0....</td>
@@ -1004,7 +1009,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <section id="demo-successive-halving-on-the-same-random-forest-space" class="title-slide slide level1 center">
 <h1>Demo: Successive Halving on the Same Random Forest Space</h1>
 <p>Use the same four forest hyperparameters and balanced-accuracy scorer.</p>
-<div id="lab04-integrated-041" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:06:15.396499Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:06:15.396339Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:06:26.016945Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:06:26.016150Z&quot;}}" data-execution_count="14">
+<div id="lab04-integrated-041" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:18:54.697210Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:18:54.697062Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:19:05.273817Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:19:05.273139Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>halving <span class="op">=</span> HalvingRandomSearchCV(</span>
@@ -1018,7 +1023,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <span id="cb10-9"><a href="" aria-label="9"></a>halving_elapsed <span class="op">=</span> time.time() <span class="op">-</span> started_at</span></code></pre></div>
 </details>
 </div>
-<div id="0047af4d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:06:26.018746Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:06:26.018507Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:06:26.038522Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:06:26.037875Z&quot;}}" data-execution_count="15">
+<div id="0047af4d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:19:05.275800Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:19:05.275650Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:19:05.296265Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:19:05.295448Z&quot;}}" data-execution_count="15">
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div>
 <style scoped="">
@@ -1069,7 +1074,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 </div>
 </div>
 </div>
-<div id="ee78603a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:06:26.040137Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:06:26.039979Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:06:26.046992Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:06:26.046329Z&quot;}}" data-execution_count="16">
+<div id="ee78603a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:19:05.297791Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:19:05.297629Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:19:05.304775Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:19:05.304111Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>pd.DataFrame(rf_search_rows).<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div>
@@ -1108,7 +1113,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <td>grid</td>
 <td>16</td>
-<td>12.0042</td>
+<td>11.8355</td>
 <td>0.8111</td>
 <td>0.8228</td>
 <td>{'clf__max_depth': 24, 'clf__max_features': 1....</td>
@@ -1118,7 +1123,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <th data-quarto-table-cell-role="th">1</th>
 <td>random</td>
 <td>16</td>
-<td>12.4416</td>
+<td>12.3351</td>
 <td>0.8160</td>
 <td>0.8270</td>
 <td>{'clf__max_depth': 16, 'clf__max_features': 0....</td>
@@ -1128,7 +1133,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <th data-quarto-table-cell-role="th">2</th>
 <td>successive halving</td>
 <td>27</td>
-<td>10.6173</td>
+<td>10.5736</td>
 <td>0.8071</td>
 <td>0.8134</td>
 <td>NaN</td>
@@ -1264,7 +1269,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 
 <section id="flaml-for-classification" class="title-slide slide level1 scrollable center">
 <h1>FLAML for Classification</h1>
-<div id="86003a33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:06:26.048684Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:06:26.048546Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:06:56.055661Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:06:56.054035Z&quot;}}" data-execution_count="17">
+<div id="86003a33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:19:05.306409Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:19:05.306260Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:19:35.310758Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:19:35.309050Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>classification_automl <span class="op">=</span> AutoML()</span>
@@ -1296,7 +1301,7 @@ Training time for best config: 0.238s</code></pre>
 
 <section id="flaml-for-classification-1" class="title-slide slide level1 scrollable center">
 <h1>FLAML for Classification</h1>
-<div id="453ae089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:06:56.058966Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:06:56.058788Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:06:56.080662Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:06:56.080019Z&quot;}}" data-execution_count="18">
+<div id="453ae089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:19:35.314614Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:19:35.314429Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:19:35.338597Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:19:35.337468Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>classification_automl_scores <span class="op">=</span> evaluate_classifier(classification_automl, X_cls_val_flaml, y_cls_val)</span>
@@ -1398,7 +1403,7 @@ Training time for best config: 0.238s</code></pre>
 
 <section id="inspect-flamls-conditional-cash-space" class="title-slide slide level1 center">
 <h1>Inspect FLAML’s Conditional CASH Space</h1>
-<div id="lab04-integrated-048" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:06:56.082773Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:06:56.082610Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:06:56.086993Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:06:56.086199Z&quot;}}" data-execution_count="19">
+<div id="lab04-integrated-048" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:19:35.341049Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:19:35.340349Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:19:35.345043Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:19:35.344157Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="im">from</span> flaml.automl.model <span class="im">import</span> RandomForestEstimator</span>
@@ -1409,7 +1414,7 @@ Training time for best config: 0.238s</code></pre>
 <pre><code>Allowed learners: ['rf', 'extra_tree', 'lrl2']</code></pre>
 </div>
 </div>
-<div id="ed745277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:06:56.095548Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:06:56.094908Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:06:56.103380Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:06:56.102527Z&quot;}}" data-execution_count="21">
+<div id="ed745277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:19:35.353593Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:19:35.352948Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:19:35.361413Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:19:35.360516Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>describe_space(RandomForestEstimator.search_space(data_size<span class="op">=</span>X_cls_train_flaml.shape, task<span class="op">=</span>task_factory(<span class="st">"classification"</span>, X_cls_train_flaml, y_cls_train)))</span></code></pre></div>
@@ -1501,7 +1506,7 @@ Training time for best config: 0.238s</code></pre>
 <section id="comparing-classification-objectives" class="title-slide slide level1 center">
 <h1>Comparing Classification Objectives</h1>
 <p>Run the same learner list and budget with accuracy, balanced accuracy, and F1. Compare validation scores; fix the objective before using test data.</p>
-<div id="48ee15a8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:06:56.202371Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:06:56.202168Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:08:26.248312Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:08:26.246955Z&quot;}}" data-execution_count="23">
+<div id="48ee15a8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:19:35.465132Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:19:35.464979Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:21:05.495990Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:21:05.494554Z&quot;}}" data-execution_count="23">
 <div class="cell-output cell-output-display" data-execution_count="23">
 <div>
 <style scoped="">
@@ -1537,7 +1542,7 @@ Training time for best config: 0.238s</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <td>accuracy</td>
 <td>30</td>
-<td>30.001</td>
+<td>29.995</td>
 <td>rf</td>
 <td>0.120</td>
 <td>0.880</td>
@@ -1548,7 +1553,7 @@ Training time for best config: 0.238s</code></pre>
 <th data-quarto-table-cell-role="th">1</th>
 <td>balanced_accuracy</td>
 <td>30</td>
-<td>29.998</td>
+<td>29.994</td>
 <td>rf</td>
 <td>0.211</td>
 <td>0.873</td>
@@ -1559,7 +1564,7 @@ Training time for best config: 0.238s</code></pre>
 <th data-quarto-table-cell-role="th">2</th>
 <td>f1</td>
 <td>30</td>
-<td>29.999</td>
+<td>29.992</td>
 <td>rf</td>
 <td>0.311</td>
 <td>0.870</td>
@@ -1587,7 +1592,7 @@ Training time for best config: 0.238s</code></pre>
 <section id="regression-dataset-california-housing" class="title-slide slide level1 center">
 <h1>Regression Dataset: California Housing</h1>
 <p>The task is to predict median house value for California districts from demographic and geographic attributes.</p>
-<div id="62b3430c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:08:26.260130Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:08:26.259980Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:08:27.656117Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:08:27.655411Z&quot;}}" data-execution_count="25">
+<div id="62b3430c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:21:05.505986Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:21:05.505312Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:21:06.411667Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:21:06.411060Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>housing_df, housing_source <span class="op">=</span> load_housing_data()</span>
@@ -1700,7 +1705,7 @@ Training time for best config: 0.238s</code></pre>
 <li>Ridge regression: simple, fast, and linear.</li>
 <li>Random forest: nonlinear and stronger, but less transparent and more expensive.</li>
 </ul>
-<div id="3ef59b1e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:08:27.665590Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:08:27.665441Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:08:31.168626Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:08:31.167636Z&quot;}}" data-execution_count="27">
+<div id="3ef59b1e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:21:06.421180Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:21:06.421037Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:21:09.827887Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:21:09.827222Z&quot;}}" data-execution_count="27">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>ridge_baseline <span class="op">=</span> Pipeline(</span>
@@ -1764,7 +1769,7 @@ Training time for best config: 0.238s</code></pre>
 
 <section id="flaml-for-regression" class="title-slide slide level1 center">
 <h1>FLAML for Regression</h1>
-<div id="439a0506" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:08:31.170070Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:08:31.169926Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:09:01.391159Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:09:01.390457Z&quot;}}" data-execution_count="28">
+<div id="439a0506" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:21:09.829448Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:21:09.829306Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:21:40.021150Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:21:40.020441Z&quot;}}" data-execution_count="28">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>regression_automl <span class="op">=</span> AutoML()</span>
@@ -1839,7 +1844,7 @@ Training time for best config: 0.238s</code></pre>
 
 <section id="budget-experiment" class="title-slide slide level1 center">
 <h1>Budget Experiment</h1>
-<div id="a35c70af" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:09:01.392910Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:09:01.392742Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:09:51.411018Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:09:51.410274Z&quot;}}" data-execution_count="29">
+<div id="a35c70af" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:21:40.022652Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:21:40.022507Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:22:30.018627Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:22:30.017977Z&quot;}}" data-execution_count="29">
 <div class="cell-output cell-output-display" data-execution_count="29">
 <div>
 <style scoped="">
@@ -1875,7 +1880,7 @@ Training time for best config: 0.238s</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <td>5</td>
 <td>rmse</td>
-<td>4.942</td>
+<td>4.897</td>
 <td>rf</td>
 <td>0.574</td>
 <td>0.574</td>
@@ -1886,7 +1891,7 @@ Training time for best config: 0.238s</code></pre>
 <th data-quarto-table-cell-role="th">1</th>
 <td>15</td>
 <td>rmse</td>
-<td>14.770</td>
+<td>14.793</td>
 <td>rf</td>
 <td>0.507</td>
 <td>0.507</td>
@@ -1897,7 +1902,7 @@ Training time for best config: 0.238s</code></pre>
 <th data-quarto-table-cell-role="th">2</th>
 <td>30</td>
 <td>rmse</td>
-<td>30.080</td>
+<td>30.087</td>
 <td>rf</td>
 <td>0.500</td>
 <td>0.500</td>
