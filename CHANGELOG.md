@@ -1,3 +1,14 @@
+## [1.1.12](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.11...1.1.12) (2026-10-16)
+
+### Dependency updates
+
+* **deps:** update node.js to 24.22 ([#12](https://github.com/w4bo/AA2627-unibo-dcai/issues/12)) ([5dd8263](https://github.com/w4bo/AA2627-unibo-dcai/commit/5dd8263e6dca34d86135668a923b0fd3cbed4515))
+
+### Bug Fixes
+
+* working on automl ([3307f43](https://github.com/w4bo/AA2627-unibo-dcai/commit/3307f43c871f98578e16dc045aa5b57cb3eba542))
+* working on automl ([90887c1](https://github.com/w4bo/AA2627-unibo-dcai/commit/90887c1795213f03e86bfc806697b1fff244cdf5))
+
 ## [1.1.11](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.10...1.1.11) (2026-10-14)
 
 ### Bug Fixes
