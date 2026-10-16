@@ -237,13 +237,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section class="slide level2">
 
 <p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-06-explainability.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
-<div id="cell-002" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:12.315945Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:12.315674Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:15.059563Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:15.058595Z&quot;}}" data-execution_count="1">
+<div id="cell-002" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:31.714229Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:31.714026Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:33.893779Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:33.893109Z&quot;}}" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-yellow-fg">WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.</span><span class="ansi-yellow-fg">
 
 </span>
-
 
 <span class="ansi-bold">[</span><span class="ansi-blue-fg">notice</span><span class="ansi-bold">]</span> A new release of pip is available: <span class="ansi-red-fg">26.0.1</span> -&gt; <span class="ansi-green-fg">26.2.1</span>
 
@@ -335,7 +334,7 @@ Note: you may need to restart the kernel to use updated packages.
 <h1>2. A fitted flight-delay model</h1>
 <p>The example uses a decision tree trained on five synthetic flight features. The model remains fixed throughout the SHAP analysis.</p>
 <p>The synthetic data keeps the example reproducible. The SHAP procedure is the same for a tree trained on real flight data.</p>
-<div id="cell-008" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:15.062293Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:15.061941Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:15.094684Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:15.093911Z&quot;}}" data-execution_count="2">
+<div id="cell-008" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:33.896217Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:33.895908Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:33.921510Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:33.920819Z&quot;}}" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 <style scoped="">
@@ -487,7 +486,7 @@ Note: you may need to restart the kernel to use updated packages.
 <p>With only five features we <em>can</em> enumerate all <span class="math inline">\(2^5 = 32\)</span> coalitions. We use the <strong>interventional</strong> value function: features in <span class="math inline">\(S\)</span> are fixed to the explained flight, the others are taken from each background flight, and predictions are averaged:</p>
 <p><span class="math display">\[v_x(S) = \frac{1}{|B|}\sum_{z \in B} f(x_S, z_{\bar S})\]</span></p>
 <p>Then we apply the Shapley formula directly.</p>
-<div id="cell-015" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:15.097343Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:15.097101Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:15.152753Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:15.151735Z&quot;}}" data-execution_count="3">
+<div id="cell-015" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:33.923244Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:33.923081Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:33.958508Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:33.957877Z&quot;}}" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>background <span class="op">=</span> X_train.sample(<span class="dv">100</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
@@ -546,7 +545,7 @@ Name: exact_phi, dtype: float64</code></pre>
 <section id="the-library-gives-the-same-numbers" class="title-slide slide level1 scrollable center">
 <h1>9. The library gives the same numbers</h1>
 <p><code>TreeExplainer</code> with the same background data and <code>feature_perturbation="interventional"</code> computes the same game exactly, using the tree structure instead of enumeration <span class="citation" data-cites="lundberg2020local">(<a href="#/references" role="doc-biblioref" onclick=""><strong>lundberg2020local?</strong></a>)</span>. Model-agnostic explainers <em>estimate</em> it from samples <span class="citation" data-cites="strumbelj2014explaining">(<a href="#/references" role="doc-biblioref" onclick=""><strong>strumbelj2014explaining?</strong></a>)</span>.</p>
-<div id="cell-017" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:15.154613Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:15.154429Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:15.432616Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:15.430961Z&quot;}}" data-execution_count="4">
+<div id="cell-017" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:33.960277Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:33.960118Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:34.176439Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:34.175751Z&quot;}}" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="im">import</span> shap</span>
@@ -600,21 +599,21 @@ Name: exact_phi, dtype: float64</code></pre>
 <th data-quarto-table-cell-role="th">bad_weather</th>
 <td>-0.1166</td>
 <td>-0.1166</td>
-<td>-0.1188</td>
+<td>-0.1155</td>
 <td>-0.1166</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">late_departure</th>
 <td>-0.0739</td>
 <td>-0.0739</td>
-<td>-0.0725</td>
+<td>-0.0745</td>
 <td>-0.0739</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">departure_hour</th>
 <td>-0.0070</td>
 <td>-0.0070</td>
-<td>-0.0073</td>
+<td>-0.0061</td>
 <td>-0.0070</td>
 </tr>
 <tr class="even">
@@ -628,7 +627,7 @@ Name: exact_phi, dtype: float64</code></pre>
 <th data-quarto-table-cell-role="th">scheduled_duration_min</th>
 <td>-0.0020</td>
 <td>-0.0020</td>
-<td>-0.0007</td>
+<td>-0.0032</td>
 <td>-0.0020</td>
 </tr>
 </tbody>
@@ -665,7 +664,7 @@ Name: exact_phi, dtype: float64</code></pre>
 <p>A local SHAP value explains one prediction. Global importance averages the absolute local contributions over many observations:</p>
 <p><span class="math display">\[I_j = \frac{1}{n}\sum_{i=1}^{n}|\phi_{ij}|\]</span></p>
 <p>Absolute values prevent positive and negative effects from cancelling. The result measures how strongly the fitted model uses each feature on average.</p>
-<div id="cell-021" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:15.434856Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:15.434654Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:15.592354Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:15.591286Z&quot;}}" data-execution_count="5">
+<div id="cell-021" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:34.178412Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:34.178265Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:34.296971Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:34.296211Z&quot;}}" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>SHAP baseline for the delayed class: 0.500</code></pre>
 </div>
@@ -731,7 +730,7 @@ Name: exact_phi, dtype: float64</code></pre>
 <section id="beeswarm-direction-and-spread" class="title-slide slide level1 scrollable center">
 <h1>12. Beeswarm: direction and spread</h1>
 <p>The bar chart hides <strong>direction</strong>. The beeswarm plot shows every <span class="math inline">\(\phi_{ij}\)</span>, coloured by the feature value: red points on the right mean “high values push the prediction up”.</p>
-<div id="cell-023" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:15.595063Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:15.594778Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:15.801389Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:15.800515Z&quot;}}" data-execution_count="6">
+<div id="cell-023" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:34.298499Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:34.298350Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:34.437587Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:34.436898Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>shap.summary_plot(shap_values_positive_class, X_shap, show<span class="op">=</span><span class="va">False</span>)</span>
@@ -746,7 +745,7 @@ Name: exact_phi, dtype: float64</code></pre>
 <section id="shap-importance-vs-permutation-importance" class="title-slide slide level1 scrollable center">
 <h1>13. SHAP importance vs permutation importance</h1>
 <p>Permutation importance measures the <strong>drop in performance</strong> when a feature is shuffled <span class="citation" data-cites="breiman2001random fisher2019all">(<a href="#/references" role="doc-biblioref" onclick="">Breiman 2001</a>; <a href="#/references" role="doc-biblioref" onclick=""><strong>fisher2019all?</strong></a>)</span>; SHAP importance measures how much the <strong>output</strong> moves. They usually agree on the top features but answer different questions.</p>
-<div id="cell-025" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:15.803711Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:15.803512Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:15.920816Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:15.920014Z&quot;}}" data-execution_count="7">
+<div id="cell-025" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:34.439362Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:34.439218Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:34.517711Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:34.517130Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>perm <span class="op">=</span> permutation_importance(tree, X_test, y_test, scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>,</span>
@@ -823,7 +822,7 @@ Name: exact_phi, dtype: float64</code></pre>
 <li>Positive SHAP values increase the delayed-class output for this observation.</li>
 <li>Negative SHAP values decrease it.</li>
 </ul>
-<div id="cell-027" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:15.923036Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:15.922850Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:15.937198Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:15.936359Z&quot;}}" data-execution_count="8">
+<div id="cell-027" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:34.519536Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:34.519306Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:34.529840Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:34.529207Z&quot;}}" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -936,7 +935,7 @@ Name: exact_phi, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-028" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:15.939165Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:15.938944Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:16.302927Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:16.302075Z&quot;}}" data-execution_count="9">
+<div id="cell-028" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:34.531172Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:34.531032Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:34.782921Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:34.782320Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>explanation <span class="op">=</span> shap.Explanation(</span>
@@ -972,7 +971,7 @@ Name: exact_phi, dtype: float64</code></pre>
 <section id="encode-and-train" class="title-slide slide level1 scrollable center">
 <h1>16. Encode and train</h1>
 <p>Categorical columns are mapped to integer codes using the <strong>training</strong> data only (unseen categories get a separate code), so that trees and <code>TreeExplainer</code> work directly on the encoded frame.</p>
-<div id="cell-033" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:16.438978Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:16.438773Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:17.034255Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:17.033324Z&quot;}}" data-execution_count="11">
+<div id="cell-033" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:34.892523Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:34.892372Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:35.320610Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:35.320018Z&quot;}}" data-execution_count="11">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>target <span class="op">=</span> <span class="st">"income_observed"</span></span>
@@ -1064,7 +1063,7 @@ Name: exact_phi, dtype: float64</code></pre>
 <section id="explain-the-model-to-debug-the-data" class="title-slide slide level1 scrollable center">
 <h1>17. Explain the model to debug the data</h1>
 <p>Compute global SHAP importance and permutation importance <strong>on the validation set</strong>. Which features dominate? Do they make sense for predicting income from a survey?</p>
-<div id="cell-036" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:17.036764Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:17.036392Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:31.677967Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:31.677117Z&quot;}}" data-execution_count="12">
+<div id="cell-036" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:35.322415Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:35.322261Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:47.402323Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:47.401652Z&quot;}}" data-execution_count="12">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>explain_rows <span class="op">=</span> X_va.sample(<span class="dv">500</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
@@ -1190,7 +1189,7 @@ Name: exact_phi, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-037" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:31.680385Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:31.680110Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:31.977034Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:31.976160Z&quot;}}" data-execution_count="13">
+<div id="cell-037" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:47.404006Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:47.403848Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:47.600277Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:47.599620Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>shap.summary_plot(dirty_phi, explain_rows, max_display<span class="op">=</span><span class="dv">10</span>, show<span class="op">=</span><span class="va">False</span>)</span>
@@ -1237,7 +1236,7 @@ Name: exact_phi, dtype: float64</code></pre>
 </tbody>
 </table>
 <p>The next cell compares each feature’s agreement with the label in validation and deployment.</p>
-<div id="cell-039" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:31.979162Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:31.978920Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:32.005676Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:32.004700Z&quot;}}" data-execution_count="14">
+<div id="cell-039" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:47.602044Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:47.601891Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:47.620504Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:47.619822Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="cf">for</span> column <span class="kw">in</span> [<span class="st">"income_band_code"</span>, <span class="st">"form_version"</span>]:</span>
@@ -1259,7 +1258,7 @@ form_version
 <section id="fix-the-data-not-the-model" class="title-slide slide level1 scrollable center">
 <h1>19. Fix the data, not the model</h1>
 <p><code>income_band_code</code> is <strong>leakage</strong> (recorded after the outcome, unavailable at prediction time). <code>form_version</code> is a <strong>shortcut</strong> (an artifact of how the historical data was collected). Remove both and retrain.</p>
-<div id="cell-041" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:32.007780Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:32.007586Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:32.664109Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:32.663287Z&quot;}}" data-execution_count="15">
+<div id="cell-041" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:47.621944Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:47.621800Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:48.092783Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:48.092008Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>clean_cols <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> feature_cols <span class="cf">if</span> c <span class="kw">not</span> <span class="kw">in</span> (<span class="st">"income_band_code"</span>, <span class="st">"form_version"</span>)]</span>
@@ -1351,7 +1350,7 @@ form_version
 <section id="out-of-fold-predictions-flag-suspicious-labels" class="title-slide slide level1 scrollable center">
 <h1>20. Out-of-fold predictions flag suspicious labels</h1>
 <p>Confident learning compares <strong>out-of-sample</strong> predicted probabilities with the given labels <span class="citation" data-cites="northcutt2021confident">(<a href="#/references" role="doc-biblioref" onclick=""><strong>northcutt2021confident?</strong></a>)</span>. A simple version: compute the out-of-fold probability of the <em>observed</em> label (<em>self-confidence</em>) and inspect the least confident examples. (The <code>cleanlab</code> library implements the full method.)</p>
-<div id="cell-045" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:32.666481Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:32.666278Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:34.784685Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:34.783825Z&quot;}}" data-execution_count="16">
+<div id="cell-045" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:48.094377Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:48.094232Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:49.729915Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:49.729264Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>cv <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
@@ -1382,7 +1381,7 @@ precision vs planted flips: 0.61   recall: 0.64   (random flagging: 0.10)</code>
 <section id="inspect-a-flagged-example" class="title-slide slide level1 scrollable center">
 <h1>21. Inspect a flagged example</h1>
 <p>A local explanation helps decide whether the <strong>label</strong> or the <strong>model</strong> is wrong: sensible attributions that strongly contradict the label suggest a label error.</p>
-<div id="cell-047" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:34.787003Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:34.786799Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:35.055319Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:35.054260Z&quot;}}" data-execution_count="17">
+<div id="cell-047" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:49.731712Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:49.731563Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:49.918426Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:49.917797Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>clean_explainer <span class="op">=</span> shap.TreeExplainer(clean_model)</span>
@@ -1408,7 +1407,7 @@ precision vs planted flips: 0.61   recall: 0.64   (random flagging: 0.10)</code>
 
 <section id="clean-the-labels-and-retrain" class="title-slide slide level1 scrollable center">
 <h1>22. Clean the labels and retrain</h1>
-<div id="cell-049" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:35.057322Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:35.057080Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:36.799258Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:36.798168Z&quot;}}" data-execution_count="18">
+<div id="cell-049" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:49.920216Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:49.920036Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:51.259831Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:51.259219Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>keep <span class="op">=</span> <span class="op">~</span>flagged</span>
@@ -1499,7 +1498,7 @@ s_{\alpha_N} = \frac{\mathbb{1}[y_{\alpha_N} = y]}{N}, \qquad
 s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1}[y_{\alpha_{i+1}} = y]}{K}\cdot\frac{\min(K, i)}{i}
 \]</span></p>
 <p>The value of a training point is the average over validation points.</p>
-<div id="cell-053" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:36.801220Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:36.801001Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:38.089422Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:38.088441Z&quot;}}" data-execution_count="19">
+<div id="cell-053" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:51.261608Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:51.261459Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:52.301900Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:52.301211Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="kw">def</span> knn_shapley(X_train_arr, y_train_arr, X_valid_arr, y_valid_arr, k<span class="op">=</span><span class="dv">10</span>):</span>
@@ -1556,7 +1555,7 @@ s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1
 <tr class="odd">
 <th data-quarto-table-cell-role="th">correct label</th>
 <td>0.00025</td>
-<td>0.18164</td>
+<td>0.18192</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">flipped label</th>
@@ -1579,7 +1578,7 @@ s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1
 <li><strong>lowest value per class</strong>: remove the same fraction of lowest-valued points <em>within each class</em>;</li>
 <li><strong>random</strong>: remove random points.</li>
 </ul>
-<div id="cell-055" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:38.091468Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:38.091282Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:46.046102Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:46.045124Z&quot;}}" data-execution_count="20">
+<div id="cell-055" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:52.303465Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:52.303330Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:12:58.353714Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:12:58.353032Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>fractions <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.05</span>, <span class="fl">0.10</span>, <span class="fl">0.15</span>, <span class="fl">0.20</span>, <span class="fl">0.30</span>]</span>
@@ -1687,19 +1686,19 @@ s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1
 <td>lowest value (global)</td>
 <td>0.985</td>
 <td>0.450</td>
-<td>0.764</td>
-<td>0.900</td>
-<td>0.670</td>
+<td>0.758</td>
+<td>0.899</td>
+<td>0.661</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
 <td>0.05</td>
 <td>lowest value per class</td>
 <td>0.290</td>
-<td>0.355</td>
-<td>0.782</td>
-<td>0.904</td>
-<td>0.685</td>
+<td>0.350</td>
+<td>0.787</td>
+<td>0.906</td>
+<td>0.692</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">5</th>
@@ -1717,9 +1716,9 @@ s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1
 <td>lowest value (global)</td>
 <td>0.985</td>
 <td>0.378</td>
-<td>0.747</td>
-<td>0.875</td>
-<td>0.645</td>
+<td>0.752</td>
+<td>0.876</td>
+<td>0.653</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">7</th>
@@ -1748,18 +1747,18 @@ s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1
 <td>0.987</td>
 <td>0.330</td>
 <td>0.701</td>
-<td>0.852</td>
-<td>0.568</td>
+<td>0.853</td>
+<td>0.567</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">10</th>
 <td>0.15</td>
 <td>lowest value per class</td>
 <td>0.290</td>
-<td>0.218</td>
-<td>0.776</td>
-<td>0.894</td>
-<td>0.672</td>
+<td>0.217</td>
+<td>0.779</td>
+<td>0.896</td>
+<td>0.678</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">11</th>
@@ -1777,19 +1776,19 @@ s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1
 <td>lowest value (global)</td>
 <td>0.968</td>
 <td>0.300</td>
-<td>0.643</td>
-<td>0.854</td>
-<td>0.447</td>
+<td>0.636</td>
+<td>0.851</td>
+<td>0.431</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">13</th>
 <td>0.20</td>
 <td>lowest value per class</td>
 <td>0.290</td>
-<td>0.199</td>
-<td>0.777</td>
-<td>0.889</td>
-<td>0.674</td>
+<td>0.196</td>
+<td>0.770</td>
+<td>0.886</td>
+<td>0.665</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">14</th>
@@ -1805,10 +1804,10 @@ s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1
 <th data-quarto-table-cell-role="th">15</th>
 <td>0.30</td>
 <td>lowest value (global)</td>
-<td>0.898</td>
+<td>0.897</td>
 <td>0.258</td>
 <td>0.532</td>
-<td>0.848</td>
+<td>0.849</td>
 <td>0.126</td>
 </tr>
 <tr class="odd">
@@ -1817,9 +1816,9 @@ s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1
 <td>lowest value per class</td>
 <td>0.290</td>
 <td>0.171</td>
-<td>0.766</td>
-<td>0.858</td>
-<td>0.655</td>
+<td>0.767</td>
+<td>0.859</td>
+<td>0.658</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">17</th>
@@ -1857,7 +1856,7 @@ s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1
 <section id="a-minimal-counterfactual-search" class="title-slide slide level1 scrollable center">
 <h1>25. A minimal counterfactual search</h1>
 <p>For a respondent predicted at most 50K, search the smallest change to <strong>actionable</strong> features that flips the prediction <span class="citation" data-cites="wachter2017counterfactual mothilal2020explaining">(<a href="#/references" role="doc-biblioref" onclick=""><strong>wachter2017counterfactual?</strong></a>; <a href="#/references" role="doc-biblioref" onclick=""><strong>mothilal2020explaining?</strong></a>)</span>. Here: weekly hours (+0 to +20) and years of education (+0 to +4).</p>
-<div id="cell-059" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:46.048233Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:46.047993Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:54.993670Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:54.992575Z&quot;}}" data-execution_count="21">
+<div id="cell-059" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:12:58.355409Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:12:58.355252Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:13:03.598303Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:13:03.597656Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>deploy_pred <span class="op">=</span> clean_model.predict(X_de_c)</span>
@@ -1973,7 +1972,7 @@ s_{\alpha_i} = s_{\alpha_{i+1}} + \frac{\mathbb{1}[y_{\alpha_i} = y] - \mathbb{1
 <section id="proxy-check-what-if-only-marital-status-changed" class="title-slide slide level1 scrollable center">
 <h1>26. Proxy check: what if only marital status changed?</h1>
 <p><code>marital_status</code> and <code>relationship</code> are not actionable, and they are strongly associated with sex (<code>Husband</code> is 100% male, <code>Wife</code> 100% female). If changing them alone flips decisions, the model relies on <strong>proxies</strong>, and counterfactuals built on them are not acceptable recourse.</p>
-<div id="cell-061" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T09:25:54.995555Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T09:25:54.995361Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T09:25:55.058434Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T09:25:55.057312Z&quot;}}" data-execution_count="22">
+<div id="cell-061" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-16T10:13:03.600077Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-16T10:13:03.599933Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-16T10:13:03.646647Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-16T10:13:03.646007Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>married_code <span class="op">=</span> category_maps[<span class="st">"marital_status"</span>].get(<span class="st">"Married-civ-spouse"</span>)</span>
