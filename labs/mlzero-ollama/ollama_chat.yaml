@@ -1,0 +1,35 @@
+# MLZero chat mode: per-agent settings.
+# Provider, model and Ollama URL are NOT set here: mlzero_chat.py injects them
+# into every section (from --model / --ollama-url).
+
+# Keys read by chat mode but missing from MLZero's own chat_config.yaml:
+# without them, tutorial retrieval is silently skipped.
+initial_root_children: 3
+condense_tutorials: True
+use_tutorial_summary: True
+
+llm: &default_llm
+  max_tokens: 4096
+  temperature: 0.3
+  top_p: 0.9
+  verbose: True
+  multi_turn: True
+  template: null
+  add_coding_format_instruction: false
+  apply_meta_prompting: False
+
+chat_agent:          # answers your questions, remembers the conversation
+  <<: *default_llm
+tool_selector:       # picks relevant libraries (e.g. autogluon.tabular)
+  <<: *default_llm
+  temperature: 0.
+  top_p: 1.
+  multi_turn: False
+retriever:           # fetches matching tutorials
+  <<: *default_llm
+  multi_turn: False
+reranker:            # keeps the most useful tutorials
+  <<: *default_llm
+  temperature: 0.
+  top_p: 1.
+  multi_turn: False
