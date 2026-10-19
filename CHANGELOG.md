@@ -1,3 +1,9 @@
+## [1.1.14](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.13...1.1.14) (2026-10-19)
+
+### Bug Fixes
+
+* update automl ([ecb3102](https://github.com/w4bo/AA2627-unibo-dcai/commit/ecb31022539ddb21f4934203ae76424023bffdd9))
+
 ## [1.1.13](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.12...1.1.13) (2026-10-19)
 
 ### Bug Fixes
