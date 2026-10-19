@@ -1,3 +1,9 @@
+## [1.1.15](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.14...1.1.15) (2026-10-19)
+
+### Bug Fixes
+
+* update fairness ([a91400a](https://github.com/w4bo/AA2627-unibo-dcai/commit/a91400a70b75dbba17efe1ac145618c99589026c))
+
 ## [1.1.14](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.13...1.1.14) (2026-10-19)
 
 ### Bug Fixes
