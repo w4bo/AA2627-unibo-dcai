@@ -1,3 +1,14 @@
+## [1.1.13](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.12...1.1.13) (2026-10-19)
+
+### Bug Fixes
+
+* update automl ([161d8bd](https://github.com/w4bo/AA2627-unibo-dcai/commit/161d8bdcf4720d98faee72de9532c5f9ca4f1ed0))
+* update automl ([d3a965d](https://github.com/w4bo/AA2627-unibo-dcai/commit/d3a965d081e3970b0d3f51799803c2a12052a3a9))
+* update automl ([56ec5d0](https://github.com/w4bo/AA2627-unibo-dcai/commit/56ec5d0dc689e583e1ab87a7da9bebb35505dfc3))
+* update automl ([29b8b34](https://github.com/w4bo/AA2627-unibo-dcai/commit/29b8b34875b9d9f4b6f1cef7d026262bc6d408ef))
+* update intro ([15db2c2](https://github.com/w4bo/AA2627-unibo-dcai/commit/15db2c2d2c6b269990910110f03203ba57a023ae))
+* update intro ([55eb14f](https://github.com/w4bo/AA2627-unibo-dcai/commit/55eb14f47be1eb43a7fb099e65d06c8043963660))
+
 ## [1.1.12](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.11...1.1.12) (2026-10-16)
 
 ### Dependency updates
