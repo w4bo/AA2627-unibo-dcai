@@ -1,3 +1,9 @@
+## [1.1.18](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.17...1.1.18) (2026-10-20)
+
+### Bug Fixes
+
+* update exercise ([c920385](https://github.com/w4bo/AA2627-unibo-dcai/commit/c920385e7281163734995c46c6e834b61109f766))
+
 ## [1.1.17](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.16...1.1.17) (2026-10-20)
 
 ### Bug Fixes
