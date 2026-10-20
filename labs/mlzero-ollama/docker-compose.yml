@@ -1,0 +1,47 @@
+# Self-contained demo: Ollama (Gemma 4 + EmbeddingGemma) + MLZero chat.
+#   docker compose build
+#   docker compose run --rm chat                         # starts Ollama, pulls the model, opens the chat
+#   OLLAMA_MODEL=gemma4:26b docker compose run --rm chat
+#   docker compose down                                  # stop Ollama (models stay in the volume)
+# NVIDIA GPU: add -f docker-compose.yml -f docker-compose.gpu.yml to every command.
+services:
+  ollama:
+    image: ollama/ollama:0.40.6
+    environment:
+      OLLAMA_CONTEXT_LENGTH: 32768        # MLZero prompts include tutorials
+      OLLAMA_KEEP_ALIVE: 30m
+    volumes:
+      - ollama-models:/root/.ollama       # downloaded models survive `down`
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  ollama-pull:                            # one-shot: downloads both models (no-op if present)
+    image: ollama/ollama:0.40.6
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint: ["/bin/sh", "-c", "ollama pull ${OLLAMA_MODEL:-gemma4} && ollama pull ${OLLAMA_EMBED_MODEL:-embeddinggemma}"]
+    depends_on:
+      ollama:
+        condition: service_healthy
+
+  chat:
+    build: .
+    image: mlzero-chat
+    environment:
+      OLLAMA_URL: ${OLLAMA_URL:-http://ollama:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-gemma4}
+      OLLAMA_EMBED_MODEL: ${OLLAMA_EMBED_MODEL:-embeddinggemma}
+    volumes:
+      - ./chat_sessions:/lab/chat_sessions   # saved Q&A on the host
+      - ./indices:/lab/indices               # tutorial index, built on the first chat and reused
+    depends_on:
+      ollama-pull:
+        condition: service_completed_successfully
+    stdin_open: true
+    tty: true
+
+volumes:
+  ollama-models:
