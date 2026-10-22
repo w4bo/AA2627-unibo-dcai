@@ -1,3 +1,10 @@
+## [1.1.22](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.21...1.1.22) (2026-10-22)
+
+### Bug Fixes
+
+* clarify lab teaching material and exercise guidance ([ae0ae12](https://github.com/w4bo/AA2627-unibo-dcai/commit/ae0ae124323322938ccc5a0fcba4729d8f8d7627))
+* resolve slide citations and store remote images locally ([e7ecbc5](https://github.com/w4bo/AA2627-unibo-dcai/commit/e7ecbc5e9e15a7f82efd6e3bff8bd05cc20b31e9))
+
 ## [1.1.21](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.20...1.1.21) (2026-10-22)
 
 ### Bug Fixes
