@@ -1,3 +1,13 @@
+## [1.1.21](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.20...1.1.21) (2026-10-22)
+
+### Bug Fixes
+
+* simplify labs and stabilize dataset loading ([aed0791](https://github.com/w4bo/AA2627-unibo-dcai/commit/aed07911da1120b839d3b0aec5c72171da9623b2))
+
+### Documentation
+
+* normalize presentation slide-count punctuation ([613789b](https://github.com/w4bo/AA2627-unibo-dcai/commit/613789bd8980c45d09533874790326942c538136))
+
 ## [1.1.20](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.19...1.1.20) (2026-10-22)
 
 ### Bug Fixes
