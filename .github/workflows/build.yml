@@ -15,6 +15,11 @@ jobs:
       - name: Configuring the environment
         run: |
           bash utils/init.sh
+      - name: Cache teaching datasets
+        uses: actions/cache@v6
+        with:
+          path: slides/.cache/datasets
+          key: lab04-datasets-v1
       - name: Running the notebooks (if any)
         run: |
           docker compose run --rm build
