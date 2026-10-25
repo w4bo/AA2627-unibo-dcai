@@ -278,7 +278,7 @@ f(\lambda)=\mathcal{L}_{D_{\mathrm{val}}}\!\left(A_\lambda(D_{\mathrm{tr}})\righ
 <h1>Get the Dataset</h1>
 <p>Adult Census Income is downloaded directly from the <a href="https://archive.ics.uci.edu/dataset/2/adult">UCI repository</a>, without OpenML.</p>
 <p>Dataset: <span class="citation" data-cites="becker1996adult">(<a href="#/references" role="doc-biblioref" onclick="">Becker and Kohavi 1996</a>)</span>.</p>
-<div id="c5bedbeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:50:17.222414Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:50:17.222205Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:50:18.069869Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:50:18.068943Z&quot;}}" data-execution_count="4">
+<div id="c5bedbeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:33:52.651684Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:33:52.651543Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:33:53.574899Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:33:53.574252Z&quot;}}" data-execution_count="4">
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 <style scoped="">
@@ -417,7 +417,7 @@ f(\lambda)=\mathcal{L}_{D_{\mathrm{val}}}\!\left(A_\lambda(D_{\mathrm{tr}})\righ
 
 <section id="get-the-dataset-1" class="title-slide slide level1 center">
 <h1>Get the Dataset</h1>
-<div id="80b56180" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:50:18.072049Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:50:18.071842Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:50:18.082493Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:50:18.081356Z&quot;}}" data-execution_count="5">
+<div id="80b56180" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:33:53.576148Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:33:53.576000Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:33:53.583700Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:33:53.583197Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>adult_df.info()</span></code></pre></div>
@@ -451,7 +451,7 @@ memory usage: 937.6 KB</code></pre>
 
 <section id="set-the-target-balanced-accuracy" class="title-slide slide level1 center">
 <h1>Set the Target: Balanced Accuracy</h1>
-<div id="d60afc77" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:50:18.100480Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:50:18.100271Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:50:18.106923Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:50:18.105929Z&quot;}}" data-execution_count="7">
+<div id="d60afc77" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:33:53.596608Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:33:53.596461Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:33:53.600935Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:33:53.600504Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>adult_df[<span class="st">"income"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"target_share"</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
@@ -473,7 +473,7 @@ Name: target_share, dtype: float64</code></pre>
 
 <section id="fixed-random-forest-baseline" class="title-slide slide level1 center">
 <h1>Fixed Random-Forest Baseline</h1>
-<div id="42e1e10e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:50:18.108695Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:50:18.108526Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:50:18.451483Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:50:18.450326Z&quot;}}" data-execution_count="8">
+<div id="42e1e10e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:33:53.602087Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:33:53.601966Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:33:53.807754Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:33:53.807185Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="co"># Fit preprocessing once on training rows; every method receives these same arrays.</span></span>
@@ -534,7 +534,7 @@ Name: target_share, dtype: float64</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <td>baseline</td>
 <td>RandomForestClassifier</td>
-<td>0.292</td>
+<td>0.176</td>
 <td>0.729</td>
 <td>0.778</td>
 <td>0.623</td>
@@ -642,7 +642,7 @@ Independent trials can be parallelized. Previous evaluations are ignored, so the
 </tbody>
 </table>
 <p>The example depends strongly on the first coordinate. Compare a fixed nine-point grid with 1,000 repetitions of nine random trials.</p>
-<div id="lab04-integrated-027" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:50:18.453662Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:50:18.453439Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:50:18.889991Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:50:18.889014Z&quot;}}" data-execution_count="9">
+<div id="lab04-integrated-027" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:33:53.809203Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:33:53.809070Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:33:54.055819Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:33:54.055251Z&quot;}}" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>Grid (9 trials, 3 distinct l1 values): loss = 0.803. Random (9 trials, 9 distinct l1 values): median loss = 0.096
 Random search beats the grid in 98% of the repetitions</code></pre>
@@ -659,7 +659,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <span id="cb9-4"><a href="" aria-label="4"></a>param_random <span class="op">=</span> {</span>
 <span id="cb9-5"><a href="" aria-label="5"></a>    <span class="st">"max_depth"</span>: randint(<span class="dv">2</span>, <span class="dv">5</span>), <span class="st">"min_samples_leaf"</span>: randint(<span class="dv">1</span>, <span class="dv">25</span>), <span class="st">"max_features"</span>: uniform(<span class="fl">0.15</span>, <span class="fl">0.85</span>), <span class="st">"max_samples"</span>: uniform(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
 <span id="cb9-6"><a href="" aria-label="6"></a>}</span></code></pre></div>
-<div id="lab04-integrated-038" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:50:18.892200Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:50:18.891996Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:50:38.783762Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:50:38.782829Z&quot;}}" data-execution_count="10">
+<div id="lab04-integrated-038" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:33:54.057389Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:33:54.057185Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:34:06.664265Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:34:06.663606Z&quot;}}" data-execution_count="10">
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 <style scoped="">
@@ -695,7 +695,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <td>grid</td>
 <td>RandomForestClassifier</td>
-<td>9.5660</td>
+<td>5.9721</td>
 <td>16</td>
 <td>2304</td>
 <td>0.7625</td>
@@ -706,7 +706,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <th data-quarto-table-cell-role="th">1</th>
 <td>random</td>
 <td>RandomForestClassifier</td>
-<td>10.2661</td>
+<td>6.6011</td>
 <td>18</td>
 <td>2592</td>
 <td>0.7688</td>
@@ -913,7 +913,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 </ul></li>
 <li>Random search gives every candidate 144 trees.</li>
 </ul>
-<div id="lab04-integrated-041" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:50:39.244421Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:50:39.244048Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:50:44.518550Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:50:44.517602Z&quot;}}" data-execution_count="13">
+<div id="lab04-integrated-041" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:34:06.913570Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:34:06.913420Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:34:10.239851Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:34:10.239326Z&quot;}}" data-execution_count="13">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>halving <span class="op">=</span> HalvingRandomSearchCV(</span>
@@ -925,7 +925,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <span id="cb10-7"><a href="" aria-label="7"></a>fit_search(<span class="st">"halving"</span>, halving)</span></code></pre></div>
 </details>
 </div>
-<div id="ee78603a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:50:44.529796Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:50:44.529626Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:50:44.539648Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:50:44.538662Z&quot;}}" data-execution_count="15">
+<div id="ee78603a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:34:10.247718Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:34:10.247587Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:34:10.253984Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:34:10.253486Z&quot;}}" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -969,7 +969,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">grid</th>
 <td>RandomForestClassifier</td>
-<td>9.5660</td>
+<td>5.9721</td>
 <td>16</td>
 <td>2304</td>
 <td>0.7625</td>
@@ -979,7 +979,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <tr class="even">
 <th data-quarto-table-cell-role="th">random</th>
 <td>RandomForestClassifier</td>
-<td>10.2661</td>
+<td>6.6011</td>
 <td>18</td>
 <td>2592</td>
 <td>0.7688</td>
@@ -989,7 +989,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">halving</th>
 <td>RandomForestClassifier</td>
-<td>5.2492</td>
+<td>3.3127</td>
 <td>26</td>
 <td>864</td>
 <td>0.7688</td>
@@ -1002,7 +1002,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Halving speedup over random: 1.96x</code></pre>
+<pre><code>Halving speedup over random: 1.99x</code></pre>
 </div>
 </div>
 </section>
@@ -1027,7 +1027,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <li>Allocate time across learners using observed cost and improvement.</li>
 </ul></li>
 </ul>
-<div id="86003a33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:50:44.541553Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:50:44.541380Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:51:14.615031Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:51:14.614040Z&quot;}}" data-execution_count="16">
+<div id="86003a33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:34:10.255162Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:34:10.255043Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:34:40.294367Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:34:40.293755Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="im">from</span> flaml <span class="im">import</span> AutoML</span>
@@ -1047,15 +1047,15 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <span id="cb12-15"><a href="" aria-label="15"></a><span class="bu">print</span>(<span class="st">"Selected hyperparameters:"</span>, classification_automl.best_config)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Selected learner: xgb_limitdepth; classifier: XGBClassifier
-Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weight': np.float64(1.782924838977797), 'learning_rate': np.float64(0.17989621506784795), 'subsample': 1.0, 'colsample_bylevel': np.float64(0.9328288706694938), 'colsample_bytree': np.float64(0.9877878456495247), 'reg_alpha': np.float64(0.005681262601785821), 'reg_lambda': np.float64(0.029377943595706977)}</code></pre>
+<pre><code>Selected learner: sgd; classifier: SGDClassifier
+Selected hyperparameters: {'penalty': np.str_('l1'), 'alpha': np.float64(6.907099416232111e-05), 'l1_ratio': np.float64(0.0170338520764837), 'epsilon': 0.1, 'learning_rate': np.str_('optimal'), 'eta0': np.float64(0.000428547829843165), 'power_t': np.float64(0.12178954044650658), 'average': False, 'loss': np.str_('modified_huber')}</code></pre>
 </div>
 </div>
 </section>
 
 <section id="flaml-search-and-resource-allocation-1" class="title-slide slide level1 center">
 <h1>FLAML: Search and Resource Allocation</h1>
-<div id="453ae089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:51:14.616872Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:51:14.616699Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:51:14.636353Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:51:14.635211Z&quot;}}" data-execution_count="17">
+<div id="453ae089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:34:40.295634Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:34:40.295502Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:34:40.306094Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:34:40.305520Z&quot;}}" data-execution_count="17">
 <div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
@@ -1095,7 +1095,7 @@ Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weigh
 <tr class="odd">
 <th data-quarto-table-cell-role="th">baseline</th>
 <td>RandomForestClassifier</td>
-<td>0.2922</td>
+<td>0.1763</td>
 <td>0.7288</td>
 <td>0.7784</td>
 <td>0.6226</td>
@@ -1103,7 +1103,7 @@ Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weigh
 <tr class="even">
 <th data-quarto-table-cell-role="th">grid</th>
 <td>RandomForestClassifier</td>
-<td>9.5660</td>
+<td>5.9721</td>
 <td>0.7625</td>
 <td>0.8043</td>
 <td>0.6558</td>
@@ -1111,7 +1111,7 @@ Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weigh
 <tr class="odd">
 <th data-quarto-table-cell-role="th">random</th>
 <td>RandomForestClassifier</td>
-<td>10.2661</td>
+<td>6.6011</td>
 <td>0.7688</td>
 <td>0.8069</td>
 <td>0.6606</td>
@@ -1119,18 +1119,18 @@ Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weigh
 <tr class="even">
 <th data-quarto-table-cell-role="th">halving</th>
 <td>RandomForestClassifier</td>
-<td>5.2492</td>
+<td>3.3127</td>
 <td>0.7688</td>
 <td>0.8069</td>
 <td>0.6606</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">FLAML</th>
-<td>XGBClassifier</td>
-<td>29.9894</td>
-<td>0.8688</td>
-<td>0.8238</td>
-<td>0.7395</td>
+<td>SGDClassifier</td>
+<td>29.9799</td>
+<td>0.8275</td>
+<td>0.8260</td>
+<td>0.7082</td>
 </tr>
 </tbody>
 </table>
@@ -1142,7 +1142,7 @@ Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weigh
 
 <section id="inspect-flamls-conditional-cash-space" class="title-slide slide level1 center">
 <h1>Inspect FLAML’s Conditional CASH Space</h1>
-<div id="lab04-integrated-048" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:51:14.638104Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:51:14.637923Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:51:14.641905Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:51:14.640914Z&quot;}}" data-execution_count="18">
+<div id="lab04-integrated-048" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:34:40.307463Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:34:40.307311Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:34:40.309834Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:34:40.309375Z&quot;}}" data-execution_count="18">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="im">from</span> flaml.automl.model <span class="im">import</span> RandomForestEstimator</span>
@@ -1153,7 +1153,7 @@ Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weigh
 <pre><code>Default learners for this run: ['lgbm', 'rf', 'xgboost', 'extra_tree', 'xgb_limitdepth', 'sgd', 'lrl1']</code></pre>
 </div>
 </div>
-<div id="ed745277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:51:14.649942Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:51:14.649770Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:51:14.657457Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:51:14.656474Z&quot;}}" data-execution_count="20">
+<div id="ed745277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:34:40.315300Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:34:40.315159Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:34:40.320711Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:34:40.320293Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>describe_space(RandomForestEstimator.search_space(data_size<span class="op">=</span>X_train_model.shape, task<span class="op">=</span>task_factory(<span class="st">"classification"</span>, X_train_model, y_cls_train)))</span></code></pre></div>
@@ -1335,7 +1335,7 @@ Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weigh
 <li>Standardization is the only preprocessing change tested in Step 3.</li>
 <li>Leave the test set until Step 5.</li>
 </ul>
-<div id="exercise-01-setup" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:51:14.831414Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:51:14.831082Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:51:14.853190Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:51:14.852171Z&quot;}}" data-execution_count="22">
+<div id="exercise-01-setup" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:34:40.409154Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:34:40.409006Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:34:40.423638Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:34:40.423137Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
@@ -1356,7 +1356,7 @@ Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weigh
 <li>Predict on <code>X_val</code> and calculate balanced accuracy.</li>
 <li>Record fit time and any convergence warning.</li>
 </ul>
-<div id="exercise-02-code" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:51:14.855126Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:51:14.854928Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:51:14.858247Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:51:14.857269Z&quot;}}" data-execution_count="23">
+<div id="exercise-02-code" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:34:40.425501Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:34:40.425323Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:34:40.427300Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:34:40.426884Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="co"># Create logistic = LogisticRegression(max_iter=2000, random_state=42).</span></span>
@@ -1380,7 +1380,7 @@ Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weigh
 <ul>
 <li>Compare validation balanced accuracy, fit time, and convergence with the unscaled baseline.</li>
 </ul>
-<div id="a45b27aa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:51:14.859943Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:51:14.859773Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:51:14.863187Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:51:14.862185Z&quot;}}" data-execution_count="24">
+<div id="a45b27aa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:34:40.428497Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:34:40.428349Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:34:40.430367Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:34:40.429972Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># Reuse the standardized arrays already prepared from training-fitted preprocessing.</span></span>
@@ -1406,7 +1406,7 @@ Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weigh
 <li>Keep the metric, seed, learner defaults, and search budget unchanged.</li>
 <li>Compare all four configurations using validation balanced accuracy and elapsed time.</li>
 </ul>
-<div id="6a9794b2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:51:14.864910Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:51:14.864743Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:51:44.876119Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:51:44.875024Z&quot;}}" data-execution_count="25">
+<div id="6a9794b2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:34:40.431532Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:34:40.431391Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:35:10.418693Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:35:10.417962Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="co"># Reuse the balanced-accuracy loss defined earlier.</span></span>
@@ -1441,7 +1441,7 @@ Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weigh
 <li>Explain whether standardization helped and whether AutoML added further benefit.</li>
 <li>Remember: do not tune after seeing test results.</li>
 </ul>
-<div id="08ec321f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-24T02:51:44.878067Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-24T02:51:44.877877Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-24T02:51:44.893679Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-24T02:51:44.892594Z&quot;}}" data-execution_count="26">
+<div id="08ec321f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-25T01:35:10.420381Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-25T01:35:10.420228Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-25T01:35:10.432257Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-25T01:35:10.431683Z&quot;}}" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="co"># Prepare test inputs without refitting either preprocessing transformer.</span></span>
