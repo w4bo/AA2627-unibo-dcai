@@ -1,3 +1,9 @@
+## [1.1.25](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.24...1.1.25) (2026-10-27)
+
+### Bug Fixes
+
+* update augmentation ([8d92751](https://github.com/w4bo/AA2627-unibo-dcai/commit/8d927512873eb2d38307920d9ab4c51021bdeb6b))
+
 ## [1.1.24](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.23...1.1.24) (2026-10-27)
 
 ### Dependency updates
