@@ -1,3 +1,17 @@
+## [1.1.24](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.23...1.1.24) (2026-10-27)
+
+### Dependency updates
+
+* **deps:** update slides/refs digest to fcf0966 ([#14](https://github.com/w4bo/AA2627-unibo-dcai/issues/14)) ([2a8e145](https://github.com/w4bo/AA2627-unibo-dcai/commit/2a8e1456fea25d5af90a05923efb04a0dc8cce3f))
+
+### Bug Fixes
+
+* update augmentation ([9fdef84](https://github.com/w4bo/AA2627-unibo-dcai/commit/9fdef84b420902ec358ac70f27d050f229701608))
+
+### General maintenance
+
+* fix link ([97a821c](https://github.com/w4bo/AA2627-unibo-dcai/commit/97a821cabedc84d2dae394c53054dd1e9424c957))
+
 ## [1.1.23](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.22...1.1.23) (2026-10-26)
 
 ### Dependency updates
