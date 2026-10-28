@@ -566,7 +566,7 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 
 <section id="trace-the-f1-difference-through-errors-in-training-label-noise" class="title-slide slide level1 center">
 <h1>Trace the F1 difference through errors in “Training label noise”</h1>
-<div id="sampler-f1-errors-table" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:51:28.751390Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:51:28.751245Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:51:28.761197Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:51:28.760385Z&quot;}}" data-execution_count="12">
+<div id="sampler-f1-errors-table" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:21:34.531619Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:21:34.531445Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:21:34.542353Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:21:34.541704Z&quot;}}" data-execution_count="12">
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 <style scoped="">
@@ -685,7 +685,7 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 <section id="create-a-deliberately-imbalanced-dataset" class="title-slide slide level1 center">
 <h1>Create a deliberately imbalanced dataset</h1>
 <p>We will use a synthetic binary classification dataset: <code>y=1</code> is a rare high-risk event, such as fraud, churn, default, or failure.</p>
-<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:51:28.762790Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:51:28.762629Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:51:28.771742Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:51:28.770923Z&quot;}}" data-outputid="4dd78d42-7805-469e-9ab6-175493ce1c3d" data-execution_count="13">
+<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:21:34.544157Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:21:34.543992Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:21:34.553419Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:21:34.552819Z&quot;}}" data-outputid="4dd78d42-7805-469e-9ab6-175493ce1c3d" data-execution_count="13">
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 <style scoped="">
@@ -765,7 +765,7 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 
 <section id="baseline-pipeline" class="title-slide slide level1 center">
 <h1>Baseline pipeline</h1>
-<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:51:29.281871Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:51:29.281668Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:51:29.295038Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:51:29.294136Z&quot;}}" data-outputid="4c229548-5a5d-4480-9927-0f6b62a6a763" data-execution_count="17">
+<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:21:35.097999Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:21:35.097828Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:21:35.108816Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:21:35.108115Z&quot;}}" data-outputid="4c229548-5a5d-4480-9927-0f6b62a6a763" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>preprocessor <span class="op">=</span> StandardScaler()</span>
@@ -1848,7 +1848,7 @@ forceTheme('sk-container-id-1');</script>
 <li><strong>More recall, more false alarms:</strong> resampling and class weights recover about 72-76% of positives, while precision falls to about 16-19%.</li>
 <li><strong>Best mean F1 here: Borderline-SMOTE (0.303).</strong> Its recall is lower than the other treatments, but its precision is higher.</li>
 </ul>
-<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:51:30.423764Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:51:30.423584Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:51:30.434849Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:51:30.434030Z&quot;}}" data-outputid="2a2f072e-1700-4a2c-b6b0-be58bf4c7be8" data-execution_count="21">
+<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:21:36.286644Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:21:36.286501Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:21:36.297944Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:21:36.297342Z&quot;}}" data-outputid="2a2f072e-1700-4a2c-b6b0-be58bf4c7be8" data-execution_count="21">
 <div class="cell-output cell-output-display">
 <table class="dataframe caption-top" data-border="1">
 <thead>
@@ -2010,7 +2010,7 @@ forceTheme('sk-container-id-1');</script>
 <li><span class="math inline">\(total\ cost = FP + 10 \times FN\)</span></li>
 <li>If a threshold produces 961 false positives and 101 false negatives, then: <span class="math inline">\(total\ cost = 961 + 10 \times 101 = 1971\)</span></li>
 </ul>
-<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:51:30.874821Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:51:30.874657Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:51:31.455392Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:51:31.454608Z&quot;}}" data-outputid="e9bdd02e-c40f-4ba9-83ea-1065bc7845c6" data-execution_count="26">
+<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:21:36.755113Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:21:36.754959Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:21:37.303264Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:21:37.302572Z&quot;}}" data-outputid="e9bdd02e-c40f-4ba9-83ea-1065bc7845c6" data-execution_count="26">
 <div class="cell-output cell-output-display" data-execution_count="26">
 <div>
 <style scoped="">
@@ -2092,7 +2092,7 @@ forceTheme('sk-container-id-1');</script>
 <li>The <strong>wrong</strong> structure applies SMOTE before cross-validation.</li>
 <li>The <strong>right</strong> structure places SMOTE inside an <code>imblearn</code> pipeline, so SMOTE is fitted only on each training fold.</li>
 </ul>
-<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:51:31.893260Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:51:31.893111Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:51:31.982256Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:51:31.979457Z&quot;}}" data-outputid="db4c1917-1746-43a8-cf67-5f3d65fdb70f" data-execution_count="29">
+<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:21:37.787238Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:21:37.787049Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:21:37.867645Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:21:37.867041Z&quot;}}" data-outputid="db4c1917-1746-43a8-cf67-5f3d65fdb70f" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>X_scaled <span class="op">=</span> preprocessor.fit_transform(X)</span>
@@ -2111,7 +2111,7 @@ forceTheme('sk-container-id-1');</script>
 <span id="cb8-14"><a href="" aria-label="14"></a>right_fold_results <span class="op">=</span> fold_results.loc[fold_results[<span class="st">"method"</span>] <span class="op">==</span> <span class="st">"SMOTE"</span>].assign(method<span class="op">=</span><span class="st">"SMOTE inside CV"</span>)</span></code></pre></div>
 </details>
 </div>
-<div id="5f9d288d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:51:31.987522Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:51:31.987321Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:51:32.000873Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:51:31.998908Z&quot;}}" data-execution_count="30">
+<div id="5f9d288d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:21:37.872234Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:21:37.871940Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:21:37.880664Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:21:37.880144Z&quot;}}" data-execution_count="30">
 <div class="cell-output cell-output-display" data-execution_count="30">
 <div>
 <style scoped="">
@@ -2193,7 +2193,7 @@ forceTheme('sk-container-id-1');</script>
 <ul>
 <li>We predict the minority class (<code>1</code>) versus the majority (<code>0</code>). The loader returns anonymous feature columns, so use <code>feature_1</code> to <code>feature_6</code>.</li>
 </ul>
-<div id="mammography-load-data" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:51:32.004395Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:51:32.004226Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:52:17.656079Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:52:17.655173Z&quot;}}" data-execution_count="31">
+<div id="mammography-load-data" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:21:37.885276Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:21:37.884893Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:22:37.768985Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:22:37.768195Z&quot;}}" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>m_dataset <span class="op">=</span> fetch_datasets(filter_data<span class="op">=</span>(<span class="st">"mammography"</span>,))[<span class="st">"mammography"</span>]</span>
@@ -2222,7 +2222,7 @@ memory usage: 524.3 KB</code></pre>
 <section id="inspect-the-observations" class="title-slide slide level1 center">
 <h1>Inspect the observations</h1>
 <p>What does one row contain? Which column is the prediction target?</p>
-<div id="mammography-show-data" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:52:17.657600Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:52:17.657431Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:52:17.663960Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:52:17.663450Z&quot;}}" data-execution_count="32">
+<div id="mammography-show-data" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:22:37.770572Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:22:37.770417Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:22:37.777183Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:22:37.776510Z&quot;}}" data-execution_count="32">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>X_mammography.assign(minority<span class="op">=</span>y_mammography).head()</span></code></pre></div>
@@ -2313,7 +2313,7 @@ memory usage: 524.3 KB</code></pre>
 </div>
 </div>
 </div>
-<div id="2a797040" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:52:17.665685Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:52:17.665548Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:52:17.669483Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:52:17.668837Z&quot;}}" data-execution_count="33">
+<div id="2a797040" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:22:37.778518Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:22:37.778383Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:22:37.782012Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:22:37.781407Z&quot;}}" data-execution_count="33">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>y_mammography.value_counts()</span></code></pre></div>
@@ -2329,7 +2329,7 @@ Name: count, dtype: int64</code></pre>
 
 <section id="inspect-the-feature-scales.-are-they-in-the-same-range" class="title-slide slide level1 center">
 <h1>Inspect the feature scales. Are they in the same range?</h1>
-<div id="mammography-show-ranges" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:52:17.670872Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:52:17.670705Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:52:17.684486Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:52:17.683759Z&quot;}}" data-execution_count="34">
+<div id="mammography-show-ranges" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:22:37.783384Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:22:37.783230Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:22:37.796720Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:22:37.796071Z&quot;}}" data-execution_count="34">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>X_mammography.describe().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
@@ -2446,7 +2446,7 @@ Name: count, dtype: int64</code></pre>
 <section id="visualization-first-2-pc-of-the-standardized-features.-are-classes-well-separated" class="title-slide slide level1 center">
 <h1>Visualization: first 2 PC of the standardized features. Are classes well separated?</h1>
 
-<img data-src="lab-02-augmentation_files/figure-revealjs/cell-36-output-1.png" class="r-stretch"><div id="7a768f47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:52:17.814667Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:52:17.814534Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:52:17.826768Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:52:17.826075Z&quot;}}" data-execution_count="36">
+<img data-src="lab-02-augmentation_files/figure-revealjs/cell-36-output-1.png" class="r-stretch"><div id="7a768f47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:22:37.927486Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:22:37.927339Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:22:37.940186Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:22:37.939637Z&quot;}}" data-execution_count="36">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>X_mammography.groupby(y_mammography).agg([<span class="st">"mean"</span>, <span class="st">"std"</span>]).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
@@ -2559,7 +2559,7 @@ Name: count, dtype: int64</code></pre>
 <li>Fit preprocessing, class weighting, and sampling using training rows only.</li>
 <li>Treat validation as a development set: compare methods here, but reserve a separate test set for a final generalization claim.</li>
 </ul>
-<div id="mammography-split-and-imports" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:52:17.828226Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:52:17.828094Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:52:17.834985Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:52:17.834088Z&quot;}}" data-execution_count="37">
+<div id="mammography-split-and-imports" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:22:37.941883Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:22:37.941725Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:22:37.949923Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:22:37.949209Z&quot;}}" data-execution_count="37">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>m_X_train, m_X_valid, m_y_train, m_y_valid <span class="op">=</span> train_test_split(</span>
@@ -2590,7 +2590,7 @@ Name: count, dtype: int64</code></pre>
 <li>How many positives are missed?</li>
 <li>Rank the fitted tree’s <code>feature_importances_</code>: which features dominate?</li>
 </ul>
-<div id="mammography-starter-1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:52:17.836369Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:52:17.836240Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:52:17.838485Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:52:17.837857Z&quot;}}" data-execution_count="38">
+<div id="mammography-starter-1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:22:37.951393Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:22:37.951237Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:22:37.953614Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:22:37.952972Z&quot;}}" data-execution_count="38">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="co"># Fill in the estimator and uncomment: use DecisionTreeClassifier(**m_tree_params).</span></span>
@@ -2609,7 +2609,7 @@ Name: count, dtype: int64</code></pre>
 <ul>
 <li>Did minority F1 improve? Did the important features change? Class weighting does not guarantee a better result on every metric.</li>
 </ul>
-<div id="mammography-starter-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:52:17.839871Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:52:17.839703Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:52:17.842219Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:52:17.841536Z&quot;}}" data-execution_count="39">
+<div id="mammography-starter-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:22:37.955032Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:22:37.954902Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:22:37.956949Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:22:37.956401Z&quot;}}" data-execution_count="39">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="co"># Fill in the class weight and uncomment.</span></span>
@@ -2627,7 +2627,7 @@ Name: count, dtype: int64</code></pre>
 <li>Use <code>random_state=42</code> for SMOTE and the same <code>m_tree_params</code> as before.</li>
 <li>Fit the whole pipeline on training data and compare with Exercises 1 and 2.</li>
 </ul>
-<div id="mammography-starter-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:52:17.843629Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:52:17.843492Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:52:17.846048Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:52:17.845356Z&quot;}}" data-execution_count="40">
+<div id="mammography-starter-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:22:37.958512Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:22:37.958372Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:22:37.960689Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:22:37.960064Z&quot;}}" data-execution_count="40">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># Fill in SMOTE(random_state=42), then uncomment and fit.</span></span>
@@ -2649,7 +2649,7 @@ Name: count, dtype: int64</code></pre>
 <li>Repeat after changing feature units using the factors below.</li>
 <li>Why can scaling change SMOTE even though the classifier is a tree? Can scaling <em>after</em> SMOTE repair its neighbor choices?</li>
 </ul>
-<div id="mammography-starter-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:52:17.847511Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:52:17.847383Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:52:17.850852Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:52:17.850196Z&quot;}}" data-execution_count="41">
+<div id="mammography-starter-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:22:37.962098Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:22:37.961889Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:22:37.965366Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:22:37.964879Z&quot;}}" data-execution_count="41">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="co"># Fill in "passthrough", then fit and evaluate as above.</span></span>
@@ -2670,7 +2670,7 @@ Name: count, dtype: int64</code></pre>
 <li>Keep the scaling, tree, and split fixed. Compare with ordinary scaled SMOTE.</li>
 <li>Which errors change, and does F1 improve? Explain why concentrating on boundary observations might help or amplify overlap and noise.</li>
 </ul>
-<div id="mammography-starter-5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-27T16:52:17.852281Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-27T16:52:17.852141Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-27T16:52:17.854482Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-27T16:52:17.853811Z&quot;}}" data-execution_count="42">
+<div id="mammography-starter-5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T02:22:37.966857Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T02:22:37.966724Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T02:22:37.968773Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T02:22:37.968189Z&quot;}}" data-execution_count="42">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a><span class="co"># Fill in BorderlineSMOTE(random_state=42), then fit and evaluate.</span></span>
