@@ -1,4 +1,4 @@
-# MLZero chat mode + Ollama (Gemma 4) — self-contained Docker demo
+# MLZero chat mode + Ollama (Gemma 4) - self-contained Docker demo
 
 [MLZero](https://github.com/autogluon/autogluon-assistant) chat mode answers data-analysis and ML questions
 about a dataset, grounded in AutoGluon tutorials it retrieves. It **does not run any code**.
@@ -47,7 +47,7 @@ Set these in the shell or in a `.env` file next to `docker-compose.yml`:
 
 | Variable | Default | |
 |---|---|---|
-| `OLLAMA_MODEL` | `gemma4` (= `gemma4:e4b`) | e.g. `gemma4:26b` (MoE), `gemma4:31b` — pulled automatically |
+| `OLLAMA_MODEL` | `gemma4` (= `gemma4:e4b`) | e.g. `gemma4:26b` (MoE), `gemma4:31b` - pulled automatically |
 | `OLLAMA_EMBED_MODEL` | `embeddinggemma` | embedding model for tutorial retrieval (one index per model) |
 | `OLLAMA_URL` | `http://ollama:11434` | point to another Ollama server instead of the bundled one |
 
