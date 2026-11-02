@@ -238,6 +238,37 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-03-feature.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
 </section>
+<section id="session-plan-theory-and-coding" class="title-slide slide level1 center">
+<h1>Session plan: theory and coding</h1>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Activity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Theory 1: Data understanding, leakage, and manual feature engineering</td>
+</tr>
+<tr class="even">
+<td><a href="#/coding-break-1">Coding 1 (~15 min): Exercises 1-2</a></td>
+</tr>
+<tr class="odd">
+<td>Theory 2: Variance, correlation, and univariate feature filters</td>
+</tr>
+<tr class="even">
+<td><a href="#/coding-break-2">Coding 2 (~15 min): Exercises 3-4</a></td>
+</tr>
+<tr class="odd">
+<td>Theory 3: Wrappers, model comparisons, selection stability, and interpretation</td>
+</tr>
+<tr class="even">
+<td><a href="#/coding-break-3">Coding 3 (~15 min): Exercises 5-6</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+
 <section id="feature-engineering-versus-feature-selection" class="title-slide slide level1 center">
 <h1>Feature engineering versus feature selection</h1>
 <p><strong>Feature engineering</strong> creates inputs using knowledge of the problem.</p>
@@ -248,7 +279,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li>It tries to keep signal while removing redundancy, noise, and sources of overfitting.</li>
 </ul>
-<p>A feature is useful when:</p>
+<p>A feature is <em>useful</em> when:</p>
 <ul>
 <li>It carries <strong>signal</strong> about the target.</li>
 <li>It is not just a duplicate of another feature.</li>
@@ -259,7 +290,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="flight-delay-prediction-predict-whether-a-flight-arrives-at-least-15-minutes-late" class="title-slide slide level1 center">
 <h1>Flight delay prediction: predict whether a flight arrives at least 15 minutes late</h1>
-<div id="750a7c46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:15.295677Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:15.295556Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:15.304245Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:15.303820Z&quot;}}" data-outputid="9262426d-6a15-41c6-c5b6-a7a17cf88863" data-execution_count="3">
+<div id="750a7c46" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:10.830606Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:10.830396Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:10.844547Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:10.843609Z&quot;}}" data-outputid="9262426d-6a15-41c6-c5b6-a7a17cf88863" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>X.head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
@@ -366,7 +397,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </div>
 </div>
-<div id="e2fd1889" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:15.305347Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:15.305233Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:15.308401Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:15.307991Z&quot;}}" data-outputid="e74c6a7e-f6f8-48f2-a6de-3b2a1f609454" data-execution_count="4">
+<div id="e2fd1889" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:10.846480Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:10.846312Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:10.851554Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:10.850509Z&quot;}}" data-outputid="e74c6a7e-f6f8-48f2-a6de-3b2a1f609454" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>y.value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
@@ -382,7 +413,7 @@ Name: proportion, dtype: float64</code></pre>
 
 <section id="data-understanding" class="title-slide slide level1 center">
 <h1>Data understanding</h1>
-<div id="567a731f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:15.309574Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:15.309452Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:15.314877Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:15.314495Z&quot;}}" data-execution_count="5">
+<div id="567a731f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:10.853422Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:10.853233Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:10.862087Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:10.861324Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>X.info()</span></code></pre></div>
@@ -418,7 +449,7 @@ memory usage: 625.1 KB</code></pre>
 <section id="redundant-features-and-irrelevant-noise" class="title-slide slide level1 center">
 <h1>Redundant features and irrelevant noise</h1>
 <ul>
-<li>The two rain forecasts can carry almost the same information.</li>
+<li>The two rain forecasts carry the same information.</li>
 <li>A rain forecast is somewhat correlated with the target, but it is not a perfect predictor.</li>
 <li>An independent noise column has similar distributions in the two classes.</li>
 </ul>
@@ -432,6 +463,7 @@ Figure&nbsp;1
 <div class="fragment">
 <ul>
 <li>IDs. <em>Why</em>?</li>
+<li>Dates. <em>Why</em>?</li>
 <li>Sensitive information. <em>Why</em>?</li>
 <li>Features that are not available at prediction time. <em>Why</em>?</li>
 <li>…</li>
@@ -447,7 +479,7 @@ Figure&nbsp;1
 <li><code>airport_*</code>: fixed airport-presence indicators for airports appearing in either origin or destination.</li>
 <li>Other?</li>
 </ul>
-<div id="819613f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:15.528094Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:15.527983Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:15.532213Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:15.531848Z&quot;}}" data-execution_count="7">
+<div id="819613f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:11.204899Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:11.204702Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:11.211492Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:11.210619Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>df[[<span class="st">'scheduled_departure'</span>]].head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
@@ -494,7 +526,7 @@ Figure&nbsp;1
 </div>
 </div>
 </div>
-<div id="9d0815e1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:15.533436Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:15.533324Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:15.536888Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:15.536508Z&quot;}}" data-execution_count="8">
+<div id="9d0815e1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:11.213409Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:11.213212Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:11.219411Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:11.218686Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>df[[<span class="st">'origin'</span>, <span class="st">'destination'</span>]].head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
@@ -549,7 +581,7 @@ Figure&nbsp;1
 
 <section id="add-domain-features-to-reveal-patterns" class="title-slide slide level1 center">
 <h1>Add domain features to reveal patterns</h1>
-<div id="bab7827a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:15.543081Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:15.542980Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:15.547213Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:15.546816Z&quot;}}" data-execution_count="10">
+<div id="bab7827a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:11.229536Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:11.229373Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:11.236794Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:11.235941Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>df[[<span class="st">'scheduled_departure'</span>, <span class="st">'departure_hour'</span>, <span class="st">'is_holiday'</span>, <span class="st">'is_late_night'</span>, <span class="st">'delayed_15_min'</span>]].head(n<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div>
@@ -622,14 +654,9 @@ Figure&nbsp;2
 
 <img data-src="lab-03-feature_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
 
-<section id="data-understanding-and-visualization-1" class="title-slide slide level1 center">
-<h1>Data understanding and visualization</h1>
-
-<img data-src="lab-03-feature_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"></section>
-
 <section id="are-features-known-at-prediction-time" class="title-slide slide level1 center">
 <h1>Are features known at prediction time?</h1>
-<div id="110bf60c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:16.392972Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:16.392847Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:16.414498Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:16.414046Z&quot;}}" data-outputid="18b357f7-25ab-4b25-bd9e-6d805aad8ec0" data-execution_count="15">
+<div id="110bf60c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:12.634141Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:12.633945Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:12.671541Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:12.670637Z&quot;}}" data-outputid="18b357f7-25ab-4b25-bd9e-6d805aad8ec0" data-execution_count="15">
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div>
 <style scoped="">
@@ -779,7 +806,7 @@ Figure&nbsp;2
 
 <section id="are-features-known-at-prediction-time-1" class="title-slide slide level1 center">
 <h1>Are features known at prediction time?</h1>
-<div id="fdc896e9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:16.415627Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:16.415512Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:16.420854Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:16.420454Z&quot;}}" data-outputid="e64b1793-aa40-4dbb-b9b8-380d6467e4dc" data-execution_count="16">
+<div id="fdc896e9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:12.673413Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:12.673224Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:12.682643Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:12.681592Z&quot;}}" data-outputid="e64b1793-aa40-4dbb-b9b8-380d6467e4dc" data-execution_count="16">
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 <style scoped="">
@@ -922,7 +949,7 @@ Figure&nbsp;2
 
 <section id="pipeline-generation" class="title-slide slide level1 center">
 <h1>Pipeline generation</h1>
-<div id="f6b0e58a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:16.422101Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:16.421915Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:16.437443Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:16.437046Z&quot;}}" data-outputid="193d445c-9813-4ff1-f978-9c59c2296717" data-execution_count="17">
+<div id="f6b0e58a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:12.684516Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:12.684323Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:12.709272Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:12.708347Z&quot;}}" data-outputid="193d445c-9813-4ff1-f978-9c59c2296717" data-execution_count="17">
 <div class="cell-output cell-output-display" data-execution_count="17">
 <style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
@@ -1478,11 +1505,11 @@ a.param-doc-link::before {
                  FlightFeatureEngineer(add_manual_features=False)),
                 ('preprocessing',
                  ColumnTransformer(transformers=[('num', 'passthrough',
-                                                  &lt;sklearn.compose._column_transformer.make_column_selector object at 0x727889dd5a90&gt;),
+                                                  &lt;sklearn.compose._column_transformer.make_column_selector object at 0x714cd4fd5a90&gt;),
                                                  ('cat',
                                                   OneHotEncoder(handle_unknown='ignore',
                                                                 sparse_output=False),
-                                                  &lt;sklearn.compose._column_transformer.make_column_selector object at 0x727889e96d50&gt;)],
+                                                  &lt;sklearn.compose._column_transformer.make_column_selector object at 0x714cd497ac10&gt;)],
                                    verbose_feature_names_out=False)),
                 ('classifier',
                  DecisionTreeClassifier(class_weight='balanced', max_depth=5,
@@ -1732,7 +1759,7 @@ The default value for `force_int_remainder_cols` will change from<br>
 
             </details>
         </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>num</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>&lt;sklearn.compose._column_transformer.make_column_selector object at 0x727889dd5a90&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox"><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>passthrough</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>passthrough</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox"><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>cat</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__"><pre>&lt;sklearn.compose._column_transformer.make_column_selector object at 0x727889e96d50&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox"><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__">
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>num</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>&lt;sklearn.compose._column_transformer.make_column_selector object at 0x714cd4fd5a90&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox"><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>passthrough</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>passthrough</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox"><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>cat</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__"><pre>&lt;sklearn.compose._column_transformer.make_column_selector object at 0x714cd497ac10&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox"><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -2237,18 +2264,11 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 
-<section id="actual-departure-and-arrival-times-keep-or-drop" class="title-slide slide level1 center">
-<h1>Actual departure and arrival times: keep or drop?</h1>
-<p>Prediction time matters:</p>
-<ul>
-<li><em>Ticket sale</em>: route, carrier, scheduled times, and planned distance/duration.</li>
-<li><em>Morning of travel</em>: forecasts and known schedule pressure.</li>
-<li><em>Gate before departure</em>: current weather and operational status that is already known.</li>
-<li><em>After departure</em>: actual departure time and departure delay may be inferred.</li>
-<li><em>After landing</em>: actual arrival time and arrival delay are known.</li>
-</ul>
-<div id="2e1613f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:16.438463Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:16.438347Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:18.295399Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:18.294830Z&quot;}}" data-outputid="f221860c-dfee-4159-852a-22b67ea3376f" data-execution_count="18">
-<div class="cell-output cell-output-display" data-execution_count="18">
+<section id="new-information-available-at-each-event" class="title-slide slide level1 center">
+<h1>New information available at each event</h1>
+
+<img data-src="lab-03-feature_files/figure-revealjs/cell-19-output-1.png" class="r-stretch"><div id="2e1613f5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:12.808689Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:12.808482Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:15.436984Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:15.435930Z&quot;}}" data-outputid="f221860c-dfee-4159-852a-22b67ea3376f" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2300,44 +2320,50 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 
-<section id="leakage-can-make-perfect-predictions-but-it-is-not-useful-in-practice." class="title-slide slide level1 center">
-<h1>Leakage can make perfect predictions, but it is not useful in practice.</h1>
-
-<img data-src="lab-03-feature_files/figure-revealjs/cell-20-output-1.png" class="r-stretch quarto-figure-center" id="fig-leakage"><p class="caption">
-Figure&nbsp;3
-</p></section>
+<section id="coding-break-1-exercises-1-2-15-minutes" class="title-slide slide level1 center">
+<h1>Coding break 1: Exercises 1-2 (~15 minutes)</h1>
+<p><a id="coding-break-1" href=""></a></p>
+<p>Run the <a href="#/coding-exercise-setup">setup</a>, then implement <a href="#/coding-exercises-1">Exercises 1-2</a>.</p>
+</section>
 
 <section id="automated-feature-selection" class="title-slide slide level1 center">
 <h1>Automated feature selection</h1>
+<p><a id="theory-block-2" href=""></a></p>
 
 <img data-src="img/remote/filter-methods.png" class="r-stretch quarto-figure-center"><p class="caption">Filter Methods</p><p><strong>Filter methods</strong> rank features using a statistical criterion independent of the final model <span class="citation" data-cites="guyon2003introduction">(<a href="#/references" role="doc-biblioref" onclick="">Guyon and Elisseeff 2003</a>)</span>.</p>
 <ul>
 <li>Filter methods are usually faster. <em>Why?</em></li>
-<li>Variance and correlation filters inspect predictors without using the target.</li>
+<li>Variance and correlation filters inspect features without using the target.</li>
 <li>We then use mutual information with <code>SelectKBest</code>.</li>
 </ul>
 </section>
 
 <section id="filter-low-variance" class="title-slide slide level1 center">
 <h1>Filter: low variance</h1>
-<p><code>VarianceThreshold</code> removes predictors that vary too little in the training data. <em>Why</em>?</p>
-<ul>
-<li><code>threshold=0</code> removes constants; a positive threshold also removes low-variance features.</li>
-<li>Variance depends on units; do not first scale every feature to unit variance.</li>
-<li>The filter ignores the target: a rare binary predictor can have low variance and still be useful.</li>
-</ul>
+<p><code>VarianceThreshold</code> removes features that vary too little in the training data.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> VarianceThreshold</span>
 <span id="cb9-2"><a href="" aria-label="2"></a>variance_filter <span class="op">=</span> VarianceThreshold(threshold<span class="op">=</span><span class="fl">0.01</span>)</span></code></pre></div>
-<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html">VarianceThreshold documentation</a></p>
+<ul>
+<li><code>threshold</code>: discard features with training variance <strong>less than or equal to</strong> this value; the default <code>0.0</code> removes constants.</li>
+<li>No target <code>y</code> is needed.</li>
+<li>Variance depends on units: do not first scale every feature to unit variance.</li>
+</ul>
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html">VarianceThreshold API</a></p>
 </section>
+
+<section id="variance-constant-nearly-constant-or-varying" class="title-slide slide level1 center">
+<h1>Variance: constant, nearly constant, or varying?</h1>
+<p>These synthetic features have the same units and mean, but different spreads.</p>
+
+<img data-src="lab-03-feature_files/figure-revealjs/cell-21-output-1.png" class="r-stretch"></section>
 
 <section id="variance-filter-inspect-the-removals" class="title-slide slide level1 center">
 <h1>Variance filter: inspect the removals</h1>
-<div id="filter-variance-example" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:18.349169Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:18.349032Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:18.374008Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:18.373523Z&quot;}}" data-execution_count="20">
+<div id="filter-variance-example" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:15.713757Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:15.713520Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:15.751379Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:15.750464Z&quot;}}" data-execution_count="21">
 <div class="cell-output cell-output-stdout">
 <pre><code>Input features: 34; retained: 34 (threshold=0.01).</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="20">
+<div class="cell-output cell-output-display" data-execution_count="21">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2397,30 +2423,35 @@ Figure&nbsp;3
 
 <section id="filter-high-correlation" class="title-slide slide level1 center">
 <h1>Filter: high correlation</h1>
-<p><code>DropCorrelatedFeatures</code> removes redundant numeric predictors.</p>
-<ul>
-<li>With <code>threshold=0.9</code>, remove features whose absolute correlation with a retained feature exceeds 0.9.
-<ul>
-<li>Absolute correlation catches both positive and negative relationships.</li>
-</ul></li>
-<li>By default, Pearson correlation measures linear association between predictors, not association with the target.</li>
-<li>Column order can affect which representative survives.
-<ul>
-<li>Correlation alone does not identify the most predictive representative.</li>
-</ul></li>
-</ul>
+<p><code>DropCorrelatedFeatures</code> removes redundant numeric features.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="im">from</span> feature_engine.selection <span class="im">import</span> DropCorrelatedFeatures</span>
-<span id="cb11-2"><a href="" aria-label="2"></a>correlation_filter <span class="op">=</span> DropCorrelatedFeatures(threshold<span class="op">=</span><span class="fl">0.9</span>)</span></code></pre></div>
-<p><a href="https://feature-engine.trainindata.com/en/latest/user_guide/selection/DropCorrelatedFeatures.html">DropCorrelatedFeatures documentation</a></p>
+<span id="cb11-2"><a href="" aria-label="2"></a>correlation_filter <span class="op">=</span> DropCorrelatedFeatures(</span>
+<span id="cb11-3"><a href="" aria-label="3"></a>    variables<span class="op">=</span><span class="va">None</span>, method<span class="op">=</span><span class="st">"pearson"</span>, threshold<span class="op">=</span><span class="fl">0.9</span>,</span>
+<span id="cb11-4"><a href="" aria-label="4"></a>)</span></code></pre></div>
+<ul>
+<li><code>method="pearson"</code>: measure linear correlation; <code>"spearman"</code> uses ranks.</li>
+<li><code>threshold=0.9</code>: remove a feature if its <strong>absolute</strong> correlation with a retained one exceeds 0.9; the default is 0.8.</li>
+</ul>
+<p><a href="https://feature-engine.trainindata.com/en/latest/api_doc/selection/DropCorrelatedFeatures.html">DropCorrelatedFeatures API</a></p>
 </section>
+
+<section id="correlation-both-positive-and-negative-redundancy" class="title-slide slide level1 center">
+<h1>Correlation: both positive and negative redundancy</h1>
+<ul>
+<li>Keep reference A; compare three other synthetic features with it.</li>
+<li>At <code>threshold=0.9</code>, B and C are removed because <span class="math inline">\(|r| &gt; 0.9\)</span>; D survives.</li>
+<li>A weak Pearson correlation does not rule out nonlinear dependence.</li>
+</ul>
+
+<img data-src="lab-03-feature_files/figure-revealjs/cell-23-output-1.png" class="r-stretch"></section>
 
 <section id="correlation-filter-inspect-the-redundant-pairs" class="title-slide slide level1 center">
 <h1>Correlation filter: inspect the redundant pairs</h1>
-<div id="filter-correlation-example" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:18.375408Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:18.375299Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:22.403119Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:22.402673Z&quot;}}" data-execution_count="21">
+<div id="filter-correlation-example" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:21.199674Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:21.199474Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:21.219340Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:21.218601Z&quot;}}" data-execution_count="23">
 <div class="cell-output cell-output-stdout">
 <pre><code>Input features: 34; removed: 3 (threshold=0.9).</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="21">
+<div class="cell-output cell-output-display" data-execution_count="23">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2475,22 +2506,41 @@ Figure&nbsp;3
 <section id="filter-selectkbest" class="title-slide slide level1 center">
 <h1>Filter: <code>SelectKBest</code></h1>
 <p><code>SelectKBest</code> ranks features by <code>score_func</code> and keeps the top <code>k</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="im">from</span> functools <span class="im">import</span> partial</span>
+<span id="cb13-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest, mutual_info_classif</span>
+<span id="cb13-3"><a href="" aria-label="3"></a>mi_score <span class="op">=</span> partial(mutual_info_classif, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb13-4"><a href="" aria-label="4"></a>filter_selector <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>mi_score, k<span class="op">=</span><span class="dv">8</span>)</span></code></pre></div>
 <ul>
-<li>Each feature is scored separately.</li>
-<li>With <code>mutual_info_classif</code>, keep the features with the highest estimated mutual information (MI) with the class label.
+<li>Each feature is scored separately: keep the features with the highest estimated mutual information (MI) with the class label.
 <ul>
 <li>MI is non-negative; zero suggests little dependence between the feature and target.</li>
 <li>Larger MI means the feature reduces more uncertainty about the label.</li>
 </ul></li>
-<li>Useful combinations can be missed, and redundant features can survive. <em>Why?</em></li>
+<li>Useful combinations can be missed. <em>Why?</em></li>
+<li>Redundant features can survive. <em>Why?</em></li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a>SelectKBest(score_func<span class="op">=</span>mutual_info, k<span class="op">=</span><span class="dv">8</span>)</span></code></pre></div>
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html">SelectKBest API</a></p>
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.mutual_info_classif.html">mutual_info_classif API</a></p>
 </section>
+
+<section id="what-does-the-filter-keep" class="title-slide slide level1 center">
+<h1>What does the filter keep?</h1>
+<ul>
+<li>Fit SelectKBest on the features retained by variance and correlation filtering.
+<ul>
+<li>Color marks retained features; only some features tied at the boundary may be selected.</li>
+</ul></li>
+<li>These are training scores, not validation performance.</li>
+</ul>
+
+<img data-src="lab-03-feature_files/figure-revealjs/cell-28-output-1.png" class="r-stretch quarto-figure-center" id="fig-filter-scores"><p class="caption">
+Figure&nbsp;3
+</p></section>
 
 <section id="compare-candidate-feature-counts-k" class="title-slide slide level1 center">
 <h1>Compare candidate feature counts <code>k</code></h1>
-<div id="a391528c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:22.422430Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:22.422307Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:28.618806Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:28.618316Z&quot;}}" data-execution_count="24">
-<div class="cell-output cell-output-display" data-execution_count="24">
+<div id="a391528c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:21.688932Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:21.688747Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:31.372483Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:31.371515Z&quot;}}" data-execution_count="28">
+<div class="cell-output cell-output-display" data-execution_count="28">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2594,24 +2644,17 @@ Figure&nbsp;3
 
 </div>
 
-<img data-src="lab-03-feature_files/figure-revealjs/cell-27-output-1.png" class="r-stretch"></section>
+<img data-src="lab-03-feature_files/figure-revealjs/cell-31-output-1.png" class="r-stretch"></section>
 
-<section id="what-does-the-filter-keep" class="title-slide slide level1 center">
-<h1>What does the filter keep?</h1>
-<ul>
-<li>Fit SelectKBest on the features retained by variance and correlation filtering.
-<ul>
-<li>Color marks retained features; only some features tied at the boundary may be selected.</li>
-</ul></li>
-<li>These are training scores, not validation performance.</li>
-</ul>
-
-<img data-src="lab-03-feature_files/figure-revealjs/cell-29-output-1.png" class="r-stretch quarto-figure-center" id="fig-filter-scores"><p class="caption">
-Figure&nbsp;4
-</p></section>
+<section id="coding-break-2-exercises-3-4-15-minutes" class="title-slide slide level1 center">
+<h1>Coding break 2: Exercises 3-4 (~15 minutes)</h1>
+<p><a id="coding-break-2" href=""></a></p>
+<p>Go to <a href="#/coding-exercises-2">Exercises 3-4</a>.</p>
+</section>
 
 <section id="automated-feature-selection-1" class="title-slide slide level1 center">
 <h1>Automated feature selection</h1>
+<p><a id="theory-block-3" href=""></a></p>
 
 <img data-src="img/remote/wrapper-methods.png" class="r-stretch quarto-figure-center"><p class="caption">Wrapper Methods</p><p><strong>Wrapper methods</strong> search for a subset by repeatedly fitting a model <span class="citation" data-cites="guyon2003introduction">(<a href="#/references" role="doc-biblioref" onclick="">Guyon and Elisseeff 2003</a>)</span>.</p>
 <ul>
@@ -2641,6 +2684,32 @@ Figure&nbsp;4
 </ul>
 </section>
 
+<section id="python-sequentialfeatureselector" class="title-slide slide level1 center">
+<h1>Python: <code>SequentialFeatureSelector</code></h1>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SequentialFeatureSelector</span>
+<span id="cb14-2"><a href="" aria-label="2"></a>sfs_selector <span class="op">=</span> SequentialFeatureSelector(</span>
+<span id="cb14-3"><a href="" aria-label="3"></a>    estimator<span class="op">=</span>make_tree(), n_features_to_select<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb14-4"><a href="" aria-label="4"></a>    direction<span class="op">=</span><span class="st">"forward"</span>, scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>, cv<span class="op">=</span><span class="dv">3</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb14-5"><a href="" aria-label="5"></a>)</span></code></pre></div>
+<ul>
+<li><code>estimator</code>: an unfitted model to refit on each candidate subset.</li>
+<li><code>n_features_to_select</code>: desired count, or a fraction between 0 and 1.</li>
+<li><code>direction</code>: <code>"forward"</code> adds features; <code>"backward"</code> removes them.</li>
+<li><code>scoring</code> and <code>cv</code>: criterion to maximize and the folds used to compare subsets; <code>cv=3</code> uses three folds.</li>
+<li><code>n_jobs=-1</code>: use all available processors for CV.</li>
+</ul>
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html">SequentialFeatureSelector API</a></p>
+</section>
+
+<section id="sfs-three-runs-keeping-1-2-then-3-features" class="title-slide slide level1 center">
+<h1>SFS: three runs, keeping 1, 2, then 3 features</h1>
+<ul>
+<li>Use a depth-2 tree.</li>
+<li>Try every possible feature addition; keep the one with the highest CV balanced accuracy.</li>
+</ul>
+
+<img data-src="lab-03-feature_files/figure-revealjs/cell-33-output-1.png" class="r-stretch"></section>
+
 <section id="wrapper-rfe" class="title-slide slide level1 center">
 <h1>Wrapper: <code>RFE</code></h1>
 <p>Recursive feature elimination (RFE) repeatedly fits an estimator and removes its least important features <span class="citation" data-cites="guyon2002gene">(<a href="#/references" role="doc-biblioref" onclick="">Guyon et al. 2002</a>)</span>.</p>
@@ -2656,6 +2725,21 @@ Figure&nbsp;4
 <li>Stop at the desired feature count.</li>
 </ul></li>
 </ul>
+</section>
+
+<section id="python-rfe" class="title-slide slide level1 center">
+<h1>Python: <code>RFE</code></h1>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFE</span>
+<span id="cb15-2"><a href="" aria-label="2"></a>rfe_selector <span class="op">=</span> RFE(</span>
+<span id="cb15-3"><a href="" aria-label="3"></a>    estimator<span class="op">=</span>make_tree(), n_features_to_select<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb15-4"><a href="" aria-label="4"></a>    step<span class="op">=</span><span class="fl">0.2</span>, importance_getter<span class="op">=</span><span class="st">"auto"</span>,</span>
+<span id="cb15-5"><a href="" aria-label="5"></a>)</span></code></pre></div>
+<ul>
+<li><code>estimator</code>: an unfitted model exposing coefficients or feature importances.</li>
+<li><code>n_features_to_select=8</code>: stop with eight features.</li>
+<li><code>step</code>: an integer removes that many features per iteration; <code>0.2</code> removes 20% of the initial count.</li>
+</ul>
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html">RFE API</a></p>
 </section>
 
 <section id="rfe-versus-backward-sfs" class="title-slide slide level1 center">
@@ -2679,10 +2763,110 @@ Figure&nbsp;4
 </ul>
 </section>
 
+<section id="one-fitted-tree-what-would-rfe-remove" class="title-slide slide level1 center">
+<h1>One fitted tree: what would RFE remove?</h1>
+<ul>
+<li>Fit a depth-2 tree on all four features from the SFS example.</li>
+<li>Tree importances measure the total weighted impurity reduction from its splits.</li>
+<li><strong>B is unused (importance 0), so RFE removes B first</strong> (<code>step=1</code>).</li>
+</ul>
+
+<img data-src="lab-03-feature_files/figure-revealjs/cell-35-output-1.png" class="r-stretch"></section>
+
+<section id="backward-elimination-refit-after-every-candidate-removal" class="title-slide slide level1 center">
+<h1>Backward elimination: refit after every candidate removal</h1>
+<ul>
+<li>Same data, depth-2 tree; keep three of the four features.</li>
+<li><strong>Backward SFS</strong> for each possible removal, refit the tree inside each fold and score its validation data.
+<ul>
+<li><em>Removes D</em>: after removing D, balanced accuracy increases.</li>
+</ul></li>
+<li><strong>RFE</strong> fit the tree and score the feature relevance.
+<ul>
+<li><em>Removes B</em>: lowest tree importance.</li>
+</ul></li>
+</ul>
+<div id="backward-elimination-demo" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:32.555762Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:32.555561Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:32.695707Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:32.694583Z&quot;}}" data-execution_count="35">
+<div class="cell-output cell-output-stdout">
+<pre><code>All four features: CV balanced accuracy = 0.828</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Remove</th>
+<th data-quarto-table-cell-role="th">Tree importance</th>
+<th data-quarto-table-cell-role="th">CV after removal</th>
+<th data-quarto-table-cell-role="th">Change vs. all four</th>
+<th data-quarto-table-cell-role="th">RFE choice</th>
+<th data-quarto-table-cell-role="th">Backward SFS choice</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>A</td>
+<td>0.099</td>
+<td>0.812</td>
+<td>-0.016</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>B</td>
+<td>0.000</td>
+<td>0.828</td>
+<td>0.000</td>
+<td>remove</td>
+<td></td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>C</td>
+<td>0.748</td>
+<td>0.807</td>
+<td>-0.021</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>D</td>
+<td>0.153</td>
+<td>0.866</td>
+<td>0.037</td>
+<td></td>
+<td>remove</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
 <section id="compare-raw-engineered-and-selected-feature-sets" class="title-slide slide level1 center">
 <h1>Compare raw, engineered, and selected feature sets</h1>
-<div id="A1xoT8hfrwWa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:28.978043Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:28.977942Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:39.011558Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:39.011034Z&quot;}}" data-outputid="39211e1f-175a-4dde-f984-d0e94d3cd594" data-execution_count="31">
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div id="A1xoT8hfrwWa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:32.697807Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:32.697592Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:48.447412Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:48.446421Z&quot;}}" data-outputid="39211e1f-175a-4dde-f984-d0e94d3cd594" data-execution_count="36">
+<div class="cell-output cell-output-display" data-execution_count="36">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2724,7 +2908,7 @@ Figure&nbsp;4
 <td>0.911111</td>
 <td>8.0</td>
 <td>0.0</td>
-<td>0.256878</td>
+<td>0.389274</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">2</th>
@@ -2736,7 +2920,7 @@ Figure&nbsp;4
 <td>0.447273</td>
 <td>8.0</td>
 <td>0.0</td>
-<td>8.922513</td>
+<td>14.052286</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">1</th>
@@ -2748,7 +2932,7 @@ Figure&nbsp;4
 <td>NaN</td>
 <td>34.0</td>
 <td>0.0</td>
-<td>0.111767</td>
+<td>0.178839</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0</th>
@@ -2760,7 +2944,7 @@ Figure&nbsp;4
 <td>NaN</td>
 <td>24.0</td>
 <td>0.0</td>
-<td>0.095732</td>
+<td>0.136569</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">3</th>
@@ -2772,7 +2956,7 @@ Figure&nbsp;4
 <td>0.393939</td>
 <td>8.0</td>
 <td>0.0</td>
-<td>0.633798</td>
+<td>0.974539</td>
 </tr>
 </tbody>
 </table>
@@ -2785,27 +2969,22 @@ Figure&nbsp;4
 <section id="compare-predictive-performance-and-complexity" class="title-slide slide level1 center">
 <h1>Compare predictive performance and complexity</h1>
 <ul>
+<li>Compare feature count and fit time alongside accuracy (measured times depend on the machine).</li>
 <li>All strategies use the same cross-validation folds.
 <ul>
 <li>Error bars show the standard deviation across folds, not confidence intervals.</li>
 </ul></li>
-<li>Compare feature count and fit time alongside accuracy (measured times depend on the machine).</li>
 </ul>
 
-<img data-src="lab-03-feature_files/figure-revealjs/cell-33-output-1.png" class="r-stretch quarto-figure-center" id="fig-strategy-comparison"><p class="caption">
-Figure&nbsp;5
+<img data-src="lab-03-feature_files/figure-revealjs/cell-38-output-1.png" class="r-stretch quarto-figure-center" id="fig-strategy-comparison"><p class="caption">
+Figure&nbsp;4
 </p></section>
 
-<section id="optional-selection-stability-across-folds" class="title-slide slide level1 center">
-<h1>Optional: Selection stability across folds</h1>
-<p>This extension checks whether each selector retains similar features across folds.</p>
-<p>You can skip it and continue with the interpretability check.</p>
-<ul>
-<li>Correlated features can be interchangeable, so changing subsets need not indicate a poor selector.</li>
-<li>If selected features change across folds, avoid drawing firm conclusions about which predictors matter.</li>
-</ul>
-<div id="Pyu6mZoGrwWa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:39.142695Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:39.142547Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:39.149036Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:39.148594Z&quot;}}" data-outputid="265ddcb3-bde4-41e9-f43c-77974e2ee267" data-execution_count="33">
-<div class="cell-output cell-output-display" data-execution_count="33">
+<section id="selection-stability-across-folds" class="title-slide slide level1 center">
+<h1>Selection stability across folds</h1>
+<p>If selected features change across folds, avoid drawing firm conclusions about which features matter.</p>
+<div id="Pyu6mZoGrwWa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:48.666871Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:48.666665Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:48.675698Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:48.674883Z&quot;}}" data-outputid="265ddcb3-bde4-41e9-f43c-77974e2ee267" data-execution_count="38">
+<div class="cell-output cell-output-display" data-execution_count="38">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2857,33 +3036,27 @@ Figure&nbsp;5
 </div>
 </section>
 
-<section id="optional-do-the-same-features-survive-each-fold" class="title-slide slide level1 center">
-<h1>Optional: Do the same features survive each fold?</h1>
+<section id="do-the-same-features-survive-each-fold" class="title-slide slide level1 center">
+<h1>Do the same features survive each fold?</h1>
 <ul>
-<li>Each entry shows the fraction of folds that retained a feature.
-<ul>
+<li>Each entry shows the fraction of folds that retained a feature.</li>
 <li>The chart shows the 18 features selected most often across methods.</li>
-</ul></li>
-<li>Titles report mean pairwise Jaccard similarity over all selected features.
-<ul>
-<li>Similar accuracy can come from different subsets.</li>
-</ul></li>
 </ul>
 
-<img data-src="lab-03-feature_files/figure-revealjs/cell-35-output-1.png" class="r-stretch quarto-figure-center" id="fig-selection-stability"><p class="caption">
-Figure&nbsp;6
+<img data-src="lab-03-feature_files/figure-revealjs/cell-40-output-1.png" class="r-stretch quarto-figure-center" id="fig-selection-stability"><p class="caption">
+Figure&nbsp;5
 </p></section>
 
 <section id="interpretability-check" class="title-slide slide level1 center">
 <h1>Interpretability check</h1>
-<div id="15_19AAMrwWb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:39.324206Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:39.324029Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:39.342227Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:39.341713Z&quot;}}" data-execution_count="35">
+<div id="15_19AAMrwWb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:48.943882Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:48.943683Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:48.971614Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:48.970645Z&quot;}}" data-execution_count="40">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>X_interpret_train, X_interpret_valid, y_interpret_train, y_interpret_valid <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.30</span>, stratify<span class="op">=</span>y, random_state<span class="op">=</span>RANDOM_STATE,)</span>
-<span id="cb14-2"><a href="" aria-label="2"></a>chosen_pipeline <span class="op">=</span> make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>, selector<span class="op">=</span>rfe_selector)</span>
-<span id="cb14-3"><a href="" aria-label="3"></a>chosen_pipeline</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>X_interpret_train, X_interpret_valid, y_interpret_train, y_interpret_valid <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.30</span>, stratify<span class="op">=</span>y, random_state<span class="op">=</span>RANDOM_STATE,)</span>
+<span id="cb17-2"><a href="" aria-label="2"></a>chosen_pipeline <span class="op">=</span> make_pipeline(add_manual_features<span class="op">=</span><span class="va">True</span>, selector<span class="op">=</span>rfe_selector)</span>
+<span id="cb17-3"><a href="" aria-label="3"></a>chosen_pipeline</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="40">
 <style>#sk-container-id-2 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
@@ -3437,11 +3610,11 @@ a.param-doc-link::before {
 </style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[('feature_engineering', FlightFeatureEngineer()),
                 ('preprocessing',
                  ColumnTransformer(transformers=[('num', 'passthrough',
-                                                  &lt;sklearn.compose._column_transformer.make_column_selector object at 0x7278886c7dd0&gt;),
+                                                  &lt;sklearn.compose._column_transformer.make_column_selector object at 0x714cd4ed39b0&gt;),
                                                  ('cat',
                                                   OneHotEncoder(handle_unknown='ignore',
                                                                 sparse_output=False),
-                                                  &lt;sklearn.compose._column_transformer.make_column_selector object at 0x7278886c7ef0&gt;)],
+                                                  &lt;sklearn.compose._column_transformer.make_column_selector object at 0x714cd4f03fb0&gt;)],
                                    verbose_feature_names_out=False)),
                 ('feature_selection',
                  RFE(estimator=DecisionTreeClassifier(class_weight='balanced',
@@ -3696,7 +3869,7 @@ The default value for `force_int_remainder_cols` will change from<br>
 
             </details>
         </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox"><label for="sk-estimator-id-12" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>num</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>&lt;sklearn.compose._column_transformer.make_column_selector object at 0x7278886c7dd0&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox"><label for="sk-estimator-id-13" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>passthrough</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>passthrough</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox"><label for="sk-estimator-id-14" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>cat</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__"><pre>&lt;sklearn.compose._column_transformer.make_column_selector object at 0x7278886c7ef0&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox"><label for="sk-estimator-id-15" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__">
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox"><label for="sk-estimator-id-12" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>num</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>&lt;sklearn.compose._column_transformer.make_column_selector object at 0x714cd4ed39b0&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox"><label for="sk-estimator-id-13" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>passthrough</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__num__"><pre>passthrough</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox"><label for="sk-estimator-id-14" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>cat</div></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__"><pre>&lt;sklearn.compose._column_transformer.make_column_selector object at 0x714cd4f03fb0&gt;</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox"><label for="sk-estimator-id-15" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="preprocessing__cat__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -4497,22 +4670,22 @@ forceTheme('sk-container-id-2');</script>
 
 <section id="interpretability-check-1" class="title-slide slide level1 center">
 <h1>Interpretability check</h1>
-<div id="33dc448e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:39.343515Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:39.343387Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:39.443293Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:39.442810Z&quot;}}" data-execution_count="36">
+<div id="33dc448e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:48.973567Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:48.973370Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:49.126369Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:49.125525Z&quot;}}" data-execution_count="41">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>chosen_pipeline.fit(X_interpret_train, y_interpret_train)</span>
-<span id="cb15-2"><a href="" aria-label="2"></a>selected_feature_names_for_tree <span class="op">=</span> selected_feature_names_ordered(chosen_pipeline)</span>
-<span id="cb15-3"><a href="" aria-label="3"></a>tree <span class="op">=</span> chosen_pipeline.named_steps[<span class="st">"classifier"</span>]</span>
-<span id="cb15-4"><a href="" aria-label="4"></a><span class="bu">print</span>(<span class="st">"Validation balanced accuracy:"</span>, <span class="bu">round</span>(balanced_accuracy_score(y_interpret_valid, chosen_pipeline.predict(X_interpret_valid)), <span class="dv">3</span>))</span>
-<span id="cb15-5"><a href="" aria-label="5"></a>pd.DataFrame({</span>
-<span id="cb15-6"><a href="" aria-label="6"></a>    <span class="st">"feature"</span>: selected_feature_names_for_tree,</span>
-<span id="cb15-7"><a href="" aria-label="7"></a>    <span class="st">"importance"</span>: tree.feature_importances_,</span>
-<span id="cb15-8"><a href="" aria-label="8"></a>}).sort_values(<span class="st">"importance"</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>chosen_pipeline.fit(X_interpret_train, y_interpret_train)</span>
+<span id="cb18-2"><a href="" aria-label="2"></a>selected_feature_names_for_tree <span class="op">=</span> selected_feature_names_ordered(chosen_pipeline)</span>
+<span id="cb18-3"><a href="" aria-label="3"></a>tree <span class="op">=</span> chosen_pipeline.named_steps[<span class="st">"classifier"</span>]</span>
+<span id="cb18-4"><a href="" aria-label="4"></a><span class="bu">print</span>(<span class="st">"Validation balanced accuracy:"</span>, <span class="bu">round</span>(balanced_accuracy_score(y_interpret_valid, chosen_pipeline.predict(X_interpret_valid)), <span class="dv">3</span>))</span>
+<span id="cb18-5"><a href="" aria-label="5"></a>pd.DataFrame({</span>
+<span id="cb18-6"><a href="" aria-label="6"></a>    <span class="st">"feature"</span>: selected_feature_names_for_tree,</span>
+<span id="cb18-7"><a href="" aria-label="7"></a>    <span class="st">"importance"</span>: tree.feature_importances_,</span>
+<span id="cb18-8"><a href="" aria-label="8"></a>}).sort_values(<span class="st">"importance"</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Validation balanced accuracy: 0.776</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="36">
+<div class="cell-output cell-output-display" data-execution_count="41">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -4588,7 +4761,7 @@ forceTheme('sk-container-id-2');</script>
 <section id="plotting-the-tree" class="title-slide slide level1 center">
 <h1>Plotting the tree</h1>
 
-<img data-src="lab-03-feature_files/figure-revealjs/cell-38-output-1.png" class="r-stretch"></section>
+<img data-src="lab-03-feature_files/figure-revealjs/cell-43-output-1.png" class="r-stretch"></section>
 
 <section id="selected-does-not-always-mean-used" class="title-slide slide level1 center">
 <h1>Selected does not always mean used</h1>
@@ -4597,8 +4770,8 @@ forceTheme('sk-container-id-2');</script>
 <li>Zero importance means the fitted tree never split on that feature.</li>
 </ul>
 
-<img data-src="lab-03-feature_files/figure-revealjs/cell-39-output-1.png" class="r-stretch quarto-figure-center" id="fig-tree-importance"><p class="caption">
-Figure&nbsp;7
+<img data-src="lab-03-feature_files/figure-revealjs/cell-44-output-1.png" class="r-stretch quarto-figure-center" id="fig-tree-importance"><p class="caption">
+Figure&nbsp;6
 </p></section>
 
 <section id="permutation-importance" class="title-slide slide level1 center">
@@ -4607,45 +4780,24 @@ Figure&nbsp;7
 <ul>
 <li>Positive values indicate that shuffling hurts the score; values near zero indicate little measured effect.</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> permutation_importance</span>
-<span id="cb17-2"><a href="" aria-label="2"></a>importance <span class="op">=</span> permutation_importance(</span>
-<span id="cb17-3"><a href="" aria-label="3"></a>    tree, X_tree_valid.to_numpy(), y_interpret_valid,</span>
-<span id="cb17-4"><a href="" aria-label="4"></a>    scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>, n_repeats<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb17-5"><a href="" aria-label="5"></a>    random_state<span class="op">=</span>RANDOM_STATE, n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
-<span id="cb17-6"><a href="" aria-label="6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> permutation_importance</span>
+<span id="cb20-2"><a href="" aria-label="2"></a>importance <span class="op">=</span> permutation_importance(</span>
+<span id="cb20-3"><a href="" aria-label="3"></a>    tree, X_tree_valid.to_numpy(), y_interpret_valid,</span>
+<span id="cb20-4"><a href="" aria-label="4"></a>    scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>, n_repeats<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb20-5"><a href="" aria-label="5"></a>    random_state<span class="op">=</span>RANDOM_STATE, n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb20-6"><a href="" aria-label="6"></a>)</span></code></pre></div>
 
-<img data-src="lab-03-feature_files/figure-revealjs/cell-40-output-1.png" class="r-stretch"></section>
+<img data-src="lab-03-feature_files/figure-revealjs/cell-45-output-1.png" class="r-stretch"></section>
 
 <section id="optional-shap-the-contribution-of-each-feature" class="title-slide slide level1 center">
-<h1>Optional: SHAP: the contribution of each feature</h1>
-<p><strong>SHAP</strong> assigns contributions to a prediction.</p>
-<p>This extension is not required for the Bike Sharing exercise; you can continue directly to that exercise.</p>
+<h1>[Optional] SHAP: the contribution of each feature</h1>
+<p><strong>SHAP</strong> assigns contributions to a prediction <span class="citation" data-cites="lundberg2017unified lundberg2020local">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>; <a href="#/references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</p>
 <p>For the delayed class (<code>y=1</code>), we explain the model’s prediction probability: <span class="math inline">\(\hat{P}(y=1 \mid x) = \text{base value} + \sum_{j=1}^{p} \phi_j(x).\)</span></p>
 <ul>
 <li>Positive contributions raise the prediction above the baseline; negative contributions lower it.</li>
 <li>SHAP explains the fitted model, not causal effects.</li>
 </ul>
-<p>Method: <span class="citation" data-cites="lundberg2017unified lundberg2020local">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>; <a href="#/references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</p>
-<div id="7c912bfb4bc3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:41.589230Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:41.589055Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:41.607152Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:41.606684Z&quot;}}" data-execution_count="41">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>background <span class="op">=</span> X_tree_train.sample(n<span class="op">=</span><span class="bu">min</span>(<span class="dv">100</span>, <span class="bu">len</span>(X_tree_train)), random_state<span class="op">=</span>RANDOM_STATE) <span class="co"># Use training rows as the background and explain validation rows only.</span></span>
-<span id="cb18-2"><a href="" aria-label="2"></a>X_explain <span class="op">=</span> X_tree_valid.sample(n<span class="op">=</span><span class="bu">min</span>(<span class="dv">300</span>, <span class="bu">len</span>(X_tree_valid)), random_state<span class="op">=</span>RANDOM_STATE)</span>
-<span id="cb18-3"><a href="" aria-label="3"></a>explainer <span class="op">=</span> shap.TreeExplainer(</span>
-<span id="cb18-4"><a href="" aria-label="4"></a>    tree,</span>
-<span id="cb18-5"><a href="" aria-label="5"></a>    data<span class="op">=</span>background,</span>
-<span id="cb18-6"><a href="" aria-label="6"></a>    feature_names<span class="op">=</span>selected_feature_names_for_tree,</span>
-<span id="cb18-7"><a href="" aria-label="7"></a>    feature_perturbation<span class="op">=</span><span class="st">"interventional"</span>,</span>
-<span id="cb18-8"><a href="" aria-label="8"></a>    model_output<span class="op">=</span><span class="st">"probability"</span>,</span>
-<span id="cb18-9"><a href="" aria-label="9"></a>)</span>
-<span id="cb18-10"><a href="" aria-label="10"></a>all_class_shap <span class="op">=</span> explainer(X_explain)</span>
-<span id="cb18-11"><a href="" aria-label="11"></a>delayed_class_index <span class="op">=</span> <span class="bu">int</span>(np.flatnonzero(tree.classes_ <span class="op">==</span> <span class="dv">1</span>)[<span class="dv">0</span>])</span>
-<span id="cb18-12"><a href="" aria-label="12"></a>shap_delayed <span class="op">=</span> all_class_shap[:, :, delayed_class_index]</span>
-<span id="cb18-13"><a href="" aria-label="13"></a></span>
-<span id="cb18-14"><a href="" aria-label="14"></a>delayed_probability <span class="op">=</span> tree.predict_proba(X_explain.to_numpy())[:, delayed_class_index]</span>
-<span id="cb18-15"><a href="" aria-label="15"></a>np.testing.assert_allclose(shap_delayed.base_values <span class="op">+</span> shap_delayed.values.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>), delayed_probability, atol<span class="op">=</span><span class="fl">1e-6</span>,)  <span class="co"># Check that all contributions reconstruct each prediction.</span></span>
-<span id="cb18-16"><a href="" aria-label="16"></a><span class="bu">print</span>(<span class="ss">f"Explained </span><span class="sc">{</span><span class="bu">len</span>(X_explain)<span class="sc">}</span><span class="ss"> validation flights and </span><span class="sc">{</span>X_explain<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> selected features."</span>)</span></code></pre></div>
-</details>
+<div id="7c912bfb4bc3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:50.295718Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:50.295516Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:52.000999Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:52.000065Z&quot;}}" data-execution_count="45">
 <div class="cell-output cell-output-stdout">
 <pre><code>Explained 300 validation flights and 8 selected features.</code></pre>
 </div>
@@ -4653,42 +4805,39 @@ Figure&nbsp;7
 </section>
 
 <section id="optional-global-shap-contributions" class="title-slide slide level1 center">
-<h1>Optional: Global SHAP contributions</h1>
+<h1>[Optional] Global SHAP contributions</h1>
 <p>Mean absolute SHAP values rank how much features move predictions across the explained flights.</p>
-<ul>
-<li>Signed means can cancel positive and negative contributions.</li>
-</ul>
 
-<img data-src="lab-03-feature_files/figure-revealjs/cell-44-output-1.png" class="r-stretch"></section>
+<img data-src="lab-03-feature_files/figure-revealjs/cell-48-output-1.png" class="r-stretch"></section>
 
 <section id="optional-direction-and-variation-across-flights" class="title-slide slide level1 center">
-<h1>Optional: Direction and variation across flights</h1>
+<h1>[Optional] Direction and variation across flights</h1>
 <p>Each dot in the beeswarm plot is a flight.</p>
 <ul>
 <li>Horizontal position shows the signed contribution; color shows the feature value.</li>
 <li>E.g., check the contribution of rain forecasts</li>
 </ul>
-<div id="2b924b3ba0d2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:41.690929Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:41.690791Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:41.806989Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:41.806418Z&quot;}}" data-execution_count="44">
+<div id="2b924b3ba0d2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:52.130397Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:52.130192Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:52.286683Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:52.285508Z&quot;}}" data-execution_count="48">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a>shap.plots.beeswarm(shap_delayed, max_display<span class="op">=</span><span class="bu">len</span>(selected_feature_names_for_tree))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>shap.plots.beeswarm(shap_delayed, max_display<span class="op">=</span><span class="bu">len</span>(selected_feature_names_for_tree))</span></code></pre></div>
 </details>
 
 </div>
-<img data-src="lab-03-feature_files/figure-revealjs/cell-45-output-1.png" class="r-stretch"></section>
+<img data-src="lab-03-feature_files/figure-revealjs/cell-49-output-1.png" class="r-stretch"></section>
 
 <section id="optional-local-shap-contributions-explain-one-flight" class="title-slide slide level1 center">
-<h1>Optional: Local SHAP contributions: explain one flight</h1>
-<div id="99fc85a6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:41.811884Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:41.811768Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:42.022364Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:42.021799Z&quot;}}" data-execution_count="46">
+<h1>[Optional] Local SHAP contributions: explain one flight</h1>
+<div id="99fc85a6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:52.293813Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:52.293627Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:52.591406Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:52.590382Z&quot;}}" data-execution_count="50">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>shap.plots.waterfall(flight_explanation, max_display<span class="op">=</span><span class="bu">len</span>(selected_feature_names_for_tree))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>shap.plots.waterfall(flight_explanation, max_display<span class="op">=</span><span class="bu">len</span>(selected_feature_names_for_tree))</span></code></pre></div>
 </details>
 
 </div>
-<img data-src="lab-03-feature_files/figure-revealjs/cell-47-output-1.png" class="r-stretch"><p>Check that the base value plus all signed contributions equals the model’s predicted probability.</p>
-<div id="local-shap-check" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:42.023694Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:42.023563Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:42.028872Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:42.028372Z&quot;}}" data-execution_count="47">
-<div class="cell-output cell-output-display" data-execution_count="47">
+<img data-src="lab-03-feature_files/figure-revealjs/cell-51-output-1.png" class="r-stretch"><p>Check that the base value plus all signed contributions equals the model’s predicted probability.</p>
+<div id="local-shap-check" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:52.593418Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:52.593219Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:52.600826Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:52.600012Z&quot;}}" data-execution_count="51">
+<div class="cell-output cell-output-display" data-execution_count="51">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -4732,62 +4881,52 @@ Figure&nbsp;7
 </div>
 </section>
 
-<section id="optional-permutation-importance-measures-score-decrease-shap-measures-probability-contribution-magnitude." class="title-slide slide level1 center">
-<h1>Optional: Permutation importance measures score decrease; SHAP measures probability-contribution magnitude.</h1>
+<section id="optional-permutation-importance-vs-shap" class="title-slide slide level1 center">
+<h1>[Optional] Permutation importance vs SHAP</h1>
+<ul>
+<li>Permutation importance measures score decrease</li>
+<li>SHAP measures probability-contribution magnitude.</li>
+</ul>
 
-<img data-src="lab-03-feature_files/figure-revealjs/cell-50-output-1.png" class="r-stretch quarto-figure-center" id="fig-importance-comparison"><p class="caption">
-Figure&nbsp;8
+<img data-src="lab-03-feature_files/figure-revealjs/cell-54-output-1.png" class="r-stretch quarto-figure-center" id="fig-importance-comparison"><p class="caption">
+Figure&nbsp;7
 </p></section>
 
-<section id="references" class="title-slide slide level1 scrollable smaller">
-<h1>References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-fanaeet2013bike" class="csl-entry" role="listitem">
-Fanaee-T, Hadi. 2013. <em>Bike Sharing</em>. UCI Machine Learning Repository. <a href="https://doi.org/10.24432/C5W894">https://doi.org/10.24432/C5W894</a>.
-</div>
-<div id="ref-guyon2003introduction" class="csl-entry" role="listitem">
-Guyon, Isabelle, and André Elisseeff. 2003. <span>“An Introduction to Variable and Feature Selection.”</span> <em>Journal of Machine Learning Research</em> 3: 1157–82. <a href="https://www.jmlr.org/papers/v3/guyon03a.html">https://www.jmlr.org/papers/v3/guyon03a.html</a>.
-</div>
-<div id="ref-guyon2002gene" class="csl-entry" role="listitem">
-Guyon, Isabelle, Jason Weston, Stephen Barnhill, and Vladimir Vapnik. 2002. <span>“Gene Selection for Cancer Classification Using Support Vector Machines.”</span> <em>Machine Learning</em> 46: 389–422. <a href="https://doi.org/10.1023/A:1012487302797">https://doi.org/10.1023/A:1012487302797</a>.
-</div>
-<div id="ref-lundberg2020local" class="csl-entry" role="listitem">
-Lundberg, Scott M., Gabriel Erion, Hugh Chen, et al. 2020. <span>“From Local Explanations to Global Understanding with Explainable <span>AI</span> for Trees.”</span> <em>Nature Machine Intelligence</em> 2 (1): 56–67.
-</div>
-<div id="ref-lundberg2017unified" class="csl-entry" role="listitem">
-Lundberg, Scott M., and Su-In Lee. 2017. <span>“A Unified Approach to Interpreting Model Predictions.”</span> <em>Advances in Neural Information Processing Systems</em> 30.
-</div>
-</div>
+<section id="coding-break-3-exercises-5-6-15-minutes" class="title-slide slide level1 center">
+<h1>Coding break 3: Exercises 5-6 (~15 minutes)</h1>
+<p><a id="coding-break-3" href=""></a></p>
+<p>Go to <a href="#/coding-exercises-3">Exercises 5-6</a>.</p>
 </section>
 
 <section id="exercise-bike-sharing" class="title-slide slide level1 center">
 <h1>Exercise: Bike Sharing</h1>
+<p><a id="coding-exercise-setup" href=""></a></p>
 <p>Predict hourly bicycle rentals using the <a href="https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset">UCI Bike Sharing dataset</a> <span class="citation" data-cites="fanaeet2013bike">(<a href="#/references" role="doc-biblioref" onclick="">Fanaee-T 2013</a>)</span>.</p>
 <ul>
 <li>Compare raw and manually engineered features.</li>
 <li>Compare variance/correlation filters with RFE using a decision tree.</li>
 <li>Use one fixed random 70/30 training/validation split, with no cross-validation.</li>
-<li>Complete the commented cells; the full implementation is in the notebook’s final cell.</li>
+<li>Complete the commented cells; solutions are hidden after each coding session’s exercises.</li>
 </ul>
 </section>
 
-<section id="step-1-download-and-inspect-the-data" class="title-slide slide level1 center">
-<h1>Step 1: download and inspect the data</h1>
+<section id="download-the-data" class="title-slide slide level1 center">
+<h1>Download the data</h1>
 <p>Run the provided code to download <code>hour.csv</code> and inspect its first rows.</p>
-<div id="bike-download" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:42.190418Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:42.190286Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:42.838747Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:42.838252Z&quot;}}" data-execution_count="50">
+<div id="bike-download" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:52.798403Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:52.798190Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.177242Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.176199Z&quot;}}" data-execution_count="54">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="im">from</span> io <span class="im">import</span> BytesIO</span>
-<span id="cb22-2"><a href="" aria-label="2"></a><span class="im">from</span> urllib.request <span class="im">import</span> urlopen</span>
-<span id="cb22-3"><a href="" aria-label="3"></a><span class="im">from</span> zipfile <span class="im">import</span> ZipFile</span>
-<span id="cb22-4"><a href="" aria-label="4"></a></span>
-<span id="cb22-5"><a href="" aria-label="5"></a>bike_url <span class="op">=</span> <span class="st">"https://archive.ics.uci.edu/static/public/275/bike+sharing+dataset.zip"</span></span>
-<span id="cb22-6"><a href="" aria-label="6"></a><span class="cf">with</span> ZipFile(BytesIO(urlopen(bike_url).read())) <span class="im">as</span> archive:</span>
-<span id="cb22-7"><a href="" aria-label="7"></a>    bike_df <span class="op">=</span> pd.read_csv(archive.<span class="bu">open</span>(<span class="st">"hour.csv"</span>), parse_dates<span class="op">=</span>[<span class="st">"dteday"</span>])</span>
-<span id="cb22-8"><a href="" aria-label="8"></a>bike_df <span class="op">=</span> bike_df.sort_values([<span class="st">"dteday"</span>, <span class="st">"hr"</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb22-9"><a href="" aria-label="9"></a>bike_df.head()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="im">from</span> io <span class="im">import</span> BytesIO</span>
+<span id="cb24-2"><a href="" aria-label="2"></a><span class="im">from</span> urllib.request <span class="im">import</span> urlopen</span>
+<span id="cb24-3"><a href="" aria-label="3"></a><span class="im">from</span> zipfile <span class="im">import</span> ZipFile</span>
+<span id="cb24-4"><a href="" aria-label="4"></a></span>
+<span id="cb24-5"><a href="" aria-label="5"></a>bike_url <span class="op">=</span> <span class="st">"https://archive.ics.uci.edu/static/public/275/bike+sharing+dataset.zip"</span></span>
+<span id="cb24-6"><a href="" aria-label="6"></a><span class="cf">with</span> ZipFile(BytesIO(urlopen(bike_url).read())) <span class="im">as</span> archive:</span>
+<span id="cb24-7"><a href="" aria-label="7"></a>    bike_df <span class="op">=</span> pd.read_csv(archive.<span class="bu">open</span>(<span class="st">"hour.csv"</span>), parse_dates<span class="op">=</span>[<span class="st">"dteday"</span>])</span>
+<span id="cb24-8"><a href="" aria-label="8"></a>bike_df <span class="op">=</span> bike_df.sort_values([<span class="st">"dteday"</span>, <span class="st">"hr"</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb24-9"><a href="" aria-label="9"></a>bike_df.head()</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="50">
+<div class="cell-output cell-output-display" data-execution_count="54">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -4941,10 +5080,10 @@ Lundberg, Scott M., and Su-In Lee. 2017. <span>“A Unified Approach to Interpre
 <li><code>cnt</code> is the total number of rentals in an hour.</li>
 <li><code>casual</code> and <code>registered</code> sum to <code>cnt</code>; including them would reveal the answer.</li>
 </ul>
-<div id="bike-info" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:42.840212Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:42.840061Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:42.844889Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:42.844411Z&quot;}}" data-execution_count="51">
+<div id="bike-info" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:53.179157Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:53.178953Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.186415Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.185638Z&quot;}}" data-execution_count="55">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a>bike_df.info()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>bike_df.info()</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.DataFrame'&gt;
@@ -4977,12 +5116,12 @@ memory usage: 2.3 MB</code></pre>
 
 <section id="regression-inspect-the-distribution-of-cnt." class="title-slide slide level1 center">
 <h1>Regression: inspect the distribution of <code>cnt</code>.</h1>
-<div id="bike-target-summary" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:42.846056Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:42.845937Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:42.850422Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:42.849927Z&quot;}}" data-execution_count="52">
+<div id="bike-target-summary" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:53.188325Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:53.188097Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.194825Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.194079Z&quot;}}" data-execution_count="56">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a>bike_df[<span class="st">"cnt"</span>].describe().<span class="bu">round</span>(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a>bike_df[<span class="st">"cnt"</span>].describe().<span class="bu">round</span>(<span class="dv">1</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="52">
+<div class="cell-output cell-output-display" data-execution_count="56">
 <pre><code>count    17379.0
 mean       189.5
 std        181.4
@@ -4995,25 +5134,30 @@ Name: cnt, dtype: float64</code></pre>
 </div>
 </div>
 
-<img data-src="lab-03-feature_files/figure-revealjs/cell-54-output-1.png" class="r-stretch"></section>
+<img data-src="lab-03-feature_files/figure-revealjs/cell-58-output-1.png" class="r-stretch"></section>
 
-<section id="step-2-use-a-fixed-random-split" class="title-slide slide level1 center">
-<h1>Step 2: use a fixed random split</h1>
-<ul>
-<li>Randomly assign 70% of observations to training and 30% to validation with <code>random_state=42</code>.</li>
-<li>Fit feature selection using training rows only.</li>
-<li>Remove the row <code>ID</code>, <code>date</code> (<em>why</em>?), <code>target</code>, and the two leakage columns.</li>
-</ul>
-<div id="bike-split" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:42.918605Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:42.918466Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:42.926225Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:42.925736Z&quot;}}" data-execution_count="54">
+<section id="exercise-1-use-a-fixed-random-split-and-manually-drop-some-features" class="title-slide slide level1 center">
+<h1>Exercise 1: use a fixed random split and manually drop some features</h1>
+<p><a id="coding-exercises-1" href=""></a></p>
+<p>Prepare leakage-free predictors using one fixed training/validation split.</p>
+<p>Which columns must be excluded, and why?</p>
+<div id="bike-split" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:53.302991Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:53.302795Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.312528Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.311737Z&quot;}}" data-execution_count="58">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a>bike_X <span class="op">=</span> bike_df <span class="co"># substitue it with bike_df.drop(columns=[???])</span></span>
-<span id="cb27-2"><a href="" aria-label="2"></a>bike_y <span class="op">=</span> bike_df[<span class="st">"cnt"</span>]</span>
-<span id="cb27-3"><a href="" aria-label="3"></a>bike_X_train, bike_X_valid, bike_y_train, bike_y_valid <span class="op">=</span> train_test_split(</span>
-<span id="cb27-4"><a href="" aria-label="4"></a>    bike_X, bike_y, test_size<span class="op">=</span><span class="fl">0.30</span>, random_state<span class="op">=</span><span class="dv">42</span>,</span>
-<span id="cb27-5"><a href="" aria-label="5"></a>)</span>
-<span id="cb27-6"><a href="" aria-label="6"></a>bike_tree_params <span class="op">=</span> <span class="bu">dict</span>(max_depth<span class="op">=</span><span class="dv">6</span>, min_samples_leaf<span class="op">=</span><span class="dv">20</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb27-7"><a href="" aria-label="7"></a><span class="bu">print</span>(<span class="ss">f"Training: </span><span class="sc">{</span><span class="bu">len</span>(bike_X_train)<span class="sc">:,}</span><span class="ss"> rows; validation: </span><span class="sc">{</span><span class="bu">len</span>(bike_X_valid)<span class="sc">:,}</span><span class="ss"> rows."</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a><span class="co"># 1. Remove the row ID, date (*why*?), target, and the two leakage columns.</span></span>
+<span id="cb29-2"><a href="" aria-label="2"></a><span class="co"># Hint: bike_df.drop(columns=[???])</span></span>
+<span id="cb29-3"><a href="" aria-label="3"></a></span>
+<span id="cb29-4"><a href="" aria-label="4"></a><span class="co"># Provide model-ready inputs so the baseline runs before completing the exercises.</span></span>
+<span id="cb29-5"><a href="" aria-label="5"></a>bike_X <span class="op">=</span> bike_df.drop(columns<span class="op">=</span>[<span class="st">"instant"</span>, <span class="st">"dteday"</span>, <span class="st">"cnt"</span>, <span class="st">"casual"</span>, <span class="st">"registered"</span>])</span>
+<span id="cb29-6"><a href="" aria-label="6"></a><span class="cf">assert</span> <span class="bu">all</span>(pd.api.types.is_numeric_dtype(dtype) <span class="cf">for</span> dtype <span class="kw">in</span> bike_X.dtypes)</span>
+<span id="cb29-7"><a href="" aria-label="7"></a><span class="cf">assert</span> <span class="kw">not</span> {<span class="st">"instant"</span>, <span class="st">"dteday"</span>, <span class="st">"cnt"</span>, <span class="st">"casual"</span>, <span class="st">"registered"</span>}.intersection(bike_X.columns)</span>
+<span id="cb29-8"><a href="" aria-label="8"></a>bike_y <span class="op">=</span> bike_df[<span class="st">"cnt"</span>]</span>
+<span id="cb29-9"><a href="" aria-label="9"></a><span class="co"># 2. Randomly assign 70% of observations to training and 30% to validation with random_state=42.</span></span>
+<span id="cb29-10"><a href="" aria-label="10"></a>bike_X_train, bike_X_valid, bike_y_train, bike_y_valid <span class="op">=</span> train_test_split(</span>
+<span id="cb29-11"><a href="" aria-label="11"></a>    bike_X, bike_y, test_size<span class="op">=</span><span class="fl">0.30</span>, random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb29-12"><a href="" aria-label="12"></a>)</span>
+<span id="cb29-13"><a href="" aria-label="13"></a>bike_tree_params <span class="op">=</span> <span class="bu">dict</span>(max_depth<span class="op">=</span><span class="dv">6</span>, min_samples_leaf<span class="op">=</span><span class="dv">20</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb29-14"><a href="" aria-label="14"></a><span class="bu">print</span>(<span class="ss">f"Training: </span><span class="sc">{</span><span class="bu">len</span>(bike_X_train)<span class="sc">:,}</span><span class="ss"> rows; validation: </span><span class="sc">{</span><span class="bu">len</span>(bike_X_valid)<span class="sc">:,}</span><span class="ss"> rows."</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training: 12,165 rows; validation: 5,214 rows.</code></pre>
@@ -5021,296 +5165,301 @@ Name: cnt, dtype: float64</code></pre>
 </div>
 </section>
 
-<section id="step-3-encode-the-hour-as-a-cycle" class="title-slide slide level1 center">
-<h1>Step 3: encode the hour as a cycle</h1>
-<ul>
-<li>A tree can learn from <code>hr</code> directly; cyclic features may help, but improvement is not guaranteed.</li>
-<li>Hours 23 and 0 are adjacent, but their numeric values are far apart.</li>
-<li>Map hour <span class="math inline">\(h\)</span> onto a circle with <span class="math inline">\(\theta = 2\pi h/24\)</span>.
-<ul>
-<li>Add <span class="math inline">\(\sin(\theta)\)</span> and <span class="math inline">\(\cos(\theta)\)</span>; together they identify the hour and preserve wraparound.</li>
-</ul></li>
-</ul>
+<section id="exercise-2-feature-engineering---encode-the-hour-as-a-cycle" class="title-slide slide level1 center">
+<h1>Exercise 2: feature engineering - encode the hour as a cycle</h1>
+<p>Why should hours 23 and 0 be close?</p>
 
-<img data-src="lab-03-feature_files/figure-revealjs/cell-56-output-1.png" class="r-stretch"></section>
-
-<section id="add-rush-hour-indicators" class="title-slide slide level1 center">
-<h1>Add rush-hour indicators</h1>
-<ul>
-<li>Create <code>morning_rush</code> for hours 7-9 and <code>evening_rush</code> for hours 16-19 (these fixed windows represent a commuting hypothesis).</li>
-</ul>
-</section>
-
-<section id="add-hour-working-day-interactions" class="title-slide slide level1 center">
-<h1>Add hour × working-day interactions</h1>
-<ul>
-<li>Multiply <code>hr</code> by <code>workingday</code> to create <code>hour_workday</code>.</li>
-<li>Multiply <code>hr</code> by <code>1 - workingday</code> to create <code>hour_nonworkday</code>.</li>
-<li>The tree can already learn interactions; but <em>explicit features may help a depth-limited tree</em>.</li>
-</ul>
-
-<img data-src="lab-03-feature_files/figure-revealjs/cell-57-output-1.png" class="r-stretch"><div id="bike-engineering-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:43.105321Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:43.105190Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:43.107156Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:43.106741Z&quot;}}" data-execution_count="57">
+<img data-src="lab-03-feature_files/figure-revealjs/cell-60-output-1.png" class="r-stretch"><div id="c205e614" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:53.421519Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:53.421321Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.424757Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.423838Z&quot;}}" data-execution_count="60">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a><span class="co"># Define the function add_bike_features(X), starting with X = X.copy().</span></span>
-<span id="cb29-2"><a href="" aria-label="2"></a><span class="co"># Compute angle = 2 * np.pi * X["hr"] / 24.</span></span>
-<span id="cb29-3"><a href="" aria-label="3"></a><span class="co"># Add hour_sin and hour_cos using np.sin(angle) and np.cos(angle).</span></span>
-<span id="cb29-4"><a href="" aria-label="4"></a><span class="co"># Add morning_rush using X["hr"].between(7, 9).astype(int).</span></span>
-<span id="cb29-5"><a href="" aria-label="5"></a><span class="co"># Add evening_rush using the inclusive range 16 to 19.</span></span>
-<span id="cb29-6"><a href="" aria-label="6"></a><span class="co"># Add hour_workday = hr * workingday.</span></span>
-<span id="cb29-7"><a href="" aria-label="7"></a><span class="co"># Add hour_nonworkday = hr * (1 - workingday).</span></span>
-<span id="cb29-8"><a href="" aria-label="8"></a><span class="co"># Return X; keep all original predictors.</span></span>
-<span id="cb29-9"><a href="" aria-label="9"></a><span class="co"># Apply the same function to bike_X_train and bike_X_valid.</span></span>
-<span id="cb29-10"><a href="" aria-label="10"></a><span class="co"># Save bike_X_train_fe and bike_X_valid_fe, then inspect their added columns.</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a><span class="co"># 1. A tree can learn from hr directly; cyclic features may help, but improvement is not guaranteed.</span></span>
+<span id="cb31-2"><a href="" aria-label="2"></a><span class="co"># 2. Hours 23 and 0 are adjacent, but their numeric values are far apart.</span></span>
+<span id="cb31-3"><a href="" aria-label="3"></a><span class="co"># 3. Map hour $h$ onto a circle with $\theta = 2\pi h/24$.</span></span>
+<span id="cb31-4"><a href="" aria-label="4"></a><span class="co"># 4. Add $\sin(\theta)$ and $\cos(\theta)$; together they identify the hour and preserve wraparound.</span></span>
+<span id="cb31-5"><a href="" aria-label="5"></a></span>
+<span id="cb31-6"><a href="" aria-label="6"></a><span class="co"># Update the function add_bike_features(X).</span></span>
+<span id="cb31-7"><a href="" aria-label="7"></a><span class="kw">def</span> add_bike_features(X):</span>
+<span id="cb31-8"><a href="" aria-label="8"></a>    X <span class="op">=</span> X.copy()</span>
+<span id="cb31-9"><a href="" aria-label="9"></a>    ...</span>
+<span id="cb31-10"><a href="" aria-label="10"></a>    <span class="cf">return</span> X</span>
+<span id="cb31-11"><a href="" aria-label="11"></a><span class="co"># Compute angle = 2 * np.pi * X["hr"] / 24.</span></span>
+<span id="cb31-12"><a href="" aria-label="12"></a><span class="co"># Add to X hour_sin and hour_cos using np.sin(angle) and np.cos(angle).</span></span></code></pre></div>
 </details>
 </div>
 </section>
 
-<section id="step-4-inspect-training-variances" class="title-slide slide level1 center">
-<h1>Step 4: inspect training variances</h1>
-<ul>
-<li>Calculate each engineered predictor’s variance with <code>var(ddof=0)</code> and sort it.</li>
-<li>Which features have the smallest variance? Are any constant?</li>
-<li>Use <code>VarianceThreshold(0.01)</code> in the later pipeline.
-<ul>
-<li>If no feature falls below the threshold, keeping all features is a valid outcome.</li>
-</ul></li>
-</ul>
-<div id="bike-variance-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:43.108364Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:43.108253Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:43.110008Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:43.109681Z&quot;}}" data-execution_count="58">
+<section id="exercise-2-feature-engineering---add-rush-hour-indicators" class="title-slide slide level1 center">
+<h1>Exercise 2: feature engineering - add rush-hour indicators</h1>
+<p>Add indicators for a commuting-pattern hypothesis.</p>
+<p>Which hours would you expect to show commuting demand?</p>
+<div id="cbcc2464" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:53.426591Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:53.426405Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.429333Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.428517Z&quot;}}" data-execution_count="61">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a><span class="co"># Calculate bike_variances = bike_X_train_fe.var(ddof=0).sort_values().</span></span>
-<span id="cb30-2"><a href="" aria-label="2"></a><span class="co"># Show every feature's variance, rounded to four decimals.</span></span>
-<span id="cb30-3"><a href="" aria-label="3"></a><span class="co"># List features whose variance is &lt;= 0.01: these will be removed.</span></span>
-<span id="cb30-4"><a href="" aria-label="4"></a><span class="co"># Compare windspeed with hr: do their different units explain their variance gap?</span></span>
-<span id="cb30-5"><a href="" aria-label="5"></a><span class="co"># Would converting a feature's units change this filter's decision?</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a><span class="co"># 1. Create morning_rush for hours 7-9 and evening_rush for hours 16-19 (these fixed windows represent a commuting hypothesis).</span></span>
+<span id="cb32-2"><a href="" aria-label="2"></a></span>
+<span id="cb32-3"><a href="" aria-label="3"></a><span class="co"># Update the function add_bike_features(X).</span></span>
+<span id="cb32-4"><a href="" aria-label="4"></a><span class="co"># Add to X morning_rush using X["hr"].between(?, ?).astype(int).</span></span>
+<span id="cb32-5"><a href="" aria-label="5"></a><span class="co"># Add to X evening_rush using the inclusive range 16 to 19.</span></span></code></pre></div>
 </details>
 </div>
 </section>
 
-<section id="step-5-inspect-training-correlations" class="title-slide slide level1 center">
-<h1>Step 5: inspect training correlations</h1>
-<ul>
-<li>Calculate absolute Pearson correlations using <code>bike_X_train_fe.corr().abs()</code>.</li>
-<li>Keep one triangle of the matrix to avoid duplicate pairs and self-correlations.</li>
-<li>List pairs with correlation above 0.9; which predictor could you drop from each pair?</li>
-<li>Inspect <code>temp</code> and <code>atemp</code>: they describe temperature and perceived temperature.</li>
-<li>High correlation suggests redundancy; low correlation does not rule out nonlinear dependence.</li>
-</ul>
-<div id="bike-correlation-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:43.111286Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:43.111173Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:43.112898Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:43.112520Z&quot;}}" data-execution_count="59">
+<section id="exercise-2-feature-engineering---add-hour-by-working-day-interactions" class="title-slide slide level1 center">
+<h1>Exercise 2: feature engineering - add hour by working-day interactions</h1>
+<p>Represent hour differently for working and non-working days.</p>
+<p>Why might explicit interactions help a depth-limited tree?</p>
+
+<img data-src="lab-03-feature_files/figure-revealjs/cell-63-output-1.png" class="r-stretch"><div id="bike-engineering-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:53.607397Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:53.607210Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.612756Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.611932Z&quot;}}" data-execution_count="63">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb31-1"><a href="" aria-label="1"></a><span class="co"># Calculate bike_correlations = bike_X_train_fe.corr().abs().</span></span>
-<span id="cb31-2"><a href="" aria-label="2"></a><span class="co"># Build an upper-triangle mask with np.triu(np.ones(bike_correlations.shape, dtype=bool), k=1).</span></span>
-<span id="cb31-3"><a href="" aria-label="3"></a><span class="co"># Use .where(mask).stack().sort_values(ascending=False) to list unique pairs.</span></span>
-<span id="cb31-4"><a href="" aria-label="4"></a><span class="co"># Show pairs above 0.9 and propose a feature to remove.</span></span>
-<span id="cb31-5"><a href="" aria-label="5"></a><span class="co"># Do not use validation rows to choose the pairs.</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a><span class="co"># 1. The tree can already learn interactions between features; but *explicit features may help a depth-limited tree*.</span></span>
+<span id="cb33-2"><a href="" aria-label="2"></a></span>
+<span id="cb33-3"><a href="" aria-label="3"></a><span class="co"># Update the function add_bike_features(X).</span></span>
+<span id="cb33-4"><a href="" aria-label="4"></a><span class="co"># Add to X hour_workday = hr * workingday.</span></span>
+<span id="cb33-5"><a href="" aria-label="5"></a><span class="co"># Add to X hour_nonworkday = hr * (1 - workingday).</span></span>
+<span id="cb33-6"><a href="" aria-label="6"></a></span>
+<span id="cb33-7"><a href="" aria-label="7"></a><span class="co"># Apply the function to bike_X_train and bike_X_valid.</span></span>
+<span id="cb33-8"><a href="" aria-label="8"></a><span class="co"># Save bike_X_train_fe and bike_X_valid_fe, then inspect their added columns.</span></span>
+<span id="cb33-9"><a href="" aria-label="9"></a></span>
+<span id="cb33-10"><a href="" aria-label="10"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: Replace these copies with your engineered features.</span></span>
+<span id="cb33-11"><a href="" aria-label="11"></a><span class="co"># These defaults only keep the notebook executable before you complete the exercise.</span></span>
+<span id="cb33-12"><a href="" aria-label="12"></a>bike_X_train_fe <span class="op">=</span> bike_X_train.copy()</span>
+<span id="cb33-13"><a href="" aria-label="13"></a>bike_X_valid_fe <span class="op">=</span> bike_X_valid.copy()</span></code></pre></div>
 </details>
 </div>
 </section>
 
-<section id="step-6-fit-the-filter-pipeline-and-tree" class="title-slide slide level1 center">
-<h1>Step 6: fit the filter pipeline and tree</h1>
-<ul>
-<li>Chain <code>VarianceThreshold(0.01)</code>, <code>DropCorrelatedFeatures(threshold=0.9)</code>, and a decision tree.</li>
-<li>Set the variance filter’s output to pandas to preserve names for the correlation filter.</li>
-<li>Use <code>DecisionTreeRegressor(**bike_tree_params)</code> and fit the whole pipeline on training rows.</li>
-<li>Evaluate MAE, RMSE, and R² on the same validation rows.</li>
-<li>Also fit a tree without selection, with raw and engineered inputs.
-<ul>
-<li>This separates the effects of engineering and filtering.</li>
-</ul></li>
-</ul>
-<div id="bike-filter-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:43.113951Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:43.113840Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:43.115651Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:43.115279Z&quot;}}" data-execution_count="60">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb32-1"><a href="" aria-label="1"></a><span class="co"># Create a selection Pipeline with these two stages:</span></span>
-<span id="cb32-2"><a href="" aria-label="2"></a><span class="co"># ("variance", VarianceThreshold(0.01).set_output(transform="pandas"))</span></span>
-<span id="cb32-3"><a href="" aria-label="3"></a><span class="co"># ("correlation", DropCorrelatedFeatures(threshold=0.9))</span></span>
-<span id="cb32-4"><a href="" aria-label="4"></a><span class="co"># Add that selector and DecisionTreeRegressor(**bike_tree_params) to a model Pipeline.</span></span>
-<span id="cb32-5"><a href="" aria-label="5"></a><span class="co"># Fit on bike_X_train_fe and bike_y_train; predict bike_X_valid_fe.</span></span>
-<span id="cb32-6"><a href="" aria-label="6"></a><span class="co"># Calculate MAE, root_mean_squared_error(...), and r2_score(...).</span></span>
-<span id="cb32-7"><a href="" aria-label="7"></a><span class="co"># Repeat with raw inputs, keeping the same rows and tree settings.</span></span>
-<span id="cb32-8"><a href="" aria-label="8"></a><span class="co"># Fit raw and engineered trees without selection as two additional baselines.</span></span>
-<span id="cb32-9"><a href="" aria-label="9"></a><span class="co"># Put all scores and retained feature counts in a DataFrame.</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="inspect-what-the-tree-uses" class="title-slide slide level1 center">
-<h1>Inspect what the tree uses</h1>
-<ul>
-<li>Recover retained names with <code>model[:-1].get_feature_names_out(training_columns)</code>.</li>
-<li>Pair those names with <code>model.named_steps["tree"].feature_importances_</code> and sort them.</li>
-<li>Do any added features receive nonzero importance?</li>
-<li>Compare validation scores with and without engineering to assess its value.
-<ul>
-<li>Nonzero importance alone does not establish that adding a feature improves validation performance.</li>
-</ul></li>
-<li>Correlated predictors can share or substitute for each other’s importance.</li>
-</ul>
-<div id="bike-importance-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:43.116833Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:43.116723Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:43.118527Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:43.118093Z&quot;}}" data-execution_count="61">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb33-1"><a href="" aria-label="1"></a><span class="co"># Get the feature names after selection using model[:-1].get_feature_names_out(...).</span></span>
-<span id="cb33-2"><a href="" aria-label="2"></a><span class="co"># Create a pd.Series of the tree's feature_importances_, indexed by those names.</span></span>
-<span id="cb33-3"><a href="" aria-label="3"></a><span class="co"># Sort and show all importances; note retained features with zero importance.</span></span>
-<span id="cb33-4"><a href="" aria-label="4"></a><span class="co"># Compare the raw and engineered pipelines' validation metrics.</span></span>
-<span id="cb33-5"><a href="" aria-label="5"></a><span class="co"># Does engineering help before filtering, after filtering, both, or neither?</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="step-7-replace-the-filters-with-rfe" class="title-slide slide level1 center">
-<h1>Step 7: replace the filters with RFE</h1>
-<ul>
-<li>Replace both filters with <code>RFE(DecisionTreeRegressor(**bike_tree_params), n_features_to_select=8)</code>.</li>
-<li>RFE repeatedly fits a tree and removes its least important remaining predictor.</li>
-<li>Fit the selector and final tree together using training rows only.</li>
-<li>Repeat with raw and engineered inputs; keep the final tree settings unchanged.</li>
-<li>Compare scores, retained features, and importances with the filter pipelines.
-<ul>
-<li>RFE keeps eight predictors; the filters choose a different count, so compare complexity as well as error.</li>
-</ul></li>
-</ul>
-<div id="bike-rfe-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:43.119500Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:43.119393Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:43.121061Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:43.120716Z&quot;}}" data-execution_count="62">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-label="1"></a><span class="co"># Replace the selection stage with RFE(..., n_features_to_select=8).</span></span>
-<span id="cb34-2"><a href="" aria-label="2"></a><span class="co"># Keep the final DecisionTreeRegressor and the fixed random split unchanged.</span></span>
-<span id="cb34-3"><a href="" aria-label="3"></a><span class="co"># Fit and evaluate RFE pipelines on both raw and engineered inputs.</span></span>
-<span id="cb34-4"><a href="" aria-label="4"></a><span class="co"># Add both results and their eight retained features to your comparison.</span></span>
-<span id="cb34-5"><a href="" aria-label="5"></a><span class="co"># Rank each final tree's importances using the post-RFE feature names.</span></span>
-<span id="cb34-6"><a href="" aria-label="6"></a><span class="co"># Which added features survive RFE? Are all surviving features used by the final tree?</span></span>
-<span id="cb34-7"><a href="" aria-label="7"></a><span class="co"># If the scores are similar, does either method give a smaller or easier-to-explain model?</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="explain-the-comparison" class="title-slide slide level1 center">
-<h1>Explain the comparison</h1>
-<ul>
-<li>Did cyclic encoding, rush indicators, and interactions improve the tree’s validation scores?</li>
-<li>Did variance filtering remove anything? What does that say about the chosen threshold?</li>
-<li>Which correlated features were removed, and did removal change prediction error?</li>
-<li>Did RFE keep the same predictors, and did eight features outperform the filter pipeline?</li>
-<li>Explain why engineering may have little effect when a tree can already learn the same boundaries.</li>
-<li>These results describe one fixed random split, not a guarantee across other samples.</li>
-</ul>
-</section>
-
-<section id="exercise-solution" class="title-slide slide level1 scrollable center">
-<h1>Exercise solution</h1>
+<section id="coding-session-1-solution" class="title-slide slide level1 center">
+<h1>Coding session 1 solution</h1>
 <details>
 <summary>
-Show the full implementation
+Show the solution
 </summary>
-<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb35-1"><a href="" aria-label="1"></a><span class="im">from</span> io <span class="im">import</span> BytesIO</span>
-<span id="cb35-2"><a href="" aria-label="2"></a><span class="im">from</span> urllib.request <span class="im">import</span> urlopen</span>
-<span id="cb35-3"><a href="" aria-label="3"></a><span class="im">from</span> zipfile <span class="im">import</span> ZipFile</span>
-<span id="cb35-4"><a href="" aria-label="4"></a></span>
-<span id="cb35-5"><a href="" aria-label="5"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb35-6"><a href="" aria-label="6"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb35-7"><a href="" aria-label="7"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb35-8"><a href="" aria-label="8"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
-<span id="cb35-9"><a href="" aria-label="9"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> VarianceThreshold, RFE</span>
-<span id="cb35-10"><a href="" aria-label="10"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_absolute_error, root_mean_squared_error, r2_score</span>
-<span id="cb35-11"><a href="" aria-label="11"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb35-12"><a href="" aria-label="12"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb35-13"><a href="" aria-label="13"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
-<span id="cb35-14"><a href="" aria-label="14"></a><span class="im">from</span> feature_engine.selection <span class="im">import</span> DropCorrelatedFeatures</span>
-<span id="cb35-15"><a href="" aria-label="15"></a></span>
-<span id="cb35-16"><a href="" aria-label="16"></a>bike_url <span class="op">=</span> <span class="st">"https://archive.ics.uci.edu/static/public/275/bike+sharing+dataset.zip"</span></span>
-<span id="cb35-17"><a href="" aria-label="17"></a><span class="cf">with</span> ZipFile(BytesIO(urlopen(bike_url).read())) <span class="im">as</span> archive:</span>
-<span id="cb35-18"><a href="" aria-label="18"></a>    bike_df <span class="op">=</span> pd.read_csv(archive.<span class="bu">open</span>(<span class="st">"hour.csv"</span>), parse_dates<span class="op">=</span>[<span class="st">"dteday"</span>])</span>
-<span id="cb35-19"><a href="" aria-label="19"></a>bike_df <span class="op">=</span> bike_df.sort_values([<span class="st">"dteday"</span>, <span class="st">"hr"</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb35-20"><a href="" aria-label="20"></a>display(bike_df.head())</span>
-<span id="cb35-21"><a href="" aria-label="21"></a>bike_df.info()</span>
-<span id="cb35-22"><a href="" aria-label="22"></a>display(bike_df[<span class="st">"cnt"</span>].describe())</span>
-<span id="cb35-23"><a href="" aria-label="23"></a></span>
-<span id="cb35-24"><a href="" aria-label="24"></a>bike_X <span class="op">=</span> bike_df.drop(columns<span class="op">=</span>[<span class="st">"instant"</span>, <span class="st">"dteday"</span>, <span class="st">"casual"</span>, <span class="st">"registered"</span>, <span class="st">"cnt"</span>])</span>
-<span id="cb35-25"><a href="" aria-label="25"></a>bike_y <span class="op">=</span> bike_df[<span class="st">"cnt"</span>]</span>
-<span id="cb35-26"><a href="" aria-label="26"></a>bike_X_train, bike_X_valid, bike_y_train, bike_y_valid <span class="op">=</span> train_test_split(</span>
-<span id="cb35-27"><a href="" aria-label="27"></a>    bike_X, bike_y, test_size<span class="op">=</span><span class="fl">0.30</span>, random_state<span class="op">=</span><span class="dv">42</span>,</span>
-<span id="cb35-28"><a href="" aria-label="28"></a>)</span>
-<span id="cb35-29"><a href="" aria-label="29"></a>bike_tree_params <span class="op">=</span> <span class="bu">dict</span>(max_depth<span class="op">=</span><span class="dv">6</span>, min_samples_leaf<span class="op">=</span><span class="dv">20</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb35-30"><a href="" aria-label="30"></a>display(<span class="ss">f"Training: </span><span class="sc">{</span><span class="bu">len</span>(bike_X_train)<span class="sc">:,}</span><span class="ss"> rows; validation: </span><span class="sc">{</span><span class="bu">len</span>(bike_X_valid)<span class="sc">:,}</span><span class="ss"> rows."</span>)</span>
-<span id="cb35-31"><a href="" aria-label="31"></a></span>
-<span id="cb35-32"><a href="" aria-label="32"></a><span class="kw">def</span> add_bike_features(X):</span>
-<span id="cb35-33"><a href="" aria-label="33"></a>    X <span class="op">=</span> X.copy()</span>
-<span id="cb35-34"><a href="" aria-label="34"></a>    angle <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> X[<span class="st">"hr"</span>] <span class="op">/</span> <span class="dv">24</span></span>
-<span id="cb35-35"><a href="" aria-label="35"></a>    X[<span class="st">"hour_sin"</span>] <span class="op">=</span> np.sin(angle)</span>
-<span id="cb35-36"><a href="" aria-label="36"></a>    X[<span class="st">"hour_cos"</span>] <span class="op">=</span> np.cos(angle)</span>
-<span id="cb35-37"><a href="" aria-label="37"></a>    X[<span class="st">"morning_rush"</span>] <span class="op">=</span> X[<span class="st">"hr"</span>].between(<span class="dv">7</span>, <span class="dv">9</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb35-38"><a href="" aria-label="38"></a>    X[<span class="st">"evening_rush"</span>] <span class="op">=</span> X[<span class="st">"hr"</span>].between(<span class="dv">16</span>, <span class="dv">19</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb35-39"><a href="" aria-label="39"></a>    X[<span class="st">"hour_workday"</span>] <span class="op">=</span> X[<span class="st">"hr"</span>] <span class="op">*</span> X[<span class="st">"workingday"</span>]</span>
-<span id="cb35-40"><a href="" aria-label="40"></a>    X[<span class="st">"hour_nonworkday"</span>] <span class="op">=</span> X[<span class="st">"hr"</span>] <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> X[<span class="st">"workingday"</span>])</span>
-<span id="cb35-41"><a href="" aria-label="41"></a>    <span class="cf">return</span> X</span>
-<span id="cb35-42"><a href="" aria-label="42"></a></span>
-<span id="cb35-43"><a href="" aria-label="43"></a>bike_X_train_fe <span class="op">=</span> add_bike_features(bike_X_train)</span>
-<span id="cb35-44"><a href="" aria-label="44"></a>bike_X_valid_fe <span class="op">=</span> add_bike_features(bike_X_valid)</span>
-<span id="cb35-45"><a href="" aria-label="45"></a></span>
-<span id="cb35-46"><a href="" aria-label="46"></a>bike_variances <span class="op">=</span> bike_X_train_fe.var(ddof<span class="op">=</span><span class="dv">0</span>).sort_values()</span>
-<span id="cb35-47"><a href="" aria-label="47"></a>display(<span class="st">"Training variances:</span><span class="ch">\n</span><span class="st">"</span>, bike_variances.<span class="bu">round</span>(<span class="dv">4</span>))</span>
-<span id="cb35-48"><a href="" aria-label="48"></a>display(<span class="st">"Below 0.01:"</span>, bike_variances[bike_variances <span class="op">&lt;=</span> <span class="fl">0.01</span>].index.tolist())</span>
-<span id="cb35-49"><a href="" aria-label="49"></a></span>
-<span id="cb35-50"><a href="" aria-label="50"></a>bike_correlations <span class="op">=</span> bike_X_train_fe.corr().<span class="bu">abs</span>()</span>
-<span id="cb35-51"><a href="" aria-label="51"></a>bike_pairs <span class="op">=</span> bike_correlations.where(</span>
-<span id="cb35-52"><a href="" aria-label="52"></a>    np.triu(np.ones(bike_correlations.shape, dtype<span class="op">=</span><span class="bu">bool</span>), k<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb35-53"><a href="" aria-label="53"></a>).stack().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb35-54"><a href="" aria-label="54"></a>display(<span class="st">"Highly correlated pairs:</span><span class="ch">\n</span><span class="st">"</span>, bike_pairs[bike_pairs <span class="op">&gt;</span> <span class="fl">0.9</span>].<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb35-55"><a href="" aria-label="55"></a></span>
-<span id="cb35-56"><a href="" aria-label="56"></a>bike_rows, bike_importances <span class="op">=</span> [], {}</span>
-<span id="cb35-57"><a href="" aria-label="57"></a><span class="cf">for</span> feature_set, train, valid <span class="kw">in</span> [</span>
-<span id="cb35-58"><a href="" aria-label="58"></a>    (<span class="st">"Raw"</span>, bike_X_train, bike_X_valid),</span>
-<span id="cb35-59"><a href="" aria-label="59"></a>    (<span class="st">"Engineered"</span>, bike_X_train_fe, bike_X_valid_fe),</span>
-<span id="cb35-60"><a href="" aria-label="60"></a>]:</span>
-<span id="cb35-61"><a href="" aria-label="61"></a>    selectors <span class="op">=</span> {</span>
-<span id="cb35-62"><a href="" aria-label="62"></a>        <span class="st">"Tree"</span>: <span class="st">"passthrough"</span>,</span>
-<span id="cb35-63"><a href="" aria-label="63"></a>        <span class="st">"Filters"</span>: Pipeline([</span>
-<span id="cb35-64"><a href="" aria-label="64"></a>            (<span class="st">"variance"</span>, VarianceThreshold(<span class="fl">0.01</span>).set_output(transform<span class="op">=</span><span class="st">"pandas"</span>)),</span>
-<span id="cb35-65"><a href="" aria-label="65"></a>            (<span class="st">"correlation"</span>, DropCorrelatedFeatures(threshold<span class="op">=</span><span class="fl">0.9</span>)),</span>
-<span id="cb35-66"><a href="" aria-label="66"></a>        ]),</span>
-<span id="cb35-67"><a href="" aria-label="67"></a>        <span class="st">"RFE"</span>: RFE(DecisionTreeRegressor(<span class="op">**</span>bike_tree_params), n_features_to_select<span class="op">=</span><span class="dv">8</span>),</span>
-<span id="cb35-68"><a href="" aria-label="68"></a>    }</span>
-<span id="cb35-69"><a href="" aria-label="69"></a>    <span class="cf">for</span> method, selector <span class="kw">in</span> selectors.items():</span>
-<span id="cb35-70"><a href="" aria-label="70"></a>        model <span class="op">=</span> Pipeline([</span>
-<span id="cb35-71"><a href="" aria-label="71"></a>            (<span class="st">"selection"</span>, selector),</span>
-<span id="cb35-72"><a href="" aria-label="72"></a>            (<span class="st">"tree"</span>, DecisionTreeRegressor(<span class="op">**</span>bike_tree_params)),</span>
-<span id="cb35-73"><a href="" aria-label="73"></a>        ]).fit(train, bike_y_train)</span>
-<span id="cb35-74"><a href="" aria-label="74"></a>        predicted <span class="op">=</span> model.predict(valid)</span>
-<span id="cb35-75"><a href="" aria-label="75"></a>        names <span class="op">=</span> model[:<span class="op">-</span><span class="dv">1</span>].get_feature_names_out(train.columns)</span>
-<span id="cb35-76"><a href="" aria-label="76"></a>        label <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>feature_set<span class="sc">}</span><span class="ss"> + </span><span class="sc">{</span>method<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb35-77"><a href="" aria-label="77"></a>        <span class="cf">if</span> method <span class="op">==</span> <span class="st">"Filters"</span>:</span>
-<span id="cb35-78"><a href="" aria-label="78"></a>            display(label, <span class="st">"correlation removals:"</span>, model.named_steps[<span class="st">"selection"</span>].named_steps[<span class="st">"correlation"</span>].features_to_drop_)</span>
-<span id="cb35-79"><a href="" aria-label="79"></a>        bike_importances[label] <span class="op">=</span> pd.Series(</span>
-<span id="cb35-80"><a href="" aria-label="80"></a>            model.named_steps[<span class="st">"tree"</span>].feature_importances_, index<span class="op">=</span>names,</span>
-<span id="cb35-81"><a href="" aria-label="81"></a>        )</span>
-<span id="cb35-82"><a href="" aria-label="82"></a>        bike_rows.append({</span>
-<span id="cb35-83"><a href="" aria-label="83"></a>            <span class="st">"Model"</span>: label,</span>
-<span id="cb35-84"><a href="" aria-label="84"></a>            <span class="st">"MAE"</span>: mean_absolute_error(bike_y_valid, predicted),</span>
-<span id="cb35-85"><a href="" aria-label="85"></a>            <span class="st">"RMSE"</span>: root_mean_squared_error(bike_y_valid, predicted),</span>
-<span id="cb35-86"><a href="" aria-label="86"></a>            <span class="st">"R2"</span>: r2_score(bike_y_valid, predicted),</span>
-<span id="cb35-87"><a href="" aria-label="87"></a>            <span class="st">"Features"</span>: <span class="bu">len</span>(names),</span>
-<span id="cb35-88"><a href="" aria-label="88"></a>        })</span>
-<span id="cb35-89"><a href="" aria-label="89"></a></span>
-<span id="cb35-90"><a href="" aria-label="90"></a>bike_results <span class="op">=</span> pd.DataFrame(bike_rows).set_index(<span class="st">"Model"</span>).sort_values(<span class="st">"RMSE"</span>)</span>
-<span id="cb35-91"><a href="" aria-label="91"></a>display(<span class="st">"Validation scores (lower MAE/RMSE is better):</span><span class="ch">\n</span><span class="st">"</span>, bike_results.<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb35-92"><a href="" aria-label="92"></a>display(<span class="st">"RFE retained:"</span>, bike_importances[<span class="st">"Engineered + RFE"</span>].index.tolist())</span>
-<span id="cb35-93"><a href="" aria-label="93"></a>display(<span class="st">"Engineered-model importances (NaN means removed):</span><span class="ch">\n</span><span class="st">"</span>, pd.DataFrame({</span>
-<span id="cb35-94"><a href="" aria-label="94"></a>    method: bike_importances[<span class="ss">f"Engineered + </span><span class="sc">{</span>method<span class="sc">}</span><span class="ss">"</span>]</span>
-<span id="cb35-95"><a href="" aria-label="95"></a>    <span class="cf">for</span> method <span class="kw">in</span> [<span class="st">"Tree"</span>, <span class="st">"Filters"</span>, <span class="st">"RFE"</span>]</span>
-<span id="cb35-96"><a href="" aria-label="96"></a>}).sort_values(<span class="st">"Filters"</span>, ascending<span class="op">=</span><span class="va">False</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb35-97"><a href="" aria-label="97"></a></span>
-<span id="cb35-98"><a href="" aria-label="98"></a><span class="co"># Plot only: compare which engineered predictors the two selection methods use.</span></span>
-<span id="cb35-99"><a href="" aria-label="99"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>), layout<span class="op">=</span><span class="st">"constrained"</span>)</span>
-<span id="cb35-100"><a href="" aria-label="100"></a><span class="cf">for</span> ax, method, color <span class="kw">in</span> <span class="bu">zip</span>(axes, [<span class="st">"Filters"</span>, <span class="st">"RFE"</span>], [<span class="st">"tab:blue"</span>, <span class="st">"tab:orange"</span>]):</span>
-<span id="cb35-101"><a href="" aria-label="101"></a>    importance <span class="op">=</span> bike_importances[<span class="ss">f"Engineered + </span><span class="sc">{</span>method<span class="sc">}</span><span class="ss">"</span>].sort_values()</span>
-<span id="cb35-102"><a href="" aria-label="102"></a>    ax.barh(importance.index, importance.values, color<span class="op">=</span>color)</span>
-<span id="cb35-103"><a href="" aria-label="103"></a>    ax.<span class="bu">set</span>(title<span class="op">=</span><span class="ss">f"Engineered + </span><span class="sc">{</span>method<span class="sc">}</span><span class="ss">"</span>, xlabel<span class="op">=</span><span class="st">"Tree impurity importance"</span>)</span>
-<span id="cb35-104"><a href="" aria-label="104"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb34-1"><a href="" aria-label="1"></a>bike_df <span class="op">=</span> bike_df.drop(columns<span class="op">=</span>[<span class="st">"instant"</span>, <span class="st">"dteday"</span>, <span class="st">"casual"</span>, <span class="st">"registered"</span>, <span class="st">"cnt"</span>])</span>
+<span id="cb34-2"><a href="" aria-label="2"></a><span class="co"># Keep the supplied split's row indices and labels.</span></span>
+<span id="cb34-3"><a href="" aria-label="3"></a>bike_X_train <span class="op">=</span> bike_X.loc[bike_X_train.index].copy()</span>
+<span id="cb34-4"><a href="" aria-label="4"></a>bike_X_valid <span class="op">=</span> bike_X.loc[bike_X_valid.index].copy()</span>
+<span id="cb34-5"><a href="" aria-label="5"></a></span>
+<span id="cb34-6"><a href="" aria-label="6"></a><span class="kw">def</span> add_bike_features(X):</span>
+<span id="cb34-7"><a href="" aria-label="7"></a>    X <span class="op">=</span> X.copy()</span>
+<span id="cb34-8"><a href="" aria-label="8"></a>    angle <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> X[<span class="st">"hr"</span>] <span class="op">/</span> <span class="dv">24</span></span>
+<span id="cb34-9"><a href="" aria-label="9"></a>    X[<span class="st">"hour_sin"</span>], X[<span class="st">"hour_cos"</span>] <span class="op">=</span> np.sin(angle), np.cos(angle)</span>
+<span id="cb34-10"><a href="" aria-label="10"></a>    X[<span class="st">"morning_rush"</span>] <span class="op">=</span> X[<span class="st">"hr"</span>].between(<span class="dv">7</span>, <span class="dv">9</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb34-11"><a href="" aria-label="11"></a>    X[<span class="st">"evening_rush"</span>] <span class="op">=</span> X[<span class="st">"hr"</span>].between(<span class="dv">16</span>, <span class="dv">19</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb34-12"><a href="" aria-label="12"></a>    X[<span class="st">"hour_workday"</span>] <span class="op">=</span> X[<span class="st">"hr"</span>] <span class="op">*</span> X[<span class="st">"workingday"</span>]</span>
+<span id="cb34-13"><a href="" aria-label="13"></a>    X[<span class="st">"hour_nonworkday"</span>] <span class="op">=</span> X[<span class="st">"hr"</span>] <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> X[<span class="st">"workingday"</span>])</span>
+<span id="cb34-14"><a href="" aria-label="14"></a>    <span class="cf">return</span> X</span>
+<span id="cb34-15"><a href="" aria-label="15"></a></span>
+<span id="cb34-16"><a href="" aria-label="16"></a></span>
+<span id="cb34-17"><a href="" aria-label="17"></a>bike_X_train_fe <span class="op">=</span> add_bike_features(bike_X_train)</span>
+<span id="cb34-18"><a href="" aria-label="18"></a>bike_X_valid_fe <span class="op">=</span> add_bike_features(bike_X_valid)</span>
+<span id="cb34-19"><a href="" aria-label="19"></a>display(bike_X_train_fe.head())</span></code></pre></div>
 </details>
+</section>
 
+<section id="exercise-3-inspect-training-variances" class="title-slide slide level1 center">
+<h1>Exercise 3: inspect training variances</h1>
+<p><a id="coding-exercises-2" href=""></a></p>
+<p>Inspect the engineered training features for low variance.</p>
+<p>Which features are constant or nearly constant?</p>
+<div id="bike-variance-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:53.614659Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:53.614467Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.617404Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.616567Z&quot;}}" data-execution_count="64">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb35-1"><a href="" aria-label="1"></a><span class="co"># 1. Calculate each engineered feature's variance with var(ddof=0) and sort it.</span></span>
+<span id="cb35-2"><a href="" aria-label="2"></a><span class="co"># 2. Which features have the smallest variance? Are any constant?</span></span>
+<span id="cb35-3"><a href="" aria-label="3"></a></span>
+<span id="cb35-4"><a href="" aria-label="4"></a><span class="co"># Calculate bike_variances = bike_X_train_fe.var(ddof=0).sort_values().</span></span>
+<span id="cb35-5"><a href="" aria-label="5"></a><span class="co"># Show every feature's variance, rounded to four decimals.</span></span>
+<span id="cb35-6"><a href="" aria-label="6"></a><span class="co"># List features whose variance is &lt;= 0.01: these will be removed.</span></span>
+<span id="cb35-7"><a href="" aria-label="7"></a><span class="co"># Compare windspeed with hr: do their different units explain their variance gap?</span></span>
+<span id="cb35-8"><a href="" aria-label="8"></a><span class="co"># Would converting a feature's units change this filter's decision?</span></span>
+<span id="cb35-9"><a href="" aria-label="9"></a></span>
+<span id="cb35-10"><a href="" aria-label="10"></a><span class="co"># Code hint: bike_variances = bike_X_train_fe.var(ddof=...).sort_values()</span></span>
+<span id="cb35-11"><a href="" aria-label="11"></a><span class="co"># display(bike_variances.round(4))</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="exercise-4-inspect-training-correlations" class="title-slide slide level1 center">
+<h1>Exercise 4: inspect training correlations</h1>
+<p>Inspect correlated training features for redundancy.</p>
+<p>Which feature could you remove from each strongly correlated pair?</p>
+<div id="bike-correlation-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:53.619153Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:53.618943Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.621716Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.621024Z&quot;}}" data-execution_count="65">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb36-1"><a href="" aria-label="1"></a><span class="co"># 1. Calculate absolute Pearson correlations using bike_X_train_fe.corr().abs().</span></span>
+<span id="cb36-2"><a href="" aria-label="2"></a><span class="co"># 2. Which feature could you drop from each pair?</span></span>
+<span id="cb36-3"><a href="" aria-label="3"></a><span class="co"># 3. High correlation suggests redundancy; low correlation does not rule out nonlinear dependence.</span></span>
+<span id="cb36-4"><a href="" aria-label="4"></a></span>
+<span id="cb36-5"><a href="" aria-label="5"></a><span class="co"># Calculate bike_correlations = bike_X_train_fe.corr().abs().</span></span>
+<span id="cb36-6"><a href="" aria-label="6"></a><span class="co"># Show pairs above 0.9 and propose a feature to remove.</span></span>
+<span id="cb36-7"><a href="" aria-label="7"></a><span class="co"># Hint: keep the upper triangle to exclude self-correlations and duplicate pairs.</span></span>
+<span id="cb36-8"><a href="" aria-label="8"></a></span>
+<span id="cb36-9"><a href="" aria-label="9"></a><span class="co"># Code hints: correlations = bike_X_train_fe.corr().abs()</span></span>
+<span id="cb36-10"><a href="" aria-label="10"></a><span class="co"># upper = correlations.where(np.triu(np.ones(correlations.shape), k=1).astype(bool))</span></span>
+<span id="cb36-11"><a href="" aria-label="11"></a><span class="co"># pairs = upper.stack()</span></span>
+<span id="cb36-12"><a href="" aria-label="12"></a><span class="co"># display(pairs[pairs &gt; ...])</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="exercise-4-compare-trees-with-and-without-filters" class="title-slide slide level1 center">
+<h1>Exercise 4: compare trees with and without filters</h1>
+<p>Compare trees with and without filters on both input representations.</p>
+<p>Does filtering improve errors or mainly reduce the number of features?</p>
+<div id="a86794fe" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:53.623577Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:53.623385Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.672599Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.671765Z&quot;}}" data-execution_count="66">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb37-1"><a href="" aria-label="1"></a><span class="co"># 1. Run the provided baseline comparison, then complete the filter pipeline for both raw and engineered inputs. Keep the split and tree settings fixed. Save the models and scores for coding break 3.</span></span>
+<span id="cb37-2"><a href="" aria-label="2"></a><span class="co"># 2. Chain VarianceThreshold(0.01), DropCorrelatedFeatures(threshold=0.9), and DecisionTreeRegressor(bike_tree_params).</span></span>
+<span id="cb37-3"><a href="" aria-label="3"></a><span class="co"># 3. Use the provided record_bike_model helper to fit each pipeline and record MAE, RMSE, R2, and retained feature count.</span></span>
+<span id="cb37-4"><a href="" aria-label="4"></a><span class="co"># 4. Does filtering change the error or only the number of features?</span></span>
+<span id="cb37-5"><a href="" aria-label="5"></a></span>
+<span id="cb37-6"><a href="" aria-label="6"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
+<span id="cb37-7"><a href="" aria-label="7"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_absolute_error, root_mean_squared_error, r2_score</span>
+<span id="cb37-8"><a href="" aria-label="8"></a><span class="kw">def</span> regression_metrics(y_true, y_pred):</span>
+<span id="cb37-9"><a href="" aria-label="9"></a>    <span class="co">"""Return MAE, RMSE, and R2 for observed and predicted rental counts."""</span></span>
+<span id="cb37-10"><a href="" aria-label="10"></a>    <span class="cf">return</span> {</span>
+<span id="cb37-11"><a href="" aria-label="11"></a>        <span class="st">"MAE"</span>: mean_absolute_error(y_true, y_pred),  <span class="co"># Mean absolute error in rentals; lower is better.</span></span>
+<span id="cb37-12"><a href="" aria-label="12"></a>        <span class="st">"RMSE"</span>: root_mean_squared_error(y_true, y_pred),  <span class="co"># Error in rentals, penalizing large misses more; lower is better.</span></span>
+<span id="cb37-13"><a href="" aria-label="13"></a>        <span class="st">"R2"</span>: r2_score(y_true, y_pred),  <span class="co"># 1 is perfect, 0 matches the observed-mean baseline, negative is worse.</span></span>
+<span id="cb37-14"><a href="" aria-label="14"></a>    }</span>
+<span id="cb37-15"><a href="" aria-label="15"></a></span>
+<span id="cb37-16"><a href="" aria-label="16"></a>bike_models, bike_results <span class="op">=</span> {}, []</span>
+<span id="cb37-17"><a href="" aria-label="17"></a>bike_inputs <span class="op">=</span> {</span>
+<span id="cb37-18"><a href="" aria-label="18"></a>    <span class="st">"Raw"</span>: (bike_X_train, bike_X_valid),</span>
+<span id="cb37-19"><a href="" aria-label="19"></a>    <span class="st">"Engineered"</span>: (bike_X_train_fe, bike_X_valid_fe),</span>
+<span id="cb37-20"><a href="" aria-label="20"></a>}</span>
+<span id="cb37-21"><a href="" aria-label="21"></a></span>
+<span id="cb37-22"><a href="" aria-label="22"></a><span class="kw">def</span> record_bike_model(label, model, train, valid):</span>
+<span id="cb37-23"><a href="" aria-label="23"></a>    model.fit(train, bike_y_train)</span>
+<span id="cb37-24"><a href="" aria-label="24"></a>    names <span class="op">=</span> model[:<span class="op">-</span><span class="dv">1</span>].get_feature_names_out(train.columns)</span>
+<span id="cb37-25"><a href="" aria-label="25"></a>    bike_models[label] <span class="op">=</span> (model, names)</span>
+<span id="cb37-26"><a href="" aria-label="26"></a>    bike_results.append({<span class="st">"Model"</span>: label, <span class="op">**</span>regression_metrics(bike_y_valid, model.predict(valid)), <span class="st">"Features"</span>: <span class="bu">len</span>(names)})</span>
+<span id="cb37-27"><a href="" aria-label="27"></a></span>
+<span id="cb37-28"><a href="" aria-label="28"></a><span class="co"># Provided baselines: focus your implementation on the filters.</span></span>
+<span id="cb37-29"><a href="" aria-label="29"></a><span class="cf">for</span> label, (train, valid) <span class="kw">in</span> bike_inputs.items():</span>
+<span id="cb37-30"><a href="" aria-label="30"></a>    baseline <span class="op">=</span> Pipeline([(<span class="st">"selection"</span>, <span class="st">"passthrough"</span>), (<span class="st">"tree"</span>, DecisionTreeRegressor(<span class="op">**</span>bike_tree_params))])</span>
+<span id="cb37-31"><a href="" aria-label="31"></a>    record_bike_model(<span class="ss">f"</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss"> + Tree"</span>, baseline, train, valid)</span>
+<span id="cb37-32"><a href="" aria-label="32"></a></span>
+<span id="cb37-33"><a href="" aria-label="33"></a><span class="co"># For each label, (train, valid) in bike_inputs.items():</span></span>
+<span id="cb37-34"><a href="" aria-label="34"></a><span class="co">#   Create a fresh Pipeline with variance, correlation, and tree stages.</span></span>
+<span id="cb37-35"><a href="" aria-label="35"></a><span class="co">#   Use record_bike_model(f"{label} + Filters", model, train, valid).</span></span>
+<span id="cb37-36"><a href="" aria-label="36"></a><span class="co"># Display pd.DataFrame(bike_results).set_index("Model").round(3).</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="coding-session-2-solution" class="title-slide slide level1 center">
+<h1>Coding session 2 solution</h1>
+<details>
+<summary>
+Show the solution
+</summary>
+<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb38-1"><a href="" aria-label="1"></a>variances <span class="op">=</span> bike_X_train_fe.var(ddof<span class="op">=</span><span class="dv">0</span>).sort_values()</span>
+<span id="cb38-2"><a href="" aria-label="2"></a>display(variances.<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb38-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"Variance &lt;= 0.01:"</span>, variances[variances <span class="op">&lt;=</span> <span class="fl">0.01</span>].index.tolist())</span>
+<span id="cb38-4"><a href="" aria-label="4"></a>correlations <span class="op">=</span> bike_X_train_fe.corr().<span class="bu">abs</span>()</span>
+<span id="cb38-5"><a href="" aria-label="5"></a>pairs <span class="op">=</span> correlations.where(np.triu(np.ones(correlations.shape), k<span class="op">=</span><span class="dv">1</span>).astype(<span class="bu">bool</span>)).stack()</span>
+<span id="cb38-6"><a href="" aria-label="6"></a>display(pairs[pairs <span class="op">&gt;</span> <span class="fl">0.9</span>].sort_values(ascending<span class="op">=</span><span class="va">False</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb38-7"><a href="" aria-label="7"></a></span>
+<span id="cb38-8"><a href="" aria-label="8"></a><span class="cf">for</span> label, (train, valid) <span class="kw">in</span> bike_inputs.items():</span>
+<span id="cb38-9"><a href="" aria-label="9"></a>    model <span class="op">=</span> Pipeline([</span>
+<span id="cb38-10"><a href="" aria-label="10"></a>        (<span class="st">"variance"</span>, VarianceThreshold(<span class="fl">0.01</span>).set_output(transform<span class="op">=</span><span class="st">"pandas"</span>)),</span>
+<span id="cb38-11"><a href="" aria-label="11"></a>        (<span class="st">"correlation"</span>, DropCorrelatedFeatures(threshold<span class="op">=</span><span class="fl">0.9</span>)),</span>
+<span id="cb38-12"><a href="" aria-label="12"></a>        (<span class="st">"tree"</span>, DecisionTreeRegressor(<span class="op">**</span>bike_tree_params)),</span>
+<span id="cb38-13"><a href="" aria-label="13"></a>    ])</span>
+<span id="cb38-14"><a href="" aria-label="14"></a>    record_bike_model(<span class="ss">f"</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss"> + Filters + Tree"</span>, model, train, valid)</span>
+<span id="cb38-15"><a href="" aria-label="15"></a>display(pd.DataFrame(bike_results).set_index(<span class="st">"Model"</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+</details>
+</section>
+
+<section id="exercise-5-add-rfe-to-the-comparison" class="title-slide slide level1 center">
+<h1>Exercise 5: add RFE to the comparison</h1>
+<p><a id="coding-exercises-3" href=""></a></p>
+<p>Add RFE to the saved model comparisons.</p>
+<p>Does any error reduction justify the retained feature count?</p>
+<div id="bike-filter-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:53.675203Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:53.674981Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.678440Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.677350Z&quot;}}" data-execution_count="67">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb39-1"><a href="" aria-label="1"></a><span class="co"># 1. For each input representation, chain RFE(DecisionTreeRegressor(bike_tree_params), n_features_to_select=8) and a decision tree.</span></span>
+<span id="cb39-2"><a href="" aria-label="2"></a><span class="co"># 2. Use record_bike_model to add both RFE models to the four saved comparisons from coding break 2.</span></span>
+<span id="cb39-3"><a href="" aria-label="3"></a><span class="co"># 3. Compare validation errors and retained feature counts for no selection, filters, and RFE. Keep the same split and tree settings.</span></span>
+<span id="cb39-4"><a href="" aria-label="4"></a></span>
+<span id="cb39-5"><a href="" aria-label="5"></a><span class="co"># For each label, (train, valid) in bike_inputs.items():</span></span>
+<span id="cb39-6"><a href="" aria-label="6"></a><span class="co">#   model = Pipeline([</span></span>
+<span id="cb39-7"><a href="" aria-label="7"></a><span class="co">#       ("selection", RFE(DecisionTreeRegressor(**bike_tree_params), n_features_to_select=8)),</span></span>
+<span id="cb39-8"><a href="" aria-label="8"></a><span class="co">#       ("tree", DecisionTreeRegressor(**bike_tree_params)),</span></span>
+<span id="cb39-9"><a href="" aria-label="9"></a><span class="co">#   ])</span></span>
+<span id="cb39-10"><a href="" aria-label="10"></a><span class="co">#   Use record_bike_model(f"{label} + RFE", model, train, valid).</span></span>
+<span id="cb39-11"><a href="" aria-label="11"></a><span class="co"># Display all six comparisons using pd.DataFrame(bike_results).set_index("Model").round(3).</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="exercise-6-explain" class="title-slide slide level1 center">
+<h1>Exercise 6: explain</h1>
+<p>Interpret the effects of feature engineering and selection.</p>
+<p>Which changes improved validation performance, and what evidence supports your explanation?</p>
+<div id="bike-importance-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:53.680189Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:53.679987Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:53.683279Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:53.682344Z&quot;}}" data-execution_count="68">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb40-1"><a href="" aria-label="1"></a><span class="co"># 1. Did cyclic encoding, rush indicators, and interactions improve the tree's validation scores? Support your answer with MAE, RMSE, and R2.</span></span>
+<span id="cb40-2"><a href="" aria-label="2"></a><span class="co"># 2. Which added features are used by the tree? Nonzero importance alone does not establish a validation improvement.</span></span>
+<span id="cb40-3"><a href="" aria-label="3"></a><span class="co"># 3. Explain why engineering may have little effect when a tree can already learn the same boundaries.</span></span>
+<span id="cb40-4"><a href="" aria-label="4"></a><span class="co"># 4. Compare RFE with the filters at the same input representation: does any error reduction justify the retained feature count?</span></span>
+<span id="cb40-5"><a href="" aria-label="5"></a></span>
+<span id="cb40-6"><a href="" aria-label="6"></a><span class="co"># For each label, (model, names) in bike_models.items():</span></span>
+<span id="cb40-7"><a href="" aria-label="7"></a><span class="co">#   Pair model.named_steps["tree"].feature_importances_ with names in a pd.Series.</span></span>
+<span id="cb40-8"><a href="" aria-label="8"></a><span class="co">#   Sort only after pairing each importance with its feature name.</span></span>
+<span id="cb40-9"><a href="" aria-label="9"></a><span class="co">#   A removed feature is absent from names; a retained but unused feature has importance 0.</span></span>
+<span id="cb40-10"><a href="" aria-label="10"></a><span class="co"># Compare engineering with selection fixed, then selection with inputs fixed.</span></span>
+<span id="cb40-11"><a href="" aria-label="11"></a><span class="co"># Explain the validation errors and feature counts in bike_results.</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="coding-session-3-solution" class="title-slide slide level1 center">
+<h1>Coding session 3 solution</h1>
+<details>
+<summary>
+Show the solution
+</summary>
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb41-1"><a href="" aria-label="1"></a><span class="cf">for</span> label, (train, valid) <span class="kw">in</span> bike_inputs.items():</span>
+<span id="cb41-2"><a href="" aria-label="2"></a>    model <span class="op">=</span> Pipeline([</span>
+<span id="cb41-3"><a href="" aria-label="3"></a>        (<span class="st">"selection"</span>, RFE(DecisionTreeRegressor(<span class="op">**</span>bike_tree_params), n_features_to_select<span class="op">=</span><span class="dv">8</span>)),</span>
+<span id="cb41-4"><a href="" aria-label="4"></a>        (<span class="st">"tree"</span>, DecisionTreeRegressor(<span class="op">**</span>bike_tree_params)),</span>
+<span id="cb41-5"><a href="" aria-label="5"></a>    ])</span>
+<span id="cb41-6"><a href="" aria-label="6"></a>    record_bike_model(<span class="ss">f"</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss"> + RFE + Tree"</span>, model, train, valid)</span>
+<span id="cb41-7"><a href="" aria-label="7"></a>display(pd.DataFrame(bike_results).set_index(<span class="st">"Model"</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb41-8"><a href="" aria-label="8"></a></span>
+<span id="cb41-9"><a href="" aria-label="9"></a>importances <span class="op">=</span> {}</span>
+<span id="cb41-10"><a href="" aria-label="10"></a><span class="cf">for</span> label, (model, names) <span class="kw">in</span> bike_models.items():</span>
+<span id="cb41-11"><a href="" aria-label="11"></a>    importances[label] <span class="op">=</span> pd.Series(model.named_steps[<span class="st">"tree"</span>].feature_importances_, index<span class="op">=</span>names)</span>
+<span id="cb41-12"><a href="" aria-label="12"></a>display(pd.DataFrame(importances).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+</details>
+</section>
+
+<section id="references" class="title-slide slide level1 smaller scrollable">
+<h1>References</h1>
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-fanaeet2013bike" class="csl-entry" role="listitem">
+Fanaee-T, Hadi. 2013. <em>Bike Sharing</em>. UCI Machine Learning Repository. <a href="https://doi.org/10.24432/C5W894">https://doi.org/10.24432/C5W894</a>.
+</div>
+<div id="ref-guyon2003introduction" class="csl-entry" role="listitem">
+Guyon, Isabelle, and André Elisseeff. 2003. <span>“An Introduction to Variable and Feature Selection.”</span> <em>Journal of Machine Learning Research</em> 3: 1157–82. <a href="https://www.jmlr.org/papers/v3/guyon03a.html">https://www.jmlr.org/papers/v3/guyon03a.html</a>.
+</div>
+<div id="ref-guyon2002gene" class="csl-entry" role="listitem">
+Guyon, Isabelle, Jason Weston, Stephen Barnhill, and Vladimir Vapnik. 2002. <span>“Gene Selection for Cancer Classification Using Support Vector Machines.”</span> <em>Machine Learning</em> 46: 389–422. <a href="https://doi.org/10.1023/A:1012487302797">https://doi.org/10.1023/A:1012487302797</a>.
+</div>
+<div id="ref-lundberg2020local" class="csl-entry" role="listitem">
+Lundberg, Scott M., Gabriel Erion, Hugh Chen, et al. 2020. <span>“From Local Explanations to Global Understanding with Explainable <span>AI</span> for Trees.”</span> <em>Nature Machine Intelligence</em> 2 (1): 56–67.
+</div>
+<div id="ref-lundberg2017unified" class="csl-entry" role="listitem">
+Lundberg, Scott M., and Su-In Lee. 2017. <span>“A Unified Approach to Interpreting Model Predictions.”</span> <em>Advances in Neural Information Processing Systems</em> 30.
+</div>
+</div>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

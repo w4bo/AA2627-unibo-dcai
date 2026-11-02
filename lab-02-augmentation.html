@@ -238,6 +238,37 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-02-augmentation.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
 </section>
+<section id="session-plan-theory-and-coding" class="title-slide slide level1 center">
+<h1>Session plan: theory and coding</h1>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Activity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Theory 1: Pipelines, validation, imbalance metrics, and sampling mechanisms</td>
+</tr>
+<tr class="even">
+<td><a href="#/coding-break-1">Coding 1 (~15 min): Exercises 1-2</a></td>
+</tr>
+<tr class="odd">
+<td>Theory 2: Borderline-SMOTE, ADASYN, and comparisons of resampling pipelines</td>
+</tr>
+<tr class="even">
+<td><a href="#/coding-break-2">Coding 2 (~15 min): Exercises 3-4</a></td>
+</tr>
+<tr class="odd">
+<td>Theory 3: Decision thresholds, error costs, and leakage-safe resampling</td>
+</tr>
+<tr class="even">
+<td><a href="#/coding-break-3">Coding 3 (~15 min): Exercises 5-6</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+
 <section id="introduction-to-the-coding-tools" class="title-slide slide level1 center">
 <h1>Introduction to the coding tools</h1>
 
@@ -354,13 +385,14 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 </details>
 </section>
 
-<section id="high-accuracy-can-hide-every-missed-positive" class="title-slide slide level1 center">
-<h1>High accuracy can hide every missed positive</h1>
+<section id="how-do-we-fix-true-positives-being-missed" class="title-slide slide level1 center">
+<h1>How do we fix true positives being missed?</h1>
+<p>High accuracy can hide every missed positive</p>
 
 <img data-src="lab-02-augmentation_files/figure-revealjs/cell-3-output-1.png" class="r-stretch"></section>
 
-<section id="how-can-we-handle-class-imbalance" class="title-slide slide level1 center">
-<h1>How can we handle class imbalance?</h1>
+<section id="how-can-we-handle-the-errors-derived-from-class-imbalance" class="title-slide slide level1 center">
+<h1>How can we handle (the errors derived from) class imbalance?</h1>
 
 </section>
 
@@ -372,14 +404,15 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 <li><strong>Recall</strong> or sensitivity: among actual positives, how many did we find?</li>
 <li><strong>Specificity</strong>: among actual negatives, how many did we correctly reject?</li>
 <li><strong>F1 score</strong>: harmonic mean of precision and recall.</li>
+<li><strong>Class weights</strong>: make minority-class errors more expensive.</li>
 </ul>
+<p>Improving the models by changing the prediction threshold can help to improve recall.</p>
 </section>
 
-<section id="methods-for-handling-imbalance" class="title-slide slide level1 center">
-<h1>Methods for handling imbalance</h1>
+<section id="handling-imbalance" class="title-slide slide level1 center">
+<h1>Handling imbalance</h1>
 <ul>
-<li><strong>Class weights</strong>: make minority-class errors more expensive.</li>
-<li><strong>Sampling</strong>: random (?), statified (?), <strong>undersampling</strong>, and <strong>oversampling</strong>.</li>
+<li><strong>Sampling</strong>: random (?), statified (?), undersampling, and oversampling.</li>
 <li><strong>SMOTE and variants</strong>: synthesize minority examples.</li>
 </ul>
 </section>
@@ -408,15 +441,13 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 <li>Risk: interpolation may create impossible records: could the generated record exist in the real data?</li>
 </ul>
 <p>For a minority point <span class="math inline">\(x_i\)</span>, it selects a nearby minority point <span class="math inline">\(x_j\)</span> and creates: <span class="math inline">\(x_{new} = x_i + \lambda * (x_j - x_i)\)</span></p>
-</section>
-
-<section id="smote-move-toward-a-minority-neighbor" class="title-slide slide level1 center">
-<h1>SMOTE: move toward a minority neighbor</h1>
-<p>Each cross (x) uses a different interpolation weight <span class="math inline">\(\lambda\)</span>.</p>
+<ul>
+<li>Each cross (x) uses a different interpolation weight <span class="math inline">\(\lambda\)</span>.</li>
+</ul>
 
 <img data-src="lab-02-augmentation_files/figure-revealjs/cell-6-output-1.png" class="r-stretch"></section>
 
-<section id="smote-move-toward-a-minority-neighbor-1" class="title-slide slide level1 center">
+<section id="smote-move-toward-a-minority-neighbor" class="title-slide slide level1 center">
 <h1>SMOTE: move toward a minority neighbor</h1>
 
 <img data-src="./img/sampler-01.png" class="r-stretch quarto-figure-center"><p class="caption">Decision function</p></section>
@@ -436,8 +467,15 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 
 <img data-src="lab-02-augmentation_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
 
+<section id="coding-break-1-exercises-1-2-15-minutes" class="title-slide slide level1 center">
+<h1>Coding break 1: Exercises 1-2 (~15 minutes)</h1>
+<p><a id="coding-break-1" href=""></a></p>
+<p>Run the <a href="#/coding-exercise-setup">setup</a>, then implement <a href="#/coding-exercises-1">Exercises 1-2</a>.</p>
+</section>
+
 <section id="borderline-smote-which-points-are-in-danger" class="title-slide slide level1 center">
 <h1>Borderline-SMOTE: which points are in danger?</h1>
+<p><a id="theory-block-2" href=""></a></p>
 <p><strong>Borderline-SMOTE</strong> focuses on minority observations near the class boundary <span class="citation" data-cites="han2005borderline">(<a href="#/references" role="doc-biblioref" onclick="">Han et al. 2005</a>)</span>.</p>
 <ul>
 <li>These are the points a classifier is most likely to confuse with the majority class.</li>
@@ -450,10 +488,7 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 <ul>
 <li>Noise is a neighborhood label, not proof of an incorrect class.</li>
 </ul></li>
-<li>Choose danger points as generation seeds.
-<ul>
-<li><code>k_neighbors</code> then finds minority neighbors for interpolation.</li>
-</ul></li>
+<li>Choose danger points as generation seeds.</li>
 </ul>
 
 <img data-src="lab-02-augmentation_files/figure-revealjs/cell-9-output-1.png" class="r-stretch"></section>
@@ -467,15 +502,13 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 <h1>ADASYN</h1>
 <p><strong>ADASYN</strong> estimates local difficulty from nearest neighbors <span class="citation" data-cites="he2008adasyn">(<a href="#/references" role="doc-biblioref" onclick="">He et al. 2008</a>)</span>.</p>
 <ul>
-<li>Minority observations surrounded by many majority observations receive larger sampling weights.
-<ul>
-<li>Creates more synthetic minority examples around locally difficult observations.</li>
-</ul></li>
+<li>Minority observations surrounded by many majority observations receive larger sampling weights.</li>
+<li>Create more synthetic minority examples around locally difficult observations.</li>
 </ul>
 <p>How?</p>
 <ul>
-<li>Count majority labels among the <span class="math inline">\(k\)</span> nearest training neighbors of each minority point.</li>
-<li>Define difficulty as <span class="math inline">\(r_i=\frac{a_i}{k}\)</span>.</li>
+<li>Count majority labels among the <span class="math inline">\(m\)</span> nearest training neighbors of each minority point.</li>
+<li>Define <strong>difficulty</strong> as <span class="math inline">\(r_i=\frac{a_i}{m}\)</span>.</li>
 <li>For a budget of <span class="math inline">\(G\)</span> new rows, allocate <span class="math inline">\(g_i \approx G \frac{r_i}{\sum_j r_j}\)</span> to seed <span class="math inline">\(i\)</span> (spread <span class="math inline">\(G\)</span> over all minority seeds).
 <ul>
 <li>0-majority neighbors gives zero allocation; a larger majority fraction gives a larger allocation.</li>
@@ -486,7 +519,6 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 
 <section id="adasyn-compare-the-same-four-minority-queries" class="title-slide slide level1 center">
 <h1>ADASYN: compare the same four minority queries</h1>
-<p>The 16 minority seeds share 56 new rows; the plots show only the four starred queries from the previous example.</p>
 
 <img data-src="lab-02-augmentation_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
 
@@ -495,8 +527,8 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 
 <img data-src="./img/sampler-03.png" class="r-stretch quarto-figure-center"><p class="caption">Decision function</p></section>
 
-<section id="when-should-we-try-each-sampler" class="title-slide slide level1 center">
-<h1>When should we try each sampler?</h1>
+<section id="sampling-mechanisms-and-failure-cases" class="title-slide slide level1 center">
+<h1><a href="https://imbalanced-learn.org/stable/over_sampling.html#ill-posed-examples">Sampling mechanisms and failure cases</a></h1>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -528,10 +560,29 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 </tr>
 </tbody>
 </table>
-<p>The classifier, feature scaling, neighbor count, and class overlap can change the ranking.</p>
-<ul>
-<li><a href="https://imbalanced-learn.org/stable/over_sampling.html#ill-posed-examples">Sampling mechanisms and failure cases</a></li>
-</ul>
+<div class="columns">
+<div class="column" style="width:33%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/sampler-01.png"></p>
+<figcaption>SMOTE</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/sampler-02.png"></p>
+<figcaption>BORDERLINE SMOTE</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/sampler-03.png"></p>
+<figcaption>ADASYN</figcaption>
+</figure>
+</div>
+</div></div>
 </section>
 
 <section id="a-controlled-comparison-across-four-conditions" class="title-slide slide level1 center">
@@ -562,91 +613,7 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 <li>If precision falls enough, higher recall can still give lower F1.</li>
 <li>With noisy training labels, samplers can generate more rows around incorrectly labeled points.</li>
 </ul>
-</section>
-
-<section id="trace-the-f1-difference-through-errors-in-training-label-noise" class="title-slide slide level1 center">
-<h1>Trace the F1 difference through errors in “Training label noise”</h1>
-<div id="sampler-f1-errors-table" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:02:15.774804Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:02:15.774663Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:02:15.783435Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:02:15.782979Z&quot;}}" data-execution_count="12">
-<div class="cell-output cell-output-display" data-execution_count="12">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe caption-top" data-border="1">
-<thead>
-<tr class="header" style="text-align: right;">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">TP</th>
-<th data-quarto-table-cell-role="th">FP</th>
-<th data-quarto-table-cell-role="th">FN</th>
-<th data-quarto-table-cell-role="th">Precision</th>
-<th data-quarto-table-cell-role="th">Recall</th>
-<th data-quarto-table-cell-role="th">F1</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">method</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">No sampling</th>
-<td>281</td>
-<td>35</td>
-<td>19</td>
-<td>0.889</td>
-<td>0.937</td>
-<td>0.912</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">SMOTE</th>
-<td>294</td>
-<td>299</td>
-<td>6</td>
-<td>0.496</td>
-<td>0.980</td>
-<td>0.658</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">Borderline-SMOTE</th>
-<td>295</td>
-<td>271</td>
-<td>5</td>
-<td>0.521</td>
-<td>0.983</td>
-<td>0.681</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">ADASYN</th>
-<td>296</td>
-<td>736</td>
-<td>4</td>
-<td>0.287</td>
-<td>0.987</td>
-<td>0.444</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
+<p>Overall</p>
 <ul>
 <li><strong>Separated classes:</strong> the untreated baseline has the highest mean F1.</li>
 <li><strong>Overlap:</strong> Borderline-SMOTE has the highest mean F1 in this experiment.</li>
@@ -685,8 +652,8 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 <section id="create-a-deliberately-imbalanced-dataset" class="title-slide slide level1 center">
 <h1>Create a deliberately imbalanced dataset</h1>
 <p>We will use a synthetic binary classification dataset: <code>y=1</code> is a rare high-risk event, such as fraud, churn, default, or failure.</p>
-<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:02:15.784625Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:02:15.784502Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:02:15.791514Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:02:15.791069Z&quot;}}" data-outputid="4dd78d42-7805-469e-9ab6-175493ce1c3d" data-execution_count="13">
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div id="dd0bbd47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:25.788424Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:25.788036Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:25.803890Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:25.802920Z&quot;}}" data-outputid="4dd78d42-7805-469e-9ab6-175493ce1c3d" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -733,12 +700,12 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 </div>
 </div>
 
-<img data-src="lab-02-augmentation_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"></section>
+<img data-src="lab-02-augmentation_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
 
 <section id="visual-intuition" class="title-slide slide level1 center">
 <h1>Visual intuition</h1>
 
-<img data-src="lab-02-augmentation_files/figure-revealjs/cell-16-output-1.png" class="r-stretch"><ul>
+<img data-src="lab-02-augmentation_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"><ul>
 <li>Random <em>under sampling</em> decreases the majority count by sampling existing observations.</li>
 <li>Random <em>oversampling</em> increases the minority count by repeating existing observations, so the red crosses sit directly on top of known points.</li>
 </ul>
@@ -747,7 +714,7 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 <section id="visual-intuition-1" class="title-slide slide level1 center">
 <h1>Visual intuition</h1>
 
-<img data-src="lab-02-augmentation_files/figure-revealjs/cell-17-output-1.png" class="r-stretch"><ul>
+<img data-src="lab-02-augmentation_files/figure-revealjs/cell-16-output-1.png" class="r-stretch"><ul>
 <li><em>SMOTE</em> fills segments between nearby minority points.
 <ul>
 <li>This smooths sparse minority regions, but assumes that interpolation produces valid records.</li>
@@ -765,7 +732,7 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 
 <section id="baseline-pipeline" class="title-slide slide level1 center">
 <h1>Baseline pipeline</h1>
-<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:02:16.165893Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:02:16.165759Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:02:16.174206Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:02:16.173811Z&quot;}}" data-outputid="4c229548-5a5d-4480-9927-0f6b62a6a763" data-execution_count="17">
+<div id="1b77be2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:26.427154Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:26.426947Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:26.440441Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:26.439451Z&quot;}}" data-outputid="4c229548-5a5d-4480-9927-0f6b62a6a763" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>preprocessor <span class="op">=</span> StandardScaler()</span>
@@ -777,7 +744,7 @@ If only 5% of customers churn, a classifier that always predicts “no churn” 
 <span id="cb6-7"><a href="" aria-label="7"></a>)</span>
 <span id="cb6-8"><a href="" aria-label="8"></a>baseline_pipeline</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
@@ -1838,7 +1805,7 @@ forceTheme('sk-container-id-1');</script>
 <section id="confusion-matrices" class="title-slide slide level1 center">
 <h1>Confusion matrices</h1>
 
-<img data-src="lab-02-augmentation_files/figure-revealjs/cell-21-output-1.png" class="r-stretch"></section>
+<img data-src="lab-02-augmentation_files/figure-revealjs/cell-20-output-1.png" class="r-stretch"></section>
 
 <section id="comparison-table" class="title-slide slide level1 center">
 <h1>Comparison table</h1>
@@ -1848,7 +1815,7 @@ forceTheme('sk-container-id-1');</script>
 <li><strong>More recall, more false alarms:</strong> resampling and class weights recover about 72-76% of positives, while precision falls to about 16-19%.</li>
 <li><strong>Best mean F1 here: Borderline-SMOTE (0.303).</strong> Its recall is lower than the other treatments, but its precision is higher.</li>
 </ul>
-<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:02:17.076572Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:02:17.076427Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:02:17.086877Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:02:17.086389Z&quot;}}" data-outputid="2a2f072e-1700-4a2c-b6b0-be58bf4c7be8" data-execution_count="21">
+<div id="a16fc137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:27.845732Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:27.845524Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:27.859845Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:27.858872Z&quot;}}" data-outputid="2a2f072e-1700-4a2c-b6b0-be58bf4c7be8" data-execution_count="20">
 <div class="cell-output cell-output-display">
 <table class="dataframe caption-top" data-border="1">
 <thead>
@@ -1941,14 +1908,21 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 
+<section id="coding-break-2-exercises-3-4-15-minutes" class="title-slide slide level1 center">
+<h1>Coding break 2: Exercises 3-4 (~15 minutes)</h1>
+<p><a id="coding-break-2" href=""></a></p>
+<p>Go to <a href="#/coding-exercises-2">Exercises 3-4</a>.</p>
+</section>
+
 <section id="from-scores-to-decisions" class="title-slide slide level1 center">
 <h1>From scores to decisions</h1>
+<p><a id="theory-block-3" href=""></a></p>
 <div class="columns">
 <div class="column" style="width:80%;">
-<p>Precision is the fraction of predicted positives that are correct: <span class="math inline">\(\frac{TP}{TP + FP}\)</span>.</p>
-<p>Recall is the fraction of actual positives recovered: <span class="math inline">\(\frac{TP}{TP + FN}\)</span>.</p>
+<p><strong>Precision</strong> is the fraction of predicted positives that are correct: <span class="math inline">\(\frac{TP}{TP + FP}\)</span>.</p>
+<p><strong>Recall</strong> is the fraction of actual positives recovered: <span class="math inline">\(\frac{TP}{TP + FN}\)</span>.</p>
 <ul>
-<li><em>High recall but low precision</em>: recover most actual positives, with a large fraction of false positives among positive predictions.</li>
+<li><em>High recall but low precision</em>: recover most actual positives, with a large fraction of false positives.</li>
 <li><em>High precision but low recall</em>: positive predictions are mostly correct, but many actual positives are missed.</li>
 </ul>
 <p>A model produces a positive-class probability <span class="math inline">\(p\)</span> and predicts positive when <span class="math inline">\(p \ge thr\)</span>.</p>
@@ -1967,7 +1941,7 @@ forceTheme('sk-container-id-1');</script>
 <li><code>predict</code> usually applies a threshold of <code>0.5</code>. In a high-cost FN scenario, such as medical screening, we may prefer a lower threshold.</li>
 </ul>
 
-<img data-src="lab-02-augmentation_files/figure-revealjs/cell-23-output-1.png" class="r-stretch"><p><strong>Precision</strong></p>
+<img data-src="lab-02-augmentation_files/figure-revealjs/cell-22-output-1.png" class="r-stretch"><p><strong>Precision</strong></p>
 <ul>
 <li>If <span class="math inline">\(thr\)</span> was too high, the new results may all be TP, which will increase precision.</li>
 <li>If <span class="math inline">\(thr\)</span> was about right or low, further lowering it will introduce FP, decreasing precision.</li>
@@ -1979,7 +1953,7 @@ forceTheme('sk-container-id-1');</script>
 <h1>Threshold adjustment</h1>
 <p>Increasing <span class="math inline">\(thr\)</span> asks for more confidence before predicting the positive class, so recall tends to fall and precision may rise.</p>
 
-<img data-src="lab-02-augmentation_files/figure-revealjs/cell-25-output-1.png" class="r-stretch"></section>
+<img data-src="lab-02-augmentation_files/figure-revealjs/cell-24-output-1.png" class="r-stretch"></section>
 
 <section id="precision-recall-curves" class="title-slide slide level1 center">
 <h1>Precision-recall curves</h1>
@@ -1993,7 +1967,7 @@ forceTheme('sk-container-id-1');</script>
 <li>The outlined circles highlight only the method with the highest mean cross-validation F1 at threshold 0.5.</li>
 </ul>
 
-<img data-src="lab-02-augmentation_files/figure-revealjs/cell-26-output-1.png" class="r-stretch"></section>
+<img data-src="lab-02-augmentation_files/figure-revealjs/cell-25-output-1.png" class="r-stretch"></section>
 
 <section id="choose-a-threshold-for-high-cost-false-negatives" class="title-slide slide level1 center">
 <h1>Choose a threshold for high-cost false negatives</h1>
@@ -2011,8 +1985,8 @@ forceTheme('sk-container-id-1');</script>
 <li><span class="math inline">\(total\ cost = FP + 10 \times FN\)</span></li>
 <li>If a threshold produces 961 false positives and 101 false negatives, then: <span class="math inline">\(total\ cost = 961 + 10 \times 101 = 1971\)</span></li>
 </ul>
-<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:02:17.425906Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:02:17.425756Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:02:17.825112Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:02:17.824587Z&quot;}}" data-outputid="e9bdd02e-c40f-4ba9-83ea-1065bc7845c6" data-execution_count="26">
-<div class="cell-output cell-output-display" data-execution_count="26">
+<div id="3c67967a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:28.402049Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:28.401835Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:29.111349Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:29.110287Z&quot;}}" data-outputid="e9bdd02e-c40f-4ba9-83ea-1065bc7845c6" data-execution_count="25">
+<div class="cell-output cell-output-display" data-execution_count="25">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2062,8 +2036,8 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 
-<section id="leakage-warning" class="title-slide slide level1 center">
-<h1>Leakage warning</h1>
+<section id="optional-leakage-warning" class="title-slide slide level1 center">
+<h1>[Optional] Leakage warning</h1>
 <p>Resampling <em>is part of model training</em>: it must be learned from the training data only.</p>
 <ul>
 <li>Do <strong>not</strong> apply SMOTE or oversampling before splitting the data. <em>Why</em>?</li>
@@ -2077,23 +2051,18 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 
-<section id="how-information-leaks-through-a-synthetic-row" class="title-slide slide level1 center">
-<h1>How information leaks through a synthetic row</h1>
+<section id="optional-leakage-can-hide-a-missing-minority-region" class="title-slide slide level1 center">
+<h1>[Optional] Leakage can hide a missing minority region</h1>
 
-<img data-src="lab-02-augmentation_files/figure-revealjs/cell-28-output-1.png" class="r-stretch"></section>
+<img data-src="lab-02-augmentation_files/figure-revealjs/cell-27-output-1.png" class="r-stretch"></section>
 
-<section id="leakage-can-hide-a-missing-minority-region" class="title-slide slide level1 center">
-<h1>Leakage can hide a missing minority region</h1>
-
-<img data-src="lab-02-augmentation_files/figure-revealjs/cell-29-output-1.png" class="r-stretch"></section>
-
-<section id="leakage-demonstration" class="title-slide slide level1 center">
-<h1>Leakage demonstration</h1>
+<section id="optional-leakage-demonstration" class="title-slide slide level1 center">
+<h1>[Optional] Leakage demonstration</h1>
 <ul>
 <li>The <strong>wrong</strong> structure applies SMOTE before cross-validation.</li>
 <li>The <strong>right</strong> structure places SMOTE inside an <code>imblearn</code> pipeline, so SMOTE is fitted only on each training fold.</li>
 </ul>
-<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:02:18.151541Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:02:18.151387Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:02:18.219237Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:02:18.216806Z&quot;}}" data-outputid="db4c1917-1746-43a8-cf67-5f3d65fdb70f" data-execution_count="29">
+<div id="605267d1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:29.411242Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:29.410997Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:29.516800Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:29.516243Z&quot;}}" data-outputid="db4c1917-1746-43a8-cf67-5f3d65fdb70f" data-execution_count="27">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>X_scaled <span class="op">=</span> preprocessor.fit_transform(X)</span>
@@ -2112,8 +2081,8 @@ forceTheme('sk-container-id-1');</script>
 <span id="cb8-14"><a href="" aria-label="14"></a>right_fold_results <span class="op">=</span> fold_results.loc[fold_results[<span class="st">"method"</span>] <span class="op">==</span> <span class="st">"SMOTE"</span>].assign(method<span class="op">=</span><span class="st">"SMOTE inside CV"</span>)</span></code></pre></div>
 </details>
 </div>
-<div id="5f9d288d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:02:18.222812Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:02:18.222623Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:02:18.230427Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:02:18.230030Z&quot;}}" data-execution_count="30">
-<div class="cell-output cell-output-display" data-execution_count="30">
+<div id="5f9d288d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:29.520413Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:29.519977Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:29.530325Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:29.529794Z&quot;}}" data-execution_count="28">
+<div class="cell-output cell-output-display" data-execution_count="28">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2173,8 +2142,15 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 
+<section id="coding-break-3-exercises-5-6-15-minutes" class="title-slide slide level1 center">
+<h1>Coding break 3: Exercises 5-6 (~15 minutes)</h1>
+<p><a id="coding-break-3" href=""></a></p>
+<p>Go to <a href="#/coding-exercises-3">Exercises 5-6</a>.</p>
+</section>
+
 <section id="exercises-exploring-resampling-methods-with-imblearn" class="title-slide slide level1 center">
 <h1>Exercises: exploring resampling methods with <code>imblearn</code></h1>
+<p><a id="coding-exercise-setup" href=""></a></p>
 <p><code>imbalanced-learn</code> (<code>imblearn</code>) extends the scikit-learn estimator API with samplers.</p>
 <ul>
 <li>It provides over/undersampling, sampler ensembles, metrics, and benchmark datasets.</li>
@@ -2194,7 +2170,7 @@ forceTheme('sk-container-id-1');</script>
 <ul>
 <li>We predict the minority class (<code>1</code>) versus the majority (<code>0</code>). The loader returns anonymous feature columns, so use <code>feature_1</code> to <code>feature_6</code>.</li>
 </ul>
-<div id="mammography-load-data" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:02:18.233529Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:02:18.233357Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:09.671629Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:09.671006Z&quot;}}" data-execution_count="31">
+<div id="mammography-load-data" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:29.533629Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:29.533443Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.652863Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.651954Z&quot;}}" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>m_dataset <span class="op">=</span> fetch_datasets(filter_data<span class="op">=</span>(<span class="st">"mammography"</span>,))[<span class="st">"mammography"</span>]</span>
@@ -2223,12 +2199,12 @@ memory usage: 524.3 KB</code></pre>
 <section id="inspect-the-observations" class="title-slide slide level1 center">
 <h1>Inspect the observations</h1>
 <p>What does one row contain? Which column is the prediction target?</p>
-<div id="mammography-show-data" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:09.672906Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:09.672787Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:09.677706Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:09.677324Z&quot;}}" data-execution_count="32">
+<div id="mammography-show-data" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:02.654869Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:02.654667Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.663032Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.662029Z&quot;}}" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>X_mammography.assign(minority<span class="op">=</span>y_mammography).head()</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="32">
+<div class="cell-output cell-output-display" data-execution_count="30">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2314,12 +2290,12 @@ memory usage: 524.3 KB</code></pre>
 </div>
 </div>
 </div>
-<div id="2a797040" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:09.678725Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:09.678612Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:09.681687Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:09.681238Z&quot;}}" data-execution_count="33">
+<div id="2a797040" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:02.664823Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:02.664640Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.669364Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.668711Z&quot;}}" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>y_mammography.value_counts()</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="33">
+<div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>minority
 0    10923
 1      260
@@ -2330,12 +2306,12 @@ Name: count, dtype: int64</code></pre>
 
 <section id="inspect-the-feature-scales.-are-they-in-the-same-range" class="title-slide slide level1 center">
 <h1>Inspect the feature scales. Are they in the same range?</h1>
-<div id="mammography-show-ranges" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:09.682686Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:09.682584Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:09.692457Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:09.692024Z&quot;}}" data-execution_count="34">
+<div id="mammography-show-ranges" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:02.671521Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:02.671346Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.688975Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.687995Z&quot;}}" data-execution_count="32">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>X_mammography.describe().<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div class="cell-output cell-output-display" data-execution_count="32">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2447,12 +2423,12 @@ Name: count, dtype: int64</code></pre>
 <section id="visualization-first-2-pc-of-the-standardized-features.-are-classes-well-separated" class="title-slide slide level1 center">
 <h1>Visualization: first 2 PC of the standardized features. Are classes well separated?</h1>
 
-<img data-src="lab-02-augmentation_files/figure-revealjs/cell-36-output-1.png" class="r-stretch"><div id="7a768f47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:09.786187Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:09.786033Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:09.795983Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:09.795505Z&quot;}}" data-execution_count="36">
+<img data-src="lab-02-augmentation_files/figure-revealjs/cell-34-output-1.png" class="r-stretch"><div id="7a768f47" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:02.883007Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:02.882796Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.899629Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.898884Z&quot;}}" data-execution_count="34">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>X_mammography.groupby(y_mammography).agg([<span class="st">"mean"</span>, <span class="st">"std"</span>]).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="36">
+<div class="cell-output cell-output-display" data-execution_count="34">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2560,7 +2536,7 @@ Name: count, dtype: int64</code></pre>
 <li>Fit preprocessing, class weighting, and sampling using training rows only.</li>
 <li>Treat validation as a development set: compare methods here, but reserve a separate test set for a final generalization claim.</li>
 </ul>
-<div id="mammography-split-and-imports" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:09.797027Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:09.796914Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:09.802027Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:09.801628Z&quot;}}" data-execution_count="37">
+<div id="mammography-split-and-imports" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:02.902023Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:02.901843Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.910750Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.910002Z&quot;}}" data-execution_count="35">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>m_X_train, m_X_valid, m_y_train, m_y_valid <span class="op">=</span> train_test_split(</span>
@@ -2586,145 +2562,217 @@ Name: count, dtype: int64</code></pre>
 
 <section id="exercise-1-a-scikit-learn-decision-tree-pipeline" class="title-slide slide level1 center">
 <h1>Exercise 1: a scikit-learn decision-tree pipeline</h1>
-<p>Build and fit an <strong>unweighted</strong> decision tree using the original class distribution.</p>
-<ul>
-<li>How many positives are missed?</li>
-<li>Rank the fitted tree’s <code>feature_importances_</code>: which features dominate?</li>
-</ul>
-<div id="mammography-starter-1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:09.803038Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:09.802930Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:09.804783Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:09.804390Z&quot;}}" data-execution_count="38">
+<p><a id="coding-exercises-1" href=""></a></p>
+<p>Fit an unweighted decision tree on the original training distribution.</p>
+<p>How many positives are missed, and which features dominate?</p>
+<div id="mammography-starter-1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:02.912928Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:02.912764Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.915822Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.915061Z&quot;}}" data-execution_count="36">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="co"># Fill in the estimator and uncomment: use DecisionTreeClassifier(**m_tree_params).</span></span>
-<span id="cb17-2"><a href="" aria-label="2"></a><span class="co"># m_baseline = Pipeline([("tree", ...)])</span></span>
-<span id="cb17-3"><a href="" aria-label="3"></a><span class="co"># m_baseline.fit(m_X_train, m_y_train)</span></span>
-<span id="cb17-4"><a href="" aria-label="4"></a><span class="co"># mammography_scores(m_baseline, m_X_valid, m_y_valid)</span></span>
-<span id="cb17-5"><a href="" aria-label="5"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: rank m_baseline.named_steps["tree"].feature_importances_</span></span>
-<span id="cb17-6"><a href="" aria-label="6"></a><span class="co">#       using m_X_train.columns as the feature names.</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="co"># 1. Build and fit an unweighted decision tree using the original class distribution.</span></span>
+<span id="cb17-2"><a href="" aria-label="2"></a><span class="co"># 2. How many positives are missed?</span></span>
+<span id="cb17-3"><a href="" aria-label="3"></a><span class="co"># 3. Rank the fitted tree's feature_importances_: which features dominate?</span></span>
+<span id="cb17-4"><a href="" aria-label="4"></a></span>
+<span id="cb17-5"><a href="" aria-label="5"></a><span class="co"># Fill in the estimator and uncomment: use DecisionTreeClassifier(**m_tree_params).</span></span>
+<span id="cb17-6"><a href="" aria-label="6"></a><span class="co"># m_baseline = Pipeline([("tree", ...)])</span></span>
+<span id="cb17-7"><a href="" aria-label="7"></a><span class="co"># m_baseline.fit(m_X_train, m_y_train)</span></span>
+<span id="cb17-8"><a href="" aria-label="8"></a><span class="co"># mammography_scores(m_baseline, m_X_valid, m_y_valid)</span></span>
+<span id="cb17-9"><a href="" aria-label="9"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: rank m_baseline.named_steps["tree"].feature_importances_</span></span>
+<span id="cb17-10"><a href="" aria-label="10"></a><span class="co">#       using m_X_train.columns as the feature names.</span></span>
+<span id="cb17-11"><a href="" aria-label="11"></a></span>
+<span id="cb17-12"><a href="" aria-label="12"></a><span class="co"># Code hint: pd.Series(..., index=m_X_train.columns).sort_values(ascending=False)</span></span></code></pre></div>
 </details>
 </div>
 </section>
 
 <section id="exercise-2-give-the-classes-balanced-weights" class="title-slide slide level1 center">
 <h1>Exercise 2: give the classes balanced weights</h1>
-<p>Clone the baseline and set <code>tree__class_weight="balanced"</code>, then refit on the <strong>same original training rows</strong>.</p>
-<ul>
-<li>Did minority F1 improve? Did the important features change? Class weighting does not guarantee a better result on every metric.</li>
-</ul>
-<div id="mammography-starter-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:09.805736Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:09.805641Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:09.807403Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:09.807009Z&quot;}}" data-execution_count="39">
+<p>Compare balanced class weights with the unweighted baseline.</p>
+<p>Did minority F1 or the important features change? Why?</p>
+<div id="mammography-starter-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:02.918055Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:02.917884Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.920964Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.920156Z&quot;}}" data-execution_count="37">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="co"># Fill in the class weight and uncomment.</span></span>
-<span id="cb18-2"><a href="" aria-label="2"></a><span class="co"># m_weighted = clone(m_baseline).set_params(tree__class_weight=...)</span></span>
-<span id="cb18-3"><a href="" aria-label="3"></a><span class="co"># m_weighted.fit(m_X_train, m_y_train)</span></span>
-<span id="cb18-4"><a href="" aria-label="4"></a><span class="co"># mammography_scores(m_weighted, m_X_valid, m_y_valid)</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="co"># 1. Clone the baseline and set tree__class_weight="balanced", then refit on the same original training rows.</span></span>
+<span id="cb18-2"><a href="" aria-label="2"></a><span class="co"># 2. Did minority F1 improve? Did the important features change? Class weighting does not guarantee a better result on every metric.</span></span>
+<span id="cb18-3"><a href="" aria-label="3"></a></span>
+<span id="cb18-4"><a href="" aria-label="4"></a><span class="co"># Fill in the class weight and uncomment.</span></span>
+<span id="cb18-5"><a href="" aria-label="5"></a><span class="co"># m_weighted = clone(m_baseline).set_params(tree__class_weight=...)</span></span>
+<span id="cb18-6"><a href="" aria-label="6"></a><span class="co"># m_weighted.fit(m_X_train, m_y_train)</span></span>
+<span id="cb18-7"><a href="" aria-label="7"></a><span class="co"># mammography_scores(m_weighted, m_X_valid, m_y_valid)</span></span>
+<span id="cb18-8"><a href="" aria-label="8"></a></span>
+<span id="cb18-9"><a href="" aria-label="9"></a><span class="co"># Code hint: set_params(tree__class_weight="balanced") changes only the tree setting.</span></span></code></pre></div>
 </details>
 </div>
 </section>
 
-<section id="exercise-3-an-imblearn-pipeline-with-smote" class="title-slide slide level1 center">
-<h1>Exercise 3: an imblearn pipeline with SMOTE</h1>
-<p>Chain <code>StandardScaler</code>, <code>SMOTE</code>, and an <strong>unweighted</strong> decision tree.</p>
-<ul>
-<li>Use <code>random_state=42</code> for SMOTE and the same <code>m_tree_params</code> as before.</li>
-<li>Fit the whole pipeline on training data and compare with Exercises 1 and 2.</li>
-</ul>
-<div id="mammography-starter-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:09.808474Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:09.808358Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:09.810219Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:09.809792Z&quot;}}" data-execution_count="40">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># Fill in SMOTE(random_state=42), then uncomment and fit.</span></span>
-<span id="cb19-2"><a href="" aria-label="2"></a><span class="co"># m_smote = ImbPipeline([</span></span>
-<span id="cb19-3"><a href="" aria-label="3"></a><span class="co">#     ("scaler", StandardScaler()),</span></span>
-<span id="cb19-4"><a href="" aria-label="4"></a><span class="co">#     ("sampler", ...),</span></span>
-<span id="cb19-5"><a href="" aria-label="5"></a><span class="co">#     ("tree", DecisionTreeClassifier(**m_tree_params)),</span></span>
-<span id="cb19-6"><a href="" aria-label="6"></a><span class="co"># ])</span></span>
-<span id="cb19-7"><a href="" aria-label="7"></a><span class="co"># m_smote.fit(m_X_train, m_y_train)</span></span>
-<span id="cb19-8"><a href="" aria-label="8"></a><span class="co"># mammography_scores(m_smote, m_X_valid, m_y_valid)</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="exercise-4-smote-with-and-without-scaling" class="title-slide slide level1 center">
-<h1>Exercise 4: SMOTE with and without scaling</h1>
-<p>Disable the SMOTE pipeline’s scaler with <code>"passthrough"</code>, refit, and compare with scaled SMOTE.</p>
-<ul>
-<li>Repeat after changing feature units using the factors below.</li>
-<li>Why can scaling change SMOTE even though the classifier is a tree? Can scaling <em>after</em> SMOTE repair its neighbor choices?</li>
-</ul>
-<div id="mammography-starter-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:09.811182Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:09.811069Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:09.813574Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:09.813198Z&quot;}}" data-execution_count="41">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="co"># Fill in "passthrough", then fit and evaluate as above.</span></span>
-<span id="cb20-2"><a href="" aria-label="2"></a><span class="co"># m_unscaled = clone(m_smote).set_params(scaler=...)</span></span>
-<span id="cb20-3"><a href="" aria-label="3"></a></span>
-<span id="cb20-4"><a href="" aria-label="4"></a><span class="co"># Repeat with changed units: fit on train_units, evaluate on valid_units.</span></span>
-<span id="cb20-5"><a href="" aria-label="5"></a>m_units <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="fl">0.01</span>, <span class="fl">0.001</span>, <span class="dv">1000</span>]</span>
-<span id="cb20-6"><a href="" aria-label="6"></a>m_X_train_units <span class="op">=</span> m_X_train <span class="op">*</span> m_units</span>
-<span id="cb20-7"><a href="" aria-label="7"></a>m_X_valid_units <span class="op">=</span> m_X_valid <span class="op">*</span> m_units</span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="exercise-5-borderline-smote" class="title-slide slide level1 center">
-<h1>Exercise 5: Borderline-SMOTE</h1>
-<p>Clone the <strong>scaled</strong> SMOTE pipeline and replace its sampler with <code>BorderlineSMOTE(random_state=42)</code> (<a href="https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.BorderlineSMOTE.html"><code>BorderlineSMOTE</code></a>).</p>
-<ul>
-<li>Keep the scaling, tree, and split fixed. Compare with ordinary scaled SMOTE.</li>
-<li>Which errors change, and does F1 improve? Explain why concentrating on boundary observations might help or amplify overlap and noise.</li>
-</ul>
-<div id="mammography-starter-5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:03:09.814658Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:03:09.814542Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:03:09.816298Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:03:09.815911Z&quot;}}" data-execution_count="42">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a><span class="co"># Fill in BorderlineSMOTE(random_state=42), then fit and evaluate.</span></span>
-<span id="cb21-2"><a href="" aria-label="2"></a><span class="co"># m_borderline = clone(m_smote).set_params(sampler=...)</span></span>
-<span id="cb21-3"><a href="" aria-label="3"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: compare all five models using the same validation set.</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="exercise-solution" class="title-slide slide level1 center">
-<h1>Exercise Solution</h1>
+<section id="coding-session-1-solution" class="title-slide slide level1 center">
+<h1>Coding session 1 solution</h1>
 <details>
 <summary>
 Show the solution
 </summary>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a></span>
-<span id="cb22-2"><a href="" aria-label="2"></a>m_baseline <span class="op">=</span> Pipeline([(<span class="st">"tree"</span>, DecisionTreeClassifier(<span class="op">**</span>m_tree_params))])</span>
-<span id="cb22-3"><a href="" aria-label="3"></a>m_weighted <span class="op">=</span> clone(m_baseline).set_params(tree__class_weight<span class="op">=</span><span class="st">"balanced"</span>)</span>
-<span id="cb22-4"><a href="" aria-label="4"></a>m_smote <span class="op">=</span> ImbPipeline([</span>
-<span id="cb22-5"><a href="" aria-label="5"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
-<span id="cb22-6"><a href="" aria-label="6"></a>    (<span class="st">"sampler"</span>, SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)),</span>
-<span id="cb22-7"><a href="" aria-label="7"></a>    (<span class="st">"tree"</span>, DecisionTreeClassifier(<span class="op">**</span>m_tree_params)),</span>
-<span id="cb22-8"><a href="" aria-label="8"></a>])</span>
-<span id="cb22-9"><a href="" aria-label="9"></a>m_unscaled <span class="op">=</span> clone(m_smote).set_params(scaler<span class="op">=</span><span class="st">"passthrough"</span>)</span>
-<span id="cb22-10"><a href="" aria-label="10"></a>m_borderline <span class="op">=</span> clone(m_smote).set_params(sampler<span class="op">=</span>BorderlineSMOTE(random_state<span class="op">=</span><span class="dv">42</span>))</span>
-<span id="cb22-11"><a href="" aria-label="11"></a>m_smote_lr <span class="op">=</span> ImbPipeline([</span>
-<span id="cb22-12"><a href="" aria-label="12"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
-<span id="cb22-13"><a href="" aria-label="13"></a>    (<span class="st">"sampler"</span>, SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)),</span>
-<span id="cb22-14"><a href="" aria-label="14"></a>    (<span class="st">"classifier"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>, random_state<span class="op">=</span><span class="dv">42</span>)),</span>
-<span id="cb22-15"><a href="" aria-label="15"></a>])</span>
-<span id="cb22-16"><a href="" aria-label="16"></a>m_smote_lr_unscaled <span class="op">=</span> clone(m_smote_lr).set_params(scaler<span class="op">=</span><span class="st">"passthrough"</span>)</span>
-<span id="cb22-17"><a href="" aria-label="17"></a>m_models <span class="op">=</span> {</span>
-<span id="cb22-18"><a href="" aria-label="18"></a>    <span class="st">"Tree"</span>: m_baseline, <span class="st">"Weighted tree"</span>: m_weighted,</span>
-<span id="cb22-19"><a href="" aria-label="19"></a>    <span class="st">"SMOTE + decision tree"</span>: m_smote, <span class="st">"SMOTE without scaling + decision tree"</span>: m_unscaled,</span>
-<span id="cb22-20"><a href="" aria-label="20"></a>    <span class="st">"Borderline-SMOTE"</span>: m_borderline,</span>
-<span id="cb22-21"><a href="" aria-label="21"></a>    <span class="st">"SMOTE + logistic regression"</span>: m_smote_lr,</span>
-<span id="cb22-22"><a href="" aria-label="22"></a>    <span class="st">"SMOTE + logistic regression without scaling"</span>: m_smote_lr_unscaled,</span>
-<span id="cb22-23"><a href="" aria-label="23"></a>}</span>
-<span id="cb22-24"><a href="" aria-label="24"></a><span class="cf">for</span> model <span class="kw">in</span> m_models.values():</span>
-<span id="cb22-25"><a href="" aria-label="25"></a>    model.fit(m_X_train, m_y_train)</span>
-<span id="cb22-26"><a href="" aria-label="26"></a>display(pd.DataFrame({</span>
-<span id="cb22-27"><a href="" aria-label="27"></a>    name: mammography_scores(model, m_X_valid, m_y_valid)</span>
-<span id="cb22-28"><a href="" aria-label="28"></a>    <span class="cf">for</span> name, model <span class="kw">in</span> m_models.items()</span>
-<span id="cb22-29"><a href="" aria-label="29"></a>}).T.<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb22-30"><a href="" aria-label="30"></a>display(pd.DataFrame({</span>
-<span id="cb22-31"><a href="" aria-label="31"></a>    name: m_models[name].named_steps[<span class="st">"tree"</span>].feature_importances_</span>
-<span id="cb22-32"><a href="" aria-label="32"></a>    <span class="cf">for</span> name <span class="kw">in</span> [<span class="st">"Tree"</span>, <span class="st">"Weighted tree"</span>, <span class="st">"SMOTE + decision tree"</span>]</span>
-<span id="cb22-33"><a href="" aria-label="33"></a>}, index<span class="op">=</span>m_X_train.columns).sort_values(<span class="st">"Tree"</span>, ascending<span class="op">=</span><span class="va">False</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb22-34"><a href="" aria-label="34"></a>pd.Series(</span>
-<span id="cb22-35"><a href="" aria-label="35"></a>    m_models[<span class="st">"SMOTE without scaling + decision tree"</span>].named_steps[<span class="st">"tree"</span>].feature_importances_,</span>
-<span id="cb22-36"><a href="" aria-label="36"></a>    index<span class="op">=</span>m_X_train.columns, name<span class="op">=</span><span class="st">"SMOTE without scaling + decision tree"</span>,</span>
-<span id="cb22-37"><a href="" aria-label="37"></a>).sort_values(ascending<span class="op">=</span><span class="va">False</span>).<span class="bu">round</span>(<span class="dv">3</span>).to_frame()</span>
-<span id="cb22-38"><a href="" aria-label="38"></a></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>m_baseline <span class="op">=</span> Pipeline([(<span class="st">"tree"</span>, DecisionTreeClassifier(<span class="op">**</span>m_tree_params))])</span>
+<span id="cb19-2"><a href="" aria-label="2"></a>m_weighted <span class="op">=</span> clone(m_baseline).set_params(tree__class_weight<span class="op">=</span><span class="st">"balanced"</span>)</span>
+<span id="cb19-3"><a href="" aria-label="3"></a>m_models <span class="op">=</span> {<span class="st">"Tree"</span>: m_baseline, <span class="st">"Weighted tree"</span>: m_weighted}</span>
+<span id="cb19-4"><a href="" aria-label="4"></a><span class="cf">for</span> model <span class="kw">in</span> m_models.values():</span>
+<span id="cb19-5"><a href="" aria-label="5"></a>    model.fit(m_X_train, m_y_train)</span>
+<span id="cb19-6"><a href="" aria-label="6"></a>display(pd.DataFrame({</span>
+<span id="cb19-7"><a href="" aria-label="7"></a>    name: mammography_scores(model, m_X_valid, m_y_valid)</span>
+<span id="cb19-8"><a href="" aria-label="8"></a>    <span class="cf">for</span> name, model <span class="kw">in</span> m_models.items()</span>
+<span id="cb19-9"><a href="" aria-label="9"></a>}).T.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb19-10"><a href="" aria-label="10"></a>display(pd.DataFrame({</span>
+<span id="cb19-11"><a href="" aria-label="11"></a>    name: model.named_steps[<span class="st">"tree"</span>].feature_importances_</span>
+<span id="cb19-12"><a href="" aria-label="12"></a>    <span class="cf">for</span> name, model <span class="kw">in</span> m_models.items()</span>
+<span id="cb19-13"><a href="" aria-label="13"></a>}, index<span class="op">=</span>m_X_train.columns).sort_values(<span class="st">"Tree"</span>, ascending<span class="op">=</span><span class="va">False</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div>
+</details>
+</section>
+
+<section id="exercise-3-an-imblearn-pipeline-with-smote" class="title-slide slide level1 center">
+<h1>Exercise 3: an imblearn pipeline with SMOTE</h1>
+<p><a id="coding-exercises-2" href=""></a></p>
+<p>Compare a scaled SMOTE pipeline with the previous baselines.</p>
+<p>Does resampling improve minority F1?</p>
+<div id="mammography-starter-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:02.922805Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:02.922629Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.925871Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.924867Z&quot;}}" data-execution_count="38">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="co"># 1. Chain StandardScaler, SMOTE, and an unweighted decision tree.</span></span>
+<span id="cb20-2"><a href="" aria-label="2"></a><span class="co"># 2. Use random_state=42 for SMOTE and the same m_tree_params as before.</span></span>
+<span id="cb20-3"><a href="" aria-label="3"></a><span class="co"># 3. Fit the whole pipeline on training data and compare with Exercises 1 and 2.</span></span>
+<span id="cb20-4"><a href="" aria-label="4"></a></span>
+<span id="cb20-5"><a href="" aria-label="5"></a><span class="co"># Fill in SMOTE(random_state=42), then uncomment and fit.</span></span>
+<span id="cb20-6"><a href="" aria-label="6"></a><span class="co"># m_smote = ImbPipeline([</span></span>
+<span id="cb20-7"><a href="" aria-label="7"></a><span class="co">#     ("scaler", StandardScaler()),</span></span>
+<span id="cb20-8"><a href="" aria-label="8"></a><span class="co">#     ("sampler", ...),</span></span>
+<span id="cb20-9"><a href="" aria-label="9"></a><span class="co">#     ("tree", DecisionTreeClassifier(**m_tree_params)),</span></span>
+<span id="cb20-10"><a href="" aria-label="10"></a><span class="co"># ])</span></span>
+<span id="cb20-11"><a href="" aria-label="11"></a><span class="co"># m_smote.fit(m_X_train, m_y_train)</span></span>
+<span id="cb20-12"><a href="" aria-label="12"></a><span class="co"># mammography_scores(m_smote, m_X_valid, m_y_valid)</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="exercise-4-borderline-smote" class="title-slide slide level1 center">
+<h1>Exercise 4: Borderline-SMOTE</h1>
+<p>Compare Borderline-SMOTE with ordinary scaled SMOTE.</p>
+<p>Which errors change? Why might boundary-focused sampling help or amplify noise?</p>
+<div id="mammography-starter-5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:02.927604Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:02.927441Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.930632Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.929649Z&quot;}}" data-execution_count="39">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a><span class="co"># 1. Clone the scaled SMOTE pipeline and replace its sampler with BorderlineSMOTE(random_state=42) (BorderlineSMOTE).</span></span>
+<span id="cb21-2"><a href="" aria-label="2"></a><span class="co"># 2. Keep the scaling, tree, and split fixed. Compare with ordinary scaled SMOTE.</span></span>
+<span id="cb21-3"><a href="" aria-label="3"></a><span class="co"># 3. Which errors change, and does F1 improve? Explain why concentrating on boundary observations might help or amplify overlap and noise.</span></span>
+<span id="cb21-4"><a href="" aria-label="4"></a></span>
+<span id="cb21-5"><a href="" aria-label="5"></a><span class="co"># Fill in BorderlineSMOTE(random_state=42), then fit and evaluate.</span></span>
+<span id="cb21-6"><a href="" aria-label="6"></a><span class="co"># m_borderline = clone(m_smote).set_params(sampler=...)</span></span>
+<span id="cb21-7"><a href="" aria-label="7"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: compare baseline, weighted tree, scaled SMOTE, and Borderline-SMOTE.</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="coding-session-2-solution" class="title-slide slide level1 center">
+<h1>Coding session 2 solution</h1>
+<details>
+<summary>
+Show the solution
+</summary>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>m_smote <span class="op">=</span> ImbPipeline([</span>
+<span id="cb22-2"><a href="" aria-label="2"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb22-3"><a href="" aria-label="3"></a>    (<span class="st">"sampler"</span>, SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)),</span>
+<span id="cb22-4"><a href="" aria-label="4"></a>    (<span class="st">"tree"</span>, DecisionTreeClassifier(<span class="op">**</span>m_tree_params)),</span>
+<span id="cb22-5"><a href="" aria-label="5"></a>])</span>
+<span id="cb22-6"><a href="" aria-label="6"></a>m_borderline <span class="op">=</span> clone(m_smote).set_params(sampler<span class="op">=</span>BorderlineSMOTE(random_state<span class="op">=</span><span class="dv">42</span>))</span>
+<span id="cb22-7"><a href="" aria-label="7"></a><span class="cf">for</span> name, model <span class="kw">in</span> {<span class="st">"SMOTE + decision tree"</span>: m_smote, <span class="st">"Borderline-SMOTE"</span>: m_borderline}.items():</span>
+<span id="cb22-8"><a href="" aria-label="8"></a>    model.fit(m_X_train, m_y_train)</span>
+<span id="cb22-9"><a href="" aria-label="9"></a>m_models <span class="op">=</span> {<span class="st">"Tree"</span>: m_baseline, <span class="st">"Weighted tree"</span>: m_weighted, <span class="st">"SMOTE + decision tree"</span>: m_smote, <span class="st">"Borderline-SMOTE"</span>: m_borderline}</span>
+<span id="cb22-10"><a href="" aria-label="10"></a>display(pd.DataFrame({</span>
+<span id="cb22-11"><a href="" aria-label="11"></a>    name: mammography_scores(model, m_X_valid, m_y_valid)</span>
+<span id="cb22-12"><a href="" aria-label="12"></a>    <span class="cf">for</span> name, model <span class="kw">in</span> m_models.items()</span>
+<span id="cb22-13"><a href="" aria-label="13"></a>}).T.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb22-14"><a href="" aria-label="14"></a>display(pd.Series(m_smote.named_steps[<span class="st">"tree"</span>].feature_importances_, index<span class="op">=</span>m_X_train.columns, name<span class="op">=</span><span class="st">"Scaled SMOTE"</span>).sort_values(ascending<span class="op">=</span><span class="va">False</span>))</span></code></pre></div>
+</details>
+</section>
+
+<section id="exercise-5-smote-with-and-without-scaling" class="title-slide slide level1 center">
+<h1>Exercise 5: SMOTE with and without scaling</h1>
+<p><a id="coding-exercises-3" href=""></a></p>
+<p>Compare ordinary SMOTE with and without scaling.</p>
+<p>Why can scaling matter even with a tree classifier? Can scaling after SMOTE repair its neighbor choices?</p>
+<div id="mammography-starter-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:02.932271Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:02.932074Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.936804Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.935794Z&quot;}}" data-execution_count="40">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="co"># 1. Disable the SMOTE pipeline's scaler with "passthrough", refit, and compare with scaled SMOTE.</span></span>
+<span id="cb23-2"><a href="" aria-label="2"></a><span class="co"># 2. Optional extension after the timed session: repeat after changing feature units using the factors below.</span></span>
+<span id="cb23-3"><a href="" aria-label="3"></a><span class="co"># 3. Why can scaling change SMOTE even though the classifier is a tree? Can scaling *after* SMOTE repair its neighbor choices?</span></span>
+<span id="cb23-4"><a href="" aria-label="4"></a></span>
+<span id="cb23-5"><a href="" aria-label="5"></a><span class="co"># Fill in "passthrough", then fit and evaluate as above.</span></span>
+<span id="cb23-6"><a href="" aria-label="6"></a><span class="co"># m_unscaled = clone(m_smote).set_params(scaler=...)</span></span>
+<span id="cb23-7"><a href="" aria-label="7"></a></span>
+<span id="cb23-8"><a href="" aria-label="8"></a><span class="co"># Repeat with changed units: fit on train_units, evaluate on valid_units.</span></span>
+<span id="cb23-9"><a href="" aria-label="9"></a>m_units <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="fl">0.01</span>, <span class="fl">0.001</span>, <span class="dv">1000</span>]</span>
+<span id="cb23-10"><a href="" aria-label="10"></a>m_X_train_units <span class="op">=</span> m_X_train <span class="op">*</span> m_units</span>
+<span id="cb23-11"><a href="" aria-label="11"></a>m_X_valid_units <span class="op">=</span> m_X_valid <span class="op">*</span> m_units</span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="exercise-6-compare-thresholds-by-error-cost" class="title-slide slide level1 center">
+<h1>Exercise 6: compare thresholds by error cost</h1>
+<p>Choose a threshold when a false negative costs ten times as much as a false positive.</p>
+<p>Which threshold has the lowest validation cost, and what is the FP/FN tradeoff?</p>
+<div id="6737fd0f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:31:02.938564Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:31:02.938392Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:31:02.941599Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:31:02.940600Z&quot;}}" data-execution_count="41">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="co"># 1. Use m_borderline without refitting it. Suppose a false negative costs 10 times as much as a false positive.</span></span>
+<span id="cb24-2"><a href="" aria-label="2"></a><span class="co"># 2. Evaluate thresholds 0.2, 0.5, and 0.8 on its validation probabilities.</span></span>
+<span id="cb24-3"><a href="" aria-label="3"></a><span class="co"># 3. For each threshold, report FP, FN, and cost = FP + 10 * FN.</span></span>
+<span id="cb24-4"><a href="" aria-label="4"></a><span class="co"># 4. Which threshold has the lowest observed cost? Compare it with 0.5 and explain the tradeoff.</span></span>
+<span id="cb24-5"><a href="" aria-label="5"></a><span class="co"># 5. This is threshold selection on development data. A final performance estimate requires a separate untouched test set.</span></span>
+<span id="cb24-6"><a href="" aria-label="6"></a></span>
+<span id="cb24-7"><a href="" aria-label="7"></a><span class="co"># m_probabilities = m_borderline.predict_proba(m_X_valid)[:, 1]</span></span>
+<span id="cb24-8"><a href="" aria-label="8"></a></span>
+<span id="cb24-9"><a href="" aria-label="9"></a><span class="co"># Code hints for the loop:</span></span>
+<span id="cb24-10"><a href="" aria-label="10"></a><span class="co"># threshold_rows = []</span></span>
+<span id="cb24-11"><a href="" aria-label="11"></a><span class="co"># for threshold in [...]:</span></span>
+<span id="cb24-12"><a href="" aria-label="12"></a><span class="co">#     predicted = (m_probabilities &gt;= ...).astype(int)</span></span>
+<span id="cb24-13"><a href="" aria-label="13"></a><span class="co">#     Unpack from confusion matrix tn, fp, fn, tp = confusion_matrix(m_y_valid, predicted, labels=[0, 1]).ravel()</span></span>
+<span id="cb24-14"><a href="" aria-label="14"></a><span class="co">#     Record threshold, FP, FN, and cost = fp + 10 * fn in a list of dictionaries.</span></span>
+<span id="cb24-15"><a href="" aria-label="15"></a><span class="co"># Explain why the lowest-cost threshold need not maximize F1.</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="coding-session-3-solution" class="title-slide slide level1 center">
+<h1>Coding session 3 solution</h1>
+<details>
+<summary>
+Show the solution
+</summary>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb25-1"><a href="" aria-label="1"></a><span class="co"># Exercise 5: disable scaling in ordinary SMOTE, retaining the saved split and tree.</span></span>
+<span id="cb25-2"><a href="" aria-label="2"></a>m_unscaled <span class="op">=</span> clone(m_smote).set_params(scaler<span class="op">=</span><span class="st">"passthrough"</span>)</span>
+<span id="cb25-3"><a href="" aria-label="3"></a>m_unscaled.fit(m_X_train, m_y_train)</span>
+<span id="cb25-4"><a href="" aria-label="4"></a>m_models[<span class="st">"SMOTE without scaling + decision tree"</span>] <span class="op">=</span> m_unscaled</span>
+<span id="cb25-5"><a href="" aria-label="5"></a>display(pd.DataFrame({</span>
+<span id="cb25-6"><a href="" aria-label="6"></a>    name: mammography_scores(model, m_X_valid, m_y_valid)</span>
+<span id="cb25-7"><a href="" aria-label="7"></a>    <span class="cf">for</span> name, model <span class="kw">in</span> m_models.items()</span>
+<span id="cb25-8"><a href="" aria-label="8"></a>}).T.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb25-9"><a href="" aria-label="9"></a>display(pd.DataFrame({</span>
+<span id="cb25-10"><a href="" aria-label="10"></a>    <span class="st">"Scaled SMOTE"</span>: m_smote.named_steps[<span class="st">"tree"</span>].feature_importances_,</span>
+<span id="cb25-11"><a href="" aria-label="11"></a>    <span class="st">"Unscaled SMOTE"</span>: m_unscaled.named_steps[<span class="st">"tree"</span>].feature_importances_,</span>
+<span id="cb25-12"><a href="" aria-label="12"></a>}, index<span class="op">=</span>m_X_train.columns).sort_values(<span class="st">"Scaled SMOTE"</span>, ascending<span class="op">=</span><span class="va">False</span>).<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb25-13"><a href="" aria-label="13"></a></span>
+<span id="cb25-14"><a href="" aria-label="14"></a><span class="co"># Exercise 6: select a threshold using development-set error costs.</span></span>
+<span id="cb25-15"><a href="" aria-label="15"></a>m_probabilities <span class="op">=</span> m_borderline.predict_proba(m_X_valid)[:, <span class="dv">1</span>]</span>
+<span id="cb25-16"><a href="" aria-label="16"></a>threshold_rows <span class="op">=</span> []</span>
+<span id="cb25-17"><a href="" aria-label="17"></a><span class="cf">for</span> threshold <span class="kw">in</span> [<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>]:</span>
+<span id="cb25-18"><a href="" aria-label="18"></a>    predicted <span class="op">=</span> (m_probabilities <span class="op">&gt;=</span> threshold).astype(<span class="bu">int</span>)</span>
+<span id="cb25-19"><a href="" aria-label="19"></a>    tn, fp, fn, tp <span class="op">=</span> confusion_matrix(m_y_valid, predicted, labels<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>]).ravel()</span>
+<span id="cb25-20"><a href="" aria-label="20"></a>    threshold_rows.append({<span class="st">"threshold"</span>: threshold, <span class="st">"FP"</span>: fp, <span class="st">"FN"</span>: fn, <span class="st">"cost"</span>: fp <span class="op">+</span> <span class="dv">10</span> <span class="op">*</span> fn})</span>
+<span id="cb25-21"><a href="" aria-label="21"></a>display(pd.DataFrame(threshold_rows).sort_values(<span class="st">"cost"</span>))</span>
+<span id="cb25-22"><a href="" aria-label="22"></a><span class="co"># An untouched test set is needed to assess the selected threshold.</span></span>
+<span id="cb25-23"><a href="" aria-label="23"></a></span>
+<span id="cb25-24"><a href="" aria-label="24"></a><span class="co"># Optional changed-unit extension: compare scaled/unscaled SMOTE on identical changed units.</span></span>
+<span id="cb25-25"><a href="" aria-label="25"></a><span class="cf">for</span> name, template <span class="kw">in</span> {<span class="st">"Scaled SMOTE"</span>: m_smote, <span class="st">"Unscaled SMOTE"</span>: m_unscaled}.items():</span>
+<span id="cb25-26"><a href="" aria-label="26"></a>    changed_units_model <span class="op">=</span> clone(template).fit(m_X_train_units, m_y_train)</span>
+<span id="cb25-27"><a href="" aria-label="27"></a>    <span class="bu">print</span>(name, mammography_scores(changed_units_model, m_X_valid_units, m_y_valid))</span></code></pre></div>
 </details>
 </section>
 

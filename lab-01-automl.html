@@ -238,11 +238,49 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-01-automl.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
 </section>
+<section id="session-plan-theory-and-coding" class="title-slide slide level1 center">
+<h1>Session plan: theory and coding</h1>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Activity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Theory 1: HPO, validation metrics, grid and random search</td>
+</tr>
+<tr class="even">
+<td><a href="#/coding-break-1">Coding 1 (~15 min): Exercises 1-2</a></td>
+</tr>
+<tr class="odd">
+<td>Theory 2: CASH, search budgets, multi-fidelity methods, and FLAML</td>
+</tr>
+<tr class="even">
+<td><a href="#/coding-break-2">Coding 2 (~15 min): Exercise 3</a></td>
+</tr>
+<tr class="odd">
+<td>Theory 3: Anytime performance, pipeline optimization, MLZero, and AutoML limitations</td>
+</tr>
+<tr class="even">
+<td><a href="#/coding-break-3">Coding 3 (~15 min): Exercise 4</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+
 <section id="the-problem-hyperparameter-optimization" class="title-slide slide level1 center">
 <h1>The Problem: Hyperparameter Optimization</h1>
-<p>A learning algorithm fits <strong>parameters</strong> (for example, regression coefficients) from data.</p>
-<p><strong>Hyperparameters</strong> configure that fitting process: regularization strength, tree depth, or learning rate.</p>
-<p>Hyperparameter optimization is the process of finding the best set of hyperparameters. Given:</p>
+
+<img data-src="img/rf_hpo.svg" class="r-stretch quarto-figure-center"><p class="caption">Example of a hyperparameter optimization loop.</p><ul>
+<li>A learning algorithm (e.g., a random forest classifier) fits <strong>parameters</strong> of a model (e.g., the values of node splits) while training on data.</li>
+<li><strong>Hyperparameters</strong> configure that fitting process (e.g., tree depth).</li>
+</ul>
+</section>
+
+<section id="the-problem-hyperparameter-optimization-1" class="title-slide slide level1 center">
+<h1>The Problem: Hyperparameter Optimization</h1>
+<p><strong>Hyperparameter optimization</strong> is the process of finding the best set of model hyperparameters. Given:</p>
 <ul>
 <li>Training data <span class="math inline">\(D_{\mathrm{tr}}\)</span>;</li>
 <li>A learning algorithm <span class="math inline">\(A\)</span> and a target <span class="math inline">\(\mathcal L\)</span>;</li>
@@ -269,16 +307,10 @@ f(\lambda)=\mathcal{L}_{D_{\mathrm{val}}}\!\left(A_\lambda(D_{\mathrm{tr}})\righ
 </ul>
 </section>
 
-<section id="hpo-as-an-optimizer-learning-system-loop-1" class="title-slide slide level1 center">
-<h1>HPO as an Optimizer-Learning-System Loop</h1>
-
-<img data-src="img/rf_hpo.svg" class="r-stretch quarto-figure-center"><p class="caption">Example of a hyperparameter optimization loop.</p></section>
-
 <section id="get-the-dataset" class="title-slide slide level1 center">
 <h1>Get the Dataset</h1>
-<p>Adult Census Income is downloaded directly from the <a href="https://archive.ics.uci.edu/dataset/2/adult">UCI repository</a>, without OpenML.</p>
-<p>Dataset: <span class="citation" data-cites="becker1996adult">(<a href="#/references" role="doc-biblioref" onclick="">Becker and Kohavi 1996</a>)</span>.</p>
-<div id="c5bedbeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:00:47.649174Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:00:47.649034Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:00:48.853199Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:00:48.852696Z&quot;}}" data-execution_count="4">
+<p><a href="https://archive.ics.uci.edu/dataset/2/adult">Adult Census Income</a>. <span class="citation" data-cites="becker1996adult">(<a href="#/references" role="doc-biblioref" onclick="">Becker and Kohavi 1996</a>)</span></p>
+<div id="c5bedbeb" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:29:15.775854Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:29:15.775675Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:29:16.634137Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:29:16.633164Z&quot;}}" data-execution_count="4">
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 <style scoped="">
@@ -417,7 +449,7 @@ f(\lambda)=\mathcal{L}_{D_{\mathrm{val}}}\!\left(A_\lambda(D_{\mathrm{tr}})\righ
 
 <section id="get-the-dataset-1" class="title-slide slide level1 center">
 <h1>Get the Dataset</h1>
-<div id="80b56180" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:00:48.854796Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:00:48.854639Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:00:48.861985Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:00:48.861459Z&quot;}}" data-execution_count="5">
+<div id="80b56180" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:29:16.636106Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:29:16.635909Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:29:16.646611Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:29:16.645653Z&quot;}}" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>adult_df.info()</span></code></pre></div>
@@ -451,7 +483,7 @@ memory usage: 937.6 KB</code></pre>
 
 <section id="set-the-target-balanced-accuracy" class="title-slide slide level1 center">
 <h1>Set the Target: Balanced Accuracy</h1>
-<div id="d60afc77" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:00:48.875651Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:00:48.875507Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:00:48.880342Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:00:48.879825Z&quot;}}" data-execution_count="7">
+<div id="d60afc77" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:29:16.665448Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:29:16.665262Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:29:16.671891Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:29:16.671154Z&quot;}}" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>adult_df[<span class="st">"income"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).rename(<span class="st">"target_share"</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
@@ -465,15 +497,14 @@ Name: target_share, dtype: float64</code></pre>
 </div>
 <p>For <span class="math inline">\(C\)</span> classes, balanced accuracy is the mean recall across classes:</p>
 <ul>
+<li>A majority-only classifier have high accuracy but balanced accuracy of 0.5.</li>
 <li><span class="math inline">\(\mathrm{BA}=\frac{1}{C}\sum_{c=1}^{C}\frac{TP_c}{TP_c+FN_c}\)</span></li>
-<li>For binary classification this is <span class="math inline">\(\frac{\mathrm{sensitivity}+\mathrm{specificity}}{2}\)</span>.</li>
 </ul>
-<p>A majority-only classifier can have high ordinary accuracy but balanced accuracy of 0.5 when both classes are present.</p>
 </section>
 
 <section id="fixed-random-forest-baseline" class="title-slide slide level1 center">
 <h1>Fixed Random-Forest Baseline</h1>
-<div id="42e1e10e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:00:48.881691Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:00:48.881560Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:00:49.087044Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:00:49.086521Z&quot;}}" data-execution_count="8">
+<div id="42e1e10e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:29:16.673781Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:29:16.673572Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:29:17.003070Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:29:17.002261Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="co"># Fit preprocessing once on training rows; every method receives these same arrays.</span></span>
@@ -484,24 +515,21 @@ Name: target_share, dtype: float64</code></pre>
 <span id="cb5-6"><a href="" aria-label="6"></a>X_train_model <span class="op">=</span> classification_preprocess.fit_transform(X_cls_train)</span>
 <span id="cb5-7"><a href="" aria-label="7"></a>X_val_model <span class="op">=</span> classification_preprocess.transform(X_cls_val)</span>
 <span id="cb5-8"><a href="" aria-label="8"></a>classification_baseline <span class="op">=</span> RandomForestClassifier(</span>
-<span id="cb5-9"><a href="" aria-label="9"></a>    n_estimators<span class="op">=</span><span class="dv">144</span>,</span>
-<span id="cb5-10"><a href="" aria-label="10"></a>    max_depth<span class="op">=</span><span class="dv">4</span>,</span>
-<span id="cb5-11"><a href="" aria-label="11"></a>    min_samples_leaf<span class="op">=</span><span class="dv">5</span>,</span>
-<span id="cb5-12"><a href="" aria-label="12"></a>    max_features<span class="op">=</span><span class="st">"sqrt"</span>,</span>
-<span id="cb5-13"><a href="" aria-label="13"></a>    class_weight<span class="op">=</span><span class="st">"balanced"</span>,</span>
+<span id="cb5-9"><a href="" aria-label="9"></a>    n_estimators<span class="op">=</span><span class="dv">144</span>, <span class="co"># trees</span></span>
+<span id="cb5-10"><a href="" aria-label="10"></a>    max_depth<span class="op">=</span><span class="dv">4</span>, <span class="co"># depth of each tree</span></span>
+<span id="cb5-11"><a href="" aria-label="11"></a>    min_samples_leaf<span class="op">=</span><span class="dv">5</span>, <span class="co"># minimum samples per leaf</span></span>
+<span id="cb5-12"><a href="" aria-label="12"></a>    max_features<span class="op">=</span><span class="st">"sqrt"</span>, <span class="co"># number of features to consider at each split</span></span>
+<span id="cb5-13"><a href="" aria-label="13"></a>    class_weight<span class="op">=</span><span class="st">"balanced"</span>, <span class="co"># handle class imbalance</span></span>
 <span id="cb5-14"><a href="" aria-label="14"></a>    random_state<span class="op">=</span>RANDOM_STATE, n_jobs<span class="op">=</span><span class="dv">1</span>,</span>
 <span id="cb5-15"><a href="" aria-label="15"></a>)</span>
 <span id="cb5-16"><a href="" aria-label="16"></a>started <span class="op">=</span> time.perf_counter()</span>
 <span id="cb5-17"><a href="" aria-label="17"></a>classification_baseline.fit(X_train_model, y_cls_train)</span>
 <span id="cb5-18"><a href="" aria-label="18"></a>baseline_elapsed <span class="op">=</span> time.perf_counter() <span class="op">-</span> started</span>
-<span id="cb5-19"><a href="" aria-label="19"></a>classification_baseline_scores <span class="op">=</span> evaluate_classifier(classification_baseline, X_val_model, y_cls_val)</span>
-<span id="cb5-20"><a href="" aria-label="20"></a>comparison_rows <span class="op">=</span> {<span class="st">"baseline"</span>: {</span>
-<span id="cb5-21"><a href="" aria-label="21"></a>    <span class="st">"method"</span>: <span class="st">"baseline"</span>, <span class="st">"classifier"</span>: <span class="bu">type</span>(classification_baseline).<span class="va">__name__</span>,</span>
-<span id="cb5-22"><a href="" aria-label="22"></a>    <span class="st">"elapsed_s"</span>: baseline_elapsed, <span class="op">**</span>classification_baseline_scores,</span>
-<span id="cb5-23"><a href="" aria-label="23"></a>}}</span>
-<span id="cb5-24"><a href="" aria-label="24"></a>pd.DataFrame(comparison_rows.values()).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<span id="cb5-19"><a href="" aria-label="19"></a>classification_baseline_scores <span class="op">=</span> evaluate_classifier(classification_baseline, X_val_model, y_cls_val)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="8">
+</div>
+<div id="c6c1980a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:29:17.005683Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:29:17.005446Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:29:17.013776Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:29:17.012757Z&quot;}}" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -534,7 +562,7 @@ Name: target_share, dtype: float64</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <td>baseline</td>
 <td>RandomForestClassifier</td>
-<td>0.175</td>
+<td>0.29</td>
 <td>0.729</td>
 <td>0.778</td>
 <td>0.623</td>
@@ -547,13 +575,13 @@ Name: target_share, dtype: float64</code></pre>
 </div>
 </section>
 
-<section id="grid-search-enumerate-a-cartesian-product" class="title-slide slide level1 center">
-<h1>Grid Search: Enumerate a Cartesian Product</h1>
+<section id="grid-search-enumerate-the-cartesian-product-of-hyperparameters" class="title-slide slide level1 center">
+<h1>Grid Search: Enumerate the Cartesian Product of Hyperparameters</h1>
 
 <img data-src="img/remote/grid-search.png" class="r-stretch quarto-figure-center"><p class="caption">Grid search</p></section>
 
-<section id="grid-search-enumerate-a-cartesian-product-1" class="title-slide slide level1 center">
-<h1>Grid Search: Enumerate a Cartesian Product</h1>
+<section id="grid-search-enumerate-the-cartesian-product-of-hyperparameters-1" class="title-slide slide level1 center">
+<h1>Grid Search: Enumerate the Cartesian Product of Hyperparameters</h1>
 <p>For each of <span class="math inline">\(d\)</span> hyperparameters, choose a set of values <span class="math inline">\(X_j\)</span>.</p>
 <p><strong>Grid search</strong> evaluates <span class="math inline">\(N_{\mathrm{grid}}=\prod_{j=1}^d |X_j|\)</span> configurations.</p>
 <blockquote>
@@ -567,13 +595,13 @@ Name: target_share, dtype: float64</code></pre>
 <span id="cb6-2"><a href="" aria-label="2"></a>GridSearchCV(rf_estimator, param_grid, cv<span class="op">=</span>holdout, scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>)</span></code></pre></div>
 </section>
 
-<section id="random-search-sample-configurations" class="title-slide slide level1 center">
-<h1>Random Search: Sample Configurations</h1>
+<section id="random-search-sample-random-hyperparameter-configurations" class="title-slide slide level1 center">
+<h1>Random Search: Sample Random Hyperparameter Configurations</h1>
 
 <img data-src="img/remote/random-search.png" class="r-stretch quarto-figure-center"><p class="caption">Random search</p></section>
 
-<section id="random-search-sample-configurations-1" class="title-slide slide level1 center">
-<h1>Random Search: Sample Configurations</h1>
+<section id="random-search-sample-random-hyperparameter-configurations-1" class="title-slide slide level1 center">
+<h1>Random Search: Sample Random Hyperparameter Configurations</h1>
 <p>Choose a sampling distribution <span class="math inline">\(p(\lambda)\)</span>, draw and evaluate <span class="math inline">\(N_{rnd}\)</span> independent configurations.</p>
 <p><span class="math display">\[\lambda_1,\ldots,\lambda_{N_{rnd}}\sim p(\lambda),\qquad \widehat\lambda\in\arg\min_{\lambda_i}\widehat f(\lambda_i).\]</span></p>
 <details>
@@ -642,14 +670,14 @@ Independent trials can be parallelized. Previous evaluations are ignored, so the
 </tbody>
 </table>
 <p>The example depends strongly on the first coordinate. Compare a fixed nine-point grid with 1,000 repetitions of nine random trials.</p>
-<div id="lab04-integrated-027" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:00:49.088702Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:00:49.088580Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:00:49.335959Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:00:49.335432Z&quot;}}" data-execution_count="9">
+<div id="lab04-integrated-027" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:29:17.015740Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:29:17.015523Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:29:17.390626Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:29:17.389682Z&quot;}}" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>Grid (9 trials, 3 distinct l1 values): loss = 0.803. Random (9 trials, 9 distinct l1 values): median loss = 0.096
 Random search beats the grid in 98% of the repetitions</code></pre>
 </div>
 
 </div>
-<img data-src="lab-01-automl_files/figure-revealjs/cell-10-output-2.png" class="r-stretch"></section>
+<img data-src="lab-01-automl_files/figure-revealjs/cell-11-output-2.png" class="r-stretch"></section>
 
 <section id="example-four-parameter-random-forest" class="title-slide slide level1 center">
 <h1>Example: Four-Parameter Random Forest</h1>
@@ -659,8 +687,8 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <span id="cb9-4"><a href="" aria-label="4"></a>param_random <span class="op">=</span> {</span>
 <span id="cb9-5"><a href="" aria-label="5"></a>    <span class="st">"max_depth"</span>: randint(<span class="dv">2</span>, <span class="dv">5</span>), <span class="st">"min_samples_leaf"</span>: randint(<span class="dv">1</span>, <span class="dv">25</span>), <span class="st">"max_features"</span>: uniform(<span class="fl">0.15</span>, <span class="fl">0.85</span>), <span class="st">"max_samples"</span>: uniform(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
 <span id="cb9-6"><a href="" aria-label="6"></a>}</span></code></pre></div>
-<div id="lab04-integrated-038" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:00:49.338824Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:00:49.338567Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:01:02.040808Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:01:02.040273Z&quot;}}" data-execution_count="10">
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div id="lab04-integrated-038" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:29:17.392662Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:29:17.392478Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:29:36.240665Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:29:36.239643Z&quot;}}" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -695,7 +723,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <th data-quarto-table-cell-role="th">0</th>
 <td>grid</td>
 <td>RandomForestClassifier</td>
-<td>6.1183</td>
+<td>9.0482</td>
 <td>16</td>
 <td>2304</td>
 <td>0.7625</td>
@@ -706,7 +734,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <th data-quarto-table-cell-role="th">1</th>
 <td>random</td>
 <td>RandomForestClassifier</td>
-<td>6.5493</td>
+<td>9.7493</td>
 <td>18</td>
 <td>2592</td>
 <td>0.7688</td>
@@ -720,13 +748,20 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 </div>
 </div>
 
-<img data-src="lab-01-automl_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-automl_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"></section>
+
+<section id="coding-break-1-exercises-1-2-15-minutes" class="title-slide slide level1 center">
+<h1>Coding break 1: Exercises 1-2 (~15 minutes)</h1>
+<p><a id="coding-break-1" href=""></a></p>
+<p>Run the <a href="#/coding-exercise-setup">setup</a>, then implement <a href="#/coding-exercises-1">Exercises 1-2</a>.</p>
+</section>
 
 <section id="from-hpo-to-automl" class="title-slide slide level1 center">
 <h1>From HPO to AutoML</h1>
+<p><a id="theory-block-2" href=""></a></p>
 <p><strong>Automated Machine Learning (AutoML)</strong> automates choices when building and evaluating an ML solution.</p>
 <ul>
-<li>While HPO fixes the learning algorithm and tunes its settings, AutoML can also choose the algorithm and parts of the pipeline.</li>
+<li>While HPO fixes the learning algorithm, AutoML also chooses the algorithm.</li>
 <li>The user defines the task, search space, metric and budget.</li>
 </ul>
 </section>
@@ -738,41 +773,16 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 \mathcal L_{D_{\mathrm{val}}}\!\left(A_{a,\lambda}(D_{\mathrm{tr}})\right). \]</span></p>
 <p>CASH jointly selects the algorithm and its hyperparameters under a resource budget.</p>
 <ul>
+<li>CASH inherits HPO’s expensive evaluations and adds learner-level allocation: <strong>which algorithm deserves the next unit of budget?</strong></li>
 <li>Its domain is a conditional union <span class="math inline">\(\bigcup_a\{a\}\times\Lambda_a\)</span>, rather than one rectangular grid.</li>
+<li>The hyperparameter space is a conditional tree or graph, not a Cartesian product of every learner’s settings.</li>
 <li>A <strong>root hyperparameter</strong> selects the learner, activating only its associated space <span class="math inline">\(\Lambda_a\)</span>.</li>
-<li>E.g., A forest activates tree-related settings; logistic regression activates regularization settings.</li>
 </ul>
-</section>
-
-<section id="cash-search-spaces-are-conditional" class="title-slide slide level1 center">
-<h1>CASH Search Spaces Are Conditional</h1>
-<p>The hyperparameter space is a conditional tree or graph, not a Cartesian product of every learner’s settings.</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Learner selected at the root</th>
-<th>Active hyperparameters</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Random forest</td>
-<td>tree count, tree/leaf constraints</td>
-</tr>
-<tr class="even">
-<td>Logistic regression</td>
-<td>penalty and regularization strength</td>
-</tr>
-<tr class="odd">
-<td>Gradient boosting</td>
-<td>learning rate, iterations, tree constraints</td>
-</tr>
-</tbody>
-</table>
-<p>CASH inherits HPO’s expensive evaluations and adds learner-level allocation: <strong>which algorithm deserves the next unit of budget?</strong></p>
-<ul>
-<li>Different learners and configurations have different costs; the answer should depend on observed quality, cost, and remaining resources.</li>
-</ul>
+<blockquote>
+<p><span class="math inline">\(A_1\)</span> is forest and activates <span class="math inline">\(\Lambda_1 = \{depth \in [3, 5], \#trees \in [10, 100]\}\)</span> tree-related settings.</p>
+<p><span class="math inline">\(A_2\)</span> is logistic regression activates <span class="math inline">\(\Lambda_2\)</span> regularization settings.</p>
+<p><span class="math inline">\(A_{1, \{depth=3, \#trees=100\}}\)</span> is a random forest with 100 trees of maximum depth 3 applied to <span class="math inline">\(D_{tr}\)</span>.</p>
+</blockquote>
 </section>
 
 <section id="search-under-a-budget" class="title-slide slide level1 center">
@@ -839,7 +849,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <section id="bayesian-optimization-surrogate-and-next-evaluation" class="title-slide slide level1 center">
 <h1>Bayesian Optimization: Surrogate and Next Evaluation</h1>
 
-<img data-src="lab-01-automl_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"></section>
+<img data-src="lab-01-automl_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
 
 <section id="successive-halving-allocate-resources" class="title-slide slide level1 center">
 <h1>Successive Halving: Allocate Resources</h1>
@@ -913,7 +923,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 </ul></li>
 <li>Random search gives every candidate 144 trees.</li>
 </ul>
-<div id="lab04-integrated-041" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:01:02.288884Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:01:02.288754Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:01:05.647098Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:01:05.646565Z&quot;}}" data-execution_count="13">
+<div id="lab04-integrated-041" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:29:36.627492Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:29:36.627293Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:29:41.651973Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:29:41.651067Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>halving <span class="op">=</span> HalvingRandomSearchCV(</span>
@@ -925,7 +935,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <span id="cb10-7"><a href="" aria-label="7"></a>fit_search(<span class="st">"halving"</span>, halving)</span></code></pre></div>
 </details>
 </div>
-<div id="ee78603a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:01:05.654837Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:01:05.654727Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:01:05.661152Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:01:05.660647Z&quot;}}" data-execution_count="15">
+<div id="ee78603a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:29:41.662641Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:29:41.662456Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:29:41.672011Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:29:41.671053Z&quot;}}" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -969,7 +979,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">grid</th>
 <td>RandomForestClassifier</td>
-<td>6.1183</td>
+<td>9.0482</td>
 <td>16</td>
 <td>2304</td>
 <td>0.7625</td>
@@ -979,7 +989,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <tr class="even">
 <th data-quarto-table-cell-role="th">random</th>
 <td>RandomForestClassifier</td>
-<td>6.5493</td>
+<td>9.7493</td>
 <td>18</td>
 <td>2592</td>
 <td>0.7688</td>
@@ -989,7 +999,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">halving</th>
 <td>RandomForestClassifier</td>
-<td>3.3444</td>
+<td>5.0036</td>
 <td>26</td>
 <td>864</td>
 <td>0.7688</td>
@@ -1002,18 +1012,9 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Halving speedup over random: 1.96x</code></pre>
+<pre><code>Halving speedup over random: 1.95x</code></pre>
 </div>
 </div>
-</section>
-
-<section id="budget-questions" class="title-slide slide level1 center">
-<h1>Budget Questions</h1>
-<ol type="1">
-<li>How many configurations survived each halving round, and how many trees were fitted during search?</li>
-<li>How much runtime did halving save compared with evaluating the same candidates at full resource?</li>
-<li>What happened to validation balanced accuracy? Could an early ranking discard the eventual best candidate?</li>
-</ol>
 </section>
 
 <section id="flaml-search-and-resource-allocation" class="title-slide slide level1 center">
@@ -1027,7 +1028,7 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 <li>Allocate time across learners using observed cost and improvement.</li>
 </ul></li>
 </ul>
-<div id="86003a33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:01:05.662334Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:01:05.662226Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:01:35.714568Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:01:35.713869Z&quot;}}" data-execution_count="16">
+<div id="86003a33" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:29:41.673692Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:29:41.673525Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:11.718641Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:11.717680Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="im">from</span> flaml <span class="im">import</span> AutoML</span>
@@ -1048,15 +1049,15 @@ Random search beats the grid in 98% of the repetitions</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Selected learner: xgb_limitdepth; classifier: XGBClassifier
-Selected hyperparameters: {'n_estimators': 362, 'max_depth': 5, 'min_child_weight': np.float64(1.3968060108416855), 'learning_rate': np.float64(0.052965775849422296), 'subsample': 1.0, 'colsample_bylevel': np.float64(0.8044468004247879), 'colsample_bytree': np.float64(0.9880163465715607), 'reg_alpha': np.float64(0.04709710816265562), 'reg_lambda': np.float64(0.05740154215948204)}</code></pre>
+Selected hyperparameters: {'n_estimators': 151, 'max_depth': 5, 'min_child_weight': np.float64(1.782924838977797), 'learning_rate': np.float64(0.17989621506784795), 'subsample': 1.0, 'colsample_bylevel': np.float64(0.9328288706694938), 'colsample_bytree': np.float64(0.9877878456495247), 'reg_alpha': np.float64(0.005681262601785821), 'reg_lambda': np.float64(0.029377943595706977)}</code></pre>
 </div>
 </div>
 </section>
 
 <section id="flaml-search-and-resource-allocation-1" class="title-slide slide level1 center">
 <h1>FLAML: Search and Resource Allocation</h1>
-<div id="453ae089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:01:35.716047Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:01:35.715906Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:01:35.731119Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:01:35.730691Z&quot;}}" data-execution_count="17">
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div id="453ae089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:11.720700Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:11.720469Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:11.739537Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:11.738460Z&quot;}}" data-execution_count="18">
+<div class="cell-output cell-output-display" data-execution_count="18">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -1095,7 +1096,7 @@ Selected hyperparameters: {'n_estimators': 362, 'max_depth': 5, 'min_child_weigh
 <tr class="odd">
 <th data-quarto-table-cell-role="th">baseline</th>
 <td>RandomForestClassifier</td>
-<td>0.1749</td>
+<td>0.2895</td>
 <td>0.7288</td>
 <td>0.7784</td>
 <td>0.6226</td>
@@ -1103,7 +1104,7 @@ Selected hyperparameters: {'n_estimators': 362, 'max_depth': 5, 'min_child_weigh
 <tr class="even">
 <th data-quarto-table-cell-role="th">grid</th>
 <td>RandomForestClassifier</td>
-<td>6.1183</td>
+<td>9.0482</td>
 <td>0.7625</td>
 <td>0.8043</td>
 <td>0.6558</td>
@@ -1111,7 +1112,7 @@ Selected hyperparameters: {'n_estimators': 362, 'max_depth': 5, 'min_child_weigh
 <tr class="odd">
 <th data-quarto-table-cell-role="th">random</th>
 <td>RandomForestClassifier</td>
-<td>6.5493</td>
+<td>9.7493</td>
 <td>0.7688</td>
 <td>0.8069</td>
 <td>0.6606</td>
@@ -1119,7 +1120,7 @@ Selected hyperparameters: {'n_estimators': 362, 'max_depth': 5, 'min_child_weigh
 <tr class="even">
 <th data-quarto-table-cell-role="th">halving</th>
 <td>RandomForestClassifier</td>
-<td>3.3444</td>
+<td>5.0036</td>
 <td>0.7688</td>
 <td>0.8069</td>
 <td>0.6606</td>
@@ -1127,10 +1128,10 @@ Selected hyperparameters: {'n_estimators': 362, 'max_depth': 5, 'min_child_weigh
 <tr class="odd">
 <th data-quarto-table-cell-role="th">FLAML</th>
 <td>XGBClassifier</td>
-<td>29.9841</td>
-<td>0.8756</td>
-<td>0.8268</td>
-<td>0.7484</td>
+<td>29.9647</td>
+<td>0.8688</td>
+<td>0.8238</td>
+<td>0.7395</td>
 </tr>
 </tbody>
 </table>
@@ -1142,7 +1143,7 @@ Selected hyperparameters: {'n_estimators': 362, 'max_depth': 5, 'min_child_weigh
 
 <section id="inspect-flamls-conditional-cash-space" class="title-slide slide level1 center">
 <h1>Inspect FLAML’s Conditional CASH Space</h1>
-<div id="lab04-integrated-048" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:01:35.732680Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:01:35.732499Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:01:35.734890Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:01:35.734495Z&quot;}}" data-execution_count="18">
+<div id="lab04-integrated-048" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:11.741299Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:11.741093Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:11.744951Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:11.743984Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="im">from</span> flaml.automl.model <span class="im">import</span> RandomForestEstimator</span>
@@ -1153,12 +1154,12 @@ Selected hyperparameters: {'n_estimators': 362, 'max_depth': 5, 'min_child_weigh
 <pre><code>Default learners for this run: ['lgbm', 'rf', 'xgboost', 'extra_tree', 'xgb_limitdepth', 'sgd', 'lrl1']</code></pre>
 </div>
 </div>
-<div id="ed745277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:01:35.740101Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:01:35.739999Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:01:35.744941Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:01:35.744314Z&quot;}}" data-execution_count="20">
+<div id="ed745277" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:11.752706Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:11.752505Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:11.760312Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:11.759281Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>describe_space(RandomForestEstimator.search_space(data_size<span class="op">=</span>X_train_model.shape, task<span class="op">=</span>task_factory(<span class="st">"classification"</span>, X_train_model, y_cls_train)))</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="20">
+<div class="cell-output cell-output-display" data-execution_count="21">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -1221,15 +1222,22 @@ Selected hyperparameters: {'n_estimators': 362, 'max_depth': 5, 'min_child_weigh
 </div>
 </section>
 
+<section id="coding-break-2-exercise-3-15-minutes" class="title-slide slide level1 center">
+<h1>Coding break 2: Exercise 3 (~15 minutes)</h1>
+<p><a id="coding-break-2" href=""></a></p>
+<p>Go to <a href="#/coding-exercises-2">Exercise 3</a>.</p>
+</section>
+
 <section id="anytime-performance-under-a-budget" class="title-slide slide level1 center">
 <h1>Anytime Performance Under a Budget</h1>
+<p><a id="theory-block-3" href=""></a></p>
 <p>Define the incumbent curve for completed trials <span class="math inline">\(f^*(\tau)=\min\{f_i:t_i\le\tau\},\qquad \tau\le B.\)</span></p>
 <ul>
 <li>Each trial has a validation loss <span class="math inline">\(f_i\)</span> and a completion time <span class="math inline">\(t_i\)</span>.</li>
 <li>The curve shows how quickly the optimizer finds better configurations.</li>
 </ul>
 
-<img data-src="lab-01-automl_files/figure-revealjs/cell-22-output-1.png" class="r-stretch"><p>Increasing a budget changes the search opportunity.</p>
+<img data-src="lab-01-automl_files/figure-revealjs/cell-23-output-1.png" class="r-stretch"><p>Increasing a budget changes the search opportunity.</p>
 <ul>
 <li>Tradeoff of validation quality and elapsed time: if two budgets give similar validation scores, is the extra compute time justified?</li>
 <li>A system that is excellent after two hours may not be the best choice for an interactive workflow that allows only two minutes.</li>
@@ -1316,215 +1324,250 @@ Selected hyperparameters: {'n_estimators': 362, 'max_depth': 5, 'min_child_weigh
 </ul>
 </section>
 
-<section id="exercise-does-data-centric-solution-help" class="title-slide slide level1 center">
-<h1>Exercise: Does Data-Centric Solution Help?</h1>
-<p>Compare four configurations using <strong>balanced accuracy</strong>:</p>
-<ul>
-<li>Logistic regression with/without numeric standardization.</li>
-<li>FLAML on the same raw and standardized inputs.</li>
-</ul>
-<p>Data preparation is provided. Fit the models, compare their scores and times, and explain the effect of standardization.</p>
+<section id="coding-break-3-exercise-4-15-minutes" class="title-slide slide level1 center">
+<h1>Coding break 3: Exercise 4 (~15 minutes)</h1>
+<p><a id="coding-break-3" href=""></a></p>
+<p>Go to <a href="#/coding-exercises-3">Exercise 4</a>.</p>
 </section>
 
-<section id="step-1---prepare-the-inputs" class="title-slide slide level1 center">
-<h1>Step 1 - Prepare the Inputs</h1>
-<p>Run the cell below. It reuses the lab’s split and preprocessing transformer.</p>
-<ul>
-<li><code>X_train</code> and <code>X_val</code> have one-hot encoded categories and unscaled numeric features.</li>
-<li><code>y_train</code> and <code>y_val</code> are the corresponding labels.</li>
-<li>Standardization is the only preprocessing change tested in Step 3.</li>
-<li>Leave the test set until Step 5.</li>
-</ul>
-<div id="exercise-01-setup" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:01:35.880773Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:01:35.880582Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:01:35.893381Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:01:35.892930Z&quot;}}" data-execution_count="22">
+<section id="exercises" class="title-slide slide level1 center">
+<h1>Exercises</h1>
+<p><a id="coding-exercise-setup" href=""></a></p>
+</section>
+
+<section id="setup" class="title-slide slide level1 center">
+<h1>Setup</h1>
+<div id="exercise-01-setup" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:11.900437Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:11.900254Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:11.927778Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:11.926585Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb17-2"><a href="" aria-label="2"></a></span>
-<span id="cb17-3"><a href="" aria-label="3"></a><span class="co"># Keep the lab's column selection and one-hot encoding; disable numeric scaling.</span></span>
-<span id="cb17-4"><a href="" aria-label="4"></a>unscaled_preprocess <span class="op">=</span> clone(classification_preprocess).set_params(num<span class="op">=</span><span class="st">"passthrough"</span>)</span>
-<span id="cb17-5"><a href="" aria-label="5"></a>X_train <span class="op">=</span> unscaled_preprocess.fit_transform(X_cls_train)</span>
-<span id="cb17-6"><a href="" aria-label="6"></a>X_val <span class="op">=</span> unscaled_preprocess.transform(X_cls_val)</span>
-<span id="cb17-7"><a href="" aria-label="7"></a>y_train, y_val <span class="op">=</span> y_cls_train, y_cls_val</span></code></pre></div>
+<span id="cb17-2"><a href="" aria-label="2"></a><span class="im">from</span> scipy.stats <span class="im">import</span> loguniform</span>
+<span id="cb17-3"><a href="" aria-label="3"></a><span class="im">from</span> flaml <span class="im">import</span> AutoML</span>
+<span id="cb17-4"><a href="" aria-label="4"></a></span>
+<span id="cb17-5"><a href="" aria-label="5"></a><span class="co"># Provided data preparation only; create the estimators in the exercises.</span></span>
+<span id="cb17-6"><a href="" aria-label="6"></a>unscaled_preprocess <span class="op">=</span> clone(classification_preprocess).set_params(num<span class="op">=</span><span class="st">"passthrough"</span>)</span>
+<span id="cb17-7"><a href="" aria-label="7"></a>X_train <span class="op">=</span> unscaled_preprocess.fit_transform(X_cls_train)</span>
+<span id="cb17-8"><a href="" aria-label="8"></a>X_val <span class="op">=</span> unscaled_preprocess.transform(X_cls_val)</span>
+<span id="cb17-9"><a href="" aria-label="9"></a>X_train_scaled, X_val_scaled <span class="op">=</span> X_train_model, X_val_model</span>
+<span id="cb17-10"><a href="" aria-label="10"></a>y_train, y_val <span class="op">=</span> y_cls_train, y_cls_val</span>
+<span id="cb17-11"><a href="" aria-label="11"></a></span>
+<span id="cb17-12"><a href="" aria-label="12"></a><span class="co"># The holdout marks training rows as -1 and validation rows as 0.</span></span>
+<span id="cb17-13"><a href="" aria-label="13"></a>X_search_raw <span class="op">=</span> np.concatenate([X_train, X_val])</span>
+<span id="cb17-14"><a href="" aria-label="14"></a>X_search_scaled <span class="op">=</span> np.concatenate([X_train_scaled, X_val_scaled])</span>
+<span id="cb17-15"><a href="" aria-label="15"></a>y_search <span class="op">=</span> np.concatenate([y_train, y_val])</span></code></pre></div>
 </details>
 </div>
 </section>
 
-<section id="step-2---fit-the-unscaled-baseline" class="title-slide slide level1 center">
-<h1>Step 2 - Fit the Unscaled Baseline</h1>
-<p>Fit logistic regression on <code>X_train</code> and <code>y_train</code>.</p>
-<ul>
-<li>Predict on <code>X_val</code> and calculate balanced accuracy.</li>
-<li>Record fit time and any convergence warning.</li>
-</ul>
-<div id="exercise-02-code" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:01:35.894752Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:01:35.894623Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:01:35.896576Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:01:35.896140Z&quot;}}" data-execution_count="23">
+<section id="exercise-1-logistic-regression-with-grid-vs-random-search" class="title-slide slide level1 center">
+<h1>Exercise 1: Logistic Regression with Grid vs Random Search</h1>
+<p><a id="coding-exercises-1" href=""></a></p>
+<p>Train logistic regression on unscaled data, then compare grid and random search.</p>
+<p>Which search performed better with the same number of evaluations?</p>
+<div id="exercise-02-code" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:11.929625Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:11.929455Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:11.933131Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:11.932153Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="co"># Create logistic = LogisticRegression(max_iter=2000, random_state=42).</span></span>
-<span id="cb18-2"><a href="" aria-label="2"></a><span class="co"># Start a timer with time.perf_counter(), then fit on X_train and y_train.</span></span>
-<span id="cb18-3"><a href="" aria-label="3"></a><span class="co"># Save the elapsed time as logistic_seconds.</span></span>
-<span id="cb18-4"><a href="" aria-label="4"></a><span class="co"># Predict with logistic.predict(X_val).</span></span>
-<span id="cb18-5"><a href="" aria-label="5"></a><span class="co"># Save balanced_accuracy_score(y_val, predictions) as logistic_val_ba.</span></span>
-<span id="cb18-6"><a href="" aria-label="6"></a><span class="co"># Print the elapsed time and score; note any convergence warning.</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a><span class="co"># 1. Create and fit a default logistic-regression classifier.</span></span>
+<span id="cb18-2"><a href="" aria-label="2"></a><span class="co">#    Start with solver="liblinear", max_iter=300, random_state=42.</span></span>
+<span id="cb18-3"><a href="" aria-label="3"></a><span class="co"># logistic = LogisticRegression(...)</span></span>
+<span id="cb18-4"><a href="" aria-label="4"></a><span class="co"># logistic.fit(..., ...)</span></span>
+<span id="cb18-5"><a href="" aria-label="5"></a></span>
+<span id="cb18-6"><a href="" aria-label="6"></a><span class="co"># 2. Evaluate on validation rows, not training rows. Note convergence warnings.</span></span>
+<span id="cb18-7"><a href="" aria-label="7"></a><span class="co"># raw_default_score = balanced_accuracy_score(y_val, logistic.predict(...))</span></span>
+<span id="cb18-8"><a href="" aria-label="8"></a></span>
+<span id="cb18-9"><a href="" aria-label="9"></a><span class="co"># 3. Choose five C values for the grid and a distribution for random search.</span></span>
+<span id="cb18-10"><a href="" aria-label="10"></a><span class="co">#    C is inverse regularization strength: smaller C means stronger regularization.</span></span>
+<span id="cb18-11"><a href="" aria-label="11"></a><span class="co">#    Hint: np.logspace(-2, 2, 5) spans 0.01 to 100; loguniform samples across orders of magnitude.</span></span>
+<span id="cb18-12"><a href="" aria-label="12"></a><span class="co">#    Keep the same bounds for both spaces and all other estimator settings fixed.</span></span>
+<span id="cb18-13"><a href="" aria-label="13"></a><span class="co"># grid_space = {"C": ...}</span></span>
+<span id="cb18-14"><a href="" aria-label="14"></a><span class="co"># random_space = {"C": loguniform(..., ...)}</span></span>
+<span id="cb18-15"><a href="" aria-label="15"></a></span>
+<span id="cb18-16"><a href="" aria-label="16"></a><span class="co"># 4. Create both searches. Use the existing holdout and five random trials.</span></span>
+<span id="cb18-17"><a href="" aria-label="17"></a><span class="co">#    refit=False keeps validation rows out of the final training fit.</span></span>
+<span id="cb18-18"><a href="" aria-label="18"></a><span class="co"># grid = GridSearchCV(logistic, grid_space, cv=holdout,</span></span>
+<span id="cb18-19"><a href="" aria-label="19"></a><span class="co">#                     scoring="balanced_accuracy", refit=False)</span></span>
+<span id="cb18-20"><a href="" aria-label="20"></a><span class="co"># random = RandomizedSearchCV(logistic, random_space, n_iter=5, cv=holdout,</span></span>
+<span id="cb18-21"><a href="" aria-label="21"></a><span class="co">#                             scoring="balanced_accuracy", refit=False, random_state=42)</span></span>
+<span id="cb18-22"><a href="" aria-label="22"></a></span>
+<span id="cb18-23"><a href="" aria-label="23"></a><span class="co"># 5. Fit on the combined arrays: holdout identifies the training/validation rows.</span></span>
+<span id="cb18-24"><a href="" aria-label="24"></a><span class="co"># grid.fit(..., y_search)</span></span>
+<span id="cb18-25"><a href="" aria-label="25"></a><span class="co"># random.fit(..., y_search)</span></span>
+<span id="cb18-26"><a href="" aria-label="26"></a><span class="co"># print("Default:", raw_default_score)</span></span>
+<span id="cb18-27"><a href="" aria-label="27"></a><span class="co"># print("Grid:", grid.best_score_, grid.best_params_)</span></span>
+<span id="cb18-28"><a href="" aria-label="28"></a><span class="co"># print("Random:", random.best_score_, random.best_params_)</span></span></code></pre></div>
 </details>
 </div>
 </section>
 
-<section id="step-3---standardize-numeric-features" class="title-slide slide level1 center">
-<h1>Step 3 - Standardize Numeric Features</h1>
-<p>Adult’s numeric features have different scales: age is in years, while <code>fnlwgt</code> can be in the hundreds of thousands.</p>
+<section id="exercise-2-hpo-vs-standardization" class="title-slide slide level1 center">
+<h1>Exercise 2: HPO vs Standardization</h1>
+<p>Repeat the comparison on standardized data.</p>
 <ul>
-<li><code>StandardScaler</code> subtracts each numeric feature’s training mean and divides by its training standard deviation.</li>
-<li>This puts the numeric features on comparable scales for regularized logistic regression.</li>
+<li>Does standardization alone beat tuning on unscaled data?</li>
+<li>Does combining both help further?</li>
 </ul>
-<p>Run the provided preparation code and fit the same logistic regression settings on <code>X_train_scaled</code>.</p>
-<ul>
-<li>Compare validation balanced accuracy, fit time, and convergence with the unscaled baseline.</li>
-</ul>
-<div id="a45b27aa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:01:35.897669Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:01:35.897551Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:01:35.899525Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:01:35.899101Z&quot;}}" data-execution_count="24">
+<div id="a45b27aa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:11.934782Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:11.934615Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:11.937921Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:11.936951Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># Reuse the standardized arrays already prepared from training-fitted preprocessing.</span></span>
-<span id="cb19-2"><a href="" aria-label="2"></a>X_train_scaled, X_val_scaled <span class="op">=</span> X_train_model, X_val_model</span>
-<span id="cb19-3"><a href="" aria-label="3"></a></span>
-<span id="cb19-4"><a href="" aria-label="4"></a><span class="co"># Create logistic_scaled = LogisticRegression(max_iter=2000, random_state=42).</span></span>
-<span id="cb19-5"><a href="" aria-label="5"></a><span class="co"># Fit on X_train_scaled and y_train; record scaled_seconds.</span></span>
-<span id="cb19-6"><a href="" aria-label="6"></a><span class="co"># Predict on X_val_scaled and save scaled_val_ba using balanced_accuracy_score.</span></span>
-<span id="cb19-7"><a href="" aria-label="7"></a><span class="co"># Compare score, time, and convergence with the unscaled logistic regression.</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="co"># 1. Clone the default estimator: preserve its settings and fit it on standardized training data.</span></span>
+<span id="cb19-2"><a href="" aria-label="2"></a><span class="co"># logistic_scaled = clone(logistic)</span></span>
+<span id="cb19-3"><a href="" aria-label="3"></a><span class="co"># logistic_scaled.fit(..., ...)</span></span>
+<span id="cb19-4"><a href="" aria-label="4"></a><span class="co"># scaled_default_score = balanced_accuracy_score(y_val, logistic_scaled.predict(...))</span></span>
+<span id="cb19-5"><a href="" aria-label="5"></a></span>
+<span id="cb19-6"><a href="" aria-label="6"></a><span class="co"># 2. Clone each search to keep its space, evaluation count, and seed fixed.</span></span>
+<span id="cb19-7"><a href="" aria-label="7"></a><span class="co"># grid_scaled = clone(grid)</span></span>
+<span id="cb19-8"><a href="" aria-label="8"></a><span class="co"># random_scaled = clone(random)</span></span>
+<span id="cb19-9"><a href="" aria-label="9"></a><span class="co"># grid_scaled.fit(X_search_scaled, ...)</span></span>
+<span id="cb19-10"><a href="" aria-label="10"></a><span class="co"># random_scaled.fit(X_search_scaled, ...)</span></span>
+<span id="cb19-11"><a href="" aria-label="11"></a></span>
+<span id="cb19-12"><a href="" aria-label="12"></a><span class="co"># 3. Compare the six scores: default/grid/random, with and without standardization.</span></span>
+<span id="cb19-13"><a href="" aria-label="13"></a><span class="co"># print("Unscaled:", raw_default_score, grid.best_score_, random.best_score_)</span></span>
+<span id="cb19-14"><a href="" aria-label="14"></a><span class="co"># print("Standardized:", scaled_default_score, grid_scaled.best_score_, random_scaled.best_score_)</span></span>
+<span id="cb19-15"><a href="" aria-label="15"></a><span class="co">#    Compare default -&gt; tuned within each row to assess HPO.</span></span>
+<span id="cb19-16"><a href="" aria-label="16"></a><span class="co">#    Compare unscaled -&gt; standardized within each method to assess the representation.</span></span></code></pre></div>
 </details>
 </div>
 </section>
 
-<section id="step-4---run-automl" class="title-slide slide level1 center">
-<h1>Step 4 - Run AutoML</h1>
-<p>Run separate FLAML searches on unscaled and standardized inputs, with a 30-second budget for each.</p>
-<ul>
-<li>The cell below provides the standardized search.</li>
-<li>Add an unscaled search using <code>X_train</code> and <code>X_val</code>; store it as <code>automl_unscaled</code>.
-<ul>
-<li>Record <code>automl_unscaled_seconds</code> and <code>automl_unscaled_val_ba</code>.</li>
-</ul></li>
-<li>Keep the metric, seed, learner defaults, and search budget unchanged.</li>
-<li>Compare all four configurations using validation balanced accuracy and elapsed time.</li>
-</ul>
-<div id="6a9794b2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:01:35.900591Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:01:35.900475Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:02:05.910017Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:02:05.909528Z&quot;}}" data-execution_count="25">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="co"># Reuse the balanced-accuracy loss defined earlier.</span></span>
-<span id="cb20-2"><a href="" aria-label="2"></a>automl <span class="op">=</span> AutoML()</span>
-<span id="cb20-3"><a href="" aria-label="3"></a>started <span class="op">=</span> time.perf_counter()</span>
-<span id="cb20-4"><a href="" aria-label="4"></a>automl.fit(</span>
-<span id="cb20-5"><a href="" aria-label="5"></a>    X_train<span class="op">=</span>X_train_scaled, y_train<span class="op">=</span>y_train,</span>
-<span id="cb20-6"><a href="" aria-label="6"></a>    X_val<span class="op">=</span>X_val_scaled, y_val<span class="op">=</span>y_val,</span>
-<span id="cb20-7"><a href="" aria-label="7"></a>    task<span class="op">=</span><span class="st">"classification"</span>, metric<span class="op">=</span>flaml_balanced_accuracy,</span>
-<span id="cb20-8"><a href="" aria-label="8"></a>    eval_method<span class="op">=</span><span class="st">"holdout"</span>, retrain_full<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb20-9"><a href="" aria-label="9"></a>    time_budget<span class="op">=</span><span class="dv">30</span>, n_jobs<span class="op">=</span><span class="dv">1</span>, seed<span class="op">=</span><span class="dv">42</span>, verbose<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb20-10"><a href="" aria-label="10"></a>)</span>
-<span id="cb20-11"><a href="" aria-label="11"></a>automl_seconds <span class="op">=</span> time.perf_counter() <span class="op">-</span> started</span>
-<span id="cb20-12"><a href="" aria-label="12"></a><span class="bu">print</span>(<span class="st">"Selected classifier:"</span>, <span class="bu">type</span>(automl.model.estimator).<span class="va">__name__</span>)</span>
-<span id="cb20-13"><a href="" aria-label="13"></a></span>
-<span id="cb20-14"><a href="" aria-label="14"></a><span class="co"># Predict on X_val_scaled and save automl_val_ba using balanced_accuracy_score.</span></span>
-<span id="cb20-15"><a href="" aria-label="15"></a><span class="co"># Repeat the search with X_train and X_val, storing the model as automl_unscaled.</span></span>
-<span id="cb20-16"><a href="" aria-label="16"></a><span class="co"># Save automl_unscaled_seconds and automl_unscaled_val_ba.</span></span>
-<span id="cb20-17"><a href="" aria-label="17"></a><span class="co"># Compare all four validation scores and their training/search times.</span></span></code></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Selected classifier: XGBClassifier</code></pre>
-</div>
-</div>
-</section>
-
-<section id="step-5---compare-and-check-test-scores" class="title-slide slide level1 center">
-<h1>Step 5 - Compare and Check Test Scores</h1>
-<p>Choose your preferred model using validation results, then run the provided test preparation code.</p>
-<ul>
-<li>Evaluate each model once on its matching test inputs.</li>
-<li>Explain whether standardization helped and whether AutoML added further benefit.</li>
-<li>Remember: do not tune after seeing test results.</li>
-</ul>
-<div id="08ec321f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-10-28T09:02:05.911542Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-10-28T09:02:05.911412Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-10-28T09:02:05.920699Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-10-28T09:02:05.920272Z&quot;}}" data-execution_count="26">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a><span class="co"># Prepare test inputs without refitting either preprocessing transformer.</span></span>
-<span id="cb22-2"><a href="" aria-label="2"></a>X_test <span class="op">=</span> unscaled_preprocess.transform(X_cls_test)</span>
-<span id="cb22-3"><a href="" aria-label="3"></a>X_test_scaled <span class="op">=</span> classification_preprocess.transform(X_cls_test)</span>
-<span id="cb22-4"><a href="" aria-label="4"></a>y_test <span class="op">=</span> y_cls_test</span>
-<span id="cb22-5"><a href="" aria-label="5"></a></span>
-<span id="cb22-6"><a href="" aria-label="6"></a><span class="co"># Predict with logistic and automl_unscaled on X_test.</span></span>
-<span id="cb22-7"><a href="" aria-label="7"></a><span class="co"># Predict with logistic_scaled and automl on X_test_scaled.</span></span>
-<span id="cb22-8"><a href="" aria-label="8"></a><span class="co"># Calculate balanced_accuracy_score(y_test, predictions) for each model.</span></span>
-<span id="cb22-9"><a href="" aria-label="9"></a><span class="co"># Put all four configurations' validation/test scores and elapsed times in a pd.DataFrame.</span></span>
-<span id="cb22-10"><a href="" aria-label="10"></a><span class="co"># Explain the effect of standardization and the extra value, if any, of AutoML.</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="exercise-solution" class="title-slide slide level1 scrollable center">
-<h1>Exercise Solution</h1>
+<section id="coding-session-1-solution" class="title-slide slide level1 center">
+<h1>Coding session 1 solution</h1>
 <details>
 <summary>
 Show the solution
 </summary>
-<p>The solution compares FLAML with and without standardization, using a separate 30-second search for each.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb20-1"><a href="" aria-label="1"></a><span class="co"># Exercise 1: default model, then two searches on unscaled data.</span></span>
+<span id="cb20-2"><a href="" aria-label="2"></a>logistic <span class="op">=</span> LogisticRegression(solver<span class="op">=</span><span class="st">"liblinear"</span>, max_iter<span class="op">=</span><span class="dv">300</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb20-3"><a href="" aria-label="3"></a>logistic.fit(X_train, y_train)</span>
+<span id="cb20-4"><a href="" aria-label="4"></a>raw_default_score <span class="op">=</span> balanced_accuracy_score(y_val, logistic.predict(X_val))</span>
+<span id="cb20-5"><a href="" aria-label="5"></a></span>
+<span id="cb20-6"><a href="" aria-label="6"></a>grid <span class="op">=</span> GridSearchCV(logistic, {<span class="st">"C"</span>: [<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>]}, cv<span class="op">=</span>holdout, scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>, refit<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-7"><a href="" aria-label="7"></a>grid.fit(X_search_raw, y_search)</span>
+<span id="cb20-8"><a href="" aria-label="8"></a>random <span class="op">=</span> RandomizedSearchCV(logistic, {<span class="st">"C"</span>: loguniform(<span class="fl">0.001</span>, <span class="dv">100</span>)}, n_iter<span class="op">=</span><span class="dv">5</span>, cv<span class="op">=</span>holdout, scoring<span class="op">=</span><span class="st">"balanced_accuracy"</span>, refit<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb20-9"><a href="" aria-label="9"></a>random.fit(X_search_raw, y_search)</span>
+<span id="cb20-10"><a href="" aria-label="10"></a><span class="bu">print</span>(<span class="st">"Grid:"</span>, grid.best_score_, grid.best_params_)</span>
+<span id="cb20-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="st">"Random:"</span>, random.best_score_, random.best_params_)</span>
+<span id="cb20-12"><a href="" aria-label="12"></a></span>
+<span id="cb20-13"><a href="" aria-label="13"></a><span class="co"># Exercise 2: repeat on standardized data, keeping settings fixed.</span></span>
+<span id="cb20-14"><a href="" aria-label="14"></a>logistic_scaled <span class="op">=</span> clone(logistic).fit(X_train_scaled, y_train)</span>
+<span id="cb20-15"><a href="" aria-label="15"></a>scaled_default_score <span class="op">=</span> balanced_accuracy_score(y_val, logistic_scaled.predict(X_val_scaled))</span>
+<span id="cb20-16"><a href="" aria-label="16"></a>grid_scaled <span class="op">=</span> clone(grid).fit(X_search_scaled, y_search)</span>
+<span id="cb20-17"><a href="" aria-label="17"></a>random_scaled <span class="op">=</span> clone(random).fit(X_search_scaled, y_search)</span>
+<span id="cb20-18"><a href="" aria-label="18"></a><span class="bu">print</span>(<span class="st">"              Def  Grid Rnd"</span>)</span>
+<span id="cb20-19"><a href="" aria-label="19"></a><span class="bu">print</span>(<span class="st">"Unscaled:    "</span>, <span class="bu">round</span>(raw_default_score, <span class="dv">2</span>), <span class="bu">round</span>(grid.best_score_, <span class="dv">2</span>), <span class="bu">round</span>(random.best_score_, <span class="dv">2</span>))</span>
+<span id="cb20-20"><a href="" aria-label="20"></a><span class="bu">print</span>(<span class="st">"Standardized:"</span>, <span class="bu">round</span>(scaled_default_score, <span class="dv">2</span>), <span class="bu">round</span>(grid_scaled.best_score_, <span class="dv">2</span>), <span class="bu">round</span>(random_scaled.best_score_, <span class="dv">2</span>))</span></code></pre></div>
+</details>
+</section>
+
+<section id="exercise-3-automl-under-different-time-budgets" class="title-slide slide level1 center">
+<h1>Exercise 3: AutoML Under Different Time Budgets</h1>
+<p><a id="coding-exercises-2" href=""></a></p>
+<p>Compare AutoML with 5-, 15-, and 30-second budgets against tuned logistic regression.</p>
+<p>Does more time improve performance? Does AutoML outperform tuned logistic regression? Independent runs need not improve monotonically with budget.</p>
+<div id="6a9794b2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:11.939747Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:11.939571Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:11.942685Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:11.941943Z&quot;}}" data-execution_count="26">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a><span class="co"># 1. Start an empty score list, then create a fresh AutoML object for each budget.</span></span>
+<span id="cb21-2"><a href="" aria-label="2"></a><span class="co"># budget_scores = []</span></span>
+<span id="cb21-3"><a href="" aria-label="3"></a><span class="co"># for budget in [5, 15, 30]:</span></span>
+<span id="cb21-4"><a href="" aria-label="4"></a><span class="co">#     automl_raw = AutoML()</span></span>
+<span id="cb21-5"><a href="" aria-label="5"></a><span class="co">#     started = time.perf_counter()</span></span>
+<span id="cb21-6"><a href="" aria-label="6"></a></span>
+<span id="cb21-7"><a href="" aria-label="7"></a><span class="co"># 2. Inside the loop, adapt the theory example to the unscaled inputs.</span></span>
+<span id="cb21-8"><a href="" aria-label="8"></a><span class="co">#    Supply X_train/y_train and X_val/y_val explicitly; do not use test rows.</span></span>
+<span id="cb21-9"><a href="" aria-label="9"></a><span class="co">#     automl_raw.fit(</span></span>
+<span id="cb21-10"><a href="" aria-label="10"></a><span class="co">#         X_train=..., y_train=..., X_val=..., y_val=...,</span></span>
+<span id="cb21-11"><a href="" aria-label="11"></a><span class="co">#         task="classification", metric=flaml_balanced_accuracy,</span></span>
+<span id="cb21-12"><a href="" aria-label="12"></a><span class="co">#         eval_method="holdout", retrain_full=False,</span></span>
+<span id="cb21-13"><a href="" aria-label="13"></a><span class="co">#         time_budget=..., seed=42, n_jobs=1, verbose=0,</span></span>
+<span id="cb21-14"><a href="" aria-label="14"></a><span class="co">#     )</span></span>
+<span id="cb21-15"><a href="" aria-label="15"></a></span>
+<span id="cb21-16"><a href="" aria-label="16"></a><span class="co"># 3. Still inside the loop, measure elapsed time, evaluate, and save the score.</span></span>
+<span id="cb21-17"><a href="" aria-label="17"></a><span class="co">#     elapsed = time.perf_counter() - started</span></span>
+<span id="cb21-18"><a href="" aria-label="18"></a><span class="co">#     raw_automl_score = balanced_accuracy_score(y_val, automl_raw.predict(...))</span></span>
+<span id="cb21-19"><a href="" aria-label="19"></a><span class="co">#     budget_scores.append(...)</span></span>
+<span id="cb21-20"><a href="" aria-label="20"></a><span class="co">#     print(budget, elapsed, raw_automl_score, automl_raw.best_estimator)</span></span>
+<span id="cb21-21"><a href="" aria-label="21"></a></span>
+<span id="cb21-22"><a href="" aria-label="22"></a><span class="co"># 4. Compare against grid.best_score_ and random.best_score_.</span></span>
+<span id="cb21-23"><a href="" aria-label="23"></a><span class="co">#    Keep automl_raw and raw_automl_score from the final 30-second iteration for Exercise 4.</span></span>
+<span id="cb21-24"><a href="" aria-label="24"></a><span class="co">#    Optional: plt.plot([5, 15, 30], budget_scores, "o-"); label both axes.</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="coding-session-2-solution" class="title-slide slide level1 center">
+<h1>Coding session 2 solution</h1>
+<details>
+<summary>
+Show the solution
+</summary>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>budget_scores <span class="op">=</span> []</span>
+<span id="cb22-2"><a href="" aria-label="2"></a><span class="cf">for</span> budget <span class="kw">in</span> [<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">30</span>, <span class="dv">45</span>]:</span>
+<span id="cb22-3"><a href="" aria-label="3"></a>    automl_raw <span class="op">=</span> AutoML()</span>
+<span id="cb22-4"><a href="" aria-label="4"></a>    started <span class="op">=</span> time.perf_counter()</span>
+<span id="cb22-5"><a href="" aria-label="5"></a>    automl_raw.fit(</span>
+<span id="cb22-6"><a href="" aria-label="6"></a>        X_train<span class="op">=</span>X_train, y_train<span class="op">=</span>y_train, X_val<span class="op">=</span>X_val, y_val<span class="op">=</span>y_val,</span>
+<span id="cb22-7"><a href="" aria-label="7"></a>        task<span class="op">=</span><span class="st">"classification"</span>, metric<span class="op">=</span>flaml_balanced_accuracy,</span>
+<span id="cb22-8"><a href="" aria-label="8"></a>        eval_method<span class="op">=</span><span class="st">"holdout"</span>, retrain_full<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb22-9"><a href="" aria-label="9"></a>        time_budget<span class="op">=</span>budget, seed<span class="op">=</span><span class="dv">42</span>, n_jobs<span class="op">=</span><span class="dv">1</span>, verbose<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb22-10"><a href="" aria-label="10"></a>    )</span>
+<span id="cb22-11"><a href="" aria-label="11"></a>    elapsed <span class="op">=</span> time.perf_counter() <span class="op">-</span> started</span>
+<span id="cb22-12"><a href="" aria-label="12"></a>    raw_automl_score <span class="op">=</span> balanced_accuracy_score(y_val, automl_raw.predict(X_val))</span>
+<span id="cb22-13"><a href="" aria-label="13"></a>    budget_scores.append(raw_automl_score)</span>
+<span id="cb22-14"><a href="" aria-label="14"></a>    <span class="bu">print</span>(budget, elapsed, raw_automl_score, automl_raw.best_estimator)</span>
+<span id="cb22-15"><a href="" aria-label="15"></a></span>
+<span id="cb22-16"><a href="" aria-label="16"></a><span class="bu">print</span>(<span class="st">"Tuned logistic regression:"</span>, grid.best_score_, random.best_score_)</span>
+<span id="cb22-17"><a href="" aria-label="17"></a><span class="co"># Optional plot.</span></span>
+<span id="cb22-18"><a href="" aria-label="18"></a>plt.plot([<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">30</span>], budget_scores, <span class="st">"o-"</span>)</span>
+<span id="cb22-19"><a href="" aria-label="19"></a>plt.xlabel(<span class="st">"Budget (seconds)"</span>)</span>
+<span id="cb22-20"><a href="" aria-label="20"></a>plt.ylabel(<span class="st">"Validation balanced accuracy"</span>)</span>
+<span id="cb22-21"><a href="" aria-label="21"></a>plt.show()</span></code></pre></div>
+</details>
+</section>
+
+<section id="exercise-4-does-standardization-affect-automl" class="title-slide slide level1 center">
+<h1>Exercise 4: Does Standardization Affect AutoML?</h1>
+<p><a id="coding-exercises-3" href=""></a></p>
+<p>Compare AutoML with and without standardization at the same 30-second budget.</p>
 <ul>
-<li>Both searches use the same rows, metric, seed, and default learners.</li>
-<li>Each run repeats model selection, so differences can reflect both scaling and the time-limited search.</li>
+<li>Is AutoML affected by standardization?</li>
+<li>Compare with the logistic-regression results. A difference can reflect preprocessing, learner selection, and search timing.</li>
 </ul>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb23-2"><a href="" aria-label="2"></a></span>
-<span id="cb23-3"><a href="" aria-label="3"></a><span class="co"># Keep the split and encoding fixed; compare both learners with and without scaling.</span></span>
-<span id="cb23-4"><a href="" aria-label="4"></a>unscaled_preprocess <span class="op">=</span> clone(classification_preprocess).set_params(num<span class="op">=</span><span class="st">"passthrough"</span>)</span>
-<span id="cb23-5"><a href="" aria-label="5"></a>X_train <span class="op">=</span> unscaled_preprocess.fit_transform(X_cls_train)</span>
-<span id="cb23-6"><a href="" aria-label="6"></a>X_val <span class="op">=</span> unscaled_preprocess.transform(X_cls_val)</span>
-<span id="cb23-7"><a href="" aria-label="7"></a>X_train_scaled, X_val_scaled <span class="op">=</span> X_train_model, X_val_model</span>
-<span id="cb23-8"><a href="" aria-label="8"></a>y_train, y_val <span class="op">=</span> y_cls_train, y_cls_val</span>
-<span id="cb23-9"><a href="" aria-label="9"></a></span>
-<span id="cb23-10"><a href="" aria-label="10"></a><span class="co"># The flag selects the standardized representation.</span></span>
-<span id="cb23-11"><a href="" aria-label="11"></a>solution_models <span class="op">=</span> {</span>
-<span id="cb23-12"><a href="" aria-label="12"></a>    <span class="st">"unscaled logistic"</span>: (LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>, random_state<span class="op">=</span><span class="dv">42</span>), <span class="va">False</span>),</span>
-<span id="cb23-13"><a href="" aria-label="13"></a>    <span class="st">"standardized logistic"</span>: (LogisticRegression(max_iter<span class="op">=</span><span class="dv">2000</span>, random_state<span class="op">=</span><span class="dv">42</span>), <span class="va">True</span>),</span>
-<span id="cb23-14"><a href="" aria-label="14"></a>    <span class="st">"unscaled FLAML"</span>: (AutoML(), <span class="va">False</span>),</span>
-<span id="cb23-15"><a href="" aria-label="15"></a>    <span class="st">"standardized FLAML"</span>: (AutoML(), <span class="va">True</span>),</span>
-<span id="cb23-16"><a href="" aria-label="16"></a>}</span>
-<span id="cb23-17"><a href="" aria-label="17"></a>solution_rows <span class="op">=</span> []</span>
-<span id="cb23-18"><a href="" aria-label="18"></a><span class="cf">for</span> name, (model, scaled) <span class="kw">in</span> solution_models.items():</span>
-<span id="cb23-19"><a href="" aria-label="19"></a>    train, valid <span class="op">=</span> (X_train_scaled, X_val_scaled) <span class="cf">if</span> scaled <span class="cf">else</span> (X_train, X_val)</span>
-<span id="cb23-20"><a href="" aria-label="20"></a>    started <span class="op">=</span> time.perf_counter()</span>
-<span id="cb23-21"><a href="" aria-label="21"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(model, AutoML):</span>
-<span id="cb23-22"><a href="" aria-label="22"></a>        model.fit(</span>
-<span id="cb23-23"><a href="" aria-label="23"></a>            X_train<span class="op">=</span>train, y_train<span class="op">=</span>y_train, X_val<span class="op">=</span>valid, y_val<span class="op">=</span>y_val,</span>
-<span id="cb23-24"><a href="" aria-label="24"></a>            task<span class="op">=</span><span class="st">"classification"</span>, metric<span class="op">=</span>flaml_balanced_accuracy,</span>
-<span id="cb23-25"><a href="" aria-label="25"></a>            eval_method<span class="op">=</span><span class="st">"holdout"</span>, retrain_full<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb23-26"><a href="" aria-label="26"></a>            time_budget<span class="op">=</span><span class="dv">30</span>, n_jobs<span class="op">=</span><span class="dv">1</span>, seed<span class="op">=</span><span class="dv">42</span>, verbose<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb23-27"><a href="" aria-label="27"></a>        )</span>
-<span id="cb23-28"><a href="" aria-label="28"></a>        classifier <span class="op">=</span> <span class="bu">type</span>(model.model.estimator).<span class="va">__name__</span></span>
-<span id="cb23-29"><a href="" aria-label="29"></a>    <span class="cf">else</span>:</span>
-<span id="cb23-30"><a href="" aria-label="30"></a>        model.fit(train, y_train)</span>
-<span id="cb23-31"><a href="" aria-label="31"></a>        classifier <span class="op">=</span> <span class="bu">type</span>(model).<span class="va">__name__</span></span>
-<span id="cb23-32"><a href="" aria-label="32"></a>    solution_rows.append({</span>
-<span id="cb23-33"><a href="" aria-label="33"></a>        <span class="st">"approach"</span>: name, <span class="st">"classifier"</span>: classifier,</span>
-<span id="cb23-34"><a href="" aria-label="34"></a>        <span class="st">"fit_search_seconds"</span>: time.perf_counter() <span class="op">-</span> started,</span>
-<span id="cb23-35"><a href="" aria-label="35"></a>        <span class="st">"validation_BA"</span>: balanced_accuracy_score(y_val, model.predict(valid)),</span>
-<span id="cb23-36"><a href="" aria-label="36"></a>    })</span>
-<span id="cb23-37"><a href="" aria-label="37"></a>results <span class="op">=</span> pd.DataFrame(solution_rows)</span>
-<span id="cb23-38"><a href="" aria-label="38"></a>display(results.<span class="bu">round</span>(<span class="dv">4</span>))</span>
-<span id="cb23-39"><a href="" aria-label="39"></a></span>
-<span id="cb23-40"><a href="" aria-label="40"></a><span class="co"># Choose using validation results before looking at the test scores.</span></span>
-<span id="cb23-41"><a href="" aria-label="41"></a>chosen_approach <span class="op">=</span> results.loc[results[<span class="st">"validation_BA"</span>].idxmax(), <span class="st">"approach"</span>]</span>
-<span id="cb23-42"><a href="" aria-label="42"></a><span class="bu">print</span>(<span class="st">"Choice before test:"</span>, chosen_approach)</span>
-<span id="cb23-43"><a href="" aria-label="43"></a>X_test <span class="op">=</span> unscaled_preprocess.transform(X_cls_test)</span>
-<span id="cb23-44"><a href="" aria-label="44"></a>X_test_scaled <span class="op">=</span> classification_preprocess.transform(X_cls_test)</span>
-<span id="cb23-45"><a href="" aria-label="45"></a>y_test <span class="op">=</span> y_cls_test</span>
-<span id="cb23-46"><a href="" aria-label="46"></a>results[<span class="st">"test_BA"</span>] <span class="op">=</span> [</span>
-<span id="cb23-47"><a href="" aria-label="47"></a>    balanced_accuracy_score(y_test, model.predict(X_test_scaled <span class="cf">if</span> scaled <span class="cf">else</span> X_test))</span>
-<span id="cb23-48"><a href="" aria-label="48"></a>    <span class="cf">for</span> model, scaled <span class="kw">in</span> solution_models.values()</span>
-<span id="cb23-49"><a href="" aria-label="49"></a>]</span>
-<span id="cb23-50"><a href="" aria-label="50"></a>display(results.<span class="bu">round</span>(<span class="dv">4</span>))</span>
-<span id="cb23-51"><a href="" aria-label="51"></a>scores <span class="op">=</span> results.set_index(<span class="st">"approach"</span>)[<span class="st">"validation_BA"</span>]</span>
-<span id="cb23-52"><a href="" aria-label="52"></a>display(pd.Series({</span>
-<span id="cb23-53"><a href="" aria-label="53"></a>    <span class="st">"Logistic scaling gain (percentage points)"</span>: <span class="dv">100</span> <span class="op">*</span> (scores[<span class="st">"standardized logistic"</span>] <span class="op">-</span> scores[<span class="st">"unscaled logistic"</span>]),</span>
-<span id="cb23-54"><a href="" aria-label="54"></a>    <span class="st">"FLAML scaling gain (percentage points)"</span>: <span class="dv">100</span> <span class="op">*</span> (scores[<span class="st">"standardized FLAML"</span>] <span class="op">-</span> scores[<span class="st">"unscaled FLAML"</span>]),</span>
-<span id="cb23-55"><a href="" aria-label="55"></a>    <span class="st">"AutoML gain over standardized logistic (percentage points)"</span>: <span class="dv">100</span> <span class="op">*</span> (scores[<span class="st">"standardized FLAML"</span>] <span class="op">-</span> scores[<span class="st">"standardized logistic"</span>]),</span>
-<span id="cb23-56"><a href="" aria-label="56"></a>}).<span class="bu">round</span>(<span class="dv">2</span>))</span></code></pre></div>
+<div id="08ec321f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-02T16:30:11.944431Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-02T16:30:11.944254Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-02T16:30:11.947491Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-02T16:30:11.946633Z&quot;}}" data-execution_count="27">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="co"># 1. Create a new AutoML object; keep the unscaled model from Exercise 3.</span></span>
+<span id="cb23-2"><a href="" aria-label="2"></a><span class="co"># automl_scaled = AutoML()</span></span>
+<span id="cb23-3"><a href="" aria-label="3"></a></span>
+<span id="cb23-4"><a href="" aria-label="4"></a><span class="co"># 2. Repeat the fit using standardized inputs; keep all other settings fixed.</span></span>
+<span id="cb23-5"><a href="" aria-label="5"></a><span class="co">#    Copy Exercise 3's fit call, changing only X_train and X_val to the scaled arrays.</span></span>
+<span id="cb23-6"><a href="" aria-label="6"></a><span class="co">#    Use time_budget=30 to match the saved unscaled run.</span></span>
+<span id="cb23-7"><a href="" aria-label="7"></a><span class="co"># automl_scaled.fit(...)</span></span>
+<span id="cb23-8"><a href="" aria-label="8"></a></span>
+<span id="cb23-9"><a href="" aria-label="9"></a><span class="co"># 3. Evaluate on standardized validation inputs, then compare scores and learners.</span></span>
+<span id="cb23-10"><a href="" aria-label="10"></a><span class="co"># scaled_automl_score = balanced_accuracy_score(y_val, automl_scaled.predict(...))</span></span>
+<span id="cb23-11"><a href="" aria-label="11"></a><span class="co"># print("Unscaled:", raw_automl_score, automl_raw.best_estimator)</span></span>
+<span id="cb23-12"><a href="" aria-label="12"></a><span class="co"># print("Standardized:", scaled_automl_score, automl_scaled.best_estimator)</span></span>
+<span id="cb23-13"><a href="" aria-label="13"></a><span class="co">#    Compare this score difference with the scaling differences from Exercise 2.</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="coding-session-3-solution" class="title-slide slide level1 center">
+<h1>Coding session 3 solution</h1>
+<details>
+<summary>
+Show the solution
+</summary>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a>automl_scaled <span class="op">=</span> AutoML()</span>
+<span id="cb24-2"><a href="" aria-label="2"></a>automl_scaled.fit(</span>
+<span id="cb24-3"><a href="" aria-label="3"></a>    X_train<span class="op">=</span>X_train_scaled, y_train<span class="op">=</span>y_train, X_val<span class="op">=</span>X_val_scaled, y_val<span class="op">=</span>y_val,</span>
+<span id="cb24-4"><a href="" aria-label="4"></a>    task<span class="op">=</span><span class="st">"classification"</span>, metric<span class="op">=</span>flaml_balanced_accuracy,</span>
+<span id="cb24-5"><a href="" aria-label="5"></a>    eval_method<span class="op">=</span><span class="st">"holdout"</span>, retrain_full<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb24-6"><a href="" aria-label="6"></a>    time_budget<span class="op">=</span><span class="dv">30</span>, seed<span class="op">=</span><span class="dv">42</span>, n_jobs<span class="op">=</span><span class="dv">1</span>, verbose<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb24-7"><a href="" aria-label="7"></a>)</span>
+<span id="cb24-8"><a href="" aria-label="8"></a>scaled_automl_score <span class="op">=</span> balanced_accuracy_score(y_val, automl_scaled.predict(X_val_scaled))</span>
+<span id="cb24-9"><a href="" aria-label="9"></a><span class="bu">print</span>(<span class="st">"Unscaled:    "</span>, raw_automl_score, automl_raw.best_estimator)</span>
+<span id="cb24-10"><a href="" aria-label="10"></a><span class="bu">print</span>(<span class="st">"Standardized:"</span>, scaled_automl_score, automl_scaled.best_estimator)</span></code></pre></div>
 </details>
 </section>
 
