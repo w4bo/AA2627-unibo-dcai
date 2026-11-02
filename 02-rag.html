@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="site_libs/quarto-html/tabby.min.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="02-rag_files/libs/quarto-html/tabby.min.js"></script>
+<script src="02-rag_files/libs/quarto-html/popper.min.js"></script>
+<script src="02-rag_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="02-rag_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="02-rag_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="02-rag_files/libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Matteo Francia   DISI — University of Bologna   m.francia@unibo.it">
@@ -13,8 +13,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="02-rag_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="02-rag_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -119,13 +119,13 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-b328c055d9dc1f3c009edd90f416a34b.css">
-  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="02-rag_files/libs/revealjs/dist/theme/quarto-b328c055d9dc1f3c009edd90f416a34b.css">
+  <link href="02-rag_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="02-rag_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="02-rag_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="02-rag_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="02-rag_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="02-rag_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -213,9 +213,9 @@
       margin-right: 0; 
     }
   </style>
-  <script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-  <script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-  <link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+  <script src="02-rag_files/libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="02-rag_files/libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="02-rag_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -366,12 +366,12 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Prompting is the first control surface of an AI application. RAG extends it by constructing part of the prompt automatically from retrieved evidence.</li>
 <li>A useful prompt often separates concerns:</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb1-1"><a aria-label="1"></a>Role: You are a teaching assistant for Data-Centric AI.</span>
-<span id="cb1-2"><a aria-label="2"></a>Task: Answer the student's question using only the provided context.</span>
-<span id="cb1-3"><a aria-label="3"></a>Context: &lt;retrieved chunks with source IDs&gt;</span>
-<span id="cb1-4"><a aria-label="4"></a>Rules: Cite sources. If evidence is missing, say what is missing.</span>
-<span id="cb1-5"><a aria-label="5"></a>Output: Short answer, then bullet list of cited evidence.</span>
-<span id="cb1-6"><a aria-label="6"></a>Question: &lt;user question&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Role: You are a teaching assistant for Data-Centric AI.</span>
+<span id="cb1-2"><a href="" aria-label="2"></a>Task: Answer the student's question using only the provided context.</span>
+<span id="cb1-3"><a href="" aria-label="3"></a>Context: &lt;retrieved chunks with source IDs&gt;</span>
+<span id="cb1-4"><a href="" aria-label="4"></a>Rules: Cite sources. If evidence is missing, say what is missing.</span>
+<span id="cb1-5"><a href="" aria-label="5"></a>Output: Short answer, then bullet list of cited evidence.</span>
+<span id="cb1-6"><a href="" aria-label="6"></a>Question: &lt;user question&gt;</span></code></pre></div>
 </section>
 
 <section id="prompting-patterns" class="title-slide slide level1 center">
@@ -447,13 +447,13 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="one-shot-and-few-shot-examples" class="title-slide slide level1 center">
 <h1>One-shot and few-shot examples</h1>
 <p>One-shot prompt:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb2-1"><a aria-label="1"></a>Classify sentiment as positive, neutral, or negative.</span>
-<span id="cb2-2"><a aria-label="2"></a></span>
-<span id="cb2-3"><a aria-label="3"></a>Text: "The interface is fast but the setup is confusing."</span>
-<span id="cb2-4"><a aria-label="4"></a>Label: neutral</span>
-<span id="cb2-5"><a aria-label="5"></a></span>
-<span id="cb2-6"><a aria-label="6"></a>Text: "The new search result is exactly what I needed."</span>
-<span id="cb2-7"><a aria-label="7"></a>Label:</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb2-1"><a href="" aria-label="1"></a>Classify sentiment as positive, neutral, or negative.</span>
+<span id="cb2-2"><a href="" aria-label="2"></a></span>
+<span id="cb2-3"><a href="" aria-label="3"></a>Text: "The interface is fast but the setup is confusing."</span>
+<span id="cb2-4"><a href="" aria-label="4"></a>Label: neutral</span>
+<span id="cb2-5"><a href="" aria-label="5"></a></span>
+<span id="cb2-6"><a href="" aria-label="6"></a>Text: "The new search result is exactly what I needed."</span>
+<span id="cb2-7"><a href="" aria-label="7"></a>Label:</span></code></pre></div>
 <p>Few-shot prompting adds more examples, especially boundary cases.</p>
 <ul>
 <li>The examples become a small, temporary training set inside the prompt.</li>
@@ -463,15 +463,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="rag-prompt-example" class="title-slide slide level1 center">
 <h1>RAG prompt example</h1>
 <p>In RAG, the prompt should make evidence use explicit:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb3-1"><a aria-label="1"></a>Answer the question using only the sources below.</span>
-<span id="cb3-2"><a aria-label="2"></a>If the sources do not contain enough information, answer: "I do not know from the provided sources."</span>
-<span id="cb3-3"><a aria-label="3"></a>Cite sources using [S1], [S2], ...</span>
-<span id="cb3-4"><a aria-label="4"></a></span>
-<span id="cb3-5"><a aria-label="5"></a>[S1] &lt;retrieved chunk&gt;</span>
-<span id="cb3-6"><a aria-label="6"></a>[S2] &lt;retrieved chunk&gt;</span>
-<span id="cb3-7"><a aria-label="7"></a></span>
-<span id="cb3-8"><a aria-label="8"></a>Question: &lt;user question&gt;</span>
-<span id="cb3-9"><a aria-label="9"></a>Answer:</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb3-1"><a href="" aria-label="1"></a>Answer the question using only the sources below.</span>
+<span id="cb3-2"><a href="" aria-label="2"></a>If the sources do not contain enough information, answer: "I do not know from the provided sources."</span>
+<span id="cb3-3"><a href="" aria-label="3"></a>Cite sources using [S1], [S2], ...</span>
+<span id="cb3-4"><a href="" aria-label="4"></a></span>
+<span id="cb3-5"><a href="" aria-label="5"></a>[S1] &lt;retrieved chunk&gt;</span>
+<span id="cb3-6"><a href="" aria-label="6"></a>[S2] &lt;retrieved chunk&gt;</span>
+<span id="cb3-7"><a href="" aria-label="7"></a></span>
+<span id="cb3-8"><a href="" aria-label="8"></a>Question: &lt;user question&gt;</span>
+<span id="cb3-9"><a href="" aria-label="9"></a>Answer:</span></code></pre></div>
 <p>This is where prompt engineering becomes part of the RAG pipeline: retrieved chunks must be arranged so the model can use them faithfully.</p>
 </section>
 
@@ -541,7 +541,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tbody>
 </table>
 <p>Question, loaded from <code>resources/rag_toy_queries.csv</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb4-1"><a aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb4-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
 </section>
 
 <section id="generation-without-retrieval" class="title-slide slide level1 center">
@@ -780,8 +780,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="toy-example-chunking-choices" class="title-slide slide level1 center">
 <h1>Toy example: chunking choices</h1>
 <p>Document:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb5-1"><a aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00.</span>
-<span id="cb5-2"><a aria-label="2"></a>Late submissions lose 10% per day.</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb5-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00.</span>
+<span id="cb5-2"><a href="" aria-label="2"></a>Late submissions lose 10% per day.</span></code></pre></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -876,14 +876,14 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>The important idea is representation: similar meanings should become nearby vectors.</li>
 <li>This toy version uses word-count vectors so the mechanics are visible.</li>
 </ul>
-<div id="547f613e" class="cell" data-execution_count="2">
+<div id="92091d38" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a aria-label="1"></a>q_vec <span class="op">=</span> bow(query)</span>
-<span id="cb6-2"><a aria-label="2"></a>doc_vec <span class="op">=</span> bow(corpus[relevant_doc])</span>
-<span id="cb6-3"><a aria-label="3"></a><span class="bu">print</span>(<span class="st">"query vector:"</span>, <span class="bu">dict</span>(q_vec))</span>
-<span id="cb6-4"><a aria-label="4"></a><span class="bu">print</span>(<span class="ss">f"chunk vector (</span><span class="sc">{</span>doc_ids[relevant_doc]<span class="sc">}</span><span class="ss">):"</span>, <span class="bu">dict</span>(doc_vec))</span>
-<span id="cb6-5"><a aria-label="5"></a><span class="bu">print</span>(<span class="st">"similarity:"</span>, <span class="bu">round</span>(cosine(q_vec, doc_vec), <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>q_vec <span class="op">=</span> bow(query)</span>
+<span id="cb6-2"><a href="" aria-label="2"></a>doc_vec <span class="op">=</span> bow(corpus[relevant_doc])</span>
+<span id="cb6-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"query vector:"</span>, <span class="bu">dict</span>(q_vec))</span>
+<span id="cb6-4"><a href="" aria-label="4"></a><span class="bu">print</span>(<span class="ss">f"chunk vector (</span><span class="sc">{</span>doc_ids[relevant_doc]<span class="sc">}</span><span class="ss">):"</span>, <span class="bu">dict</span>(doc_vec))</span>
+<span id="cb6-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">"similarity:"</span>, <span class="bu">round</span>(cosine(q_vec, doc_vec), <span class="dv">3</span>))</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>query vector: {'can': 1, 'i': 1, 'submit': 1, 'assignment': 1, 'on': 1, 'saturday': 1}
@@ -940,22 +940,22 @@ similarity: 0.354</code></pre>
 <section id="example-retrieval-ranking" class="title-slide slide level1 center">
 <h1>Example: retrieval ranking</h1>
 <p>Given the query</p>
-<div id="c3775cb4" class="cell" data-execution_count="3">
+<div id="def56ede" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a><span class="bu">print</span>(query)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="bu">print</span>(query)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Can I submit Assignment 1 on Saturday?</code></pre>
 </div>
 </div>
 <p>… rank chunks by similarity</p>
-<div id="d08e261a" class="cell" data-execution_count="4">
+<div id="06f5c64e" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a>scores <span class="op">=</span> [(i, cosine(bow(query), bow(text)), text) <span class="cf">for</span> i, text <span class="kw">in</span> <span class="bu">enumerate</span>(corpus)]</span>
-<span id="cb10-2"><a aria-label="2"></a><span class="cf">for</span> i, score, text <span class="kw">in</span> <span class="bu">sorted</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>):</span>
-<span id="cb10-3"><a aria-label="3"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>score<span class="sc">:.3f}</span><span class="ss"> | </span><span class="sc">{</span>doc_ids[i]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>scores <span class="op">=</span> [(i, cosine(bow(query), bow(text)), text) <span class="cf">for</span> i, text <span class="kw">in</span> <span class="bu">enumerate</span>(corpus)]</span>
+<span id="cb10-2"><a href="" aria-label="2"></a><span class="cf">for</span> i, score, text <span class="kw">in</span> <span class="bu">sorted</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb10-3"><a href="" aria-label="3"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>score<span class="sc">:.3f}</span><span class="ss"> | </span><span class="sc">{</span>doc_ids[i]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.354 | D1 | Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.
@@ -968,7 +968,7 @@ similarity: 0.354</code></pre>
 <section id="toy-example-sparse-retrieval" class="title-slide slide level1 center">
 <h1>Toy example: sparse retrieval</h1>
 <p>Use the same question:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb12-1"><a aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb12-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
 <p>BM25 likes exact anchors in <code>D1</code>:</p>
 <ul>
 <li><code>Assignment 1</code></li>
@@ -1013,9 +1013,9 @@ similarity: 0.354</code></pre>
 <section id="toy-example-embedding-search" class="title-slide slide level1 center">
 <h1>Toy example: embedding search</h1>
 <p>Use the same question:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb13-1"><a aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb13-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
 <p>Dense retrieval should rank <code>D1</code> highly because the question and the chunk discuss the same policy.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb14-1"><a aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb14-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
 <p>The embedding step decides whether this meaning becomes searchable.</p>
 </section>
 
@@ -1048,7 +1048,7 @@ similarity: 0.354</code></pre>
 <section id="toy-example-reranking" class="title-slide slide level1 center">
 <h1>Toy example: reranking</h1>
 <p>Use the same question:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb15-1"><a aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb15-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -1091,15 +1091,15 @@ similarity: 0.354</code></pre>
 <section id="example-prompt-assembly" class="title-slide slide level1 center">
 <h1>Example: prompt assembly</h1>
 <p>The prompt combines stable instructions with the retrieved chunk.</p>
-<div id="687d37fc" class="cell" data-execution_count="5">
+<div id="4b9b3f35" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a aria-label="1"></a>top <span class="op">=</span> <span class="bu">max</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>])</span>
-<span id="cb16-2"><a aria-label="2"></a>prompt <span class="op">=</span> <span class="ss">f"""Answer using only the context.</span></span>
-<span id="cb16-3"><a aria-label="3"></a><span class="ss">Context: </span><span class="sc">{</span>top[<span class="dv">2</span>]<span class="sc">}</span></span>
-<span id="cb16-4"><a aria-label="4"></a><span class="ss">Question: </span><span class="sc">{</span>query<span class="sc">}</span></span>
-<span id="cb16-5"><a aria-label="5"></a><span class="ss">Answer:"""</span></span>
-<span id="cb16-6"><a aria-label="6"></a><span class="bu">print</span>(prompt)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>top <span class="op">=</span> <span class="bu">max</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>])</span>
+<span id="cb16-2"><a href="" aria-label="2"></a>prompt <span class="op">=</span> <span class="ss">f"""Answer using only the context.</span></span>
+<span id="cb16-3"><a href="" aria-label="3"></a><span class="ss">Context: </span><span class="sc">{</span>top[<span class="dv">2</span>]<span class="sc">}</span></span>
+<span id="cb16-4"><a href="" aria-label="4"></a><span class="ss">Question: </span><span class="sc">{</span>query<span class="sc">}</span></span>
+<span id="cb16-5"><a href="" aria-label="5"></a><span class="ss">Answer:"""</span></span>
+<span id="cb16-6"><a href="" aria-label="6"></a><span class="bu">print</span>(prompt)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Answer using only the context.
@@ -1128,13 +1128,13 @@ Answer:</code></pre>
 <section id="toy-example-grounded-vs-ungrounded" class="title-slide slide level1 center">
 <h1>Toy example: grounded vs ungrounded</h1>
 <p>User question:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb18-1"><a aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb18-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
 <p>Retrieved context:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb19-1"><a aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb19-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
 <p>Good answer:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb20-1"><a aria-label="1"></a>Yes, but it is late. A Saturday submission is after Friday 18:00, so it loses 10%.</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb20-1"><a href="" aria-label="1"></a>Yes, but it is late. A Saturday submission is after Friday 18:00, so it loses 10%.</span></code></pre></div>
 <p>Bad answer:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb21-1"><a aria-label="1"></a>No. Saturday submissions are automatically rejected.</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb21-1"><a href="" aria-label="1"></a>No. Saturday submissions are automatically rejected.</span></code></pre></div>
 <p>The bad answer sounds decisive, but the rejection rule is not in the evidence.</p>
 </section>
 
@@ -1257,16 +1257,16 @@ Answer:</code></pre>
 <section id="example-retrieval-metrics" class="title-slide slide level1 center">
 <h1>Example: retrieval metrics</h1>
 <p>Assume the relevant document for the query is known.</p>
-<div id="80305119" class="cell" data-execution_count="6">
+<div id="257fe406" class="cell" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a aria-label="1"></a>ranked <span class="op">=</span> [i <span class="cf">for</span> i, score, text <span class="kw">in</span> <span class="bu">sorted</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)]</span>
-<span id="cb22-2"><a aria-label="2"></a>top_k <span class="op">=</span> ranked[:<span class="dv">2</span>]</span>
-<span id="cb22-3"><a aria-label="3"></a>precision_at_2 <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(top_k) <span class="op">&amp;</span> relevant) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb22-4"><a aria-label="4"></a>recall_at_2 <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(top_k) <span class="op">&amp;</span> relevant) <span class="op">/</span> <span class="bu">len</span>(relevant)</span>
-<span id="cb22-5"><a aria-label="5"></a><span class="bu">print</span>(<span class="st">"top-2:"</span>, [doc_ids[i] <span class="cf">for</span> i <span class="kw">in</span> top_k])</span>
-<span id="cb22-6"><a aria-label="6"></a><span class="bu">print</span>(<span class="st">"precision@2:"</span>, precision_at_2)</span>
-<span id="cb22-7"><a aria-label="7"></a><span class="bu">print</span>(<span class="st">"recall@2:"</span>, recall_at_2)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb22-1"><a href="" aria-label="1"></a>ranked <span class="op">=</span> [i <span class="cf">for</span> i, score, text <span class="kw">in</span> <span class="bu">sorted</span>(scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)]</span>
+<span id="cb22-2"><a href="" aria-label="2"></a>top_k <span class="op">=</span> ranked[:<span class="dv">2</span>]</span>
+<span id="cb22-3"><a href="" aria-label="3"></a>precision_at_2 <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(top_k) <span class="op">&amp;</span> relevant) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb22-4"><a href="" aria-label="4"></a>recall_at_2 <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(top_k) <span class="op">&amp;</span> relevant) <span class="op">/</span> <span class="bu">len</span>(relevant)</span>
+<span id="cb22-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="st">"top-2:"</span>, [doc_ids[i] <span class="cf">for</span> i <span class="kw">in</span> top_k])</span>
+<span id="cb22-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="st">"precision@2:"</span>, precision_at_2)</span>
+<span id="cb22-7"><a href="" aria-label="7"></a><span class="bu">print</span>(<span class="st">"recall@2:"</span>, recall_at_2)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>top-2: ['D1', 'D2']
@@ -1363,9 +1363,9 @@ recall@2: 1.0</code></pre>
 <section id="toy-evaluation-item" class="title-slide slide level1 center">
 <h1>Toy evaluation item</h1>
 <p>Question, loaded from <code>resources/rag_toy_queries.csv</code>:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb24-1"><a aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb24-1"><a href="" aria-label="1"></a>Can I submit Assignment 1 on Saturday?</span></code></pre></div>
 <p>Retrieved evidence:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb25-1"><a aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb25-1"><a href="" aria-label="1"></a>Students can submit Assignment 1 until Friday at 18:00. Late submissions lose 10% per day.</span></code></pre></div>
 <p>Candidate answers:</p>
 <table class="caption-top">
 <thead>
@@ -2326,7 +2326,7 @@ recall@2: 1.0</code></pre>
 <section id="example-graph-search-returns-chunks" class="title-slide slide level1 center">
 <h1>Example: graph search returns chunks</h1>
 <p>Question:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb26-1"><a aria-label="1"></a>Can a Saturday Assignment 1 submission be accepted, and what happens to the grade?</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb26-1"><a href="" aria-label="1"></a>Can a Saturday Assignment 1 submission be accepted, and what happens to the grade?</span></code></pre></div>
 <p>Graph search:</p>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
@@ -2496,7 +2496,6 @@ Zheng, Danna, Danyang Liu, Mirella Lapata, and Jeff Z. Pan. 2024. <em><span>Trus
 </div>
 </div>
 
-
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
@@ -2506,20 +2505,20 @@ Zheng, Danna, Danyang Liu, Mirella Lapata, and Jeff Z. Pan. 2024. <em><span>Trus
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="site_libs/revealjs/dist/reveal.js"></script>
+  <script src="02-rag_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="02-rag_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="02-rag_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="02-rag_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="02-rag_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="02-rag_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="02-rag_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="site_libs/revealjs/plugin/search/search.js"></script>
-  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="site_libs/revealjs/plugin/math/math.js"></script>
+  <script src="02-rag_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="02-rag_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="02-rag_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="02-rag_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -2723,7 +2722,7 @@ Zheng, Danna, Danyang Liu, Mirella Lapata, and Jeff Z. Pan. 2024. <em><span>Trus
         });
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/w4bo\.github\.io\/AA2627-unibo-dcai\/");
+            var filterRegex = new RegExp('/' + window.location.host + '/');
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
