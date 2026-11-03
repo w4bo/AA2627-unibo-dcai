@@ -1,3 +1,37 @@
+## [1.1.27](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.26...1.1.27) (2026-11-02)
+
+### Bug Fixes
+
+* add refs ([e5291e9](https://github.com/w4bo/AA2627-unibo-dcai/commit/e5291e91a8771da027d6366042916e3f9f88db45))
+* enable website aliases for the course homepage ([126e3a2](https://github.com/w4bo/AA2627-unibo-dcai/commit/126e3a2bd75f0f00a653270f8e80bd5ba2f358fa))
+* import feature engineering ([73d1e6c](https://github.com/w4bo/AA2627-unibo-dcai/commit/73d1e6ce7bc6c9cebd77334e61dbc6b89a08104c))
+* keep feature engineering exercise executable ([24ccac7](https://github.com/w4bo/AA2627-unibo-dcai/commit/24ccac75b4b46b09a23f7ce7d809b76956cf7f79))
+* prepare numeric leakage-free bike baseline inputs ([5a0a0bd](https://github.com/w4bo/AA2627-unibo-dcai/commit/5a0a0bd95ef721bdc8a7afe03885412f82ee8744))
+* render homepage by including the intro slides ([49c89f8](https://github.com/w4bo/AA2627-unibo-dcai/commit/49c89f833365c72ba122e04d1cc04c088a101fc4))
+* rework augmentation ([84036a0](https://github.com/w4bo/AA2627-unibo-dcai/commit/84036a0ce7bc09250eefc2bc91293c722b278774))
+* rework augmentation ([9fc2076](https://github.com/w4bo/AA2627-unibo-dcai/commit/9fc20761ea9f117fa50ee15f9914b8abb948f343))
+* rework feature engineering and selection ([3ae4759](https://github.com/w4bo/AA2627-unibo-dcai/commit/3ae4759a326c7a8c28916f701c8ec93cb5f20c65))
+* update slides ([8364ba8](https://github.com/w4bo/AA2627-unibo-dcai/commit/8364ba8caea897ced80adc3677fc0c199067e42a))
+* working on features ([c350681](https://github.com/w4bo/AA2627-unibo-dcai/commit/c350681952334c09d6634668320bb3fe03990280))
+
+### General maintenance
+
+* add alias ([310d5fc](https://github.com/w4bo/AA2627-unibo-dcai/commit/310d5fc7e60df7fd285ac83599525c1a78bebd04))
+* expand fairness mitigation explanations ([8d5b472](https://github.com/w4bo/AA2627-unibo-dcai/commit/8d5b47267df2affd1bcf17fd116b3c1ddb47391c))
+* rework augmentation as a workshop ([89df97b](https://github.com/w4bo/AA2627-unibo-dcai/commit/89df97b39b7b75629ee4ccddfa861ed8e253aaca))
+* rework automl as a workshop ([ab853bd](https://github.com/w4bo/AA2627-unibo-dcai/commit/ab853bd413156bc6a7798d6997ce6587035043c8))
+* reworking lab structure ([e423104](https://github.com/w4bo/AA2627-unibo-dcai/commit/e42310476a2fa0ad1a830fecc355128df38a9cf4))
+* simplify lab exercises and solution cards [skip ci] ([d6f5d9c](https://github.com/w4bo/AA2627-unibo-dcai/commit/d6f5d9c0c11a96ebe7a556cad180cbf49d448321))
+* standardize coding guidance across all labs [skip ci] ([6215bc4](https://github.com/w4bo/AA2627-unibo-dcai/commit/6215bc4b91f314c53241c160b84f64d4c02b049b))
+* update lab notebooks ([9c4ed8a](https://github.com/w4bo/AA2627-unibo-dcai/commit/9c4ed8a31e6bd63e707ae8742248f7f8459db237))
+* working on explainability ([62f0ab7](https://github.com/w4bo/AA2627-unibo-dcai/commit/62f0ab7a629feb6acdf72326d149e9e18184b715))
+* working on fairness ([9edd909](https://github.com/w4bo/AA2627-unibo-dcai/commit/9edd90947b7b8f28f755dff09c13576b57e88ee0))
+* working on fairness ([9e137b4](https://github.com/w4bo/AA2627-unibo-dcai/commit/9e137b4b9c41b65107cd9e8e8eb83e72310623bc))
+* working on fairness ([80b4e24](https://github.com/w4bo/AA2627-unibo-dcai/commit/80b4e247506816964203ac3bd33b7c78f117588d))
+* working on fairness ([db866d8](https://github.com/w4bo/AA2627-unibo-dcai/commit/db866d8d4cdd041826c16f9092c580cff528e63a))
+* working on fairness ([dff5024](https://github.com/w4bo/AA2627-unibo-dcai/commit/dff5024c751a2c15014650b3f147684460b98822))
+* working on privacy ([2920534](https://github.com/w4bo/AA2627-unibo-dcai/commit/292053485bdba467fc0114f5b8a1f39ba8dd4dde))
+
 ## [1.1.26](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.25...1.1.26) (2026-10-28)
 
 ### Dependency updates
