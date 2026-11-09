@@ -1,3 +1,14 @@
+## [1.1.29](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.28...1.1.29) (2026-11-09)
+
+### Dependency updates
+
+* **deps:** update ollama/ollama docker tag to v0.40.14 ([#20](https://github.com/w4bo/AA2627-unibo-dcai/issues/20)) ([5d8ab5a](https://github.com/w4bo/AA2627-unibo-dcai/commit/5d8ab5a049ba229adfee66d0a8827a9cca48fe88))
+* **deps:** update ollama/ollama docker tag to v0.40.15 ([#24](https://github.com/w4bo/AA2627-unibo-dcai/issues/24)) ([3ca507a](https://github.com/w4bo/AA2627-unibo-dcai/commit/3ca507a5eb30e92774d4c922e2b3890cee2f2045))
+
+### Bug Fixes
+
+* working on fairness ([f44873c](https://github.com/w4bo/AA2627-unibo-dcai/commit/f44873c1fda9c4334e3e6d6935f7d5fcf7799608))
+
 ## [1.1.28](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.27...1.1.28) (2026-11-03)
 
 ### Dependency updates
