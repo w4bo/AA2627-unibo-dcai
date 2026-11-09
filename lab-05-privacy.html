@@ -426,100 +426,237 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 
 <section id="definition-k-anonymity" class="title-slide slide level1 center">
-<h1>Definition: k-anonymity</h1>
-<p><strong>k is the chosen minimum number of matching records in each group</strong>; for example, choose k = 3.</p>
-<p>A released table is <strong>k-anonymous with respect to chosen quasi-identifiers</strong> if <strong>every QI group contains at least k records</strong> <span class="citation" data-cites="sweeney2002kanonymity">(<a href="#/references" role="doc-biblioref" onclick="">Sweeney 2002</a>)</span>.</p>
+<h1>Definition: <span class="math inline">\(k\)</span>-anonymity</h1>
+<p><strong><span class="math inline">\(k\)</span> is the chosen minimum number of matching records in each group</strong>; for example, choose <span class="math inline">\(k = 3\)</span>.</p>
+<p>A released table is <strong><span class="math inline">\(k\)</span>-anonymous with respect to chosen quasi-identifiers</strong> if <strong>every QI group contains at least <span class="math inline">\(k\)</span> records</strong> <span class="citation" data-cites="sweeney2002kanonymity">(<a href="#/references" role="doc-biblioref" onclick="">Sweeney 2002</a>)</span>.</p>
 <p><span class="math display">\[\forall E,\quad |E|\geq k.\]</span></p>
-<p>The table’s achieved k is its <strong>smallest</strong> group size, not its average group size.</p>
+<p>The table’s achieved <span class="math inline">\(k\)</span> is its <strong>smallest</strong> group size, not its average group size.</p>
 <ul>
 <li><strong>What is checked?</strong> The number of records sharing each displayed QI combination.</li>
-<li><strong>Example:</strong> group sizes 3, 5 and 8 satisfy k = 3. Sizes 2, 5 and 8 do not.
+<li><strong>Example:</strong> group sizes 3, 5 and 8 satisfy <span class="math inline">\(k = 3\)</span>. Sizes 2, 5 and 8 do not.
 <ul>
-<li>k = 1 requirement provides no meaningful anonymity guarantee.</li>
+<li><span class="math inline">\(k = 1\)</span> requirement provides no meaningful anonymity guarantee.</li>
 </ul></li>
 </ul>
 </section>
 
 <section id="adult-dataset" class="title-slide slide level1 center">
 <h1>Adult dataset</h1>
-<p>Use the real <a href="https://archive.ics.uci.edu/dataset/2/adult">UCI Adult dataset</a>: 48,842 census-income records. The next cell downloads it once and caches it locally.</p>
+<div id="privacy-009" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:09.918266Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:09.918122Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:11.925500Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:11.924886Z&quot;}}" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">workclass</th>
+<th data-quarto-table-cell-role="th">fnlwgt</th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">education_num</th>
+<th data-quarto-table-cell-role="th">marital_status</th>
+<th data-quarto-table-cell-role="th">occupation</th>
+<th data-quarto-table-cell-role="th">relationship</th>
+<th data-quarto-table-cell-role="th">race</th>
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">capital_gain</th>
+<th data-quarto-table-cell-role="th">capital_loss</th>
+<th data-quarto-table-cell-role="th">hours_per_week</th>
+<th data-quarto-table-cell-role="th">native_country</th>
+<th data-quarto-table-cell-role="th">income</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>39</td>
+<td>State-gov</td>
+<td>77516</td>
+<td>Bachelors</td>
+<td>13</td>
+<td>Never-married</td>
+<td>Adm-clerical</td>
+<td>Not-in-family</td>
+<td>White</td>
+<td>Male</td>
+<td>2174</td>
+<td>0</td>
+<td>40</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>50</td>
+<td>Self-emp-not-inc</td>
+<td>83311</td>
+<td>Bachelors</td>
+<td>13</td>
+<td>Married-civ-spouse</td>
+<td>Exec-managerial</td>
+<td>Husband</td>
+<td>White</td>
+<td>Male</td>
+<td>0</td>
+<td>0</td>
+<td>13</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>38</td>
+<td>Private</td>
+<td>215646</td>
+<td>HS-grad</td>
+<td>9</td>
+<td>Divorced</td>
+<td>Handlers-cleaners</td>
+<td>Not-in-family</td>
+<td>White</td>
+<td>Male</td>
+<td>0</td>
+<td>0</td>
+<td>40</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>53</td>
+<td>Private</td>
+<td>234721</td>
+<td>11th</td>
+<td>7</td>
+<td>Married-civ-spouse</td>
+<td>Handlers-cleaners</td>
+<td>Husband</td>
+<td>Black</td>
+<td>Male</td>
+<td>0</td>
+<td>0</td>
+<td>40</td>
+<td>United-States</td>
+<td>&lt;=50K</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>28</td>
+<td>Private</td>
+<td>338409</td>
+<td>Bachelors</td>
+<td>13</td>
+<td>Married-civ-spouse</td>
+<td>Prof-specialty</td>
+<td>Wife</td>
+<td>Black</td>
+<td>Female</td>
+<td>0</td>
+<td>0</td>
+<td>40</td>
+<td>Cuba</td>
+<td>&lt;=50K</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+
+<section id="adult-choose-the-privacy-roles-before-computing-k" class="title-slide slide level1 center">
+<h1>Adult: choose the privacy roles before computing <span class="math inline">\(k\)</span></h1>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Role</th>
+<th>Columns in this lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Quasi-identifiers</td>
+<td>???</td>
+</tr>
+<tr class="even">
+<td>Sensitive target</td>
+<td>???</td>
+</tr>
+</tbody>
+</table>
+<div id="da3382db" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:11.927194Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:11.927039Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:11.930772Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:11.930213Z&quot;}}" data-execution_count="3">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="bu">list</span>(adult_original.columns)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>['age',
+ 'workclass',
+ 'fnlwgt',
+ 'education',
+ 'education_num',
+ 'marital_status',
+ 'occupation',
+ 'relationship',
+ 'race',
+ 'sex',
+ 'capital_gain',
+ 'capital_loss',
+ 'hours_per_week',
+ 'native_country',
+ 'income']</code></pre>
+</div>
+</div>
+</section>
+
+<section id="adult-choose-the-privacy-roles-before-computing-k-1" class="title-slide slide level1 center">
+<h1>Adult: choose the privacy roles before computing <span class="math inline">\(k\)</span></h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Role</th>
+<th>Columns in this lesson</th>
+<th>Why?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Quasi-identifiers / model inputs</td>
+<td>age, education, marital status, race, sex</td>
+<td>A person may be linkable through a combination of demographic values</td>
+</tr>
+<tr class="even">
+<td>Sensitive target</td>
+<td>income above or below $50K</td>
+<td>The prediction task and the fact an attacker may infer</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li>Predict whether income exceeds $50K using five demographic quasi-identifiers.</li>
-<li>Keep those same inputs and the same test people throughout the lesson.</li>
+<li><strong>A <span class="math inline">\(k\)</span>-anonymity claim is relative to the declared QIs.</strong></li>
+<li>Income is not included in the grouping key.</li>
 </ul>
-<div id="privacy-008" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:09.231996Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:09.231834Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:12.518815Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:12.517862Z&quot;}}" data-execution_count="1">
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre>Collecting diffprivlib==0.6.6
-
-  Downloading diffprivlib-0.6.6-py3-none-any.whl.metadata (10 kB)
-
-Collecting scikit-learn&lt;1.8,&gt;=1.4
-
-  Downloading scikit_learn-1.7.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (11 kB)
-
-Requirement already satisfied: numpy&gt;=2.0.0 in /usr/local/lib/python3.14/site-packages (from diffprivlib==0.6.6) (2.4.2)
-
-Requirement already satisfied: scipy&gt;=1.13.0 in /usr/local/lib/python3.14/site-packages (from diffprivlib==0.6.6) (1.17.1)
-
-Requirement already satisfied: joblib&gt;=0.16.0 in /usr/local/lib/python3.14/site-packages (from diffprivlib==0.6.6) (1.5.3)
-
-Requirement already satisfied: setuptools&gt;=49.0.0 in /usr/local/lib/python3.14/site-packages (from diffprivlib==0.6.6) (81.0.0)
-
-Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3.14/site-packages (from scikit-learn&lt;1.8,&gt;=1.4) (3.6.0)
-
-Downloading diffprivlib-0.6.6-py3-none-any.whl (176 kB)
-
-Downloading scikit_learn-1.7.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (9.4 MB)
-
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">0.0/9.4 MB</span> <span class="ansi-red-fg">?</span> eta <span class="ansi-cyan-fg">-:--:--</span>
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">9.4/9.4 MB</span> <span class="ansi-red-fg">86.3 MB/s</span>  <span class="ansi-yellow-fg">0:00:00</span>
-
-
-Installing collected packages: scikit-learn, diffprivlib
-
-
-  Attempting uninstall: scikit-learn
-
-
-    Found existing installation: scikit-learn 1.8.0
-
-
-    Uninstalling scikit-learn-1.8.0:
-
-
-      Successfully uninstalled scikit-learn-1.8.0
-
-
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">0/2</span> [scikit-learn]
-
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">0/2</span> [scikit-learn]
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">0/2</span> [scikit-learn]
-
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">0/2</span> [scikit-learn]
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">0/2</span> [scikit-learn]
-
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">0/2</span> [scikit-learn]
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">0/2</span> [scikit-learn]
-
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">0/2</span> [scikit-learn]
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">0/2</span> [scikit-learn]
-
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">0/2</span> [scikit-learn]
-   <span class="ansi-bright-red-fg">━━━━━━━━━━━━━━━━━━━━</span><span class="ansi-bright-black-fg">╺</span><span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">1/2</span> [diffprivlib]
-
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">2/2</span> [diffprivlib]
-
-
-Successfully installed diffprivlib-0.6.6 scikit-learn-1.7.2
-</pre>
-</div>
-</div>
-</div>
-<div id="privacy-009" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:12.520499Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:12.520333Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:14.537528Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:14.536873Z&quot;}}" data-execution_count="2">
-<div class="cell-output cell-output-stdout">
-<pre><code>Downloaded Adult: 48,842 rows; analysis population: 48,842 rows</code></pre>
-</div>
+<div id="f396572c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:11.932274Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:11.932136Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:11.977920Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:11.977368Z&quot;}}" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -606,40 +743,6 @@ Successfully installed diffprivlib-0.6.6 scikit-learn-1.7.2
 Name: income_share, dtype: float64</code></pre>
 </div>
 </div>
-</section>
-
-<section id="adult-choose-the-privacy-roles-before-computing-k" class="title-slide slide level1 center">
-<h1>Adult: choose the privacy roles before computing k</h1>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Role</th>
-<th>Columns in this lesson</th>
-<th>Why?</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Quasi-identifiers / model inputs</td>
-<td>age, education, marital status, race, sex</td>
-<td>A person may be linkable through a combination of demographic values</td>
-</tr>
-<tr class="even">
-<td>Sensitive target</td>
-<td>income above or below $50K</td>
-<td>The prediction task and the fact an attacker may infer</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><strong>A k-anonymity claim is relative to the declared QIs.</strong></li>
-<li>Income is not included in the grouping key.</li>
-</ul>
 </section>
 
 <section id="adult-excerpt-nine-real-records-before-generalization" class="title-slide slide level1 center">
@@ -734,20 +837,26 @@ Name: income_share, dtype: float64</code></pre>
 <li>Every displayed five-QI combination is unique within the excerpt: its minimum group size is 1.</li>
 <li>Names are absent, but that alone does not provide anonymity.</li>
 </ul>
-<div id="adult-excerpt-group-counts" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:14.544238Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:14.544096Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:14.551054Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:14.550388Z&quot;}}" data-execution_count="4">
+<div id="adult-excerpt-group-counts" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:11.984777Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:11.984644Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:11.990921Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:11.990290Z&quot;}}" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="co"># Income is sensitive, so group only by the five quasi-identifiers.</span></span>
-<span id="cb3-2"><a href="" aria-label="2"></a>group_counts <span class="op">=</span> excerpt.groupby(QI, dropna<span class="op">=</span><span class="va">False</span>).size().rename(<span class="st">"rows"</span>)</span>
-<span id="cb3-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"Minimum group size (achieved k):"</span>, group_counts.<span class="bu">min</span>())</span>
-<span id="cb3-4"><a href="" aria-label="4"></a>group_counts</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="co"># Income is sensitive, so group only by the five quasi-identifiers.</span></span>
+<span id="cb4-2"><a href="" aria-label="2"></a>group_counts <span class="op">=</span> excerpt.groupby(QI, dropna<span class="op">=</span><span class="va">False</span>).size().rename(<span class="st">"rows"</span>)</span>
+<span id="cb4-3"><a href="" aria-label="3"></a><span class="bu">print</span>(<span class="st">"Minimum group size (achieved k):"</span>, group_counts.<span class="bu">min</span>())</span>
+<span id="cb4-4"><a href="" aria-label="4"></a>group_counts</span></code></pre></div>
 </details>
 </div>
 </section>
 
 <section id="generalize-the-same-nine-adult-records" class="title-slide slide level1 center">
 <h1>Generalize the same nine Adult records</h1>
-<p>Replace exact ages with 10-year bands, education with four-level bands and marital status with married / not married. Keep race, sex and income.</p>
+<p>Replace</p>
+<ol type="1">
+<li>exact ages with 10-year bands,</li>
+<li>education with four-level bands and</li>
+<li>marital status with married / not married.</li>
+</ol>
+<p>Keep race, sex and income.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -834,11 +943,14 @@ Name: income_share, dtype: float64</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Compare all five displayed QIs when grouping; income is the sensitive value and is not a grouping key.</p>
+<p>Compare all five displayed QIs when grouping</p>
+<ul>
+<li>Income is the sensitive value and is not a grouping key.</li>
+</ul>
 </section>
 
 <section id="adult-example-check-k-3-after-generalization" class="title-slide slide level1 center">
-<h1>Adult example: check k = 3 after generalization</h1>
+<h1>Adult example: check <span class="math inline">\(k = 3\)</span> after generalization</h1>
 <p>The same nine records now form three QI groups.</p>
 <table class="caption-top">
 <thead>
@@ -914,12 +1026,12 @@ Name: income_share, dtype: float64</code></pre>
 </tr>
 </tbody>
 </table>
-<p>The excerpt no longer meets k = 3, even if all other records remain properly generalized.</p>
+<p>The excerpt no longer meets <span class="math inline">\(k = 3\)</span>, even if all other records remain properly generalized.</p>
 </section>
 
 <section id="suppression-is-the-other-lever" class="title-slide slide level1 center">
 <h1>Suppression is the other lever</h1>
-<p>When one record prevents a table from satisfying <code>k</code>, we can suppress fields or rows.</p>
+<p>When one record prevents a table from satisfying <span class="math inline">\(k\)</span>, we can suppress fields or rows.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -987,7 +1099,7 @@ Name: income_share, dtype: float64</code></pre>
 <li>Suppress entire QI groups containing fewer than 3 records.</li>
 </ul>
 <p>Check the minimum group size after suppression. Generalization alone may leave groups that are too small.</p>
-<div id="privacy-020" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:14.552743Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:14.552602Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:14.611729Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:14.611139Z&quot;}}" data-execution_count="5">
+<div id="privacy-020" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:11.992345Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:11.992208Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:12.054142Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:12.053505Z&quot;}}" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1063,7 +1175,7 @@ Name: income_share, dtype: float64</code></pre>
 <li>After suppression, no retained row belongs to a group smaller than 3.</li>
 </ul>
 
-<img data-src="lab-05-privacy_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"></section>
+<img data-src="lab-05-privacy_files/figure-revealjs/cell-9-output-1.png" class="r-stretch"></section>
 
 <section id="coding-break-1-exercises-1-and-2-15-minutes" class="title-slide slide level1 center">
 <h1>Coding break 1: Exercises 1 and 2 (~15 minutes)</h1>
@@ -1077,7 +1189,7 @@ Name: income_share, dtype: float64</code></pre>
 </section>
 
 <section id="k-anonymity-known-issues" class="title-slide slide level1 center">
-<h1>k-anonymity known issues</h1>
+<h1><span class="math inline">\(k\)</span>-anonymity known issues</h1>
 <p><a id="theory-block-2" href=""></a></p>
 <p><strong>Homogeneity attack</strong></p>
 <ul>
@@ -1095,19 +1207,19 @@ Name: income_share, dtype: float64</code></pre>
 </section>
 
 <section id="definition-l-diversity-distinct-version" class="title-slide slide level1 center">
-<h1>Definition: l-diversity (distinct version)</h1>
-<p>A released table satisfies <strong>distinct l-diversity</strong> if <strong>every QI group contains at least l distinct values of the sensitive attribute</strong> <span class="citation" data-cites="machanavajjhala2006ldiversity">(<a href="#/references" role="doc-biblioref" onclick="">Machanavajjhala et al. 2006</a>)</span>.</p>
+<h1>Definition: <span class="math inline">\(l\)</span>-diversity (distinct version)</h1>
+<p>A released table satisfies <strong>distinct <span class="math inline">\(l\)</span>-diversity</strong> if <strong>every QI group contains at least <span class="math inline">\(l\)</span> distinct values of the sensitive attribute</strong> <span class="citation" data-cites="machanavajjhala2006ldiversity">(<a href="#/references" role="doc-biblioref" onclick="">Machanavajjhala et al. 2006</a>)</span>.</p>
 <p><span class="math display">\[\forall E,\quad |\{S(r):r\in E\}|\geq l,\]</span></p>
 <p>where <span class="math inline">\(S(r)\)</span> is the sensitive value in record <span class="math inline">\(r\)</span>. Here <span class="math inline">\(S\)</span> is the income label.</p>
 <ul>
-<li><strong>Example:</strong> a three-record group with incomes [&lt;=50K, &lt;=50K, &gt;50K] satisfies k = 3 and distinct l = 2.</li>
-<li>A three-record group with [&lt;=50K, &lt;=50K, &lt;=50K] satisfies k = 3 but fails distinct l = 2.</li>
+<li><strong>Example:</strong> a three-record group with incomes [&lt;=50K, &lt;=50K, &gt;50K] satisfies <span class="math inline">\(k = 3\)</span> and distinct <span class="math inline">\(l = 2\)</span>.</li>
+<li>A three-record group with [&lt;=50K, &lt;=50K, &lt;=50K] satisfies <span class="math inline">\(k = 3\)</span> but fails distinct <span class="math inline">\(l = 2\)</span>.</li>
 </ul>
-<p>Other l-diversity variants impose frequency requirements.</p>
+<p>Other <span class="math inline">\(l\)</span>-diversity variants impose frequency requirements.</p>
 </section>
 
 <section id="adult-example-k-anonymity-does-not-imply-l-diversity" class="title-slide slide level1 center">
-<h1>Adult example: k-anonymity does not imply l-diversity</h1>
+<h1>Adult example: <span class="math inline">\(k\)</span>-anonymity does not imply <span class="math inline">\(l\)</span>-diversity</h1>
 <p>Count sensitive income values inside the same three groups.</p>
 <table class="caption-top">
 <thead>
@@ -1115,8 +1227,8 @@ Name: income_share, dtype: float64</code></pre>
 <th>Group</th>
 <th style="text-align: right;">Records &lt;=50K</th>
 <th style="text-align: right;">Records &gt;50K</th>
-<th>k = 3?</th>
-<th>Distinct l = 2?</th>
+<th><span class="math inline">\(k = 3\)</span>?</th>
+<th>Distinct <span class="math inline">\(l = 2\)</span>?</th>
 </tr>
 </thead>
 <tbody>
@@ -1146,13 +1258,13 @@ Name: income_share, dtype: float64</code></pre>
 <p>Groups A and B each contain <strong>two &lt;=50K records and one &gt;50K record</strong>. Both are distinct-2-diverse.</p>
 <ul>
 <li>Their high-income share is 1/3, whereas the whole excerpt’s share is 2/9.</li>
-<li>Distinct diversity requires both labels to be present. With this binary target (&lt;=50K vs &gt;50K), distinct l can never exceed 2.</li>
+<li>Distinct diversity requires both labels to be present. With this binary target (&lt;=50K vs &gt;50K), distinct <span class="math inline">\(l\)</span> can never exceed 2.</li>
 </ul>
 <p>If a person is known to be a released member of group C, their income class is revealed even though their individual row is hidden.</p>
 </section>
 
 <section id="l-diversity-known-issues" class="title-slide slide level1 center">
-<h1>l-diversity known issues</h1>
+<h1><span class="math inline">\(l\)</span>-diversity known issues</h1>
 <p>Diversity checks the presence of values, not how close their proportions are to the whole release.</p>
 <p>Learning a person’s group changes the income distribution an attacker associates with that person.</p>
 <ul>
@@ -1162,11 +1274,12 @@ Name: income_share, dtype: float64</code></pre>
 </section>
 
 <section id="definition-t-closeness" class="title-slide slide level1 center">
-<h1>Definition: t-closeness</h1>
-<p>A released table satisfies <strong>t-closeness</strong> if, in <strong>every QI group</strong>, the sensitive-value distribution is within distance <span class="math inline">\(t\)</span> of the distribution in the whole released table <span class="citation" data-cites="li2007tcloseness">(<a href="#/references" role="doc-biblioref" onclick="">Li et al. 2007</a>)</span>.</p>
+<h1>Definition: <span class="math inline">\(t\)</span>-closeness</h1>
+<p>A released table satisfies <strong><span class="math inline">\(t\)</span>-closeness</strong> if, in <strong>every QI group</strong>, the sensitive-value distribution is within distance <span class="math inline">\(t\)</span> of the distribution in the whole released table <span class="citation" data-cites="li2007tcloseness">(<a href="#/references" role="doc-biblioref" onclick="">Li et al. 2007</a>)</span>.</p>
 <p><span class="math display">\[\forall E,\quad EMD(P_E,Q)\leq t.\]</span></p>
-<p><span class="math inline">\(P_E\)</span> is the group distribution; <span class="math inline">\(Q\)</span> is the whole-table distribution. We use <strong>Earth Mover Distance (EMD)</strong>: the minimum work needed to move probability mass between income categories. The ground distance is 0 within a category and 1 between the two categories.</p>
+<p><span class="math inline">\(P_E\)</span> is the group distribution; <span class="math inline">\(Q\)</span> is the whole-table distribution.</p>
 <ul>
+<li><strong>Earth Mover Distance (EMD)</strong>: the minimum work needed to move probability mass between income categories.</li>
 <li>If <span class="math inline">\(Q\)</span> is public, the privacy question becomes: how much extra does <code>P</code> reveal?</li>
 </ul>
 <div class="cell" data-reveal="true" data-layout-align="default">
@@ -1231,8 +1344,8 @@ Name: income_share, dtype: float64</code></pre>
 </section>
 
 <section id="compare-all-three-groups-at-t-0.15" class="title-slide slide level1 center">
-<h1>Compare all three groups at t = 0.15</h1>
-<p>The excerpt is 3-anonymous, but it does <strong>not</strong> satisfy distinct 2-diversity or t = 0.15 closeness, because group C fails both checks.</p>
+<h1>Compare all three groups at <span class="math inline">\(t = 0.15\)</span></h1>
+<p>The excerpt is 3-anonymous, but it does <strong>not</strong> satisfy distinct 2-diversity or <span class="math inline">\(t = 0.15\)</span> closeness, because group C fails both checks.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 21%">
@@ -1245,7 +1358,7 @@ Name: income_share, dtype: float64</code></pre>
 <th>Group</th>
 <th style="text-align: right;">High-income share</th>
 <th style="text-align: right;">EMD from Q(&gt;50K) = 2/9</th>
-<th>Passes t = 0.15?</th>
+<th>Passes <span class="math inline">\(t = 0.15\)</span>?</th>
 </tr>
 </thead>
 <tbody>
@@ -1278,13 +1391,13 @@ Name: income_share, dtype: float64</code></pre>
 </section>
 
 <section id="adult-k-3-can-still-reveal-income" class="title-slide slide level1 center">
-<h1>Adult: k = 3 can still reveal income</h1>
+<h1>Adult: <span class="math inline">\(k = 3\)</span> can still reveal income</h1>
 <p>The full-data calculation below uses its own retained-population reference rate, not the excerpt rate 2/9.</p>
 <ul>
-<li>The suppression procedure enforces k = 3 only. The diversity and closeness results below are diagnostic checks; violations can remain.</li>
+<li>The suppression procedure enforces <span class="math inline">\(k = 3\)</span> only. The diversity and closeness results below are diagnostic checks; violations can remain.</li>
 </ul>
 
-<img data-src="lab-05-privacy_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
+<img data-src="lab-05-privacy_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
 
 <section id="compare-the-three-privacy-definitions" class="title-slide slide level1 center">
 <h1>Compare the three privacy definitions</h1>
@@ -1305,36 +1418,25 @@ Name: income_share, dtype: float64</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td>k-anonymity</td>
-<td>At least k matching records</td>
-<td>Larger k imposes a stricter size requirement</td>
+<td><span class="math inline">\(k\)</span>-anonymity</td>
+<td>At least <span class="math inline">\(k\)</span> matching records</td>
+<td>Larger <span class="math inline">\(k\)</span> imposes a stricter size requirement</td>
 <td>Members may share one sensitive value</td>
 </tr>
 <tr class="even">
-<td>Distinct l-diversity</td>
-<td>At least l distinct sensitive values</td>
-<td>Larger l requires more variety</td>
+<td>Distinct <span class="math inline">\(l\)</span>-diversity</td>
+<td>At least <span class="math inline">\(l\)</span> distinct sensitive values</td>
+<td>Larger <span class="math inline">\(l\)</span> requires more variety</td>
 <td>Values may be extremely unbalanced</td>
 </tr>
 <tr class="odd">
-<td>t-closeness</td>
-<td>Sensitive distribution at EMD at most t from the whole table</td>
-<td>Smaller t requires greater closeness</td>
+<td><span class="math inline">\(t\)</span>-closeness</td>
+<td>Sensitive distribution at EMD at most <span class="math inline">\(t\)</span> from the whole table</td>
+<td>Smaller <span class="math inline">\(t\)</span> requires greater closeness</td>
 <td>Result depends on the distance and reference population</td>
 </tr>
 </tbody>
 </table>
-</section>
-
-<section id="read-the-metrics-before-comparing-models" class="title-slide slide level1 center">
-<h1>Read the metrics before comparing models</h1>
-<ul>
-<li><strong>Accuracy:</strong> fraction of all predictions that are correct. Most Adult records have income &lt;=50K, so this can look high for a weak model.</li>
-<li><strong>Balanced accuracy:</strong> average recall of the two income classes. Always predicting &lt;=50K scores 0.5 here.</li>
-<li><strong>F1:</strong> balances precision and recall for the positive label, income &gt;50K.</li>
-<li><strong>Retained share:</strong> fraction of original training records left after suppression; this measures coverage, not predictive accuracy.</li>
-</ul>
-<p>Every result uses the same held-out people and the same positive label.</p>
 </section>
 
 <section id="a-pipeline-with-a-decision-tree" class="title-slide slide level1 center">
@@ -1344,8 +1446,8 @@ Name: income_share, dtype: float64</code></pre>
 <li>Encode categories with fixed, declared domains and scale features to [0, 1]. These public bounds are also used by the DP forest; no bounds are learned from private data.</li>
 <li>Fit a depth-5 tree with at least 20 training records per leaf.</li>
 </ol>
-<p>For the anonymized model, generalize both splits and suppress <strong>training groups only</strong>. Evaluate both trees on every original test person.</p>
-<div id="8e51d5e8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:15.392292Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:15.392138Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:15.475948Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:15.475319Z&quot;}}" data-execution_count="10">
+<p>For the anonymized model, generalize both splits and suppress <strong>training groups only</strong>.</p>
+<div id="8e51d5e8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:12.860620Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:12.860461Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:12.953095Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:12.952478Z&quot;}}" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1401,7 +1503,7 @@ Name: income_share, dtype: float64</code></pre>
 
 <section id="which-features-did-the-tree-actually-use" class="title-slide slide level1 center">
 <h1>Which features did the tree actually use?</h1>
-<div id="privacy-051" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:15.477701Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:15.477549Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:15.634648Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:15.633881Z&quot;}}" data-execution_count="11">
+<div id="privacy-051" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:12.954814Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:12.954676Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:13.117693Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:13.117045Z&quot;}}" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1465,7 +1567,7 @@ Name: income_share, dtype: float64</code></pre>
 </div>
 
 </div>
-<img data-src="lab-05-privacy_files/figure-revealjs/cell-12-output-2.png" class="r-stretch"></section>
+<img data-src="lab-05-privacy_files/figure-revealjs/cell-14-output-2.png" class="r-stretch"></section>
 
 <section id="one-anonymization-policy-one-comparison" class="title-slide slide level1 center">
 <h1>One anonymization policy, one comparison</h1>
@@ -1475,9 +1577,8 @@ Name: income_share, dtype: float64</code></pre>
 <li>Suppress training groups smaller than 3.</li>
 <li>Compare the raw and anonymized trees on the same test people.</li>
 </ul>
-<p>A small change in accuracy is a valid result. Also inspect how many training records are removed and which features the tree uses. A k-anonymous training table does not make the fitted tree differentially private.</p>
 
-<img data-src="lab-05-privacy_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"></section>
+<img data-src="lab-05-privacy_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"></section>
 
 <section id="suppression-can-change-who-is-represented" class="title-slide slide level1 center">
 <h1>Suppression can change who is represented</h1>
@@ -1486,7 +1587,7 @@ Name: income_share, dtype: float64</code></pre>
 <li>A small utility change on average can hide a coverage loss for a small group.</li>
 </ul>
 
-<img data-src="lab-05-privacy_files/figure-revealjs/cell-14-output-1.png" class="r-stretch"></section>
+<img data-src="lab-05-privacy_files/figure-revealjs/cell-16-output-1.png" class="r-stretch"></section>
 
 <section id="coding-break-2-two-decision-tree-pipelines-15-minutes" class="title-slide slide level1 center">
 <h1>Coding break 2: two decision-tree pipelines (~15 minutes)</h1>
@@ -1506,10 +1607,9 @@ Name: income_share, dtype: float64</code></pre>
 <section id="table-anonymity-and-model-privacy-are-different-guarantees" class="title-slide slide level1 center">
 <h1>Table anonymity and model privacy are different guarantees</h1>
 <ul>
-<li>k-anonymity, l-diversity and t-closeness impose formal conditions on a <strong>released table</strong> <span class="citation" data-cites="jin2023survey">(<a href="#/references" role="doc-biblioref" onclick="">Jin et al. 2023</a>)</span>.</li>
-<li>Their guarantees depend on the chosen QIs, sensitive attribute and attacker assumptions. They do not bound every re-identification or inference risk.</li>
-<li>Training an ordinary model on an anonymized table does not make that model differentially private.</li>
-<li>Differential privacy instead limits the influence of one person’s participation on a randomized release.</li>
+<li><span class="math inline">\(k\)</span>-anonymity, <span class="math inline">\(l\)</span>-diversity and <span class="math inline">\(t\)</span>-closeness impose formal conditions on a <strong>released table</strong> <span class="citation" data-cites="jin2023survey">(<a href="#/references" role="doc-biblioref" onclick="">Jin et al. 2023</a>)</span>.</li>
+<li>Their guarantees depend on the chosen QIs, sensitive attribute and attacker assumptions.</li>
+<li>They do not bound every re-identification or inference risk.</li>
 </ul>
 </section>
 
@@ -1517,13 +1617,13 @@ Name: income_share, dtype: float64</code></pre>
 <h1>Definition: differential privacy</h1>
 <p>Two training datasets D and D′ are <strong>neighbors</strong> if they differ by the addition or removal of one person’s record.</p>
 <ul>
-<li>A randomized training algorithm M provides <strong>epsilon-differential privacy</strong> if, for every neighboring pair D, D′ and every set S of possible output models <span class="citation" data-cites="dwork2006differential">(<a href="#/references" role="doc-biblioref" onclick="">Dwork 2006</a>)</span>:</li>
+<li>A randomized training algorithm M provides <strong><span class="math inline">\(\epsilon\)</span>-differential privacy</strong> if, for every neighboring pair <span class="math inline">\(D, D′\)</span> and every set <span class="math inline">\(S\)</span> of possible output models <span class="citation" data-cites="dwork2006differential">(<a href="#/references" role="doc-biblioref" onclick="">Dwork 2006</a>)</span>:</li>
 </ul>
 <p><span class="math display">\[\Pr[M(D)\in S]\leq e^{\epsilon}\Pr[M(D')\in S].\]</span></p>
 <ul>
-<li><strong>M:</strong> the randomized training procedure; its output is the trained forest.</li>
-<li><strong>Probability:</strong> over the algorithm’s random choices, not over people’s income labels.</li>
-<li><strong>Smaller epsilon:</strong> a tighter limit on how much one person’s participation can change output probabilities.</li>
+<li><strong>M:</strong> the machine learning model applied to dataset <span class="math inline">\(D\)</span> (e.g., a decision tree).</li>
+<li><strong>Probability:</strong> over the algorithm’s choices.</li>
+<li><strong>Smaller <span class="math inline">\(\epsilon\)</span>:</strong> a tighter limit on how much one person’s participation can change output probabilities.</li>
 </ul>
 <p>For <span class="math inline">\(\epsilon= 0.1\)</span>, the probability of any output event can change by at most a factor of <span class="math inline">\(e^{0.1} \approx 1.105\)</span>.</p>
 <ul>
@@ -1531,33 +1631,186 @@ Name: income_share, dtype: float64</code></pre>
 </ul>
 </section>
 
+<section id="differential-privacy-example-count-queries" class="title-slide slide level1 center">
+<h1>Differential Privacy Example: Count Queries</h1>
+<p>The same DP definition applies when <span class="math inline">\(M\)</span> releases a query answer rather than a trained model. Assume <strong>one record per person</strong> and add/remove neighbors.</p>
+<blockquote>
+<p>How many people have income above 50K?</p>
+</blockquote>
+<p>Adding or removing one person changes the count <span class="math inline">\(q(D)\)</span> by at most <strong>1</strong>. This worst-case change is its sensitivity:</p>
+<p><span class="math display">\[\Delta q=\max_{D\sim D'}|q(D)-q(D')|=1.\]</span></p>
+<p>The <strong>Laplace mechanism</strong> releases:</p>
+<p><span class="math display">\[M(D)=q(D)+Z,\qquad Z\sim\operatorname{Laplace}(0,b),\qquad b=\frac{\Delta q}{\epsilon}=\frac{1}{\epsilon}.\]</span></p>
+<p>The noise probability density is <span class="math inline">\(f_Z(z)=\frac{1}{2b}\exp\!\left(-\frac{|z|}{b}\right)\)</span> for <span class="math inline">\(z\in\mathbb{R}\)</span>.</p>
+<ul>
+<li>Neighboring datasets might have true counts <strong>40 and 41</strong>; both yield overlapping distributions of noisy answers.</li>
+<li>Smaller <span class="math inline">\(\epsilon\)</span> gives stronger privacy and more noise for this query.</li>
+</ul>
+<aside class="notes">
+<p>Laplace(0, b) denotes zero-centered Laplace noise with scale b, not variance b. Its expected absolute magnitude is b. The general scalar Laplace mechanism uses scale Delta q / <span class="math inline">\(\epsilon\)</span> and provides pure <span class="math inline">\(\epsilon\)</span>-DP.</p>
+<p>Overlap alone does not establish DP: the probability of every output event must satisfy the definition’s multiplicative bound. The raw count plus Laplace noise has that guarantee. Rounding or clipping the noisy answer to be nonnegative is post-processing and preserves the guarantee.</p>
+<p>The count query is a predicate count, not the dataset size; only people satisfying the predicate contribute 1. A bound of one contribution per person is essential for person-level sensitivity 1.</p>
+<p>Source: <a href="https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf">Dwork and Roth, The Algorithmic Foundations of Differential Privacy, Section 3.3</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="count-queries-a-worked-numerical-release" class="title-slide slide level1 center">
+<h1>Count Queries: A Worked Numerical Release</h1>
+<p>Suppose <strong>40 people</strong> have income above 50K. Use <span class="math inline">\(\epsilon=0.5\)</span> and one record per person:</p>
+<p><span class="math display">\[q(D)=40,\qquad \Delta q=1,\qquad b=\frac{1}{0.5}=2.\]</span></p>
+<ol type="1">
+<li><p>Draw fresh noise <span class="math inline">\(Z\sim\operatorname{Laplace}(0,2)\)</span>, whose density is:</p>
+<p><span class="math display">\[f_Z(z)=\frac{1}{4}\exp\!\left(-\frac{|z|}{2}\right).\]</span></p></li>
+<li><p>Suppose this draw gives <span class="math inline">\(z=-1.6\)</span>. Release:</p>
+<p><span class="math display">\[M(D)=40+(-1.6)=\boxed{38.4}.\]</span></p></li>
+<li><p>If an integer answer is needed, round the noisy result to <strong>38</strong>. This post-processing preserves DP.</p></li>
+</ol>
+<p>The true count and the sampled noise are shown together only to explain the arithmetic in this teaching example.</p>
+<ul>
+<li>For confidential data, release only the noisy answer;</li>
+<li>publishing the exact noise alongside it would let the recipient recover the true count.</li>
+</ul>
+<p>Source: <a href="https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf">Dwork and Roth, Section 3.3</a>.</p>
+<aside class="notes">
+<p>The true count and the sampled noise are shown together only to explain the arithmetic in this teaching example. For confidential data, release only the noisy answer; publishing the exact noise alongside it would let the recipient recover the true count. The displayed noise value is an illustrative rounded realization, not a fixed offset to reuse. Use fresh appropriate randomness for each private release, and account for the privacy budget of repeated queries.</p>
+<p>For <span class="math inline">\(\epsilon\)</span>=0.5 and b=2, the mechanism’s output density at m is f_D(m)=1/4 exp(-|m-40|/2). If an added person satisfying the predicate makes the neighboring count 41, the density at m=38.4 is about 0.11233 under D and 0.06813 under D’. Their ratio is exp(0.5), about 1.649. These are densities, not probabilities of an exact real-valued output. More generally, the triangle inequality bounds the density ratio by exp(<span class="math inline">\(\epsilon\)</span>) for every output, which implies the DP inequality for every measurable output event.</p>
+<p>The release 38.4 alone does not prove privacy; the guarantee comes from the full randomized mechanism and its sensitivity-calibrated noise distribution. Likewise, different sampled noise values do not define different privacy budgets: the budget is determined before sampling by the mechanism’s parameters.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="differential-privacy-example-average-queries" class="title-slide slide level1 center">
+<h1>Differential Privacy Example: Average Queries</h1>
+<blockquote>
+<p>What is the average age? Bound each person’s contribution by clipping age to the <strong>public range <span class="math inline">\([0,100]\)</span></strong>.</p>
+</blockquote>
+<p>With add/remove neighbors, both the age sum <span class="math inline">\(s(D)\)</span> and the count <span class="math inline">\(n(D)\)</span> can change: <span class="math inline">\(\Delta s=100\)</span> and <span class="math inline">\(\Delta n=1\)</span>.</p>
+<p>One simple mechanism splits the total privacy budget <span class="math inline">\(\epsilon\)</span> equally:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\widetilde{s}&amp;=s(D)+\operatorname{Laplace}(0,200/\epsilon),\\
+\widetilde{n}&amp;=n(D)+\operatorname{Laplace}(0,2/\epsilon),\\
+\widetilde{\mu}&amp;=\operatorname{clip}_{[0,100]}\!\left(\frac{\widetilde{s}}{\max(1,\widetilde{n})}\right).
+\end{aligned}
+\]</span></p>
+<ul>
+<li><strong>Example:</strong> true sum 40,000 over 1,000 people gives mean 40. Noisy values 40,120 and 1,002 give a released mean of about <strong>40.04</strong>.</li>
+</ul>
+<p>Sources: <a href="https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf">Dwork and Roth, Sections 3.3 and 3.5</a>.</p>
+<aside class="notes">
+<p>Use independent noise for the sum and count. Each release is <span class="math inline">\(\epsilon\)</span>/2-DP, so sequential composition gives <span class="math inline">\(\epsilon\)</span>-DP for the pair. The final ratio, denominator safeguard and output clipping use only private outputs and public constants; post-processing spends no additional privacy budget. This is a simple teaching mechanism, not an optimal private mean estimator.</p>
+<p>The example uses <span class="math inline">\(\epsilon\)</span>=1; the displayed noisy values illustrate one possible release, not guaranteed accuracy. The numerator’s units are summed years, and the denominator’s units are people. Clipping changes the estimand to the mean of clipped ages; the bounds must be chosen publicly rather than inferred without privacy protection from the same records.</p>
+<p>Do not divide a private sum by the exact confidential count under add/remove adjacency. The familiar sensitivity (upper bound - lower bound)/n applies to a fixed public n with replace-one adjacency, which is a different setup from this lab. Here, the actual sample size is allowed to vary and is privatized as well.</p>
+<p>Sources: <a href="https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf">Dwork and Roth, Sections 3.3 and 3.5</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
 <section id="how-diffprivlib-trains-a-dp-random-forest" class="title-slide slide level1 center">
 <h1>How diffprivlib trains a DP random forest</h1>
 <p>This implementation uses random tree structures and private leaf labels <span class="citation" data-cites="fletcher2017differentially">(<a href="#/references" role="doc-biblioref" onclick="">Fletcher and Islam 2017</a>)</span>.</p>
 <ol type="1">
-<li><strong>Build random trees.</strong> Choose split features and thresholds using declared public domains, without inspecting training records.</li>
-<li><strong>Partition training rows across trees.</strong> Each row trains exactly one tree, instead of using ordinary bootstrap samples.</li>
-<li><strong>Choose a private label for each leaf.</strong> Permute-and-Flip favors the more frequent income label while preserving randomness. Epsilon controls the privacy guarantee.</li>
-<li><strong>Vote across trees.</strong> Combine their predictions into the forest prediction.</li>
+<li><p><strong>Build random trees.</strong> Choose split features and thresholds using declared public domains, without inspecting training records.</p></li>
+<li><p><strong>Partition training rows across trees.</strong> Each row trains exactly one tree, instead of using ordinary bootstrap samples.</p></li>
+<li><p><strong>Choose a private label for each leaf.</strong></p>
+<ul>
+<li><p>Let <span class="math inline">\(u_c\)</span> be the number of records with label <span class="math inline">\(c\)</span> in the leaf and <span class="math inline">\(u_* = \max_c u_c\)</span>.</p></li>
+<li><p><strong>Permute:</strong> put labels in random order. <strong>Flip:</strong> test each with a biased coin; counts closer to the maximum have a higher acceptance probability. <strong>Return the first accepted label:</strong></p>
+<p><span class="math display">\[p_c=\Pr(\text{accept }c\mid\text{reached }c)=\exp\!\left(\frac{\epsilon(u_c-u_*)}{\Delta u}\right),\qquad \Delta u=1.\]</span></p></li>
+<li><p>This is diffprivlib’s <strong>monotonic-count</strong> version: adding one record cannot decrease any <span class="math inline">\(u_c\)</span>. A maximum-count label has <span class="math inline">\(p_c=1\)</span>.</p></li>
+<li><p><strong>Intuition:</strong> favor the majority while allowing a minority label to win, limiting what the result reveals about any one person. Smaller <span class="math inline">\(\epsilon\)</span> means more randomness.</p></li>
+</ul></li>
+<li><p><strong>Vote across trees.</strong> Combine their predictions into the forest prediction.</p></li>
 </ol>
-<p>The code supplies bounds [0, 1] and labels [0, 1] explicitly. See the <a href="https://diffprivlib.readthedocs.io/en/latest/modules/models.html#tree-based-models">diffprivlib forest documentation</a>.</p>
-<div id="privacy-065" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:15.890017Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:15.889861Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:19.741849Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:19.740968Z&quot;}}" data-execution_count="14">
-<div class="cell-output cell-output-stdout">
-<pre><code>Total epsilon across all fitted forests: (epsilon=33.33, delta=0.0)</code></pre>
-</div>
-</div>
+<p>See the <a href="https://diffprivlib.readthedocs.io/en/latest/modules/models.html#tree-based-models">diffprivlib forest documentation</a>.</p>
+<aside class="notes">
+<p>These are sequential acceptance probabilities, not the final probabilities of selecting each label; the random permutation matters. At least one label has maximum utility and is accepted with probability 1 when reached, so the procedure terminates. It releases a label, not the counts or the maximum count.</p>
+<p>Diffprivlib’s forest calls PermuteAndFlip with sensitivity=1 and monotonic=True because its utilities are leaf class counts under add/remove adjacency. Hence the displayed exponent is <span class="math inline">\(\epsilon\)</span> times the utility gap divided by Delta u. For a general utility without the monotonic assumption, the usual formulation has 2 Delta u in the denominator instead.</p>
+<p>For example, counts u_0=8 and u_1=5 at <span class="math inline">\(\epsilon\)</span>=0.5 give acceptance probabilities p_0=1 and p_1=exp(-1.5), about 0.223. With two labels, label 1 is output only when it appears first and its coin succeeds, so its final selection probability is 0.5 exp(-1.5), about 0.112. A minority label can therefore be released; the mechanism does not always reveal the exact majority. Smaller <span class="math inline">\(\epsilon\)</span> increases the chance of accepting lower-count labels.</p>
+<p>Sources: <a href="https://diffprivlib.readthedocs.io/en/latest/_modules/diffprivlib/models/forest.html">diffprivlib forest implementation</a>, <a href="https://diffprivlib.readthedocs.io/en/latest/_modules/diffprivlib/mechanisms/exponential.html">PermuteAndFlip implementation</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="privacy-budgets-one-forest-vs-repeated-releases" class="title-slide slide level1 center">
+<h1>Privacy Budgets: One Forest vs Repeated Releases</h1>
+<ul>
+<li><p><strong>Within this forest:</strong> each person trains exactly one tree. Disjoint subsets use <strong>parallel composition</strong>:</p>
+<p><span class="math display">\[\epsilon_{\mathrm{forest}}=\max_j\epsilon_{\mathrm{tree},j}=\epsilon.\]</span></p>
+<p>Ten trees each using <span class="math inline">\(\epsilon=1\)</span> still give a forest with <span class="math inline">\(\epsilon=1\)</span>.</p></li>
+<li><p><strong>Across released forests trained on the same people:</strong> <strong>sequential composition</strong> adds the budgets:</p>
+<p><span class="math display">\[\epsilon_{\mathrm{total}}\leq\sum_{r=1}^{R}\epsilon_r.\]</span></p>
+<p>If all three runs at each of this lab’s four budgets are made available, the basic accounting bound is:</p>
+<p><span class="math display">\[\epsilon_{\mathrm{total}}=3(0.01+0.1+1+10)=33.33.\]</span></p></li>
+</ul>
+<p><strong>Why release several forests?</strong></p>
+<ul>
+<li>To publish model comparisons or deploy updated versions over time.</li>
+<li>More releases on the same people consume more budget. Reusing an already released forest for predictions is post-processing and adds no privacy cost.</li>
+</ul>
+<aside class="notes">
+<p>The equality in the numerical example denotes the budget charged by basic sequential accounting, not a claim that the tightest possible privacy parameter is exactly 33.33. Sequential composition gives a valid upper bound. Independent random seeds do not reset the privacy budget.</p>
+<p>Within a tree, each record also contributes to one leaf. Public random split structures and declared public domains allow leaf-label privacy to compose in parallel. Diffprivlib partitions records across trees and charges one epsilon per forest fit. This argument relies on disjoint contributions; if every tree instead reused the same private records, the basic bound would sum the tree budgets.</p>
+<p>The total above assumes all 12 forests from the main demonstration are exposed. Training candidates internally does not itself release them. Choosing which candidate to expose using private evaluation data may require additional privacy accounting. Releasing the student sweep on the same people adds its own budget. An accountant tracks spending; it does not make separately released exact test metrics private.</p>
+<p>Sources: <a href="https://diffprivlib.readthedocs.io/en/latest/_modules/diffprivlib/models/forest.html">diffprivlib forest implementation</a>, <a href="https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf">Dwork and Roth, Section 3.5</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="privacy-versus-utility-vary-epsilon" class="title-slide slide level1 center">
-<h1>Privacy versus utility: vary epsilon</h1>
-<p>Keep the inputs, test people, tree count and depth fixed. Each point is mean balanced accuracy across three DP fits; the band shows their minimum and maximum.</p>
+<h1>Privacy versus utility: vary <span class="math inline">\(\epsilon\)</span></h1>
+<p>Keep the inputs, test people, tree count and depth fixed.</p>
 <ul>
-<li>Smaller epsilon gives a stronger per-fit privacy guarantee. Utility need not change monotonically in a finite experiment.</li>
-<li>Releasing all fitted forests composes their budgets: the demonstration spends epsilon 33.33, not the epsilon of a single point.</li>
-<li>Fixed seeds make this public-data lesson reproducible. A private deployment needs fresh, appropriate randomness; these published seeds and unprotected test metrics are not a private release protocol.</li>
+<li>Each point is mean balanced accuracy across three DP fits; the band shows their minimum and maximum.</li>
 </ul>
 
-<img data-src="lab-05-privacy_files/figure-revealjs/cell-16-output-1.png" class="r-stretch"></section>
+<img data-src="lab-05-privacy_files/figure-revealjs/cell-18-output-1.png" class="r-stretch"></section>
 
 <section id="attack-to-defense-map" class="title-slide slide level1 center">
 <h1>Attack-to-defense map</h1>
@@ -1578,17 +1831,17 @@ Name: income_share, dtype: float64</code></pre>
 <tr class="odd">
 <td>Record linkage</td>
 <td>Join quasi-identifiers with outside data</td>
-<td>k-anonymity, stronger generalization</td>
+<td><span class="math inline">\(k\)</span>-anonymity, stronger generalization</td>
 </tr>
 <tr class="even">
 <td>Homogeneity</td>
 <td>All group members share a sensitive value</td>
-<td>l-diversity</td>
+<td><span class="math inline">\(l\)</span>-diversity</td>
 </tr>
 <tr class="odd">
 <td>Skewness</td>
 <td>Group income distribution differs from the released population</td>
-<td>t-closeness</td>
+<td><span class="math inline">\(t\)</span>-closeness</td>
 </tr>
 <tr class="even">
 <td>Differencing</td>
@@ -1608,11 +1861,11 @@ Name: income_share, dtype: float64</code></pre>
 <h1>Final comparison: different guarantees, common utility</h1>
 <p>Compare predictive utility on the same test people, while stating the guarantee separately:</p>
 <ul>
-<li>The anonymized training table satisfies k = 3; its ordinary tree has no DP guarantee.</li>
-<li>Each private forest has its stated epsilon; DP rows average the three fitted models at that epsilon.</li>
-<li>k and epsilon do not share a privacy scale. These methods cannot be ranked on one common privacy axis.</li>
+<li>The anonymized training table satisfies <span class="math inline">\(k = 3\)</span>; its ordinary tree has no DP guarantee.</li>
+<li>Each private forest has its stated <span class="math inline">\(\epsilon\)</span>; DP rows average the three fitted models at that <span class="math inline">\(\epsilon\)</span>.</li>
+<li><span class="math inline">\(k\)</span> and <span class="math inline">\(\epsilon\)</span> do not share a privacy scale. These methods cannot be ranked on one common privacy axis.</li>
 </ul>
-<div id="privacy-079" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:19.892342Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:19.892195Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:19.905660Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:19.904961Z&quot;}}" data-execution_count="16">
+<div id="privacy-079" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:17.580961Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:17.580820Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:17.593718Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:17.593121Z&quot;}}" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1723,9 +1976,8 @@ Name: income_share, dtype: float64</code></pre>
 
 <section id="compare-utility-on-the-same-test-people" class="title-slide slide level1 center">
 <h1>Compare utility on the same test people</h1>
-<p>This chart compares balanced accuracy. Read each model’s privacy guarantee from the preceding table; the chart does not put k and epsilon on a common scale.</p>
 
-<img data-src="lab-05-privacy_files/figure-revealjs/cell-18-output-1.png" class="r-stretch"></section>
+<img data-src="lab-05-privacy_files/figure-revealjs/cell-20-output-1.png" class="r-stretch"></section>
 
 <section id="why-a-high-accuracy-can-still-hide-a-poor-income-classifier" class="title-slide slide level1 center">
 <h1>Why a high accuracy can still hide a poor income classifier</h1>
@@ -1735,9 +1987,8 @@ Name: income_share, dtype: float64</code></pre>
 <li><strong>Recall:</strong> among people who actually earn &gt;50K, how many does the model find? Low recall means many high-income people are missed.</li>
 </ul>
 <p>Most Adult records have income &lt;=50K, so high accuracy can coexist with poor recall for &gt;50K.</p>
-<p>Rows are true labels; columns are predictions. Each row sums to 100%: the diagonal shows recall for each class. <strong>Precision requires the original counts</strong>, not these row-normalized percentages.</p>
 
-<img data-src="lab-05-privacy_files/figure-revealjs/cell-19-output-1.png" class="r-stretch"></section>
+<img data-src="lab-05-privacy_files/figure-revealjs/cell-21-output-1.png" class="r-stretch"></section>
 
 <section id="coding-break-3-dp-budgets-and-the-final-tradeoff-15-minutes" class="title-slide slide level1 center">
 <h1>Coding break 3: DP budgets and the final tradeoff (~15 minutes)</h1>
@@ -1747,7 +1998,6 @@ Name: income_share, dtype: float64</code></pre>
 
 <section id="exercises-guided-practice-on-adult" class="title-slide slide level1 center">
 <h1>Exercises: guided practice on Adult</h1>
-<p>Reuse the downloaded data and the existing training/test split. Uncomment each template and replace <code>...</code> using the hints. Implement <code>student_generalize</code> and <code>student_suppress</code> in Exercise 2; reuse both in Exercise 4.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -1766,7 +2016,7 @@ Name: income_share, dtype: float64</code></pre>
 </tr>
 <tr class="even">
 <td><code>group_sizes</code>, <code>audit_k</code></td>
-<td>Count groups and check k</td>
+<td>Count groups and check <span class="math inline">\(k\)</span></td>
 </tr>
 <tr class="odd">
 <td><code>make_preprocessor</code>, <code>make_tree_pipeline</code></td>
@@ -1786,16 +2036,15 @@ Name: income_share, dtype: float64</code></pre>
 </tr>
 </tbody>
 </table>
-<p>The worked examples also define instructor versions named <code>generalize</code> and <code>suppress</code>. The exercises ask you to write the corresponding student functions.</p>
 </section>
 
 <section id="exercise-1-does-raw-adult-satisfy-k-3" class="title-slide slide level1 center">
-<h1>Exercise 1: does raw Adult satisfy k = 3?</h1>
+<h1>Exercise 1: does raw Adult satisfy <span class="math inline">\(k = 3\)</span>?</h1>
 <p><a id="exercise-1" href=""></a></p>
 <p>Group the original Adult records by the five QIs and check the smallest group.</p>
 <p><strong>Use:</strong> <code>df</code>, <code>QI</code>, <code>audit_k</code>. <strong>Save:</strong> <code>student_raw_report</code>.</p>
 <p>Does the smallest group reach 3? What fraction of records belong to smaller groups?</p>
-<div id="privacy-087" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:20.206775Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:20.206605Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:20.209124Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:20.208445Z&quot;}}" data-execution_count="19">
+<div id="privacy-087" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:17.894219Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:17.894073Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:17.896455Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:17.895890Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="co"># 1. Group df by QI only; income is not part of the key.</span></span>
@@ -1814,16 +2063,14 @@ Name: income_share, dtype: float64</code></pre>
 <section id="exercise-2-generalize-and-suppress" class="title-slide slide level1 scrollable center">
 <h1>Exercise 2: generalize and suppress</h1>
 <p><a id="exercise-2" href=""></a></p>
-<p>Complete two small functions for our single k = 3 release:</p>
+<p>Complete two small functions for our single <span class="math inline">\(k = 3\)</span> release:</p>
 <ol type="1">
 <li><code>student_generalize(table)</code>: put age into 10-year bands, education into four-level bands and marital status into married / not married. Keep race, sex and income unchanged.</li>
-<li><code>student_suppress(table, qi, k=3)</code>: remove rows in QI groups containing fewer than <code>k</code> records.</li>
+<li><code>student_suppress(table, qi, k=3)</code>: remove rows in QI groups containing fewer than <span class="math inline">\(k\)</span> records.</li>
 </ol>
 <p><strong>Hints:</strong> <code>//</code> is integer division: <code>(39 // 10) * 10</code> gives <code>30</code>, the label for ages 30–39. Education starts at 1: <code>((level - 1) // 4) * 4 + 1</code> labels the bands 1–4, 5–8, 9–12 and 13–16.</p>
-<p><strong>Already provided:</strong> <code>df</code>, <code>GEN_QI</code>, <code>pd</code>, <code>np</code> and <code>audit_k</code> (checks the resulting groups).</p>
-<p><strong>Save:</strong> both functions and <code>student_release</code>. Keep the original row index.</p>
-<p>How many records remain, and does the release meet k = 3?</p>
-<div id="privacy-089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:20.210664Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:20.210510Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:20.213570Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:20.212800Z&quot;}}" data-execution_count="20">
+<p>How many records remain, and does the release meet <span class="math inline">\(k = 3\)</span>?</p>
+<div id="privacy-089" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:17.897874Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:17.897739Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:17.900381Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:17.899834Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># 1. Complete student_generalize: copy the table and fill in the two band widths.</span></span>
@@ -1897,7 +2144,7 @@ Show the solution
 <p>Fit the supplied pipeline on the original QIs.</p>
 <p><strong>Use:</strong> <code>train_df</code>, <code>test_df</code>, <code>QI</code>, <code>y_train</code>, <code>y_test</code>. <strong>Save:</strong> <code>student_raw_tree</code>, <code>student_raw_result</code>.</p>
 <p>What are accuracy, balanced accuracy and F1? Which features actually appear in splits?</p>
-<div id="privacy-092" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:20.214919Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:20.214786Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:20.217615Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:20.216740Z&quot;}}" data-execution_count="21">
+<div id="privacy-092" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:17.901854Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:17.901716Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:17.903942Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:17.903366Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="co"># 1. Reuse the existing training/test split and choose QI as input columns.</span></span>
@@ -1907,7 +2154,7 @@ Show the solution
 <span id="cb9-5"><a href="" aria-label="5"></a></span>
 <span id="cb9-6"><a href="" aria-label="6"></a><span class="co"># student_raw_tree = make_tree_pipeline()  # Provided: preprocessing + fixed depth-5 tree.</span></span>
 <span id="cb9-7"><a href="" aria-label="7"></a><span class="co"># student_raw_tree.fit(...[QI], ...)  # Hint: train_df and y_train.</span></span>
-<span id="cb9-8"><a href="" aria-label="8"></a><span class="co"># student_raw_result = evaluate(student_raw_tree, ...[QI], "Raw tree")  # Hint: test_df.</span></span>
+<span id="cb9-8"><a href="" aria-label="8"></a><span class="co"># student_raw_result = evaluate(student_raw_tree, ...[QI], "Raw tree")</span></span>
 <span id="cb9-9"><a href="" aria-label="9"></a><span class="co"># display(pd.Series(student_raw_result))</span></span>
 <span id="cb9-10"><a href="" aria-label="10"></a><span class="co"># student_used_features = tree_feature_report(student_raw_tree)</span></span>
 <span id="cb9-11"><a href="" aria-label="11"></a><span class="co"># display(student_used_features.query("split_count &gt; 0"))</span></span></code></pre></div>
@@ -1919,9 +2166,8 @@ Show the solution
 <h1>Exercise 4: a decision tree on anonymized Adult</h1>
 <p><a id="exercise-4" href=""></a></p>
 <p>Use the same generalization as Exercise 2 and suppress training groups smaller than 3. Fit the same decision tree, then compare it with the raw tree from Exercise 3.</p>
-<p><strong>Use:</strong> your two functions from Exercise 2, <code>student_raw_result</code>, and the supplied tree/evaluation helpers. <strong>Save:</strong> <code>student_tree_results</code>.</p>
 <p>How do balanced accuracy, F1 and the retained training share change? Keep every original test person in the comparison.</p>
-<div id="privacy-094" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:20.219086Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:20.218930Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:20.221821Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:20.221097Z&quot;}}" data-execution_count="22">
+<div id="privacy-094" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:17.905252Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:17.905120Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:17.908224Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:17.907572Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># 1. Generalize both existing splits with your student_generalize from Exercise 2.</span></span>
@@ -1993,10 +2239,9 @@ Show the solution
 <section id="exercise-5-a-dp-random-forest-under-different-budgets" class="title-slide slide level1 center">
 <h1>Exercise 5: a DP random forest under different budgets</h1>
 <p><a id="exercise-5" href=""></a></p>
-<p>Train one private forest at each value in EPSILONS, changing only epsilon. The helper supplies the feature bounds, label domain, tree count and depth.</p>
-<p><strong>Use:</strong> <code>make_forest_pipeline</code>, seed 142, one shared <code>BudgetAccountant</code>. <strong>Save:</strong> <code>student_dp_table</code>, <code>student_accountant</code>.</p>
-<p>How do balanced accuracy and F1 change? How much epsilon does the whole sweep spend?</p>
-<div id="privacy-097" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:20.223326Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:20.223178Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:20.226130Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:20.225523Z&quot;}}" data-execution_count="23">
+<p>Train one private forest at each value in EPSILONS, changing only <span class="math inline">\(\epsilon\)</span>. The helper supplies the feature bounds, label domain, tree count and depth.</p>
+<p>How do balanced accuracy and F1 change? How much <span class="math inline">\(\epsilon\)</span> does the whole sweep spend?</p>
+<div id="privacy-097" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:17.909502Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:17.909375Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:17.912224Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:17.911643Z&quot;}}" data-execution_count="25">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="co"># 1. Create one accountant BEFORE the loop with budget sum(EPSILONS).</span></span>
@@ -2022,10 +2267,10 @@ Show the solution
 <section id="exercise-6-compare-privacy-and-utility" class="title-slide slide level1 center">
 <h1>Exercise 6: compare privacy and utility</h1>
 <p><a id="exercise-6" href=""></a></p>
-<p>Combine the results already computed. Do not fit more models. The helper adds the provided ordinary-forest reference.</p>
-<p><strong>Use:</strong> <code>student_tree_results</code> from Exercise 4 and <code>student_dp_table</code> from Exercise 5. <strong>Save:</strong> <code>student_comparison</code>.</p>
+<p>Combine the results already computed. The helper adds the provided ordinary-forest reference.</p>
+<p><strong>Use:</strong> <code>student_tree_results</code> from Exercise 4 and <code>student_dp_table</code> from Exercise 5.</p>
 <p>Which release would you choose for a stated use case? What utility or coverage would you give up?</p>
-<div id="privacy-099" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:20.227729Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:20.227596Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:20.230455Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:20.229684Z&quot;}}" data-execution_count="24">
+<div id="privacy-099" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T12:11:17.913590Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T12:11:17.913466Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T12:11:17.915814Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T12:11:17.915234Z&quot;}}" data-execution_count="26">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># 1. Pass your two saved tables to final_comparison; no retraining is needed.</span></span>
@@ -2036,19 +2281,16 @@ Show the solution
 <span id="cb13-6"><a href="" aria-label="6"></a><span class="co"># student_comparison = final_comparison(..., ...)  # Your tree table, then your DP table.</span></span>
 <span id="cb13-7"><a href="" aria-label="7"></a><span class="co"># display(student_comparison[["model", "privacy_claim", "retained_share", "balanced_accuracy", "f1"]].round(3))</span></span>
 <span id="cb13-8"><a href="" aria-label="8"></a><span class="co"># fig, (ax_models, ax_dp) = plt.subplots(1, 2, figsize=(12, 4.5))</span></span>
-<span id="cb13-9"><a href="" aria-label="9"></a><span class="co"># student_comparison.set_index("model")["balanced_accuracy"].plot.barh(</span></span>
-<span id="cb13-10"><a href="" aria-label="10"></a><span class="co">#     ax=ax_models, xlim=(0, 1), title="Same Adult test people")</span></span>
-<span id="cb13-11"><a href="" aria-label="11"></a><span class="co"># student_dp_table.plot(x="epsilon", y="balanced_accuracy", logx=True,</span></span>
-<span id="cb13-12"><a href="" aria-label="12"></a><span class="co">#     marker="o", ax=ax_dp, legend=False)</span></span>
-<span id="cb13-13"><a href="" aria-label="13"></a><span class="co"># ax_dp.axhline(forest_reference["balanced_accuracy"], color="black",</span></span>
-<span id="cb13-14"><a href="" aria-label="14"></a><span class="co">#     linestyle="--", label="Ordinary forest")</span></span>
-<span id="cb13-15"><a href="" aria-label="15"></a><span class="co"># ax_dp.set(xlabel="Epsilon per fit", ylabel="Balanced accuracy", ylim=(0.4, 1))</span></span>
-<span id="cb13-16"><a href="" aria-label="16"></a><span class="co"># ax_dp.legend()</span></span>
-<span id="cb13-17"><a href="" aria-label="17"></a><span class="co"># plt.tight_layout()</span></span>
-<span id="cb13-18"><a href="" aria-label="18"></a><span class="co"># plt.show()</span></span>
-<span id="cb13-19"><a href="" aria-label="19"></a><span class="co"># print("Student sweep epsilon:", student_accountant.total()[0])</span></span>
-<span id="cb13-20"><a href="" aria-label="20"></a><span class="co"># print("Main demonstration + student sweep epsilon:",</span></span>
-<span id="cb13-21"><a href="" aria-label="21"></a><span class="co">#     forest_accountant.total()[0] + student_accountant.total()[0])</span></span></code></pre></div>
+<span id="cb13-9"><a href="" aria-label="9"></a><span class="co"># student_comparison.set_index("model")["balanced_accuracy"].plot.barh(ax=ax_models, xlim=(0, 1), title="Same Adult test people")</span></span>
+<span id="cb13-10"><a href="" aria-label="10"></a><span class="co"># student_dp_table.plot(x="epsilon", y="balanced_accuracy", logx=True, marker="o", ax=ax_dp, legend=False)</span></span>
+<span id="cb13-11"><a href="" aria-label="11"></a><span class="co"># ax_dp.axhline(forest_reference["balanced_accuracy"], color="black", linestyle="--", label="Ordinary forest")</span></span>
+<span id="cb13-12"><a href="" aria-label="12"></a><span class="co"># ax_dp.set(xlabel="Epsilon per fit", ylabel="Balanced accuracy", ylim=(0.4, 1))</span></span>
+<span id="cb13-13"><a href="" aria-label="13"></a><span class="co"># ax_dp.legend()</span></span>
+<span id="cb13-14"><a href="" aria-label="14"></a><span class="co"># plt.tight_layout()</span></span>
+<span id="cb13-15"><a href="" aria-label="15"></a><span class="co"># plt.show()</span></span>
+<span id="cb13-16"><a href="" aria-label="16"></a><span class="co"># print("Student sweep epsilon:", student_accountant.total()[0])</span></span>
+<span id="cb13-17"><a href="" aria-label="17"></a><span class="co"># print("Main demonstration + student sweep epsilon:",</span></span>
+<span id="cb13-18"><a href="" aria-label="18"></a><span class="co">#     forest_accountant.total()[0] + student_accountant.total()[0])</span></span></code></pre></div>
 </details>
 </div>
 </section>
@@ -2096,7 +2338,6 @@ Show the solution
 <section id="further-reading" class="title-slide slide level1 center">
 <h1>Further reading</h1>
 <ul>
-<li><a href="https://archive.ics.uci.edu/dataset/2/adult">UCI Adult</a>: source data and column domains.</li>
 <li><a href="https://diffprivlib.readthedocs.io/en/latest/modules/models.html#tree-based-models">diffprivlib random forest</a>.</li>
 <li><a href="https://diffprivlib.readthedocs.io/en/latest/modules/mechanisms.html#diffprivlib.mechanisms.PermuteAndFlip">PermuteAndFlip</a>.</li>
 <li><a href="https://diffprivlib.readthedocs.io/en/latest/modules/accountant.html">BudgetAccountant</a>.</li>
