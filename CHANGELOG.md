@@ -1,3 +1,14 @@
+## [1.1.28](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.27...1.1.28) (2026-11-03)
+
+### Dependency updates
+
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.158 ([#22](https://github.com/w4bo/AA2627-unibo-dcai/issues/22)) ([24539a6](https://github.com/w4bo/AA2627-unibo-dcai/commit/24539a6bf8f12f83d5a45e59b4c8e5a66559327e))
+* **deps:** update node.js to v26 ([#19](https://github.com/w4bo/AA2627-unibo-dcai/issues/19)) ([c3d0be4](https://github.com/w4bo/AA2627-unibo-dcai/commit/c3d0be45069316939d1eaa5c170b41c88e449797))
+
+### Bug Fixes
+
+* working on solution ([fdcf3f8](https://github.com/w4bo/AA2627-unibo-dcai/commit/fdcf3f887aabb1c7e16a3d209b3694e14e9614d0))
+
 ## [1.1.27](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.26...1.1.27) (2026-11-02)
 
 ### Bug Fixes
