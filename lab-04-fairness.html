@@ -492,10 +492,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>Each group has 100 CV applicants: 60 qualified applicants (<span class="math inline">\(Y=1\)</span>) in A and 30 in B.</p>
 <ul>
 <li><p>Circles <span class="math inline">\(Y=1\)</span> and crosses <span class="math inline">\(Y=0\)</span>; orange rings mark shortlisted people (<span class="math inline">\(\hat{Y}=1\)</span>).</p></li>
-<li><p><strong>Statistical parity:</strong> shortlist 30 applicants in each group; the fractions of qualified applicants shortlisted differ.</p></li>
-<li><p><strong>Equal opportunity:</strong> shortlist 80% of qualified applicants in each group; the overall shortlisting rates differ.</p></li>
+<li><p><strong>Statistical parity:</strong> shortlist 40 applicants in each group. B has only 30 qualified applicants, so at least 10 shortlisted people in B must be unqualified.</p></li>
+<li><p><strong>Equal opportunity:</strong> shortlist 80% of qualified applicants in each group (48 in A, 24 in B); the overall shortlisting rates differ.</p></li>
 </ul>
 <aside class="notes">
+<p>The unqualified selections above are forced by the 40% selection target and B’s limited number of qualified applicants, not by statistical parity alone. A common selection rate of at most 30% could avoid unqualified selections in this example. We assume qualification is known and qualified applicants are shortlisted first to make the trade-off explicit.</p>
 <p>Suppose groups have different positive-class rates <span class="math inline">\(p_a=P(Y=1\mid A=a)\)</span>.</p>
 <ul>
 <li><strong>Equalized odds</strong> requires the same true positive rate (TPR) and false positive rate (FPR) in each group.</li>
@@ -562,7 +563,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="adult-income-dataset" class="title-slide slide level1 center">
 <h1>Adult Income Dataset</h1>
 <p>The Adult dataset is census-derived tabular data. The task is to predict whether annual income exceeds 50K USD.</p>
-<div id="20309655" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:41.755938Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:41.755809Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:41.838617Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:41.837866Z&quot;}}" data-execution_count="8">
+<div id="20309655" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:51.222963Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:51.222820Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:52.228087Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:52.226858Z&quot;}}" data-execution_count="8">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>adult_df <span class="op">=</span> load_cached_csv(</span>
@@ -712,7 +713,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="forget-about-fairness-for-a-moment-how-well-can-we-predict-income" class="title-slide slide level1 center">
 <h1>Forget about fairness for a moment: how well can we predict income?</h1>
-<div id="b3c4ddb2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:41.840151Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:41.840013Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:41.899070Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:41.898377Z&quot;}}" data-execution_count="9">
+<div id="b3c4ddb2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:52.230372Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:52.230190Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:52.294471Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:52.293592Z&quot;}}" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>X_train_raw, X_test_raw, y_train, y_test <span class="op">=</span> train_test_split(</span>
@@ -2271,7 +2272,7 @@ forceTheme('sk-container-id-1');</script>
 
 <section id="forget-about-fairness-for-a-moment-how-well-can-we-predict-income-1" class="title-slide slide level1 center">
 <h1>Forget about fairness for a moment: how well can we predict income?</h1>
-<div id="71d47869" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:41.900492Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:41.900353Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:42.200917Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:42.200228Z&quot;}}" data-execution_count="10">
+<div id="71d47869" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:52.295929Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:52.295772Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:52.574198Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:52.573346Z&quot;}}" data-execution_count="10">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>baseline.fit(X_train, y_train)</span>
@@ -2286,9 +2287,14 @@ forceTheme('sk-container-id-1');</script>
 
 <img data-src="lab-04-fairness_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
 
+<section id="which-features-does-the-income-prediction-tree-use" class="title-slide slide level1 center">
+<h1>Which features does the income prediction tree use?</h1>
+
+<img data-src="lab-04-fairness_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"></section>
+
 <section id="data-centric-audit-questions-which-features-might-act-as-proxies-for-protected-attributes" class="title-slide slide level1 center">
 <h1>Data-Centric Audit Questions: Which features might act as proxies for protected attributes?</h1>
-<div id="tree-feature-proxy-audit-code" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:42.585943Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:42.585818Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:43.191467Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:43.190689Z&quot;}}" data-execution_count="13">
+<div id="tree-feature-proxy-audit-code" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:53.053511Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:53.053376Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:53.655761Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:53.654889Z&quot;}}" data-execution_count="14">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>feature <span class="op">=</span> <span class="st">"marital-status"</span>  <span class="co"># Change this to inspect another potential proxy.</span></span>
@@ -2309,7 +2315,7 @@ forceTheme('sk-container-id-1');</script>
 
 <section id="data-centric-audit-questions-which-features-might-act-as-proxies" class="title-slide slide level1 center">
 <h1>Data-Centric Audit Questions: Which features might act as proxies?</h1>
-<div id="518de1a5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:43.198263Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:43.198134Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:43.204008Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:43.203376Z&quot;}}" data-execution_count="15">
+<div id="518de1a5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:53.663384Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:53.663131Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:53.669339Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:53.668717Z&quot;}}" data-execution_count="16">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>display(mf.by_group)  <span class="co"># The same proportions, separately for women and men.</span></span></code></pre></div>
@@ -2380,7 +2386,7 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </div>
 </div>
-<div id="82d90b60" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:43.205472Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:43.205249Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:43.208449Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:43.207884Z&quot;}}" data-execution_count="16">
+<div id="82d90b60" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:53.670831Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:53.670684Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:53.674023Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:53.673407Z&quot;}}" data-execution_count="17">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a>display(mf.difference().<span class="bu">max</span>())  <span class="co"># Largest category-proportion gap between groups.</span></span></code></pre></div>
@@ -2390,17 +2396,17 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </div>
 
-<img data-src="lab-04-fairness_files/figure-revealjs/cell-18-output-1.png" class="r-stretch"></section>
+<img data-src="lab-04-fairness_files/figure-revealjs/cell-19-output-1.png" class="r-stretch"></section>
 
 <section id="data-centric-audit-questions-compare-group-coverage-and-label-rates" class="title-slide slide level1 center">
 <h1>Data-Centric Audit Questions: Compare Group Coverage and Label Rates</h1>
 <p>Who is represented most often?</p>
-<div id="79807f8e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:43.312813Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:43.312650Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:43.321946Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:43.321400Z&quot;}}" data-execution_count="18">
+<div id="79807f8e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:53.779669Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:53.779514Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:53.789833Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:53.789027Z&quot;}}" data-execution_count="19">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>describe_by_group(adult_df, <span class="st">"sex"</span>, <span class="st">"income_gt_50k"</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2450,12 +2456,12 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </div>
 </div>
-<div id="02dfe809" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:43.323422Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:43.323293Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:43.331747Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:43.331170Z&quot;}}" data-execution_count="19">
+<div id="02dfe809" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:53.791352Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:53.791206Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:53.801094Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:53.800427Z&quot;}}" data-execution_count="20">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>describe_by_group(adult_df, <span class="st">"race"</span>, <span class="st">"income_gt_50k"</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="20">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2525,9 +2531,14 @@ forceTheme('sk-container-id-1');</script>
 </div>
 </section>
 
+<section id="fairness-through-unawareness-remove-sex-and-race.-outcomes" class="title-slide slide level1 center">
+<h1>Fairness Through Unawareness: remove <code>sex</code> and <code>race</code>. Outcomes?</h1>
+
+</section>
+
 <section id="fairness-through-unawareness-remove-sex-and-race" class="title-slide slide level1 center">
 <h1>Fairness Through Unawareness: remove <code>sex</code> and <code>race</code></h1>
-<div id="230eb891" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:43.333041Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:43.332909Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:43.576830Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:43.576194Z&quot;}}" data-execution_count="20">
+<div id="230eb891" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:53.802501Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:53.802378Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:54.029976Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:54.029268Z&quot;}}" data-execution_count="21">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>sex_train, sex_test <span class="op">=</span> X_train_raw[<span class="st">"sex"</span>], X_test_raw[<span class="st">"sex"</span>]</span>
@@ -2554,7 +2565,7 @@ forceTheme('sk-container-id-1');</script>
 
 <section id="data-centric-audit-questions-compare-group-coverage-and-label-rates-1" class="title-slide slide level1 center">
 <h1>Data-Centric Audit Questions: Compare Group Coverage and Label Rates</h1>
-<div id="af0c8090" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:43.578555Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:43.578419Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:43.838382Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:43.837814Z&quot;}}" data-execution_count="21">
+<div id="af0c8090" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:54.031856Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:54.031706Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:54.310723Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:54.310009Z&quot;}}" data-execution_count="22">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="kw">def</span> group_metrics(y_true, y_pred, groups):</span>
@@ -2565,18 +2576,14 @@ forceTheme('sk-container-id-1');</script>
 <span id="cb14-6"><a href="" aria-label="6"></a><span class="kw">def</span> model_summary(mf):</span>
 <span id="cb14-7"><a href="" aria-label="7"></a>    gaps <span class="op">=</span> mf.difference()  <span class="co"># Largest minus smallest group value for each metric.</span></span>
 <span id="cb14-8"><a href="" aria-label="8"></a>    <span class="cf">return</span> {</span>
-<span id="cb14-9"><a href="" aria-label="9"></a>        <span class="st">"accuracy"</span>: mf.overall[<span class="st">"accuracy"</span>],</span>
-<span id="cb14-10"><a href="" aria-label="10"></a>        <span class="st">"balanced_accuracy"</span>: mf.overall[<span class="st">"balanced_accuracy"</span>],</span>
-<span id="cb14-11"><a href="" aria-label="11"></a>        <span class="st">"balanced_accuracy_loss"</span>: <span class="dv">1</span> <span class="op">-</span> mf.overall[<span class="st">"balanced_accuracy"</span>],</span>
-<span id="cb14-12"><a href="" aria-label="12"></a>        <span class="st">"demographic_parity_diff"</span>: gaps[<span class="st">"selection_rate"</span>],</span>
-<span id="cb14-13"><a href="" aria-label="13"></a>        <span class="st">"equal_opportunity_diff"</span>: gaps[<span class="st">"TP_rate"</span>],</span>
-<span id="cb14-14"><a href="" aria-label="14"></a>        <span class="st">"equalized_odds_diff"</span>: gaps[[<span class="st">"TP_rate"</span>, <span class="st">"FP_rate"</span>]].<span class="bu">max</span>(),</span>
-<span id="cb14-15"><a href="" aria-label="15"></a>    }</span>
-<span id="cb14-16"><a href="" aria-label="16"></a><span class="kw">def</span> fairness_report(y_true, y_pred, groups):</span>
-<span id="cb14-17"><a href="" aria-label="17"></a>    mf <span class="op">=</span> group_metrics(y_true, y_pred, groups)</span>
-<span id="cb14-18"><a href="" aria-label="18"></a>    display(mf.overall.to_frame(<span class="st">"overall"</span>).T.<span class="bu">round</span>(<span class="dv">3</span>), mf.by_group.<span class="bu">round</span>(<span class="dv">3</span>), pd.Series(model_summary(mf)).<span class="bu">round</span>(<span class="dv">3</span>))  <span class="co"># Reuse the same summary for every model.</span></span>
-<span id="cb14-19"><a href="" aria-label="19"></a>    <span class="cf">return</span> mf</span>
-<span id="cb14-20"><a href="" aria-label="20"></a>mf_sex_base <span class="op">=</span> fairness_report(y_test, y_pred_base, sex_test)</span></code></pre></div>
+<span id="cb14-9"><a href="" aria-label="9"></a>        <span class="st">"accuracy"</span>: mf.overall[<span class="st">"accuracy"</span>], <span class="st">"balanced_accuracy"</span>: mf.overall[<span class="st">"balanced_accuracy"</span>], <span class="st">"balanced_accuracy_loss"</span>: <span class="dv">1</span> <span class="op">-</span> mf.overall[<span class="st">"balanced_accuracy"</span>],</span>
+<span id="cb14-10"><a href="" aria-label="10"></a>        <span class="st">"demographic_parity_diff"</span>: gaps[<span class="st">"selection_rate"</span>], <span class="st">"equal_opportunity_diff"</span>: gaps[<span class="st">"TP_rate"</span>], <span class="st">"equalized_odds_diff"</span>: gaps[[<span class="st">"TP_rate"</span>, <span class="st">"FP_rate"</span>]].<span class="bu">max</span>(),</span>
+<span id="cb14-11"><a href="" aria-label="11"></a>    }</span>
+<span id="cb14-12"><a href="" aria-label="12"></a><span class="kw">def</span> fairness_report(y_true, y_pred, groups):</span>
+<span id="cb14-13"><a href="" aria-label="13"></a>    mf <span class="op">=</span> group_metrics(y_true, y_pred, groups)</span>
+<span id="cb14-14"><a href="" aria-label="14"></a>    display(mf.overall.to_frame(<span class="st">"overall"</span>).T.<span class="bu">round</span>(<span class="dv">3</span>), mf.by_group.<span class="bu">round</span>(<span class="dv">3</span>), pd.Series(model_summary(mf)).<span class="bu">round</span>(<span class="dv">3</span>))  <span class="co"># Reuse the same summary for every model.</span></span>
+<span id="cb14-15"><a href="" aria-label="15"></a>    <span class="cf">return</span> mf</span>
+<span id="cb14-16"><a href="" aria-label="16"></a>mf_sex_base <span class="op">=</span> fairness_report(y_test, y_pred_base, sex_test)</span></code></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -2754,7 +2761,7 @@ dtype: float64</code></pre>
 <li>Small groups can produce noisy estimates. When a subgroup has few examples, a large disparity may be real or random.</li>
 <li>Data-centric fixes may include collecting more data, improving subgroup coverage, or reporting uncertainty intervals.</li>
 </ul>
-<div id="28a0491d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:43.840249Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:43.840036Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:44.053446Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:44.052740Z&quot;}}" data-execution_count="22">
+<div id="28a0491d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:54.312399Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:54.312245Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:54.543160Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:54.542534Z&quot;}}" data-execution_count="23">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a>intersection_test <span class="op">=</span> pd.DataFrame({<span class="st">"sex"</span>: sex_test, <span class="st">"race"</span>: race_test})</span>
@@ -2765,7 +2772,7 @@ dtype: float64</code></pre>
 <span id="cb16-6"><a href="" aria-label="6"></a>)</span>
 <span id="cb16-7"><a href="" aria-label="7"></a>mf_intersection.by_group.sort_values(<span class="st">"count"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="22">
+<div class="cell-output cell-output-display" data-execution_count="23">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -2885,6 +2892,98 @@ dtype: float64</code></pre>
 </div>
 </section>
 
+<section id="intersectional-fairness-formulas" class="title-slide slide level1 center">
+<h1>Intersectional Fairness: Formulas</h1>
+<p>Let <span class="math inline">\(G=(A_{\mathrm{sex}}, A_{\mathrm{race}})\)</span> identify each intersectional group <span class="math inline">\(g\)</span>. Apply the chosen criterion across <strong>all intersections</strong>, not separately to sex and race.</p>
+<p><span class="math display">\[
+\begin{aligned}
+q_g &amp;= P(\hat Y=1\mid G=g) &amp;&amp;\text{(selection rate)}\\
+t_g &amp;= P(\hat Y=1\mid Y=1,G=g) &amp;&amp;\text{(TPR)}\\
+f_g &amp;= P(\hat Y=1\mid Y=0,G=g) &amp;&amp;\text{(FPR)}
+\end{aligned}
+\]</span></p>
+<p>For any group rate <span class="math inline">\(r_g\)</span>, define <span class="math inline">\(\Delta(r)=\max_g r_g-\min_g r_g\)</span>.</p>
+<ul>
+<li><strong>Statistical parity:</strong> <span class="math inline">\(\Delta(q)=0\)</span>.</li>
+<li><strong>Equal opportunity:</strong> <span class="math inline">\(\Delta(t)=0\)</span> (equivalently, equal FNR since <span class="math inline">\(\mathrm{FNR}_g=1-t_g\)</span>).</li>
+<li><strong>Equalized odds:</strong> <span class="math inline">\(\max\{\Delta(t),\Delta(f)\}=0\)</span>.</li>
+</ul>
+<aside class="notes">
+<p>These are existing group fairness criteria applied to joint sensitive-attribute groups, rather than a single universal definition of intersectional fairness. Smaller gaps mean closer agreement with the chosen criterion; an approximate constraint can use a tolerance <span class="math inline">\(\varepsilon\)</span> instead of zero.</p>
+<p>In the income example, <span class="math inline">\(Y=1\)</span> means income above 50K and <span class="math inline">\(\hat Y=1\)</span> means predicted income above 50K. Empirical rates are computed within each sex/race combination. Equal opportunity requires equal detection rates for actual high earners across those combinations.</p>
+<p>Audits of sex and race separately can miss disparities at their intersections. Report subgroup counts and uncertainty; a conditional rate is undefined if its conditioning group has no observations (for example, TPR with no actual positives).</p>
+<p>Source: <a href="https://fairlearn.org/main/user_guide/assessment/intersecting_groups.html">Fairlearn: Intersecting Groups</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="intersectional-fairness-the-curse-of-dimensionality" class="title-slide slide level1 center">
+<h1>Intersectional Fairness: The Curse of Dimensionality</h1>
+<p>With <span class="math inline">\(d\)</span> sensitive attributes and <span class="math inline">\(c_j\)</span> categories per attribute, the number of possible intersections is:</p>
+<p><span class="math display">\[K=\prod_{j=1}^{d}c_j \qquad (K=2^d\text{ if every attribute is binary}).\]</span></p>
+<p>For <span class="math inline">\(N=10{,}000\)</span> audit observations, assuming evenly populated groups:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Binary attributes <span class="math inline">\(d\)</span></th>
+<th style="text-align: right;">Possible groups <span class="math inline">\(K\)</span></th>
+<th style="text-align: right;">Observations per group <span class="math inline">\(N/K\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2,500</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">312.5</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td style="text-align: right;">1,024</td>
+<td style="text-align: right;">9.8</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Sparse evidence:</strong> real groups are uneven; some intersections may be tiny or empty.</li>
+<li><strong>Unstable metrics:</strong> TPR uses only actual positives, shrinking the denominator further; extreme gaps may reflect noise.</li>
+<li><strong>Audit response:</strong> report counts and uncertainty, collect data for poorly covered groups, and flag estimates with insufficient support.</li>
+</ul>
+<aside class="notes">
+<p>This is a statistical curse of dimensionality: increasing the number of attributes multiplies the number of intersectional groups while the audit sample remains fixed.</p>
+<p>Inspecting more groups also creates more opportunities for extreme empirical gaps by chance. Account for multiple comparisons when making inferential claims. Wide uncertainty means that more evidence is needed; it does not establish either fairness or unfairness. Do not silently discard small groups or treat an empty group as having zero disparity.</p>
+<p>Source: <a href="https://fairlearn.org/v0.12/user_guide/assessment/confidence_interval_estimation.html">Fairlearn: Confidence Interval Estimation</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
 <section id="part-ii.-how-do-we-fix-fairness-issues" class="title-slide slide level1 center">
 <h1>Part II. How do we <em>fix</em> fairness issues?</h1>
 <p><a id="theory-block-2" href=""></a></p>
@@ -2985,7 +3084,7 @@ dtype: float64</code></pre>
 <li>Removing correlation does not guarantee independence, statistical parity, or equal opportunity.</li>
 <li>Other data interventions include augmentation, reweighting, and better subgroup coverage.</li>
 </ul>
-<div id="fairness-preprocessing-example" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:44.055060Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:44.054907Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:44.064876Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:44.064528Z&quot;}}" data-execution_count="23">
+<div id="fairness-preprocessing-example" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:54.545251Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:54.545045Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:54.557272Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:54.556911Z&quot;}}" data-execution_count="24">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a><span class="kw">def</span> marital_proxy_input(X, sex):</span>
@@ -2999,11 +3098,11 @@ dtype: float64</code></pre>
 </details>
 </div>
 
-<img data-src="lab-04-fairness_files/figure-revealjs/cell-25-output-1.png" class="r-stretch"></section>
+<img data-src="lab-04-fairness_files/figure-revealjs/cell-26-output-1.png" class="r-stretch"></section>
 
 <section id="pre-processing-interpreting-the-result" class="title-slide slide level1 center">
 <h1><a href="(https://fairlearn.org/v0.12/user_guide/mitigation/preprocessing.html)">Pre-Processing</a>: Interpreting the Result</h1>
-<div id="correlation-remover-simple-pipeline-fit" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:44.250014Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:44.249875Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:44.511912Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:44.511399Z&quot;}}" data-execution_count="26">
+<div id="correlation-remover-simple-pipeline-fit" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:54.754301Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:54.753994Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:55.084365Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:55.083771Z&quot;}}" data-execution_count="27">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>cr_X_train <span class="op">=</span> add_sex_indicator(X_train, sex_train)</span>
@@ -3016,7 +3115,7 @@ dtype: float64</code></pre>
 <span id="cb18-8"><a href="" aria-label="8"></a>y_pred_cr_tree <span class="op">=</span> cr_tree_pipeline.predict(cr_X_test)</span></code></pre></div>
 </details>
 </div>
-<div id="correlation-remover-tree-evaluation" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:44.515216Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:44.514956Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:44.798999Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:44.798242Z&quot;}}" data-execution_count="27">
+<div id="correlation-remover-tree-evaluation" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:55.087274Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:55.087074Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:28:55.403051Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:28:55.402233Z&quot;}}" data-execution_count="28">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -3086,12 +3185,11 @@ dtype: float64</code></pre>
 <li><strong>Repeat and combine:</strong> learn a weighted mixture of the candidate classifiers.</li>
 </ol>
 <p>The result is a randomized mixture, not necessarily one tree.</p>
-<p>Sources: <a href="https://proceedings.mlr.press/v80/agarwal18a.html">Agarwal et al.&nbsp;(2018)</a>, <a href="https://fairlearn.org/main/user_guide/mitigation/reductions.html">Fairlearn reductions guide</a>.</p>
 </section>
 
 <section id="in-processing-how-exponentiatedgradient-learns-1" class="title-slide slide level1 center">
 <h1>In-Processing: How <a href="https://fairlearn.org/v0.12/api_reference/generated/fairlearn.reductions.ExponentiatedGradient.html">ExponentiatedGradient</a> Learns</h1>
-<div id="c018170e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:44.800588Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:44.800374Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:52.964775Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:52.964084Z&quot;}}" data-execution_count="28">
+<div id="c018170e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:28:55.404607Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:28:55.404453Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:03.149690Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:03.148862Z&quot;}}" data-execution_count="29">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a>reduction_eopp <span class="op">=</span> ExponentiatedGradient(estimator<span class="op">=</span>clone(baseline), constraints<span class="op">=</span>TruePositiveRateParity(), eps<span class="op">=</span><span class="fl">0.02</span>, max_iter<span class="op">=</span><span class="dv">25</span>, sample_weight_name<span class="op">=</span><span class="st">"model__sample_weight"</span>)</span>
@@ -3099,7 +3197,7 @@ dtype: float64</code></pre>
 <span id="cb19-3"><a href="" aria-label="3"></a>y_pred_reduction_eopp <span class="op">=</span> reduction_eopp.predict(X_test, random_state<span class="op">=</span>RANDOM_STATE)</span></code></pre></div>
 </details>
 </div>
-<div id="92251df2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:52.966745Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:52.966513Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:53.224470Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:53.223864Z&quot;}}" data-execution_count="29">
+<div id="92251df2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:03.151694Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:03.151451Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:03.425491Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:03.424678Z&quot;}}" data-execution_count="30">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -3280,7 +3378,6 @@ dtype: float64</code></pre>
 <li>Raising it produces fewer positive predictions and can decrease both rates.</li>
 <li>The same score can lead to different decisions across groups; the chosen fairness objective determines the thresholds.</li>
 </ul>
-<p>Sources: <a href="https://arxiv.org/abs/1610.02413">Hardt, Price &amp; Srebro (2016)</a>, <a href="https://fairlearn.org/v0.12/user_guide/mitigation/postprocessing.html">Fairlearn post-processing guide</a>.</p>
 </section>
 
 <section id="how-thresholdoptimizer-chooses-the-rule" class="title-slide slide level1 center">
@@ -3308,12 +3405,12 @@ dtype: float64</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Sources: <a href="https://fairlearn.org/v0.12/user_guide/mitigation/postprocessing.html">Fairlearn threshold algorithm</a>, <a href="https://arxiv.org/html/1610.02413v1#S4">original post-processing method</a>.</p>
+<p>Sources: <a href="https://fairlearn.org/v0.12/user_guide/mitigation/postprocessing.html">Fairlearn threshold algorithm</a></p>
 </section>
 
 <section id="how-thresholdoptimizer-chooses-the-rule-hardt2016equality" class="title-slide slide level1 center">
 <h1>How <a href="https://fairlearn.org/v0.12/api_reference/generated/fairlearn.postprocessing.ThresholdOptimizer.html">ThresholdOptimizer</a> Chooses the Rule <span class="citation" data-cites="hardt2016equality">(<a href="#/references" role="doc-biblioref" onclick="">Hardt et al. 2016</a>)</span></h1>
-<div id="05fe8a49" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:53.226098Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:53.225948Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:53.306726Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:53.306046Z&quot;}}" data-execution_count="30">
+<div id="05fe8a49" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:03.427114Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:03.426944Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:03.512429Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:03.511736Z&quot;}}" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb21-1"><a href="" aria-label="1"></a>threshold_eopp <span class="op">=</span> ThresholdOptimizer(estimator<span class="op">=</span>baseline, prefit<span class="op">=</span><span class="va">True</span>, constraints<span class="op">=</span><span class="st">"true_positive_rate_parity"</span>, objective<span class="op">=</span><span class="st">"balanced_accuracy_score"</span>, predict_method<span class="op">=</span><span class="st">"predict_proba"</span>,)</span>
@@ -3321,7 +3418,7 @@ dtype: float64</code></pre>
 <span id="cb21-3"><a href="" aria-label="3"></a>y_pred_threshold_eopp <span class="op">=</span> threshold_eopp.predict(X_test, sensitive_features<span class="op">=</span>sex_test, random_state<span class="op">=</span>RANDOM_STATE,)  <span class="co"># Group-specific thresholds require sex at prediction time.</span></span></code></pre></div>
 </details>
 </div>
-<div id="e450157c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:53.308654Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:53.308518Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:53.553672Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:53.552896Z&quot;}}" data-execution_count="31">
+<div id="e450157c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:03.514201Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:03.514050Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:03.786098Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:03.785472Z&quot;}}" data-execution_count="32">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -3494,7 +3591,7 @@ dtype: float64</code></pre>
 <ul>
 <li>The first three approaches do not enforce TPR parity.</li>
 </ul>
-<div id="d13dadcc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:53.555224Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:53.555083Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:53.799734Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:53.799128Z&quot;}}" data-execution_count="32">
+<div id="d13dadcc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:03.788095Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:03.787886Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:04.056953Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:04.056102Z&quot;}}" data-execution_count="33">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -3652,7 +3749,7 @@ dtype: float64</code></pre>
 <li>The <strong>Pareto front</strong> contains the remaining solutions. Identical points do not dominate one another.</li>
 </ul>
 
-<img data-src="lab-04-fairness_files/figure-revealjs/cell-34-output-1.png" class="r-stretch"></section>
+<img data-src="lab-04-fairness_files/figure-revealjs/cell-35-output-1.png" class="r-stretch"></section>
 
 <section id="why-googles-woke-ai-problem-wont-be-an-easy-fix" class="title-slide slide level1 center">
 <h1><a href="https://www.bbc.com/news/technology-68412620">Why Google’s ‘woke’ AI problem won’t be an easy fix</a></h1>
@@ -3686,7 +3783,7 @@ dtype: float64</code></pre>
 <p><a id="coding-exercises-1" href=""></a></p>
 <p>Inspect race groups and fit an unaware baseline.</p>
 <p>Which groups have few examples? Why does an income-rate difference alone not establish a model error?</p>
-<div id="adult-race-exercise-1-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:53.928313Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:53.928168Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:53.930542Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:53.929975Z&quot;}}" data-execution_count="34">
+<div id="adult-race-exercise-1-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:04.179847Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:04.179694Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:04.182514Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:04.181793Z&quot;}}" data-execution_count="35">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb23-1"><a href="" aria-label="1"></a><span class="co"># 1. Reuse X_train_raw, X_test_raw, y_train, and y_test; do not make a new split.</span></span>
@@ -3712,7 +3809,7 @@ dtype: float64</code></pre>
 <h1>Exercise 2: Build and Read a MetricFrame</h1>
 <p>Audit the unaware baseline by race.</p>
 <p>Which groups have the highest selection rate and missed-positive rate? Why do their denominators differ?</p>
-<div id="adult-race-exercise-2-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:53.931887Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:53.931752Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:53.934224Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:53.933687Z&quot;}}" data-execution_count="35">
+<div id="adult-race-exercise-2-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:04.183998Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:04.183842Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:04.186644Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:04.186000Z&quot;}}" data-execution_count="36">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb24-1"><a href="" aria-label="1"></a><span class="co"># 1. Create a MetricFrame for the unaware tree, grouping test predictions by race.</span></span>
@@ -3773,7 +3870,7 @@ Show the solution
 <p><a id="coding-exercises-2" href=""></a></p>
 <p>Compare correlation removal with the unaware baseline.</p>
 <p>Does reducing linear correlation improve the held-out equal-opportunity gap?</p>
-<div id="adult-race-exercise-3-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:53.935821Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:53.935658Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:53.938306Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:53.937636Z&quot;}}" data-execution_count="36">
+<div id="adult-race-exercise-3-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:04.188180Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:04.188006Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:04.190822Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:04.190098Z&quot;}}" data-execution_count="37">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb26-1"><a href="" aria-label="1"></a><span class="co"># 1. One-hot encode race using training categories only. Do not assign ordinal numbers to race categories. Why?</span></span>
@@ -3808,7 +3905,7 @@ Show the solution
 <h1>Exercise 4: In-Processing with ExponentiatedGradient</h1>
 <p>Train an in-processing model for equal opportunity.</p>
 <p>Did the TPR gap improve? What happened to balanced accuracy, FPR, and selection rates?</p>
-<div id="adult-race-exercise-4-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:53.939644Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:53.939514Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:53.941693Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:53.941178Z&quot;}}" data-execution_count="37">
+<div id="adult-race-exercise-4-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:04.192242Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:04.192078Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:04.194613Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:04.193916Z&quot;}}" data-execution_count="38">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb27-1"><a href="" aria-label="1"></a><span class="co"># 1. Start again from the unaware baseline, without applying Exercise 3's transformation.</span></span>
@@ -3874,7 +3971,7 @@ Show the solution
 <p><a id="coding-exercises-3" href=""></a></p>
 <p>Learn a post-processing rule for equal opportunity.</p>
 <p>Can improving TPR parity worsen other gaps? Why is prefit=True appropriate here?</p>
-<div id="adult-race-exercise-5-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:53.943250Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:53.943124Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:53.945252Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:53.944736Z&quot;}}" data-execution_count="38">
+<div id="adult-race-exercise-5-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:04.195997Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:04.195862Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:04.198682Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:04.197910Z&quot;}}" data-execution_count="39">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb29-1"><a href="" aria-label="1"></a><span class="co"># 1. Keep Exercise 1's fitted unaware baseline and learn a new decision rule for equal opportunity.</span></span>
@@ -3899,7 +3996,7 @@ Show the solution
 <h1>Exercise 6: Compare Five Approaches and Explain</h1>
 <p>Compare five approaches on fairness and predictive performance.</p>
 <p>What changed from the sex audit? Which small-group estimates need caution, and why does the Pareto front not decide fairness?</p>
-<div id="adult-race-exercise-6-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-06T05:59:53.946735Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-06T05:59:53.946584Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-06T05:59:53.949202Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-06T05:59:53.948649Z&quot;}}" data-execution_count="39">
+<div id="adult-race-exercise-6-starter" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-09T11:29:04.200161Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-09T11:29:04.200006Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-09T11:29:04.202895Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-09T11:29:04.202187Z&quot;}}" data-execution_count="40">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb30-1"><a href="" aria-label="1"></a><span class="co"># 1. Compare raw, unaware, pre-processed, in-processed, and post-processed predictions by race, on the same test rows.</span></span>
