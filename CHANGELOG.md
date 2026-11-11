@@ -1,3 +1,9 @@
+## [1.1.32](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.31...1.1.32) (2026-11-11)
+
+### Bug Fixes
+
+* privacy typos ([b28bd68](https://github.com/w4bo/AA2627-unibo-dcai/commit/b28bd68273d356be5d0049acaafe7e5ea298e13b))
+
 ## [1.1.31](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.30...1.1.31) (2026-11-11)
 
 ### Dependency updates
