@@ -260,7 +260,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td><a href="#/coding-break-2">Coding 2 (~15 min): Exercises 3-4</a></td>
 </tr>
 <tr class="odd">
-<td>Theory 3: Explanation quality and multi-objective model selection</td>
+<td>Theory 3: Global SHAP interpretation, explanation checks, and model-selection recap</td>
 </tr>
 <tr class="even">
 <td><a href="#/coding-break-3">Coding 3 (~15 min): Exercises 5-6</a></td>
@@ -389,11 +389,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 
 <section id="working-example-uci-bike-sharing-fanaeet2013bike" class="title-slide slide level1 center">
-<h1>Working example: <a href="https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset">UCI Bike Sharing</a> <span class="citation" data-cites="fanaeet2013bike">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Fanaee-T 2013</a>)</span></h1>
+<h1>Working example: <a href="https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset">UCI Bike Sharing</a> <span class="citation" data-cites="fanaeet2013bike">(<a href="#/references" role="doc-biblioref" onclick="">Fanaee-T 2013</a>)</span></h1>
 <ul>
 <li><code>cnt = casual + registered</code>: exclude all three from predictors.</li>
 </ul>
-<div id="c0dfbd2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:51.547790Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:51.547411Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:51.867899Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:51.866797Z&quot;}}" data-execution_count="2">
+<div id="c0dfbd2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:42.506623Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:42.506343Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:42.893236Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:42.892558Z&quot;}}" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -769,10 +769,10 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>Does improved prediction quality justify a model that takes more work to simulate?</p>
 <ul>
 <li><strong>Prediction quality:</strong> balanced accuracy and high-demand recall compare predictions with observed labels.</li>
-<li><strong>Structural complexity:</strong> global coefficients, rules and leaves; local terms or split checks needed for one prediction <span class="citation" data-cites="lipton2018mythos">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lipton 2018</a>)</span>.</li>
-<li><strong>Human simulatability:</strong> measure how accurately and quickly people reproduce model predictions. The counts below are proxies, not a human evaluation <span class="citation" data-cites="doshivelez2017towards poursabzi2021manipulating">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Doshi-Velez and Kim 2017</a>; <a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Poursabzi-Sangdeh et al. 2021</a>)</span>.</li>
+<li><strong>Structural complexity:</strong> global coefficients, rules and leaves; local terms or split checks needed for one prediction <span class="citation" data-cites="lipton2018mythos">(<a href="#/references" role="doc-biblioref" onclick="">Lipton 2018</a>)</span>.</li>
+<li><strong>Human simulatability:</strong> measure how accurately and quickly people reproduce model predictions. The counts below are proxies, not a human evaluation <span class="citation" data-cites="doshivelez2017towards poursabzi2021manipulating">(<a href="#/references" role="doc-biblioref" onclick="">Doshi-Velez and Kim 2017</a>; <a href="#/references" role="doc-biblioref" onclick="">Poursabzi-Sangdeh et al. 2021</a>)</span>.</li>
 </ul>
-<div id="5f124a70" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:54.458238Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:54.458030Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:54.520249Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:54.519059Z&quot;}}" data-execution_count="12">
+<div id="5f124a70" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:44.800303Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:44.800150Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:44.841337Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:44.840586Z&quot;}}" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -849,10 +849,16 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </section>
 
-<section id="coding-break-1-exercises-12-15-minutes" class="title-slide slide level1 center">
-<h1>Coding break 1: Exercises 1–2 (~15 minutes)</h1>
+<section id="coding-break-1-guided-exercises-12-15-minutes" class="title-slide slide level1 center">
+<h1>Coding Break 1: Guided Exercises 1–2 (~15 minutes)</h1>
 <p><a id="coding-break-1" href=""></a></p>
-<p>Run the full notebook, then complete <a href="#/exercise-1">Exercise 1</a> and <a href="#/exercise-2">Exercise 2</a>.</p>
+<p>Complete <a href="#/exercise-1">Exercise 1</a> and <a href="#/exercise-2">Exercise 2</a> using the supplied templates and helpers.</p>
+<ul>
+<li><strong>5 min: compare accuracy and leaf counts.</strong></li>
+<li><strong>7 min: reconstruct a logistic prediction and inspect the supplied tree path.</strong></li>
+<li><strong>3 min: discuss whether the extra model complexity is worthwhile.</strong></li>
+</ul>
+<p>Fill a few expressions and interpret the results; no helper functions or plots need to be written from scratch.</p>
 </section>
 
 <section id="local-explanations-for-a-fixed-forest" class="title-slide slide level1 center">
@@ -863,7 +869,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>LIME fits a simple surrogate near this observation.</li>
 <li>SHAP allocates the prediction minus a reference output among features.</li>
 </ul>
-<div id="16cb7082" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:54.522196Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:54.521994Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:54.537969Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:54.537045Z&quot;}}" data-execution_count="13">
+<div id="16cb7082" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:44.842807Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:44.842670Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:44.851791Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:44.851218Z&quot;}}" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -921,7 +927,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="explain-one-forest-prediction" class="title-slide slide level1 center">
 <h1>Explain One Forest Prediction</h1>
-<p><strong>LIME</strong> learns a small explanatory model for one observation <span class="citation" data-cites="ribeiro2016should">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>)</span>.</p>
+<p><strong>LIME</strong> learns a small explanatory model for one observation <span class="citation" data-cites="ribeiro2016should">(<a href="#/references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>)</span>.</p>
 <blockquote>
 <p>Our forest combines 100 trees. For <strong>14:00 on 5 August 2012</strong>, its inputs include hour 14, temperature <strong>34.30°C</strong>, humidity <strong>42%</strong>, and a non-working-day flag.</p>
 <p>Which input conditions help explain the forest’s high-demand probability for this observation?</p>
@@ -950,7 +956,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="lime-agreement-plus-simplicity" class="title-slide slide level1 center">
 <h1>LIME: Agreement Plus Simplicity</h1>
-<p>Choose a simple model that closely imitates the forest around the observation we want to explain <span class="citation" data-cites="ribeiro2016should">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>)</span>.</p>
+<p>Choose a simple model that closely imitates the forest around the observation we want to explain <span class="citation" data-cites="ribeiro2016should">(<a href="#/references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>)</span>.</p>
 <p><span class="math display">\[g_x=\arg\min_{g\in G}\left[L(f,g,\pi_x)+\Omega(g)\right].\]</span></p>
 <table class="caption-top">
 <colgroup>
@@ -1058,7 +1064,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><strong>Read its coefficients and check its fit.</strong> Repeat with another seed to check stability.</li>
 </ol>
 <p><code>num_features=4</code> keeps the explanation short. Numeric fields remain continuous here; they are not converted into temperature intervals.</p>
-<div id="ee4eb295" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:54.546038Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:54.545829Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:54.611734Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:54.610652Z&quot;}}" data-execution_count="15">
+<div id="ee4eb295" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:44.857804Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:44.857644Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:44.903350Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:44.902689Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="kw">def</span> make_lime_explainer(seed<span class="op">=</span><span class="dv">42</span>, kernel_width<span class="op">=</span><span class="fl">0.5</span>):</span>
@@ -1183,7 +1189,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><strong>Point discrepancy:</strong> surrogate prediction versus forest probability at this hour.</li>
 <li><strong>Weighted <span class="math inline">\(R^2\)</span>:</strong> agreement on LIME’s sampled neighborhood.</li>
 </ul>
-<div id="a6b1744b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:55.125039Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:55.124856Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:55.139295Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:55.138502Z&quot;}}" data-execution_count="18">
+<div id="a6b1744b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:45.254281Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:45.254139Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:45.263261Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:45.262593Z&quot;}}" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1239,7 +1245,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="lime-limitations-and-the-next-question" class="title-slide slide level1 center">
 <h1>LIME: Limitations and the Next Question</h1>
-<p>LIME provides a short local summary, with several limitations <span class="citation" data-cites="ribeiro2016should">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>)</span>:</p>
+<p>LIME provides a short local summary, with several limitations <span class="citation" data-cites="ribeiro2016should">(<a href="#/references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>)</span>:</p>
 <ul>
 <li><strong>Approximation:</strong> a small linear surrogate can miss nonlinear behavior and interactions.</li>
 <li><strong>Dependence on choices:</strong> sampling, random seed, feature encoding, neighborhood width and explanation length can change the result.</li>
@@ -1263,7 +1269,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>LIME gave us a small model that behaves similarly nearby.</p>
 <p>What is the real <strong>feature contribution</strong>?</p>
 <ul>
-<li>Problem: features interact. The information supplied by temperature can depend on whether hour is already known <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</li>
+<li>Problem: features interact. The information supplied by temperature can depend on whether hour is already known <span class="citation" data-cites="lundberg2017unified">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</li>
 </ul>
 </section>
 
@@ -1686,7 +1692,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="a-worked-example-with-real-forest-outputs" class="title-slide slide level1 center">
 <h1>A Worked Example with Real Forest Outputs</h1>
-<p><strong>Shapley’s idea</strong> is then to average each feature’s prediction increment across different reveal orders <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</p>
+<p><strong>Shapley’s idea</strong> is then to average each feature’s prediction increment across different reveal orders <span class="citation" data-cites="lundberg2017unified">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <table class="caption-top">
@@ -1804,7 +1810,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Summing these weighted changes gives <span class="math inline">\(\phi_j(x)\)</span>: feature <span class="math inline">\(j\)</span>’s average share across reveal orders.</li>
 </ul>
 <p>The reference and contributions reconstruct the prediction: <span class="math inline">\(\underbrace{\phi_0}_{v_x(\varnothing)}+\sum_{j\in F}\phi_j(x)=f(x).\)</span></p>
-<p>Here <span class="math inline">\(\phi_0\)</span> is the reference probability, and signed <span class="math inline">\(\phi_j\)</span> values are in probability units <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</p>
+<p>Here <span class="math inline">\(\phi_0\)</span> is the reference probability, and signed <span class="math inline">\(\phi_j\)</span> values are in probability units <span class="citation" data-cites="lundberg2017unified">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</p>
 </section>
 
 <section id="the-algorithm-average-reveal-increments" class="title-slide slide level1 center">
@@ -1825,7 +1831,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <span id="cb5-8"><a href="" aria-label="8"></a>Divide each feature's credit by the number of orders used.</span></code></pre></div>
 <p>All orders give exact Shapley values.</p>
 <ul>
-<li>With six features, there are 720 orders but only <strong>64 distinct revealed subsets</strong>, whose predictions can be cached <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</li>
+<li>With six features, there are 720 orders but only <strong>64 distinct revealed subsets</strong>, whose predictions can be cached <span class="citation" data-cites="lundberg2017unified">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</li>
 </ul>
 </section>
 
@@ -1862,11 +1868,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>Listing every order is expensive. <strong>Our forest is a tree ensemble, so we use TreeSHAP</strong> <span class="citation" data-cites="lundberg2017unified lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>; <a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</p>
+<p>Listing every order is expensive. <strong>Our forest is a tree ensemble, so we use TreeSHAP</strong> <span class="citation" data-cites="lundberg2017unified lundberg2020local">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>; <a href="#/references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</p>
 </section>
 
 <section id="treeshap-lundberg2020local-many-subsets-share-a-path-outcome" class="title-slide slide level1 center">
-<h1>TreeSHAP <span class="citation" data-cites="lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>: Many Subsets Share a Path Outcome</h1>
+<h1>TreeSHAP <span class="citation" data-cites="lundberg2020local">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>: Many Subsets Share a Path Outcome</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="img/explainability/treeshap-subset-reuse.png" height="430"></p>
@@ -1880,7 +1886,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="how-treeshap-works" class="title-slide slide level1 center">
 <h1>How TreeSHAP Works</h1>
-<p>TreeSHAP computes the feature shares defined earlier by exploiting the <strong>already trained tree structure</strong> <span class="citation" data-cites="lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</p>
+<p>TreeSHAP computes the feature shares defined earlier by exploiting the <strong>already trained tree structure</strong> <span class="citation" data-cites="lundberg2020local">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</p>
 <ol type="1">
 <li><strong>Read the trees:</strong> use their split features, thresholds and leaf outputs.</li>
 <li><strong>Account for revealed and unrevealed values:</strong> a revealed split feature uses the target’s value; an unrevealed one uses a reference row’s value.</li>
@@ -1894,7 +1900,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The <strong>baseline prediction</strong> is the same forest’s mean prediction on the reference rows: <strong>31.35%</strong> here.</p>
 <ul>
 <li>TreeSHAP returns contributions satisfying <strong>baseline + feature shares = target prediction</strong>: here <strong>78.73%</strong>.</li>
-<li>It computes this allocation directly from the trees rather than fitting a local surrogate <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</li>
+<li>It computes this allocation directly from the trees rather than fitting a local surrogate <span class="citation" data-cites="lundberg2017unified">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</li>
 </ul>
 </section>
 
@@ -1921,7 +1927,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The contributions sum to <strong>47.38 points</strong>. Adding the <strong>31.35%</strong> reference gives the actual <strong>78.73%</strong> forest probability.</p>
 </blockquote>
 <p>Positive contributions raise the prediction relative to the reference; negative contributions lower it.</p>
-<div id="8704e4f4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:55.889560Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:55.889353Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:56.267012Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:56.266115Z&quot;}}" data-execution_count="22">
+<div id="8704e4f4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:45.755434Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:45.755270Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:46.018754Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:46.018141Z&quot;}}" data-execution_count="22">
 
 <div class="cell-output cell-output-display">
 <div>
@@ -1965,38 +1971,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 <img data-src="lab-06-explainability_files/figure-revealjs/cell-23-output-1.png" class="r-stretch"></section>
 
-<section id="shap-from-one-prediction-to-global-model-interpretation" class="title-slide slide level1 center">
-<h1>SHAP: From One Prediction to Global Model Interpretation</h1>
-<p><strong>Local question:</strong> why does this observation differ from the reference?</p>
-<p><strong>Global question:</strong> which inputs move predictions most across many observations?</p>
-</section>
-
-<section id="shap-beeswarm-direction-magnitude-and-variation" class="title-slide slide level1 center">
-<h1>SHAP Beeswarm: Direction, Magnitude, and Variation</h1>
-<p>Start with the distribution of local contributions across the sampled observations <span class="citation" data-cites="lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</p>
-<ul>
-<li>Features are ordered by mean absolute SHAP value.</li>
-<li><strong>Each dot:</strong> one validation observation for that feature.</li>
-<li><strong>Horizontal position:</strong> its signed SHAP contribution. Right raises high-demand probability relative to the reference; left lowers it. A value of <span class="math inline">\(+0.1\)</span> means <strong>+10 percentage points</strong>.</li>
-<li><strong>Vertical spread:</strong> dots stack to show density; it is not another feature value.</li>
-</ul>
-
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-25-output-1.png" class="r-stretch"></section>
-
-<section id="shap-from-one-prediction-to-global-model-interpretation-1" class="title-slide slide level1 center">
-<h1>SHAP: From One Prediction to Global Model Interpretation</h1>
-<p>Explain <strong><span class="math inline">\(n\)</span> sampled rows</strong>, using the same fitted forest, and 100 reference training rows.</p>
-<p><span class="math display">\[I_j=\frac{1}{n}\sum_{i=1}^{n}|\phi_j(x_i)|.\]</span></p>
-<ul>
-<li><span class="math inline">\(x_i\)</span> is explained observation, <span class="math inline">\(\phi_j(x_i)\)</span> is feature <span class="math inline">\(j\)</span>’s signed contribution, and <span class="math inline">\(I_j\)</span> measures its <strong>average contribution magnitude</strong> <span class="citation" data-cites="lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</li>
-</ul>
-
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-26-output-1.png" class="r-stretch"><p>For these <strong>60 validation observations</strong>: <em>hour</em> dominates and its contributions vary widely and can raise or lower predictions.</p>
-<div class="fragment">
-<p><em>These are not causal effects</em>.</p>
-</div>
-</section>
-
 <section id="making-shap-computation-practical" class="title-slide slide level1 center">
 <h1>Making SHAP Computation Practical</h1>
 <p>Explicitly evaluating all <span class="math inline">\(2^p\)</span> revealed subsets works for our six features (<strong>64 subsets</strong>), but 30 features already imply over <strong>one billion</strong> subsets.</p>
@@ -2014,7 +1988,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <tbody>
 <tr class="odd">
 <td><strong>Use model structure</strong></td>
-<td>TreeSHAP exploits trained tree paths instead of explicitly listing every subset <span class="citation" data-cites="lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</td>
+<td>TreeSHAP exploits trained tree paths instead of explicitly listing every subset <span class="citation" data-cites="lundberg2020local">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</td>
 </tr>
 <tr class="even">
 <td><strong>Use a reference sample</strong></td>
@@ -2026,22 +2000,56 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 <tr class="even">
 <td><strong>For black-box models, sample</strong></td>
-<td>Sample feature orders or use KernelSHAP instead of exhaustive enumeration; check estimates as the evaluation budget increases <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</td>
+<td>Sample feature orders or use KernelSHAP instead of exhaustive enumeration; check estimates as the evaluation budget increases <span class="citation" data-cites="lundberg2017unified">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</td>
 </tr>
 </tbody>
 </table>
 <p>The main costs are the number of observations explained, reference size, and model complexity.</p>
 </section>
 
-<section id="coding-break-2-exercises-34-15-minutes" class="title-slide slide level1 center">
-<h1>Coding break 2: Exercises 3–4 (~15 minutes)</h1>
+<section id="coding-break-2-guided-exercises-34-15-minutes" class="title-slide slide level1 center">
+<h1>Coding Break 2: Guided Exercises 3–4 (~15 minutes)</h1>
 <p><a id="coding-break-2" href=""></a></p>
-<p>Go to <a href="#/coding-exercises-2">Exercises 3–4</a>.</p>
+<p>Complete <a href="#/exercise-3">Exercise 3</a> and <a href="#/exercise-4">Exercise 4</a> using the supplied templates and helpers.</p>
 <ul>
-<li><strong>7 min:</strong> explain validation hour 24 with LIME; repeat with another seed.</li>
-<li><strong>8 min:</strong> explain the same forest and hour with SHAP; verify reconstruction.</li>
+<li><strong>6 min: read LIME terms and its existing fit/seed diagnostics.</strong></li>
+<li><strong>7 min: reveal hour, use the supplied SHAP call, and compare prediction sums.</strong></li>
+<li><strong>2 min: discuss why a first-reveal increment differs from a SHAP value.</strong></li>
 </ul>
-<p>Deliver the explanations, diagnostics, and one reason their rankings may differ.</p>
+<p>Fill a few expressions and interpret the results; no helper functions or plots need to be written from scratch.</p>
+</section>
+
+<section id="shap-from-one-prediction-to-global-model-interpretation" class="title-slide slide level1 center">
+<h1>SHAP: From One Prediction to Global Model Interpretation</h1>
+<p><a id="theory-block-3" href=""></a></p>
+<p><strong>Local question:</strong> why does this observation differ from the reference?</p>
+<p><strong>Global question:</strong> which inputs move predictions most across many observations?</p>
+</section>
+
+<section id="shap-beeswarm-direction-magnitude-and-variation" class="title-slide slide level1 center">
+<h1>SHAP Beeswarm: Direction, Magnitude, and Variation</h1>
+<p>Start with the distribution of local contributions across the sampled observations <span class="citation" data-cites="lundberg2020local">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</p>
+<ul>
+<li>Features are ordered by mean absolute SHAP value.</li>
+<li><strong>Each dot:</strong> one validation observation for that feature.</li>
+<li><strong>Horizontal position:</strong> its signed SHAP contribution. Right raises high-demand probability relative to the reference; left lowers it. A value of <span class="math inline">\(+0.1\)</span> means <strong>+10 percentage points</strong>.</li>
+<li><strong>Vertical spread:</strong> dots stack to show density; it is not another feature value.</li>
+</ul>
+
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-25-output-1.png" class="r-stretch"></section>
+
+<section id="shap-from-one-prediction-to-global-model-interpretation-1" class="title-slide slide level1 center">
+<h1>SHAP: From One Prediction to Global Model Interpretation</h1>
+<p>Explain <strong><span class="math inline">\(n\)</span> sampled rows</strong>, using the same fitted forest, and 100 reference training rows.</p>
+<p><span class="math display">\[I_j=\frac{1}{n}\sum_{i=1}^{n}|\phi_j(x_i)|.\]</span></p>
+<ul>
+<li><span class="math inline">\(x_i\)</span> is explained observation, <span class="math inline">\(\phi_j(x_i)\)</span> is feature <span class="math inline">\(j\)</span>’s signed contribution, and <span class="math inline">\(I_j\)</span> measures its <strong>average contribution magnitude</strong> <span class="citation" data-cites="lundberg2020local">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</li>
+</ul>
+
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-26-output-1.png" class="r-stretch"><p>For these <strong>60 validation observations</strong>: <em>hour</em> dominates and its contributions vary widely and can raise or lower predictions.</p>
+<div class="fragment">
+<p><em>These are not causal effects</em>.</p>
+</div>
 </section>
 
 <section id="no-single-scalar-certifies-interpretability." class="title-slide slide level1 center">
@@ -2182,285 +2190,290 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <tr class="even">
 <td>Input gradients</td>
 <td>Which numeric inputs affect this output under tiny changes?</td>
-<td>Local sensitivity <span class="citation" data-cites="simonyan2013deep">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Simonyan et al. 2013</a>)</span></td>
+<td>Local sensitivity <span class="citation" data-cites="simonyan2013deep">(<a href="#/references" role="doc-biblioref" onclick="">Simonyan et al. 2013</a>)</span></td>
 </tr>
 <tr class="odd">
 <td>Integrated Gradients</td>
 <td>How is the output difference from a chosen baseline allocated to inputs?</td>
-<td>Local attribution <span class="citation" data-cites="sundararajan2017axiomatic">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Sundararajan et al. 2017</a>)</span></td>
+<td>Local attribution <span class="citation" data-cites="sundararajan2017axiomatic">(<a href="#/references" role="doc-biblioref" onclick="">Sundararajan et al. 2017</a>)</span></td>
 </tr>
 </tbody>
 </table>
 </section>
 
-<section id="coding-break-3-exercises-56-15-minutes" class="title-slide slide level1 center">
-<h1>Coding break 3: Exercises 5–6 (~15 minutes)</h1>
+<section id="coding-break-3-guided-exercises-56-15-minutes" class="title-slide slide level1 center">
+<h1>Coding Break 3: Guided Exercises 5–6 (~15 minutes)</h1>
 <p><a id="coding-break-3" href=""></a></p>
-<p>Go to <a href="#/coding-exercises-3">Exercises 5–6</a>.</p>
+<p>Complete <a href="#/exercise-5">Exercise 5</a> and <a href="#/exercise-6">Exercise 6</a> using the supplied templates and helpers.</p>
 <ul>
-<li><strong>7 min:</strong> identify the Pareto candidates and select a tree under the given tolerance.</li>
-<li><strong>8 min:</strong> compare two SHAP backgrounds for hour 24 and write a recommendation.</li>
+<li><strong>6 min: aggregate existing SHAP values and read the supplied beeswarm.</strong></li>
+<li><strong>6 min: compare the supplied reference explainers.</strong></li>
+<li><strong>3 min: choose a reference for the stated question and discuss a limitation.</strong></li>
 </ul>
-<p>Deliver the candidate table, sensitivity check, and a two-sentence recommendation. Evaluate the selected tree on the test period only after selection.</p>
+<p>Fill a few expressions and interpret the results; no helper functions or plots need to be written from scratch.</p>
 </section>
 
-<section id="exercises-guided-practice-on-bike-sharing" class="title-slide slide level1 center">
-<h1>Exercises: Guided Practice on Bike Sharing</h1>
-
+<section id="exercises-short-guided-tasks" class="title-slide slide level1 center">
+<h1>Exercises: Short Guided Tasks</h1>
+<p>Each 15-minute block contains <strong>two small coding tasks plus discussion</strong>. Fill the marked expressions; the data preparation, plotting calls and helpers are provided.</p>
+<p>Run the setup and theory cells first. Use the provided <code>exercise_x</code> (validation position 854), <code>reference_probability</code>, and <code>exercise_shap</code>. <strong>Do not write new helpers or retrain the forest.</strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Provided</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>evaluate(model, X_valid, y_valid)</code></td>
+<td>Reports validation scores</td>
+</tr>
+<tr class="even">
+<td><code>tree_path_table(model, row)</code></td>
+<td>Lists the split conditions followed by one observation</td>
+</tr>
+<tr class="odd">
+<td><code>explain_lime</code>, <code>lime_diagnostics</code>, <code>lime_seed_results</code></td>
+<td>Produce/read a local explanation and its seed comparison</td>
+</tr>
+<tr class="even">
+<td><code>explain_shap</code>, <code>shap_batch</code></td>
+<td>Produce a local explanation or reuse the 60-row global explanation</td>
+</tr>
+<tr class="odd">
+<td><code>background</code>, <code>morning_explainer</code></td>
+<td>Supply the two reference comparisons</td>
+</tr>
+</tbody>
+</table>
+<p>Uncomment each template, fill its blanks, then interpret the result. The solutions are short worked answers. Keep the test period unused.</p>
 </section>
 
-<section id="exercise-1-compare-interpretable-models" class="title-slide slide level1 center">
-<h1>Exercise 1: compare interpretable models</h1>
-<p><a id="coding-exercises-1" href=""></a></p>
-<p>Reuse the fitted <code>logistic</code> pipeline. Fit a depth-4 tree on training rows with <code>min_samples_leaf=40</code> and seed 42.</p>
-<p>Compare validation balanced accuracy and high-demand recall. Does extra depth help here?</p>
-<p>Keep the test period unused.</p>
-<div id="78aa4663" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.053963Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.053778Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.056762Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.055927Z&quot;}}" data-execution_count="29">
+<section id="exercise-1-is-a-deeper-tree-worth-it" class="title-slide slide level1 center">
+<h1>Exercise 1: Is a Deeper Tree Worth It?</h1>
+<p><a id="coding-exercises-1" href=""></a> <a id="exercise-1" href=""></a></p>
+<p>Fit the requested depth-4 tree by filling the template. The comparison table is provided.</p>
+<ul>
+<li>Compare validation balanced accuracy and recall with the existing models.</li>
+<li>Compare the depth-2 and depth-4 trees’ leaf counts.</li>
+<li><strong>Discuss:</strong> is the measured gain worth the larger tree? Use the existing structural-complexity slide for the logistic model.</li>
+</ul>
+<div id="78aa4663" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:47.308890Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:47.308751Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:47.311413Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:47.310635Z&quot;}}" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># student_tree = DecisionTreeClassifier(</span></span>
-<span id="cb7-2"><a href="" aria-label="2"></a><span class="co">#     max_depth=..., min_samples_leaf=40, random_state=RANDOM_STATE,</span></span>
-<span id="cb7-3"><a href="" aria-label="3"></a><span class="co"># ).fit(......)</span></span>
-<span id="cb7-4"><a href="" aria-label="4"></a><span class="co"># student_scores = pd.DataFrame({</span></span>
-<span id="cb7-5"><a href="" aria-label="5"></a><span class="co">#     "logistic": evaluate(logistic......),</span></span>
-<span id="cb7-6"><a href="" aria-label="6"></a><span class="co">#     "tree depth 4": evaluate(student_tree......),</span></span>
-<span id="cb7-7"><a href="" aria-label="7"></a><span class="co"># }).T</span></span>
-<span id="cb7-8"><a href="" aria-label="8"></a><span class="co"># display(student_scores.round(3))</span></span></code></pre></div>
+<span id="cb7-2"><a href="" aria-label="2"></a><span class="co">#     max_depth=..., min_samples_leaf=40, random_state=RANDOM_STATE,  # Hint: use depth 4.</span></span>
+<span id="cb7-3"><a href="" aria-label="3"></a><span class="co"># ).fit(X_train, y_train)</span></span>
+<span id="cb7-4"><a href="" aria-label="4"></a><span class="co"># display(pd.DataFrame({</span></span>
+<span id="cb7-5"><a href="" aria-label="5"></a><span class="co">#     "Logistic": evaluate(logistic, X_valid, y_valid),</span></span>
+<span id="cb7-6"><a href="" aria-label="6"></a><span class="co">#     "Tree depth 2": evaluate(small_tree, X_valid, y_valid),</span></span>
+<span id="cb7-7"><a href="" aria-label="7"></a><span class="co">#     "Tree depth 4": evaluate(..., X_valid, y_valid),  # Hint: the tree you just fitted.</span></span>
+<span id="cb7-8"><a href="" aria-label="8"></a><span class="co"># }).T.round(3))</span></span>
+<span id="cb7-9"><a href="" aria-label="9"></a><span class="co"># print("Leaves (depth 2 / depth 4):", small_tree.get_n_leaves(), ...)  # Hint: call get_n_leaves on your tree.</span></span></code></pre></div>
 </details>
 </div>
 </section>
 
-<section id="exercise-2-explain-a-coefficient-and-a-path" class="title-slide slide level1 center">
-<h1>Exercise 2: explain a coefficient and a path</h1>
-<p>Use validation row position 24 throughout the exercise.</p>
+<section id="exercise-2-reproduce-one-prediction" class="title-slide slide level1 center">
+<h1>Exercise 2: Reproduce One Prediction</h1>
+<p><a id="exercise-2" href=""></a></p>
+<p>Use the provided <code>exercise_x</code> and complete the score calculation.</p>
 <ol type="1">
-<li>Convert the temperature coefficient into an odds multiplier. What is its unit?</li>
-<li>Use <code>decision_path</code> to list the tree’s visited split conditions.</li>
-<li>Show the tree’s predicted probability and observed class for this hour.</li>
+<li>Multiply encoded inputs by logistic coefficients, add the intercept, then apply sigmoid.</li>
+<li>Compare your probability with <code>predict_proba</code>.</li>
+<li>Call the provided <code>tree_path_table</code> to inspect your depth-4 tree’s route.</li>
 </ol>
-<p>How does this local path differ from the tree’s global impurity importance? Why does neither account establish what would happen if we changed the real weather?</p>
-<div id="f66f020c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.058868Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.058695Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.061732Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.060863Z&quot;}}" data-execution_count="30">
+<p><strong>Discuss:</strong> which prediction is easier to reproduce by hand? Why do score terms not represent fixed probability increments? You do not need to implement tree traversal.</p>
+<div id="f66f020c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:47.312681Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:47.312557Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:47.315023Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:47.314313Z&quot;}}" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># student_x = X_valid.iloc[[...]]  # Position 24, not row label 24.</span></span>
-<span id="cb8-2"><a href="" aria-label="2"></a><span class="co"># student_odds_multiplier = np.exp(coefs[...])  # Use "temperature_C".</span></span>
-<span id="cb8-3"><a href="" aria-label="3"></a><span class="co"># print(student_odds_multiplier)</span></span>
-<span id="cb8-4"><a href="" aria-label="4"></a><span class="co"># student_nodes = student_tree.decision_path(student_x).indices</span></span>
-<span id="cb8-5"><a href="" aria-label="5"></a><span class="co"># for node in student_nodes:</span></span>
-<span id="cb8-6"><a href="" aria-label="6"></a><span class="co">#     feature = student_tree.tree_.feature[node]</span></span>
-<span id="cb8-7"><a href="" aria-label="7"></a><span class="co">#     if feature &gt;= 0:  # Leaves have a negative feature index.</span></span>
-<span id="cb8-8"><a href="" aria-label="8"></a><span class="co">#         name = X.columns[feature]</span></span>
-<span id="cb8-9"><a href="" aria-label="9"></a><span class="co">#         threshold = student_tree.tree_.threshold[node]</span></span>
-<span id="cb8-10"><a href="" aria-label="10"></a><span class="co">#         direction = "&lt;=" if student_x.iloc[0, feature] &lt;= threshold else "&gt;"</span></span>
-<span id="cb8-11"><a href="" aria-label="11"></a><span class="co">#         print(name, direction, round(threshold, 2))</span></span>
-<span id="cb8-12"><a href="" aria-label="12"></a><span class="co"># print("P(high):", student_tree.predict_proba(student_x)[0, 1])</span></span>
-<span id="cb8-13"><a href="" aria-label="13"></a><span class="co"># print("Observed:", y_valid.iloc[...])</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># student_z = logistic["preprocess"].transform(exercise_x)[0]</span></span>
+<span id="cb8-2"><a href="" aria-label="2"></a><span class="co"># student_terms = ... * logistic["model"].coef_[0]  # Hint: multiply the encoded input values by coefficients.</span></span>
+<span id="cb8-3"><a href="" aria-label="3"></a><span class="co"># student_score = logistic["model"].intercept_[0] + ...  # Hint: sum the terms.</span></span>
+<span id="cb8-4"><a href="" aria-label="4"></a><span class="co"># student_probability = 1 / (1 + np.exp(-...))  # Hint: apply sigmoid to the complete score.</span></span>
+<span id="cb8-5"><a href="" aria-label="5"></a><span class="co"># print("Calculated / model probability:", student_probability, logistic.predict_proba(exercise_x)[0, 1])</span></span>
+<span id="cb8-6"><a href="" aria-label="6"></a><span class="co"># display(tree_path_table(student_tree, exercise_x))  # Provided helper; no loop to write.</span></span></code></pre></div>
 </details>
 </div>
 </section>
 
-<section id="coding-session-1-solution" class="title-slide slide level1 scrollable center">
-<h1>Coding session 1 solution</h1>
+<section id="coding-session-1-short-solution" class="title-slide slide level1 scrollable center">
+<h1>Coding Session 1: Short Solution</h1>
 <details>
 <summary>
 Show the solution
 </summary>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>student_tree <span class="op">=</span> DecisionTreeClassifier(</span>
-<span id="cb9-2"><a href="" aria-label="2"></a>    max_depth<span class="op">=</span><span class="dv">4</span>, min_samples_leaf<span class="op">=</span><span class="dv">40</span>, random_state<span class="op">=</span>RANDOM_STATE,</span>
-<span id="cb9-3"><a href="" aria-label="3"></a>).fit(X_train, y_train)</span>
-<span id="cb9-4"><a href="" aria-label="4"></a>student_scores <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb9-5"><a href="" aria-label="5"></a>    <span class="st">"logistic"</span>: evaluate(logistic, X_valid, y_valid),</span>
-<span id="cb9-6"><a href="" aria-label="6"></a>    <span class="st">"tree depth 4"</span>: evaluate(student_tree, X_valid, y_valid),</span>
-<span id="cb9-7"><a href="" aria-label="7"></a>}).T</span>
-<span id="cb9-8"><a href="" aria-label="8"></a>display(student_scores.<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb9-9"><a href="" aria-label="9"></a>student_x <span class="op">=</span> X_valid.iloc[[<span class="dv">24</span>]]</span>
-<span id="cb9-10"><a href="" aria-label="10"></a>student_odds_multiplier <span class="op">=</span> np.exp(coefs[<span class="st">"temperature_C"</span>])</span>
-<span id="cb9-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="st">"Odds multiplier per training SD:"</span>, student_odds_multiplier)</span>
-<span id="cb9-12"><a href="" aria-label="12"></a>student_nodes <span class="op">=</span> student_tree.decision_path(student_x).indices</span>
-<span id="cb9-13"><a href="" aria-label="13"></a><span class="cf">for</span> node <span class="kw">in</span> student_nodes:</span>
-<span id="cb9-14"><a href="" aria-label="14"></a>    feature <span class="op">=</span> student_tree.tree_.feature[node]</span>
-<span id="cb9-15"><a href="" aria-label="15"></a>    <span class="cf">if</span> feature <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
-<span id="cb9-16"><a href="" aria-label="16"></a>        name <span class="op">=</span> X.columns[feature]</span>
-<span id="cb9-17"><a href="" aria-label="17"></a>        threshold <span class="op">=</span> student_tree.tree_.threshold[node]</span>
-<span id="cb9-18"><a href="" aria-label="18"></a>        direction <span class="op">=</span> <span class="st">"&lt;="</span> <span class="cf">if</span> student_x.iloc[<span class="dv">0</span>, feature] <span class="op">&lt;=</span> threshold <span class="cf">else</span> <span class="st">"&gt;"</span></span>
-<span id="cb9-19"><a href="" aria-label="19"></a>        <span class="bu">print</span>(name, direction, <span class="bu">round</span>(threshold, <span class="dv">2</span>))</span>
-<span id="cb9-20"><a href="" aria-label="20"></a><span class="bu">print</span>(<span class="st">"P(high):"</span>, student_tree.predict_proba(student_x)[<span class="dv">0</span>, <span class="dv">1</span>])</span>
-<span id="cb9-21"><a href="" aria-label="21"></a><span class="bu">print</span>(<span class="st">"Observed:"</span>, y_valid.iloc[<span class="dv">24</span>])</span></code></pre></div>
-<p>The odds multiplier refers to one training standard deviation, holding other inputs fixed. A path describes one route through the fitted tree, whereas impurity importance sums training credits over all splits; neither explanation identifies a causal weather effect.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="co"># Exercise 1: only the new depth-4 tree is trained.</span></span>
+<span id="cb9-2"><a href="" aria-label="2"></a>student_tree <span class="op">=</span> DecisionTreeClassifier(</span>
+<span id="cb9-3"><a href="" aria-label="3"></a>    max_depth<span class="op">=</span><span class="dv">4</span>, min_samples_leaf<span class="op">=</span><span class="dv">40</span>, random_state<span class="op">=</span>RANDOM_STATE,</span>
+<span id="cb9-4"><a href="" aria-label="4"></a>).fit(X_train, y_train)</span>
+<span id="cb9-5"><a href="" aria-label="5"></a>display(pd.DataFrame({</span>
+<span id="cb9-6"><a href="" aria-label="6"></a>    <span class="st">"Logistic"</span>: evaluate(logistic, X_valid, y_valid),</span>
+<span id="cb9-7"><a href="" aria-label="7"></a>    <span class="st">"Tree depth 2"</span>: evaluate(small_tree, X_valid, y_valid),</span>
+<span id="cb9-8"><a href="" aria-label="8"></a>    <span class="st">"Tree depth 4"</span>: evaluate(student_tree, X_valid, y_valid),</span>
+<span id="cb9-9"><a href="" aria-label="9"></a>}).T.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb9-10"><a href="" aria-label="10"></a><span class="bu">print</span>(<span class="st">"Leaves (depth 2 / depth 4):"</span>, small_tree.get_n_leaves(), student_tree.get_n_leaves())</span>
+<span id="cb9-11"><a href="" aria-label="11"></a></span>
+<span id="cb9-12"><a href="" aria-label="12"></a><span class="co"># Exercise 2: sum score terms, convert once, then read the provided tree path.</span></span>
+<span id="cb9-13"><a href="" aria-label="13"></a>student_z <span class="op">=</span> logistic[<span class="st">"preprocess"</span>].transform(exercise_x)[<span class="dv">0</span>]</span>
+<span id="cb9-14"><a href="" aria-label="14"></a>student_terms <span class="op">=</span> student_z <span class="op">*</span> logistic[<span class="st">"model"</span>].coef_[<span class="dv">0</span>]</span>
+<span id="cb9-15"><a href="" aria-label="15"></a>student_score <span class="op">=</span> logistic[<span class="st">"model"</span>].intercept_[<span class="dv">0</span>] <span class="op">+</span> student_terms.<span class="bu">sum</span>()</span>
+<span id="cb9-16"><a href="" aria-label="16"></a>student_probability <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>student_score))</span>
+<span id="cb9-17"><a href="" aria-label="17"></a><span class="bu">print</span>(<span class="st">"Calculated / model probability:"</span>, student_probability, logistic.predict_proba(exercise_x)[<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb9-18"><a href="" aria-label="18"></a>display(tree_path_table(student_tree, exercise_x))</span></code></pre></div>
 </details>
 </section>
 
-<section id="exercise-3-fit-and-inspect-a-local-surrogate" class="title-slide slide level1 center">
-<h1>Exercise 3: fit and inspect a local surrogate</h1>
-<p><a id="coding-exercises-2" href=""></a></p>
-<p>Use <code>explain_lime</code> on validation row position 24.</p>
-<ol type="1">
-<li>Show its four conditions and weights.</li>
-<li>Show <code>lime_diagnostics</code> and interpret the weighted <span class="math inline">\(R^2\)</span> and point discrepancy.</li>
-<li>Repeat with seed 7; compare the two strongest terms.</li>
-</ol>
-<p>Keep the forest and observation fixed.</p>
-<div id="2ee805ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.063545Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.063367Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.066291Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.065389Z&quot;}}" data-execution_count="31">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># student_x = X_valid.iloc[[...]]  # Position 24.</span></span>
-<span id="cb10-2"><a href="" aria-label="2"></a><span class="co"># student_lime = explain_lime(..., seed=42)</span></span>
-<span id="cb10-3"><a href="" aria-label="3"></a><span class="co"># student_lime_repeat = explain_lime(..., seed=7)</span></span>
-<span id="cb10-4"><a href="" aria-label="4"></a><span class="co"># display(pd.DataFrame(student_lime.as_list(label=1), columns=["condition", "weight"]))</span></span>
-<span id="cb10-5"><a href="" aria-label="5"></a><span class="co"># display(pd.DataFrame([</span></span>
-<span id="cb10-6"><a href="" aria-label="6"></a><span class="co">#     lime_diagnostics(student_lime...),</span></span>
-<span id="cb10-7"><a href="" aria-label="7"></a><span class="co">#     lime_diagnostics(student_lime_repeat...),</span></span>
-<span id="cb10-8"><a href="" aria-label="8"></a><span class="co"># ]).round(3))</span></span>
-<span id="cb10-9"><a href="" aria-label="9"></a><span class="co"># print(student_lime.as_list(label=1)[:2])</span></span>
-<span id="cb10-10"><a href="" aria-label="10"></a><span class="co"># print(student_lime_repeat.as_list(label=1)[:2])</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="exercise-4-shap-and-the-output-scale" class="title-slide slide level1 center">
-<h1>Exercise 4: SHAP and the output scale</h1>
-<p>Explain the same row with <code>explain_shap</code>.</p>
-<ol type="1">
-<li>Draw a waterfall and identify the two largest absolute contributions.</li>
-<li>Add the baseline to the signed contribution sum.</li>
-<li>Compare with the forest’s class-1 probability using <code>assert_allclose</code>.</li>
-</ol>
-<p>What does agreement with exact coalition enumeration check beyond reconstruction? Is a positive contribution evidence that changing the feature would increase real demand? Why might LIME rank a different condition first?</p>
-<div id="9923fad1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.068157Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.067980Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.070899Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.069958Z&quot;}}" data-execution_count="32">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># student_shap = explain_shap(...)</span></span>
-<span id="cb11-2"><a href="" aria-label="2"></a><span class="co"># shap.plots.waterfall(student_shap[0], max_display=len(feature_names))</span></span>
-<span id="cb11-3"><a href="" aria-label="3"></a><span class="co"># student_reconstructed = ... + ...  # base_values plus values.sum(axis=1)</span></span>
-<span id="cb11-4"><a href="" aria-label="4"></a><span class="co"># np.testing.assert_allclose(student_reconstructed,</span></span>
-<span id="cb11-5"><a href="" aria-label="5"></a><span class="co">#     forest.predict_proba(student_x)[:...], atol=1e-6)</span></span>
-<span id="cb11-6"><a href="" aria-label="6"></a><span class="co"># print(sorted(zip(feature_names, student_shap.values[0]),</span></span>
-<span id="cb11-7"><a href="" aria-label="7"></a><span class="co">#              key=lambda pair: abs(pair[1]), reverse=True)[:2])</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="coding-session-2-solution" class="title-slide slide level1 scrollable center">
-<h1>Coding session 2 solution</h1>
-<details>
-<summary>
-Show the solution
-</summary>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>student_x <span class="op">=</span> X_valid.iloc[[<span class="dv">24</span>]]</span>
-<span id="cb12-2"><a href="" aria-label="2"></a>student_lime <span class="op">=</span> explain_lime(student_x, seed<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb12-3"><a href="" aria-label="3"></a>student_lime_repeat <span class="op">=</span> explain_lime(student_x, seed<span class="op">=</span><span class="dv">7</span>)</span>
-<span id="cb12-4"><a href="" aria-label="4"></a>display(pd.DataFrame(student_lime.as_list(label<span class="op">=</span><span class="dv">1</span>), columns<span class="op">=</span>[<span class="st">"condition"</span>, <span class="st">"weight"</span>]))</span>
-<span id="cb12-5"><a href="" aria-label="5"></a>display(pd.DataFrame([</span>
-<span id="cb12-6"><a href="" aria-label="6"></a>    lime_diagnostics(student_lime, student_x),</span>
-<span id="cb12-7"><a href="" aria-label="7"></a>    lime_diagnostics(student_lime_repeat, student_x),</span>
-<span id="cb12-8"><a href="" aria-label="8"></a>]).<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb12-9"><a href="" aria-label="9"></a><span class="bu">print</span>(student_lime.as_list(label<span class="op">=</span><span class="dv">1</span>)[:<span class="dv">2</span>])</span>
-<span id="cb12-10"><a href="" aria-label="10"></a><span class="bu">print</span>(student_lime_repeat.as_list(label<span class="op">=</span><span class="dv">1</span>)[:<span class="dv">2</span>])</span>
-<span id="cb12-11"><a href="" aria-label="11"></a>student_shap <span class="op">=</span> explain_shap(student_x)</span>
-<span id="cb12-12"><a href="" aria-label="12"></a>shap.plots.waterfall(student_shap[<span class="dv">0</span>], max_display<span class="op">=</span><span class="bu">len</span>(feature_names))</span>
-<span id="cb12-13"><a href="" aria-label="13"></a>student_reconstructed <span class="op">=</span> student_shap.base_values <span class="op">+</span> student_shap.values.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb12-14"><a href="" aria-label="14"></a>np.testing.assert_allclose(student_reconstructed,</span>
-<span id="cb12-15"><a href="" aria-label="15"></a>    forest.predict_proba(student_x)[:, <span class="dv">1</span>], atol<span class="op">=</span><span class="fl">1e-6</span>)</span>
-<span id="cb12-16"><a href="" aria-label="16"></a><span class="bu">print</span>(<span class="bu">sorted</span>(<span class="bu">zip</span>(feature_names, student_shap.values[<span class="dv">0</span>]),</span>
-<span id="cb12-17"><a href="" aria-label="17"></a>             key<span class="op">=</span><span class="kw">lambda</span> pair: <span class="bu">abs</span>(pair[<span class="dv">1</span>]), reverse<span class="op">=</span><span class="va">True</span>)[:<span class="dv">2</span>])</span></code></pre></div>
-<p>LIME fits a neighborhood surrogate; SHAP allocates a difference from a background output. Different rankings are possible. Coalition enumeration checks each attribution, while reconstruction checks only their sum. Neither is a causal effect estimate, and matching the prediction does not establish usefulness.</p>
-</details>
-</section>
-
-<section id="exercise-5-make-a-multi-objective-choice" class="title-slide slide level1 center">
-<h1>Exercise 5: make a multi-objective choice</h1>
-<p><a id="coding-exercises-3" href=""></a></p>
-<p>Use <code>tradeoffs</code> and <code>pareto_mask</code>; both <code>error</code> and <code>leaves</code> are minimized.</p>
-<ol type="1">
-<li>Identify the non-dominated trees from the depth sweep.</li>
-<li>Keep candidates within 0.02 absolute balanced accuracy of the best.</li>
-<li>Select the feasible candidate with the fewest leaves, then lowest error.</li>
-<li>Report the chosen depth, score, and leaf count. What does leaf count miss?</li>
-</ol>
-<div id="f8203721" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.072751Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.072544Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.075365Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.074524Z&quot;}}" data-execution_count="33">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># student_tradeoffs = tradeoffs.copy()</span></span>
-<span id="cb13-2"><a href="" aria-label="2"></a><span class="co"># student_tradeoffs["pareto"] = pareto_mask(student_tradeoffs[[......]])</span></span>
-<span id="cb13-3"><a href="" aria-label="3"></a><span class="co"># display(student_tradeoffs.loc[student_tradeoffs.pareto].round(3))</span></span>
-<span id="cb13-4"><a href="" aria-label="4"></a><span class="co"># student_best = student_tradeoffs.balanced_accuracy.max()</span></span>
-<span id="cb13-5"><a href="" aria-label="5"></a><span class="co"># student_feasible = student_tradeoffs.loc[</span></span>
-<span id="cb13-6"><a href="" aria-label="6"></a><span class="co">#     student_tradeoffs.balanced_accuracy &gt;= student_best - ...</span></span>
-<span id="cb13-7"><a href="" aria-label="7"></a><span class="co"># ]</span></span>
-<span id="cb13-8"><a href="" aria-label="8"></a><span class="co"># student_choice = student_feasible.sort_values(</span></span>
-<span id="cb13-9"><a href="" aria-label="9"></a><span class="co">#     ["leaves", "error"], ascending=[True, True]</span></span>
-<span id="cb13-10"><a href="" aria-label="10"></a><span class="co"># ).iloc[0]</span></span>
-<span id="cb13-11"><a href="" aria-label="11"></a><span class="co"># display(student_choice)</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="exercise-6-audit-the-reference-and-recommend" class="title-slide slide level1 center">
-<h1>Exercise 6: audit the reference and recommend</h1>
-<p>Explain validation hour 24 using <code>shap_explainer</code> and <code>morning_explainer</code>.</p>
+<section id="exercise-3-read-and-check-lime" class="title-slide slide level1 center">
+<h1>Exercise 3: Read and Check LIME</h1>
+<p><a id="coding-exercises-2" href=""></a> <a id="exercise-3" href=""></a></p>
+<p>Explain the provided <code>exercise_x</code>. The table construction and seed comparison are provided.</p>
 <ul>
-<li>Show both baseline probabilities and the signed contribution differences.</li>
-<li>Check that both explanations reconstruct the <strong>same forest probability</strong>.</li>
-<li>Recommend a model using Exercise 5; contrast the local SHAP ranking with global importance.</li>
-<li>Once the tree choice is fixed, evaluate it on the final test period.</li>
+<li>Identify the strongest positive and negative coefficients.</li>
+<li>Read weighted <span class="math inline">\(R^2\)</span> and the point prediction gap from <code>lime_diagnostics</code>.</li>
+<li>Use the existing <code>lime_seed_results</code> table: do the runs tell a similar story?</li>
 </ul>
-<p>Do not choose a background because it produces a more appealing story.</p>
-<div id="33dd9a3a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.077366Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.077192Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.080151Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.079411Z&quot;}}" data-execution_count="34">
+<p>Distinguish numeric slopes from categorical matches. You do not need to implement LIME, generate plots, or repeat the seed experiment.</p>
+<div id="2ee805ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:47.337706Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:47.337541Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:47.339965Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:47.339334Z&quot;}}" data-execution_count="33">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="co"># student_x = X_valid.iloc[[24]]</span></span>
-<span id="cb14-2"><a href="" aria-label="2"></a><span class="co"># student_all = explain_shap(student_x...)</span></span>
-<span id="cb14-3"><a href="" aria-label="3"></a><span class="co"># student_morning = explain_shap(student_x...)</span></span>
-<span id="cb14-4"><a href="" aria-label="4"></a><span class="co"># display(pd.DataFrame({</span></span>
-<span id="cb14-5"><a href="" aria-label="5"></a><span class="co">#     "all_hours": student_all.values[0],</span></span>
-<span id="cb14-6"><a href="" aria-label="6"></a><span class="co">#     "morning_hours": student_morning.values[0],</span></span>
-<span id="cb14-7"><a href="" aria-label="7"></a><span class="co"># }, index=feature_names).round(4))</span></span>
-<span id="cb14-8"><a href="" aria-label="8"></a><span class="co"># print("Bases:", student_all.base_values, student_morning.base_values)</span></span>
-<span id="cb14-9"><a href="" aria-label="9"></a><span class="co"># for attribution in [student_all, student_morning]:</span></span>
-<span id="cb14-10"><a href="" aria-label="10"></a><span class="co">#     np.testing.assert_allclose(</span></span>
-<span id="cb14-11"><a href="" aria-label="11"></a><span class="co">#         attribution.base_values + attribution.values.sum(axis=1),</span></span>
-<span id="cb14-12"><a href="" aria-label="12"></a><span class="co">#         forest.predict_proba(student_x)[:, 1], atol=1e-6)</span></span>
-<span id="cb14-13"><a href="" aria-label="13"></a><span class="co"># chosen_model = tree_candidates[int(student_choice.max_depth)]</span></span>
-<span id="cb14-14"><a href="" aria-label="14"></a><span class="co"># display(pd.DataFrame([evaluate(chosen_model......)], index=["final test"]))</span></span>
-<span id="cb14-15"><a href="" aria-label="15"></a><span class="co"># Write two sentences: your choice with evidence, then an explanation limitation.</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># student_lime = explain_lime(..., seed=42)  # Hint: explain exercise_x.</span></span>
+<span id="cb10-2"><a href="" aria-label="2"></a><span class="co"># display(pd.DataFrame(student_lime.as_list(label=1), columns=["term", "coefficient"]))</span></span>
+<span id="cb10-3"><a href="" aria-label="3"></a><span class="co"># display(pd.DataFrame([lime_diagnostics(..., exercise_x)]).round(3))  # Hint: pass your explanation.</span></span>
+<span id="cb10-4"><a href="" aria-label="4"></a><span class="co"># display(lime_seed_results[["seed", "weighted_R2", "point_gap"]].round(3))  # Already computed in the lesson.</span></span></code></pre></div>
 </details>
 </div>
 </section>
 
-<section id="coding-session-3-solution" class="title-slide slide level1 scrollable center">
-<h1>Coding session 3 solution</h1>
+<section id="exercise-4-reveal-hour-and-read-shap" class="title-slide slide level1 center">
+<h1>Exercise 4: Reveal Hour and Read SHAP</h1>
+<p><a id="exercise-4" href=""></a></p>
+<p>The provided <code>reference_probability</code> is the forest’s average prediction on <code>background</code>.</p>
+<ol type="1">
+<li>In a copy of the background, fix the hour column to <code>exercise_x</code>’s hour and compute the mean prediction change.</li>
+<li>Explain the target with SHAP using the provided helper and waterfall call.</li>
+<li>Add the baseline and signed contributions; compare the result with the forest probability.</li>
+</ol>
+<p><strong>Discuss:</strong> why can the first-reveal hour increment differ from the full SHAP hour contribution? All six columns remain present; the forest is not retrained.</p>
+<div id="9923fad1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:47.341555Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:47.341408Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:47.343945Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:47.343320Z&quot;}}" data-execution_count="34">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># student_mixed = background.copy()</span></span>
+<span id="cb11-2"><a href="" aria-label="2"></a><span class="co"># student_mixed["hour"] = ...  # Hint: exercise_x.iloc[0]["hour"] is copied into EVERY row.</span></span>
+<span id="cb11-3"><a href="" aria-label="3"></a><span class="co"># student_revealed = forest.predict_proba(student_mixed)[:, 1].mean()</span></span>
+<span id="cb11-4"><a href="" aria-label="4"></a><span class="co"># print("Hour-first increment:", student_revealed - reference_probability)</span></span>
+<span id="cb11-5"><a href="" aria-label="5"></a><span class="co"># student_shap = explain_shap(exercise_x)</span></span>
+<span id="cb11-6"><a href="" aria-label="6"></a><span class="co"># shap.plots.waterfall(student_shap[0], max_display=len(feature_names))</span></span>
+<span id="cb11-7"><a href="" aria-label="7"></a><span class="co"># student_reconstructed = student_shap.base_values + student_shap.values.sum(axis=...)  # Hint: sum across features.</span></span>
+<span id="cb11-8"><a href="" aria-label="8"></a><span class="co"># print("SHAP sum / forest:", student_reconstructed, forest.predict_proba(exercise_x)[:, 1])</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="coding-session-2-short-solution" class="title-slide slide level1 scrollable center">
+<h1>Coding Session 2: Short Solution</h1>
 <details>
 <summary>
 Show the solution
 </summary>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>student_tradeoffs <span class="op">=</span> tradeoffs.copy()</span>
-<span id="cb15-2"><a href="" aria-label="2"></a>student_tradeoffs[<span class="st">"pareto"</span>] <span class="op">=</span> pareto_mask(student_tradeoffs[[<span class="st">"error"</span>, <span class="st">"leaves"</span>]])</span>
-<span id="cb15-3"><a href="" aria-label="3"></a>display(student_tradeoffs.loc[student_tradeoffs.pareto].<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb15-4"><a href="" aria-label="4"></a>student_best <span class="op">=</span> student_tradeoffs.balanced_accuracy.<span class="bu">max</span>()</span>
-<span id="cb15-5"><a href="" aria-label="5"></a>student_feasible <span class="op">=</span> student_tradeoffs.loc[</span>
-<span id="cb15-6"><a href="" aria-label="6"></a>    student_tradeoffs.balanced_accuracy <span class="op">&gt;=</span> student_best <span class="op">-</span> <span class="fl">0.02</span></span>
-<span id="cb15-7"><a href="" aria-label="7"></a>]</span>
-<span id="cb15-8"><a href="" aria-label="8"></a>student_choice <span class="op">=</span> student_feasible.sort_values(</span>
-<span id="cb15-9"><a href="" aria-label="9"></a>    [<span class="st">"leaves"</span>, <span class="st">"error"</span>], ascending<span class="op">=</span>[<span class="va">True</span>, <span class="va">True</span>]</span>
-<span id="cb15-10"><a href="" aria-label="10"></a>).iloc[<span class="dv">0</span>]</span>
-<span id="cb15-11"><a href="" aria-label="11"></a>display(student_choice)</span>
-<span id="cb15-12"><a href="" aria-label="12"></a>student_x <span class="op">=</span> X_valid.iloc[[<span class="dv">24</span>]]</span>
-<span id="cb15-13"><a href="" aria-label="13"></a>student_all <span class="op">=</span> explain_shap(student_x, shap_explainer)</span>
-<span id="cb15-14"><a href="" aria-label="14"></a>student_morning <span class="op">=</span> explain_shap(student_x, morning_explainer)</span>
-<span id="cb15-15"><a href="" aria-label="15"></a>display(pd.DataFrame({<span class="st">"all_hours"</span>: student_all.values[<span class="dv">0</span>],</span>
-<span id="cb15-16"><a href="" aria-label="16"></a>    <span class="st">"morning_hours"</span>: student_morning.values[<span class="dv">0</span>]}, index<span class="op">=</span>feature_names).<span class="bu">round</span>(<span class="dv">4</span>))</span>
-<span id="cb15-17"><a href="" aria-label="17"></a><span class="bu">print</span>(<span class="st">"Bases:"</span>, student_all.base_values, student_morning.base_values)</span>
-<span id="cb15-18"><a href="" aria-label="18"></a><span class="cf">for</span> attribution <span class="kw">in</span> [student_all, student_morning]:</span>
-<span id="cb15-19"><a href="" aria-label="19"></a>    np.testing.assert_allclose(attribution.base_values <span class="op">+</span> attribution.values.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb15-20"><a href="" aria-label="20"></a>        forest.predict_proba(student_x)[:, <span class="dv">1</span>], atol<span class="op">=</span><span class="fl">1e-6</span>)</span>
-<span id="cb15-21"><a href="" aria-label="21"></a>chosen_model <span class="op">=</span> tree_candidates[<span class="bu">int</span>(student_choice.max_depth)]</span>
-<span id="cb15-22"><a href="" aria-label="22"></a>display(pd.DataFrame([evaluate(chosen_model, X_test, y_test)], index<span class="op">=</span>[<span class="st">"final test"</span>]))</span></code></pre></div>
-<p>The rule selects the smallest feasible tree among these candidates. Leaf count omits feature meaning, rule length, comprehension, and stability. A mean absolute global ranking summarizes many hours and can differ from any one hour’s ranking. Both SHAP references reconstruct the same forest prediction while answering different comparison questions. If final performance is lower, investigate seasonal shift with new evaluation data; do not tune on this test period.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="co"># Exercise 3: reuse the seed results; spend time interpreting the fit.</span></span>
+<span id="cb12-2"><a href="" aria-label="2"></a>student_lime <span class="op">=</span> explain_lime(exercise_x, seed<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb12-3"><a href="" aria-label="3"></a>display(pd.DataFrame(student_lime.as_list(label<span class="op">=</span><span class="dv">1</span>), columns<span class="op">=</span>[<span class="st">"term"</span>, <span class="st">"coefficient"</span>]))</span>
+<span id="cb12-4"><a href="" aria-label="4"></a>display(pd.DataFrame([lime_diagnostics(student_lime, exercise_x)]).<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb12-5"><a href="" aria-label="5"></a>display(lime_seed_results[[<span class="st">"seed"</span>, <span class="st">"weighted_R2"</span>, <span class="st">"point_gap"</span>]].<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb12-6"><a href="" aria-label="6"></a></span>
+<span id="cb12-7"><a href="" aria-label="7"></a><span class="co"># Exercise 4: replace input values, predict, and reconstruct the target probability.</span></span>
+<span id="cb12-8"><a href="" aria-label="8"></a>student_mixed <span class="op">=</span> background.copy()</span>
+<span id="cb12-9"><a href="" aria-label="9"></a>student_mixed[<span class="st">"hour"</span>] <span class="op">=</span> exercise_x.iloc[<span class="dv">0</span>][<span class="st">"hour"</span>]</span>
+<span id="cb12-10"><a href="" aria-label="10"></a>student_revealed <span class="op">=</span> forest.predict_proba(student_mixed)[:, <span class="dv">1</span>].mean()</span>
+<span id="cb12-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="st">"Hour-first increment:"</span>, student_revealed <span class="op">-</span> reference_probability)</span>
+<span id="cb12-12"><a href="" aria-label="12"></a>student_shap <span class="op">=</span> explain_shap(exercise_x)</span>
+<span id="cb12-13"><a href="" aria-label="13"></a>shap.plots.waterfall(student_shap[<span class="dv">0</span>], max_display<span class="op">=</span><span class="bu">len</span>(feature_names))</span>
+<span id="cb12-14"><a href="" aria-label="14"></a>student_reconstructed <span class="op">=</span> student_shap.base_values <span class="op">+</span> student_shap.values.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-15"><a href="" aria-label="15"></a><span class="bu">print</span>(<span class="st">"SHAP sum / forest:"</span>, student_reconstructed, forest.predict_proba(exercise_x)[:, <span class="dv">1</span>])</span></code></pre></div>
 </details>
 </section>
 
-<section id="further-reading-and-references" class="title-slide slide level1 scrollable smaller">
-<h1>Further reading and references</h1>
+<section id="exercise-5-read-the-global-shap-summary" class="title-slide slide level1 center">
+<h1>Exercise 5: Read the Global SHAP Summary</h1>
+<p><a id="coding-exercises-3" href=""></a> <a id="exercise-5" href=""></a></p>
+<p>Reuse the provided <code>shap_batch</code>, which already explains 60 validation observations.</p>
+<ol type="1">
+<li>Compute the mean absolute contribution for each feature; display the ranking in percentage points.</li>
+<li>Run the provided beeswarm call. Explain what its dots, horizontal positions, colors, and vertical stacking mean.</li>
+<li>Name the most influential feature globally and one visible feature-value pattern.</li>
+</ol>
+<p>You do not need to recompute SHAP for the batch or build a plot from scratch. Explain why this population summary may differ from one local explanation.</p>
+<div id="f8203721" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:47.345595Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:47.345450Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:47.347908Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:47.347216Z&quot;}}" data-execution_count="35">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># student_importance = pd.Series(</span></span>
+<span id="cb13-2"><a href="" aria-label="2"></a><span class="co">#     np.abs(shap_batch.values).mean(axis=...), index=feature_names)  # Hint: average observations, leaving one value per feature.</span></span>
+<span id="cb13-3"><a href="" aria-label="3"></a><span class="co"># display((100 * student_importance).sort_values(ascending=False))  # Probability units -&gt; percentage points.</span></span>
+<span id="cb13-4"><a href="" aria-label="4"></a><span class="co"># shap.plots.beeswarm(shap_batch, max_display=len(feature_names))  # Plotting call provided.</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="exercise-6-explain-the-choice-of-reference" class="title-slide slide level1 center">
+<h1>Exercise 6: Explain the Choice of Reference</h1>
+<p><a id="exercise-6" href=""></a></p>
+<p>The provided <code>exercise_shap</code> uses all training hours as its reference. Explain the same observation using <code>morning_explainer</code> instead.</p>
+<ul>
+<li>Compare the baselines and the provided table of feature shares.</li>
+<li>Reconstruct both predictions. They should match the same forest probability.</li>
+<li><strong>Discuss:</strong> which reference answers an afternoon-versus-morning question? Give a two-sentence recommendation and one limitation.</li>
+</ul>
+<p>Only the reference changes. You do not need to implement a new explainer, choose a new model, or run final-test evaluation.</p>
+<div id="33dd9a3a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T10:54:47.349282Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T10:54:47.349126Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T10:54:47.351798Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T10:54:47.351074Z&quot;}}" data-execution_count="36">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="co"># student_morning = explain_shap(exercise_x, ...)  # Hint: use morning_explainer.</span></span>
+<span id="cb14-2"><a href="" aria-label="2"></a><span class="co"># print("Baselines:", exercise_shap.base_values, student_morning.base_values)</span></span>
+<span id="cb14-3"><a href="" aria-label="3"></a><span class="co"># display(pd.DataFrame({</span></span>
+<span id="cb14-4"><a href="" aria-label="4"></a><span class="co">#     "All hours": exercise_shap.values[0],</span></span>
+<span id="cb14-5"><a href="" aria-label="5"></a><span class="co">#     "Mornings": student_morning.values[0],</span></span>
+<span id="cb14-6"><a href="" aria-label="6"></a><span class="co"># }, index=feature_names))  # Table is provided.</span></span>
+<span id="cb14-7"><a href="" aria-label="7"></a><span class="co"># print("All-hours sum:", exercise_shap.base_values + exercise_shap.values.sum(axis=1))</span></span>
+<span id="cb14-8"><a href="" aria-label="8"></a><span class="co"># print("Morning sum:", ... + student_morning.values.sum(axis=1))  # Hint: use this explanation's own baseline.</span></span>
+<span id="cb14-9"><a href="" aria-label="9"></a><span class="co"># print("Forest:", forest.predict_proba(exercise_x)[:, 1])</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="coding-session-3-short-solution" class="title-slide slide level1 scrollable center">
+<h1>Coding Session 3: Short Solution</h1>
+<details>
+<summary>
+Show the solution
+</summary>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="co"># Exercise 5: aggregate existing values and use the supplied plot.</span></span>
+<span id="cb15-2"><a href="" aria-label="2"></a>student_importance <span class="op">=</span> pd.Series(</span>
+<span id="cb15-3"><a href="" aria-label="3"></a>    np.<span class="bu">abs</span>(shap_batch.values).mean(axis<span class="op">=</span><span class="dv">0</span>), index<span class="op">=</span>feature_names)</span>
+<span id="cb15-4"><a href="" aria-label="4"></a>display((<span class="dv">100</span> <span class="op">*</span> student_importance).sort_values(ascending<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb15-5"><a href="" aria-label="5"></a>shap.plots.beeswarm(shap_batch, max_display<span class="op">=</span><span class="bu">len</span>(feature_names))</span>
+<span id="cb15-6"><a href="" aria-label="6"></a></span>
+<span id="cb15-7"><a href="" aria-label="7"></a><span class="co"># Exercise 6: change the reference, keeping the target and model fixed.</span></span>
+<span id="cb15-8"><a href="" aria-label="8"></a>student_morning <span class="op">=</span> explain_shap(exercise_x, morning_explainer)</span>
+<span id="cb15-9"><a href="" aria-label="9"></a><span class="bu">print</span>(<span class="st">"Baselines:"</span>, exercise_shap.base_values, student_morning.base_values)</span>
+<span id="cb15-10"><a href="" aria-label="10"></a>display(pd.DataFrame({</span>
+<span id="cb15-11"><a href="" aria-label="11"></a>    <span class="st">"All hours"</span>: exercise_shap.values[<span class="dv">0</span>],</span>
+<span id="cb15-12"><a href="" aria-label="12"></a>    <span class="st">"Mornings"</span>: student_morning.values[<span class="dv">0</span>],</span>
+<span id="cb15-13"><a href="" aria-label="13"></a>}, index<span class="op">=</span>feature_names))</span>
+<span id="cb15-14"><a href="" aria-label="14"></a><span class="bu">print</span>(<span class="st">"All-hours sum:"</span>, exercise_shap.base_values <span class="op">+</span> exercise_shap.values.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb15-15"><a href="" aria-label="15"></a><span class="bu">print</span>(<span class="st">"Morning sum:"</span>, student_morning.base_values <span class="op">+</span> student_morning.values.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb15-16"><a href="" aria-label="16"></a><span class="bu">print</span>(<span class="st">"Forest:"</span>, forest.predict_proba(exercise_x)[:, <span class="dv">1</span>])</span></code></pre></div>
+<p>The mean absolute ranking summarizes magnitudes across observations; the beeswarm also shows direction and input values. Different references define different comparisons but reconstruct the same prediction. For an afternoon-versus-morning question, use the morning reference and state that the result describes model behavior, not a causal effect of changing the hour.</p>
+</details>
+</section>
+
+<section id="further-reading" class="title-slide slide level1 scrollable center">
+<h1>Further reading</h1>
 <p>Molnar, <em>Interpretable Machine Learning</em>, online third edition:</p>
 <ul>
 <li><a href="https://christophm.github.io/interpretable-ml-book/interpretability.html">Interpretability</a>, <a href="https://christophm.github.io/interpretable-ml-book/goals.html">goals</a>, <a href="https://christophm.github.io/interpretable-ml-book/overview.html">methods overview</a></li>
@@ -2469,13 +2482,15 @@ Show the solution
 </ul>
 <p>Interpretability evaluation and complexity measures:</p>
 <ul>
-<li>Lipton, <em>The Mythos of Model Interpretability</em>: model size versus per-prediction computation <span class="citation" data-cites="lipton2018mythos">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lipton 2018</a>)</span>.</li>
-<li>Doshi-Velez and Kim, <em>Towards A Rigorous Science of Interpretable Machine Learning</em>: proxy, human-grounded, and application-grounded evaluation <span class="citation" data-cites="doshivelez2017towards">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Doshi-Velez and Kim 2017</a>)</span>.</li>
-<li>Poursabzi-Sangdeh et al., <em>Manipulating and Measuring Model Interpretability</em>: human experiments varying feature count and transparency <span class="citation" data-cites="poursabzi2021manipulating">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Poursabzi-Sangdeh et al. 2021</a>)</span>.</li>
+<li>Lipton, <em>The Mythos of Model Interpretability</em>: model size versus per-prediction computation <span class="citation" data-cites="lipton2018mythos">(<a href="#/references" role="doc-biblioref" onclick="">Lipton 2018</a>)</span>.</li>
+<li>Doshi-Velez and Kim, <em>Towards A Rigorous Science of Interpretable Machine Learning</em>: proxy, human-grounded, and application-grounded evaluation <span class="citation" data-cites="doshivelez2017towards">(<a href="#/references" role="doc-biblioref" onclick="">Doshi-Velez and Kim 2017</a>)</span>.</li>
+<li>Poursabzi-Sangdeh et al., <em>Manipulating and Measuring Model Interpretability</em>: human experiments varying feature count and transparency <span class="citation" data-cites="poursabzi2021manipulating">(<a href="#/references" role="doc-biblioref" onclick="">Poursabzi-Sangdeh et al. 2021</a>)</span>.</li>
 </ul>
-<p>Neural-network explanations: input-gradient saliency <span class="citation" data-cites="simonyan2013deep">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Simonyan et al. 2013</a>)</span> and Integrated Gradients <span class="citation" data-cites="sundararajan2017axiomatic">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Sundararajan et al. 2017</a>)</span>.</p>
-<p>Original methods: <span class="citation" data-cites="ribeiro2016should lundberg2017unified lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>; <a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>; <a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>. Implementation: <a href="https://lime-ml.readthedocs.io/en/latest/lime.html">LIME</a>, <a href="https://shap.readthedocs.io/en/latest/generated/shap.TreeExplainer.html">TreeExplainer</a>.</p>
-<p>Concepts adapted with attribution from Molnar’s <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> online book. Bike examples, code, and exercises are written for this workshop.</p>
+<p>Neural-network explanations: input-gradient saliency <span class="citation" data-cites="simonyan2013deep">(<a href="#/references" role="doc-biblioref" onclick="">Simonyan et al. 2013</a>)</span> and Integrated Gradients <span class="citation" data-cites="sundararajan2017axiomatic">(<a href="#/references" role="doc-biblioref" onclick="">Sundararajan et al. 2017</a>)</span>.</p>
+</section>
+
+<section id="references" class="title-slide slide level1 scrollable smaller">
+<h1>References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-doshivelez2017towards" class="csl-entry" role="listitem">
 Doshi-Velez, Finale, and Been Kim. 2017. <em>Towards a Rigorous Science of Interpretable Machine Learning</em>. <a href="https://arxiv.org/abs/1702.08608">https://arxiv.org/abs/1702.08608</a>.
