@@ -244,37 +244,29 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <thead>
 <tr class="header">
 <th>Activity</th>
-<th>Duration</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Theory 1: Interpretability, goals, method overview, logistic regression versus trees</td>
-<td>30 min</td>
 </tr>
 <tr class="even">
-<td><a href="#/coding-break-1">Coding 1: Compare interpretable models</a></td>
-<td>15 min</td>
+<td><a href="#/coding-break-1">Coding 1 (~15 min): Exercises 1-2</a></td>
 </tr>
 <tr class="odd">
 <td>Theory 2: Local explanations with LIME and SHAP for tabular data</td>
-<td>30 min</td>
 </tr>
 <tr class="even">
-<td><a href="#/coding-break-2">Coding 2: Explain the same hour with both methods</a></td>
-<td>15 min</td>
+<td><a href="#/coding-break-2">Coding 2 (~15 min): Exercises 3-4</a></td>
 </tr>
 <tr class="odd">
 <td>Theory 3: Explanation quality and multi-objective model selection</td>
-<td>30 min</td>
 </tr>
 <tr class="even">
-<td><a href="#/coding-break-3">Coding 3: Audit explanations and choose a model</a></td>
-<td>15 min</td>
+<td><a href="#/coding-break-3">Coding 3 (~15 min): Exercises 5-6</a></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Total: 135 minutes.</strong> Based on <a href="https://christophm.github.io/interpretable-ml-book/">Molnar’s online book</a> <span class="citation" data-cites="molnarIMLonline">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Molnar, n.d.</a>)</span>.</p>
 </section>
 
 <section id="the-interpretability-issue" class="title-slide slide level1 center">
@@ -285,24 +277,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Different fitted models can reach similar scores using different relationships.</li>
 <li>Understanding depends on the <strong>person and task</strong>, not just the algorithm.</li>
 </ul>
-<p><strong>Question:</strong> would you deploy a bike-demand model that uses registered rentals to predict total rentals?</p>
-<aside class="notes">
-<p>Theory 1, 0–3 min. Ask students to identify the availability problem. Source: https://christophm.github.io/interpretable-ml-book/interpretability.html</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="prediction-explanation-and-causality" class="title-slide slide level1 center">
-<h1>Prediction, explanation, and causality</h1>
+<blockquote>
+<p><strong>Question:</strong> would you deploy a bike-demand model that predicts total rentals?</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -329,24 +305,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>These are different claims. An explanation describes a <strong>fitted predictor</strong>; it does not automatically explain the data-generating process.</p>
-<aside class="notes">
-<p>3–5 min. Ask for a confounder of temperature and rentals, such as season. Book: Interpretability and Goals of Interpretability.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+</blockquote>
 </section>
 
-<section id="goals-of-interpretability" class="title-slide slide level1 center">
-<h1>Goals of interpretability</h1>
+<section id="who-needs-the-explanation" class="title-slide slide level1 center">
+<h1>Who needs the explanation?</h1>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -379,44 +342,15 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tbody>
 </table>
 <p>Choose the <strong>question and audience</strong> before the explanation method.</p>
-<aside class="notes">
-<p>5–7 min. Three goals from https://christophm.github.io/interpretable-ml-book/goals.html .</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="who-needs-the-explanation" class="title-slide slide level1 center">
-<h1>Who needs the explanation?</h1>
+<blockquote>
 <p>A bike operator asks: “Should I prepare for demand during this hour?”</p>
 <p>A model developer asks: “Did the model learn a shortcut?”</p>
 <p>A researcher asks: “How does the fitted relationship vary by working day?”</p>
-<p><strong>Discuss:</strong> would a list of 100 coefficients answer all three questions? What would each person need to check?</p>
-<aside class="notes">
-<p>7–9 min. Pair discussion. A short explanation can be useful without describing every model detail; shortness alone does not establish correctness.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+</blockquote>
 </section>
 
-<section id="method-overview" class="title-slide slide level1 center">
-<h1>Method overview</h1>
+<section id="interpretability-methods" class="title-slide slide level1 center">
+<h1>Interpretability Methods</h1>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -438,7 +372,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 <tr class="even">
 <td>Post-hoc, model-agnostic</td>
-<td>Permutation importance; PDP/ALE</td>
+<td>Permutation importance</td>
 <td>LIME; KernelSHAP</td>
 </tr>
 <tr class="odd">
@@ -448,46 +382,18 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p><strong>Local scope</strong> does not mean the predictive model was trained locally. SHAP includes both model-agnostic and model-specific algorithms.</p>
-<aside class="notes">
-<p>9–11 min. Taxonomy: https://christophm.github.io/interpretable-ml-book/overview.html .</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<ul>
+<li><strong>Global:</strong> explain model behavior across many observations, e.g., which features generally drive predicted bike demand.</li>
+<li><strong>Local:</strong> explain one prediction, e.g., why the model predicts high demand for a particular hour.</li>
+</ul>
 </section>
 
-<section id="working-example-uci-bike-sharing" class="title-slide slide level1 center">
-<h1>Working example: UCI Bike Sharing</h1>
-<p>Reuse lab 03’s <a href="https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset">real hourly rentals</a>, from Capital Bikeshare in 2011–2012 <span class="citation" data-cites="fanaeet2013bike">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Fanaee-T 2013</a>)</span>.</p>
+<section id="working-example-uci-bike-sharing-fanaeet2013bike" class="title-slide slide level1 center">
+<h1>Working example: <a href="https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset">UCI Bike Sharing</a> <span class="citation" data-cites="fanaeet2013bike">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Fanaee-T 2013</a>)</span></h1>
 <ul>
-<li><strong>Classification task:</strong> high demand means <code>cnt &gt;= 200</code> rentals/hour.</li>
-<li>The fixed cutoff is a teaching scenario, not a UCI label or an optimized threshold.</li>
 <li><code>cnt = casual + registered</code>: exclude all three from predictors.</li>
-<li>Exclude row ID and date; keep six readable predictors for this small example.</li>
 </ul>
-<p>This is a retrospective analysis with recorded weather. Forecasting would require inputs available before the hour.</p>
-<aside class="notes">
-<p>11–13 min. UCI documents the original counts and normalized weather fields. The lab changes the regression target used in lab 03 to permit logistic classification.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<div id="c0dfbd2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-10T06:24:00.190987Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-10T06:24:00.190600Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-10T06:24:00.995058Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-10T06:24:00.994352Z&quot;}}" data-execution_count="2">
+<div id="c0dfbd2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:51.547790Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:51.547411Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:51.867899Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:51.866797Z&quot;}}" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -552,190 +458,261 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </section>
 
-<section id="evaluation-protocol" class="title-slide slide level1 center">
-<h1>Evaluation protocol</h1>
+<section id="does-high-demand-occur-at-the-same-hours-on-working-and-non-working-days" class="title-slide slide level1 center">
+<h1>Does high demand occur at the same hours on working and non-working days?</h1>
+
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-4-output-1.png" class="r-stretch"></section>
+
+<section id="logistic-regression-add-first-then-convert" class="title-slide slide level1 center">
+<h1>Logistic Regression: Add First, Then Convert</h1>
+<p>For one observation, logistic regression makes a prediction in <strong>two steps</strong>:</p>
+<ol type="1">
+<li><p><strong>Build a score:</strong> multiply each encoded input <span class="math inline">\(z_j(x)\)</span> by its learned coefficient, then add the terms and intercept:</p>
+<p><span class="math display">\[s(x)=\beta_0+\sum_j\beta_j z_j(x).\]</span></p></li>
+<li><p><strong>Convert the total score to a probability</strong> using the sigmoid:</p>
+<p><span class="math display">\[p(x)=P(y=1\mid x)=\sigma(s(x))=\frac{1}{1+e^{-s(x)}}.\]</span></p></li>
+</ol>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>The score can be any real number; the probability is between 0 and 1.</p>
+<ul>
+<li>A score of 0 maps to 50%; positive scores map above 50%.</li>
+<li>The score is also called <strong>log-odds</strong>, because <span class="math inline">\(s(x)=\log\!\frac{p(x)}{1-p(x)}\)</span>.</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/330px-Logistic-curve.svg.png?utm_source=en.wikipedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail"></p>
+<figcaption>Sigmoid</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+
+<section id="discussion-why-one-hot-encode-hour" class="title-slide slide level1 center">
+<h1>Discussion: Why One-Hot Encode Hour?</h1>
+<p>Hour is numeric, but demand can have <strong>separate morning and evening peaks</strong>.</p>
+<ul>
+<li><strong>Raw hour in logistic regression:</strong> a term <span class="math inline">\(\beta_h h\)</span> assumes the same change in log-odds for every one-hour increase, holding other inputs fixed.</li>
+<li><strong>One-hot encoding (OHE):</strong> each hour gets its own effect relative to hour 0, allowing a flexible hourly pattern.</li>
+<li><strong>Trade-off:</strong> OHE uses more coefficients and ignores cyclic proximity: 23:00 and 00:00 are adjacent in time but separate categories.</li>
+<li><strong>Alternatives:</strong> sine/cosine features preserve the daily cycle.</li>
+</ul>
+</section>
+
+<section id="read-the-fitted-logistic-coefficients" class="title-slide slide level1 center">
+<h1>Read the Fitted Logistic Coefficients</h1>
+<p>The plot shows the eight largest absolute coefficients, plus <code>temperature_C</code>.</p>
+<ul>
+<li><code>hour_17</code> is the score difference between hour 17 and hour 0, holding other inputs fixed.</li>
+<li><code>temperature_C</code> is the score change for one training standard deviation of temperature, holding other inputs fixed.</li>
+<li>A positive coefficient increases the score and hence the predicted probability.
+<ul>
+<li>Magnitudes depend on encoding and scaling; they are not universal importance scores.</li>
+</ul></li>
+</ul>
+
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-6-output-1.png" class="r-stretch"></section>
+
+<section id="worked-example-use-the-fitted-coefficients" class="title-slide slide level1 center">
+<h1>Worked Example: Use the Fitted Coefficients</h1>
+<p>Take the actual validation observation at <strong>17:00 on 2012-07-01</strong>, with temperature <strong>35.24°C</strong>.</p>
 <table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Partition</th>
-<th>Dates</th>
-<th>Purpose</th>
+<th>Encoded term</th>
+<th style="text-align: right;">Value <span class="math inline">\(z_j\)</span></th>
+<th style="text-align: right;">Fitted coefficient</th>
+<th style="text-align: right;">Score contribution</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Training</td>
-<td>Jan 2011–Jun 2012</td>
-<td>Fit preprocessing and models; explanation background</td>
+<td>Intercept</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><span class="math inline">\(-2.887\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-2.887\)</span></td>
 </tr>
 <tr class="even">
-<td>Validation</td>
-<td>Jul–Sep 2012</td>
-<td>Compare candidates and inspect explanations</td>
+<td><code>temperature_C</code></td>
+<td style="text-align: right;"><span class="math inline">\(2.293\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.011\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(2.318\)</span></td>
 </tr>
 <tr class="odd">
-<td>Test</td>
-<td>Oct–Dec 2012</td>
-<td>Evaluate once after model selection</td>
+<td><code>humidity_pct</code></td>
+<td style="text-align: right;"><span class="math inline">\(-1.820\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.340\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.618\)</span></td>
+</tr>
+<tr class="even">
+<td><code>windspeed_kmh</code></td>
+<td style="text-align: right;"><span class="math inline">\(0.825\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.159\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.131\)</span></td>
+</tr>
+<tr class="odd">
+<td><code>hour_17</code></td>
+<td style="text-align: right;"><span class="math inline">\(1.000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4.327\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4.327\)</span></td>
+</tr>
+<tr class="even">
+<td><code>workingday_1</code></td>
+<td style="text-align: right;"><span class="math inline">\(0.000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.059\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.000\)</span></td>
+</tr>
+<tr class="odd">
+<td><code>adverse_weather_1</code></td>
+<td style="text-align: right;"><span class="math inline">\(0.000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.332\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.000\)</span></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Balanced accuracy</strong> is the mean recall of the two classes. A constant prediction scores 0.5 when both classes occur.</p>
-<p>Chronological splitting avoids mixing neighboring hours randomly; seasonal and yearly shifts still limit generalization.</p>
-<aside class="notes">
-<p>13–15 min. Deliberately use a temporal split instead of lab 03’s random split. No test-based model selection or explanation background.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p>Numeric values are standardized using training statistics; OHE values are 0 or 1. The other hour indicators are all 0.</p>
+<p><span class="math display">\[s=\beta_0+\sum_j\beta_j z_j=4.245,\qquad p=\frac{1}{1+e^{-s}}=98.6\%.\]</span></p>
 </section>
 
-<section id="demand-patterns-in-the-training-period" class="title-slide slide level1 center">
-<h1>Demand patterns in the training period</h1>
-<p>Does high demand occur at the same hours on working and non-working days?</p>
-<p>Use the training period to inspect the relationship before fitting models. A visible pattern suggests useful features; it does not prove causality.</p>
-<aside class="notes">
-<p>15–17 min. Ask whether a single linear effect of numeric hour could capture the curve. This motivates categorical hour encoding for logistic regression.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-4-output-1.png" class="r-stretch"></section>
-
-<section id="logistic-regression" class="title-slide slide level1 center">
-<h1>Logistic regression</h1>
-<p>For high demand, <span class="math inline">\(p(x)=P(y=1\mid x)\)</span>:</p>
-<p><span class="math display">\[\log\frac{p(x)}{1-p(x)}=\beta_0+\sum_j\beta_j x_j\]</span></p>
+<section id="the-same-fitted-coefficient-different-probability-changes" class="title-slide slide level1 center">
+<h1>The Same Fitted Coefficient, Different Probability Changes</h1>
+<p>The fitted temperature coefficient is <span class="math inline">\(\beta_T=1.011\)</span>. One training standard deviation is <strong>8.99°C</strong>; the training mean is <strong>14.64°C</strong>.</p>
+<p>Since <span class="math inline">\(z_T=(T-14.64)/8.99\)</span>, raising temperature by 8.99°C raises <span class="math inline">\(z_T\)</span> by 1 and adds <strong>1.011</strong> to the score.</p>
+<p>Start from the actual 00:00 and 17:00 validation observations on 2012-07-01, raise temperature by one training standard deviation:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Observation</th>
+<th>Score change</th>
+<th>Probability change</th>
+<th style="text-align: right;">Percentage-point change</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>00:00</td>
+<td><span class="math inline">\(-1.227\to-0.215\)</span></td>
+<td><span class="math inline">\(22.7\%\to44.6\%\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(+22.0\)</span></td>
+</tr>
+<tr class="even">
+<td>17:00</td>
+<td><span class="math inline">\(4.245\to5.256\)</span></td>
+<td><span class="math inline">\(98.6\%\to99.5\%\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(+0.9\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The score increment is the same.</p>
 <ul>
-<li>Each coefficient changes <strong>log-odds</strong>, holding other inputs fixed.</li>
-<li><span class="math inline">\(\exp(\beta_j)\)</span> is an odds multiplier, not a probability change.</li>
-<li>Here, continuous inputs are standardized; hour is one-hot encoded with hour 0 as reference.</li>
-<li>Interactions require additional features. More terms can reduce readability.</li>
+<li>The probability increment differs because sigmoid depends on the starting score.</li>
+<li>These are controlled model predictions, not causal temperature effects.</li>
 </ul>
-<aside class="notes">
-<p>17–19 min. https://christophm.github.io/interpretable-ml-book/logistic.html . A continuous coefficient refers to one training standard deviation; category coefficients compare with the omitted category.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 
-<section id="read-the-fitted-logistic-coefficients" class="title-slide slide level1 center">
-<h1>Read the fitted logistic coefficients</h1>
-<p>The plot shows the eight largest absolute coefficients, not the whole model.</p>
+<section id="one-prediction-two-scales-score-and-probability" class="title-slide slide level1 center">
+<h1>One Prediction, Two Scales: Score and Probability</h1>
+<p>These panels show the <strong>same fitted model</strong> while temperature varies and other conditions stay fixed.</p>
 <ul>
-<li><code>hour_17</code> compares hour 17 with hour 0.</li>
-<li><code>temperature_C</code> refers to one training standard deviation, holding other transformed features fixed.</li>
-<li>Magnitude depends on encoding and scaling. It is not a universal importance score.</li>
+<li><strong>Left: add contributions.</strong> The temperature term is <span class="math inline">\(\beta_T z_T\)</span>. A fixed temperature increase adds a fixed amount to the score: each hour’s line is straight.</li>
+<li><strong>Right: apply sigmoid.</strong> Each left-hand score becomes <span class="math inline">\(p=1/(1+e^{-s})\)</span>. This bends the response and keeps it between 0 and 1.</li>
+<li>Hour 17 and hour 0 have different score offsets but the same temperature slope: this model has no hour-by-temperature interaction.</li>
 </ul>
-<p><strong>Question:</strong> can a positive coefficient imply a fixed increase of 20 percentage points?</p>
-<aside class="notes">
-<p>19–21 min. No: the sigmoid makes probability changes depend on the starting log-odds. Include the preprocessing when interpreting a model.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-6-output-1.png" class="r-stretch"></section>
-
-<section id="log-odds-and-probability" class="title-slide slide level1 center">
-<h1>Log-odds and probability</h1>
-<p>Hold hour and weather conditions fixed, then vary temperature in the fitted logistic model.</p>
-<p>The log-odds response is linear in standardized temperature. The sigmoid turns it into a curved probability response; the same temperature change need not give the same probability change.</p>
-<aside class="notes">
-<p>Theory 1: use this with the coefficient discussion, within 17–21 min. These are controlled model slices, not observations or causal effects. Working day = 1, adverse weather = 0, other inputs at training medians. Inspect sparse combinations cautiously. The fitted coefficients, not invented parameters, generate both curves.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p>The dotted score line <span class="math inline">\(s=0\)</span> corresponds to the dotted probability line <span class="math inline">\(p=0.5\)</span>.</p>
+<ul>
+<li>Near probability 0 or 1, the same score change has a smaller probability effect.</li>
+</ul>
 
 <img data-src="lab-06-explainability_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"></section>
 
+<section id="coefficients-become-contributions-when-inputs-are-known" class="title-slide slide level1 center">
+<h1>Coefficients Become Contributions When Inputs Are Known</h1>
+<p>A <strong>coefficient</strong> <span class="math inline">\(\beta_j\)</span> is a learned multiplier. Its <strong>contribution</strong> also depends on the encoded value for the observation being explained.</p>
+<p>To compare one hour with the training population, let <span class="math inline">\(\mu_j\)</span> be the training mean of encoded input <span class="math inline">\(j\)</span>:</p>
+<p><span class="math display">\[c_j(x)=\beta_j\bigl(z_j(x)-\mu_j\bigr),\qquad s_{\mathrm{ref}}=\beta_0+\sum_j\beta_j\mu_j.\]</span></p>
+<ul>
+<li><p><span class="math inline">\(c_j(x)\)</span> measures how far this input moves the score from that reference.</p></li>
+<li><p>Add the reference score and all contributions to reconstruct the score, then apply sigmoid <strong>once</strong>:</p>
+<p><span class="math display">\[s(x)=s_{\mathrm{ref}}+\sum_j c_j(x),\qquad p(x)=\sigma\!\left(s_{\mathrm{ref}}+\sum_j c_j(x)\right).\]</span></p></li>
+</ul>
+</section>
+
+<section id="logistic-regression-local-terms-and-a-global-summary" class="title-slide slide level1 center">
+<h1>Logistic Regression: Local Terms and a Global Summary</h1>
+<ul>
+<li><strong>Left:</strong> signed contributions for one validation observation, relative to the training mean. Positive bars raise its score; negative bars lower it.</li>
+<li><strong>Right:</strong> average absolute contribution over validation observations.
+<ul>
+<li>For <strong>hour</strong>, sum its OHE contributions before taking the absolute value.</li>
+</ul></li>
+</ul>
+
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
+
+<section id="decision-tree" class="title-slide slide level1 center">
+<h1>Decision tree</h1>
+
+<img data-src="img/dt.png" class="r-stretch quarto-figure-center"><p class="caption">Decision tree</p></section>
+
 <section id="decision-tree-rules-and-paths" class="title-slide slide level1 center">
 <h1>Decision tree: rules and paths</h1>
+<p>Trace a path from root to leaf. What information does the model ignore on that path?</p>
 <ul>
 <li>Each split asks a threshold question; a path joins conditions with <strong>AND</strong>.</li>
 <li>A leaf’s class fraction estimates high-demand probability here; it is not automatically calibrated.</li>
-<li>Trees can learn interactions without explicitly creating interaction columns.</li>
+<li>Trees can learn interactions without explicitly creating interaction features.</li>
 <li>A small tree is inspectable; many leaves make the full model difficult to read.</li>
 </ul>
-<p>Trace a path from root to leaf. What information does the model ignore on that path?</p>
-<aside class="notes">
-<p>21–24 min, including the plot. Source: https://christophm.github.io/interpretable-ml-book/tree.html . The tree receives raw features, including numeric hour. This is a simple baseline rather than an optimized cyclic representation.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-9-output-1.png" class="r-stretch"></section>
 
 <section id="how-the-tree-chooses-a-split" class="title-slide slide level1 center">
 <h1>How the tree chooses a split</h1>
 <p>For the root’s selected feature, compare candidate thresholds using weighted child <strong>Gini impurity</strong>.</p>
-<p>The learner favors purer child groups, subject to constraints such as minimum leaf size. This plot inspects the chosen feature; training also compared the other features.</p>
-<aside class="notes">
-<p>Theory 1: use as part of the tree discussion, 21–24 min. Gini = 2 p (1-p) in the binary case. Recompute costs on training rows only. The selected root must attain the minimum on this feature, allowing ties. Source: https://scikit-learn.org/stable/modules/tree.html#classification-criteria</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<ul>
+<li>The learner favors purer child groups, subject to constraints such as minimum leaf size.</li>
+</ul>
 
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-9-output-1.png" class="r-stretch"></section>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
+
+<section id="decision-tree-importance-from-impurity-reduction" class="title-slide slide level1 center">
+<h1>Decision tree: importance from impurity reduction</h1>
+<p>For split node <span class="math inline">\(t\)</span>, let <span class="math inline">\(N_t\)</span> be the <strong>number of training records reaching that node</strong> and <span class="math inline">\(G(t)\)</span> its Gini impurity.</p>
+<ul>
+<li>Assume all records have equal weight.</li>
+</ul>
+<p><span class="math inline">\(N\)</span> is the total number of training records; <span class="math inline">\(N_L\)</span> and <span class="math inline">\(N_R\)</span> count those reaching the left and right children. The split’s credit <span class="math inline">\(\Delta_t\)</span> is</p>
+<p><span class="math display">\[\Delta_t=\frac{N_t}{N}\left[G(t)-\frac{N_L}{N_t}G(L)-\frac{N_R}{N_t}G(R)\right].\]</span></p>
+<ol type="1">
+<li>Credit the feature used at that node with <span class="math inline">\(\Delta_t\)</span>.</li>
+<li>Sum its credits over <strong>all split nodes</strong> in the fitted tree.</li>
+<li>Normalize feature totals to sum to one when total reduction is positive.</li>
+</ol>
+<p>This is <code>feature_importances_</code>: a <strong>global training statistic</strong></p>
+<ul>
+<li>It has no direction and does not explain one prediction’s probability.</li>
+</ul>
+</section>
+
+<section id="tree-importance-training-credit-versus-validation-reliance" class="title-slide slide level1 center">
+<h1>Tree importance: training credit versus validation reliance</h1>
+<p><strong>Why temperature has zero permutation importance here?</strong></p>
+<div class="fragment">
+<p>The split threshold is 11.27°C, but all validation temperatures are at least 11.74°C.</p>
+<ul>
+<li>Shuffling them never changes the branch taken.</li>
+<li>Its training impurity importance can still be high. <em>Why</em>?</li>
+</ul>
+</div>
+
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-11-output-1.png" class="r-stretch"></section>
 
 <section id="logistic-regression-versus-a-small-tree" class="title-slide slide level1 center">
 <h1>Logistic regression versus a small tree</h1>
@@ -780,65 +757,22 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>Neither family is automatically accurate, stable, or understandable to every user.</p>
-<aside class="notes">
-<p>24–26 min. Compare model structure, not a claim of a universal accuracy–interpretability tradeoff.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 
-<section id="different-models-different-response-shapes" class="title-slide slide level1 center">
-<h1>Different models, different response shapes</h1>
-<p>Change hour while fixing weather at training medians. Compare working and non-working days.</p>
-<p>The tree produces steps. Logistic regression uses separate hour-category coefficients here; it can produce a nonlinear hourly pattern even though its transformed score is additive.</p>
-<aside class="notes">
-<p>Theory 1: visual counterpart to the model-family comparison, 24–26 min. Controlled predictions, not empirical frequency curves or a causal intervention. Lines join discrete hour values for readability. Temperature, humidity and wind are fixed at training medians, adverse weather = 0.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="which-procedure-could-you-reproduce-by-hand" class="title-slide slide level1 center">
+<h1>Which procedure could you reproduce by hand?</h1>
 
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
 
-<section id="compare-predictions-on-later-hours" class="title-slide slide level1 center">
-<h1>Compare predictions on later hours</h1>
-<p>Same training period, validation period, target, and classification threshold (0.5).</p>
+<section id="predictive-performance-and-structural-complexity" class="title-slide slide level1 center">
+<h1>Predictive Performance and Structural Complexity</h1>
+<p>Does improved prediction quality justify a model that takes more work to simulate?</p>
 <ul>
-<li>Balanced accuracy gives both classes equal weight.</li>
-<li>High-demand recall shows how often the model catches busy hours.</li>
-<li>Logistic preprocessing is fitted on training rows only.</li>
+<li><strong>Prediction quality:</strong> balanced accuracy and high-demand recall compare predictions with observed labels.</li>
+<li><strong>Structural complexity:</strong> global coefficients, rules and leaves; local terms or split checks needed for one prediction <span class="citation" data-cites="lipton2018mythos">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lipton 2018</a>)</span>.</li>
+<li><strong>Human simulatability:</strong> measure how accurately and quickly people reproduce model predictions. The counts below are proxies, not a human evaluation <span class="citation" data-cites="doshivelez2017towards poursabzi2021manipulating">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Doshi-Velez and Kim 2017</a>; <a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Poursabzi-Sangdeh et al. 2021</a>)</span>.</li>
 </ul>
-<p>Read the measured scores before choosing a model. The three candidates are illustrations, not exhaustive HPO.</p>
-<aside class="notes">
-<p>26–28 min. Forest may improve accuracy but its many rules are harder to inspect. Discuss the cost of missed high-demand hours.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<div id="5f124a70" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-10T06:24:02.939045Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-10T06:24:02.938833Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-10T06:24:02.945715Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-10T06:24:02.944870Z&quot;}}" data-execution_count="10">
+<div id="5f124a70" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:54.458238Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:54.458030Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:54.520249Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:54.519059Z&quot;}}" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -859,25 +793,53 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <thead>
 <tr class="header" style="text-align: right;">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">balanced_accuracy</th>
-<th data-quarto-table-cell-role="th">high_demand_recall</th>
+<th data-quarto-table-cell-role="th">Logistic regression</th>
+<th data-quarto-table-cell-role="th">Depth-2 tree</th>
+<th data-quarto-table-cell-role="th">Random forest</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">Logistic regression</th>
+<th data-quarto-table-cell-role="th">Balanced accuracy</th>
 <td>0.883</td>
-<td>0.869</td>
+<td>0.857</td>
+<td>0.906</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">Tree depth 2</th>
-<td>0.857</td>
+<th data-quarto-table-cell-role="th">High-demand recall</th>
+<td>0.869</td>
 <td>0.995</td>
+<td>0.867</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">Forest</th>
-<td>0.906</td>
-<td>0.867</td>
+<th data-quarto-table-cell-role="th">Original inputs used</th>
+<td>6</td>
+<td>3</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Global learned structure</th>
+<td>28 coefficients + intercept</td>
+<td>3 split rules</td>
+<td>100 trees; 8,769 splits</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Leaves (sum across trees)</th>
+<td>Not applicable</td>
+<td>4</td>
+<td>8,869</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Mean local work (validation)</th>
+<td>4.92 terms</td>
+<td>2.00 split checks</td>
+<td>660.59 split checks</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Max local work (validation)</th>
+<td>6 terms</td>
+<td>2 split checks</td>
+<td>800 split checks</td>
 </tr>
 </tbody>
 </table>
@@ -887,146 +849,21 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </div>
 </section>
 
-<section id="checkpoint-what-would-you-inspect" class="title-slide slide level1 center">
-<h1>Checkpoint: what would you inspect?</h1>
-<p>A model reports excellent validation performance.</p>
-<ol type="1">
-<li>Which inputs could leak the answer?</li>
-<li>What distinguishes a globally readable model from a local explanation?</li>
-<li>Which stakeholder question can logistic coefficients answer?</li>
-<li>What would you lose by reducing a tree to depth 1?</li>
-</ol>
-<p>Use these questions to frame the first coding session.</p>
-<aside class="notes">
-<p>28–30 min. Invite one answer per question; connect directly to the templates.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
 <section id="coding-break-1-exercises-12-15-minutes" class="title-slide slide level1 center">
 <h1>Coding break 1: Exercises 1–2 (~15 minutes)</h1>
 <p><a id="coding-break-1" href=""></a></p>
-<p>Run the provided setup above, then complete <a href="#/coding-exercises-1">Exercises 1–2</a>.</p>
-<ul>
-<li><strong>7 min:</strong> fit and compare logistic regression and a depth-4 tree.</li>
-<li><strong>8 min:</strong> inspect a coefficient and trace a prediction through the tree.</li>
-</ul>
-<p>Deliver a validation comparison and a short explanation of one hour’s prediction. Solutions are hidden below.</p>
-</section>
-
-<section id="exercise-1-compare-interpretable-models" class="title-slide slide level1 center">
-<h1>Exercise 1: compare interpretable models</h1>
-<p><a id="coding-exercises-1" href=""></a></p>
-<p>Reuse the fitted <code>logistic</code> pipeline. Fit a depth-4 tree on training rows with <code>min_samples_leaf=40</code> and seed 42.</p>
-<p>Compare validation balanced accuracy and high-demand recall. Does extra depth help here?</p>
-<p>Keep the test period unused.</p>
-<div id="78aa4663" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-10T06:24:02.947519Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-10T06:24:02.947340Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-10T06:24:02.950219Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-10T06:24:02.949373Z&quot;}}" data-execution_count="11">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="co"># student_tree = DecisionTreeClassifier(</span></span>
-<span id="cb1-2"><a href="" aria-label="2"></a><span class="co">#     max_depth=..., min_samples_leaf=40, random_state=RANDOM_STATE,</span></span>
-<span id="cb1-3"><a href="" aria-label="3"></a><span class="co"># ).fit(..., ...)</span></span>
-<span id="cb1-4"><a href="" aria-label="4"></a><span class="co"># student_scores = pd.DataFrame({</span></span>
-<span id="cb1-5"><a href="" aria-label="5"></a><span class="co">#     "logistic": evaluate(logistic, ..., ...),</span></span>
-<span id="cb1-6"><a href="" aria-label="6"></a><span class="co">#     "tree depth 4": evaluate(student_tree, ..., ...),</span></span>
-<span id="cb1-7"><a href="" aria-label="7"></a><span class="co"># }).T</span></span>
-<span id="cb1-8"><a href="" aria-label="8"></a><span class="co"># display(student_scores.round(3))</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="exercise-2-explain-a-coefficient-and-a-path" class="title-slide slide level1 center">
-<h1>Exercise 2: explain a coefficient and a path</h1>
-<p>Use validation row position 24 throughout the exercise.</p>
-<ol type="1">
-<li>Convert the temperature coefficient into an odds multiplier. What is its unit?</li>
-<li>Use <code>decision_path</code> to list the tree’s visited split conditions.</li>
-<li>Show the tree’s predicted probability and observed class for this hour.</li>
-</ol>
-<p>Why does neither account establish what would happen if we changed the real weather?</p>
-<div id="f66f020c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-10T06:24:02.951895Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-10T06:24:02.951724Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-10T06:24:02.954381Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-10T06:24:02.953674Z&quot;}}" data-execution_count="12">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="co"># student_x = X_valid.iloc[[...]]  # Position 24, not row label 24.</span></span>
-<span id="cb2-2"><a href="" aria-label="2"></a><span class="co"># student_odds_multiplier = np.exp(coefs[...])  # Use "temperature_C".</span></span>
-<span id="cb2-3"><a href="" aria-label="3"></a><span class="co"># print(student_odds_multiplier)</span></span>
-<span id="cb2-4"><a href="" aria-label="4"></a><span class="co"># student_nodes = student_tree.decision_path(student_x).indices</span></span>
-<span id="cb2-5"><a href="" aria-label="5"></a><span class="co"># for node in student_nodes:</span></span>
-<span id="cb2-6"><a href="" aria-label="6"></a><span class="co">#     feature = student_tree.tree_.feature[node]</span></span>
-<span id="cb2-7"><a href="" aria-label="7"></a><span class="co">#     if feature &gt;= 0:  # Leaves have a negative feature index.</span></span>
-<span id="cb2-8"><a href="" aria-label="8"></a><span class="co">#         name = X.columns[feature]</span></span>
-<span id="cb2-9"><a href="" aria-label="9"></a><span class="co">#         threshold = student_tree.tree_.threshold[node]</span></span>
-<span id="cb2-10"><a href="" aria-label="10"></a><span class="co">#         direction = "&lt;=" if student_x.iloc[0, feature] &lt;= threshold else "&gt;"</span></span>
-<span id="cb2-11"><a href="" aria-label="11"></a><span class="co">#         print(name, direction, round(threshold, 2))</span></span>
-<span id="cb2-12"><a href="" aria-label="12"></a><span class="co"># print("P(high):", student_tree.predict_proba(student_x)[0, 1])</span></span>
-<span id="cb2-13"><a href="" aria-label="13"></a><span class="co"># print("Observed:", y_valid.iloc[...])</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="coding-session-1-solution" class="title-slide slide level1 scrollable center">
-<h1>Coding session 1 solution</h1>
-<details>
-<summary>
-Show the solution
-</summary>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>student_tree <span class="op">=</span> DecisionTreeClassifier(</span>
-<span id="cb3-2"><a href="" aria-label="2"></a>    max_depth<span class="op">=</span><span class="dv">4</span>, min_samples_leaf<span class="op">=</span><span class="dv">40</span>, random_state<span class="op">=</span>RANDOM_STATE,</span>
-<span id="cb3-3"><a href="" aria-label="3"></a>).fit(X_train, y_train)</span>
-<span id="cb3-4"><a href="" aria-label="4"></a>student_scores <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb3-5"><a href="" aria-label="5"></a>    <span class="st">"logistic"</span>: evaluate(logistic, X_valid, y_valid),</span>
-<span id="cb3-6"><a href="" aria-label="6"></a>    <span class="st">"tree depth 4"</span>: evaluate(student_tree, X_valid, y_valid),</span>
-<span id="cb3-7"><a href="" aria-label="7"></a>}).T</span>
-<span id="cb3-8"><a href="" aria-label="8"></a>display(student_scores.<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb3-9"><a href="" aria-label="9"></a>student_x <span class="op">=</span> X_valid.iloc[[<span class="dv">24</span>]]</span>
-<span id="cb3-10"><a href="" aria-label="10"></a>student_odds_multiplier <span class="op">=</span> np.exp(coefs[<span class="st">"temperature_C"</span>])</span>
-<span id="cb3-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="st">"Odds multiplier per training SD:"</span>, student_odds_multiplier)</span>
-<span id="cb3-12"><a href="" aria-label="12"></a>student_nodes <span class="op">=</span> student_tree.decision_path(student_x).indices</span>
-<span id="cb3-13"><a href="" aria-label="13"></a><span class="cf">for</span> node <span class="kw">in</span> student_nodes:</span>
-<span id="cb3-14"><a href="" aria-label="14"></a>    feature <span class="op">=</span> student_tree.tree_.feature[node]</span>
-<span id="cb3-15"><a href="" aria-label="15"></a>    <span class="cf">if</span> feature <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
-<span id="cb3-16"><a href="" aria-label="16"></a>        name <span class="op">=</span> X.columns[feature]</span>
-<span id="cb3-17"><a href="" aria-label="17"></a>        threshold <span class="op">=</span> student_tree.tree_.threshold[node]</span>
-<span id="cb3-18"><a href="" aria-label="18"></a>        direction <span class="op">=</span> <span class="st">"&lt;="</span> <span class="cf">if</span> student_x.iloc[<span class="dv">0</span>, feature] <span class="op">&lt;=</span> threshold <span class="cf">else</span> <span class="st">"&gt;"</span></span>
-<span id="cb3-19"><a href="" aria-label="19"></a>        <span class="bu">print</span>(name, direction, <span class="bu">round</span>(threshold, <span class="dv">2</span>))</span>
-<span id="cb3-20"><a href="" aria-label="20"></a><span class="bu">print</span>(<span class="st">"P(high):"</span>, student_tree.predict_proba(student_x)[<span class="dv">0</span>, <span class="dv">1</span>])</span>
-<span id="cb3-21"><a href="" aria-label="21"></a><span class="bu">print</span>(<span class="st">"Observed:"</span>, y_valid.iloc[<span class="dv">24</span>])</span></code></pre></div>
-<p>The odds multiplier refers to one training standard deviation, holding other inputs fixed. A path describes the fitted tree; neither explanation identifies a causal weather effect.</p>
-</details>
+<p>Run the full notebook, then complete <a href="#/exercise-1">Exercise 1</a> and <a href="#/exercise-2">Exercise 2</a>.</p>
 </section>
 
 <section id="local-explanations-for-a-fixed-forest" class="title-slide slide level1 center">
 <h1>Local explanations for a fixed forest</h1>
 <p><a id="theory-block-2" href=""></a></p>
-<p>The forest is already trained. We explain its <strong>high-demand probability</strong> for one fixed validation hour.</p>
+<p>We explain its <strong>high-demand probability</strong> for one fixed validation hour.</p>
 <ul>
 <li>LIME fits a simple surrogate near this observation.</li>
 <li>SHAP allocates the prediction minus a reference output among features.</li>
 </ul>
-<p>The explanation method does not retrain the forest. A sensible explanation can still describe an incorrect prediction.</p>
-<aside class="notes">
-<p>Theory 2, 0–3 min. Show the same row and same class for both methods. Avoid changing the model between explanations.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<div id="16cb7082" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-10T06:24:02.956043Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-10T06:24:02.955873Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-10T06:24:02.967807Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-10T06:24:02.967133Z&quot;}}" data-execution_count="13">
+<div id="16cb7082" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:54.522196Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:54.521994Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:54.537969Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:54.537045Z&quot;}}" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1059,15 +896,15 @@ Show the solution
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">13003</th>
+<th data-quarto-table-cell-role="th">13857</th>
+<td>14</td>
 <td>0</td>
 <td>0</td>
-<td>0</td>
-<td>27.72</td>
-<td>66.0</td>
-<td>0.0</td>
-<td>0</td>
-<td>0.041</td>
+<td>34.3</td>
+<td>42.0</td>
+<td>31.001</td>
+<td>1</td>
+<td>0.787</td>
 </tr>
 </tbody>
 </table>
@@ -1077,100 +914,267 @@ Show the solution
 </div>
 </section>
 
-<section id="lime-a-local-surrogate" class="title-slide slide level1 center">
-<h1>LIME: a local surrogate</h1>
+<section id="lime-local-interpretable-model-agnostic-explanations" class="title-slide slide level1 center">
+<h1>LIME: Local Interpretable Model-agnostic Explanations</h1>
+
+</section>
+
+<section id="explain-one-forest-prediction" class="title-slide slide level1 center">
+<h1>Explain One Forest Prediction</h1>
+<p><strong>LIME</strong> learns a small explanatory model for one observation <span class="citation" data-cites="ribeiro2016should">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>)</span>.</p>
+<blockquote>
+<p>Our forest combines 100 trees. For <strong>14:00 on 5 August 2012</strong>, its inputs include hour 14, temperature <strong>34.30°C</strong>, humidity <strong>42%</strong>, and a non-working-day flag.</p>
+<p>Which input conditions help explain the forest’s high-demand probability for this observation?</p>
+</blockquote>
+<p>We want a short explanation of this one prediction that an operator can inspect.</p>
+</section>
+
+<section id="lime-explain-one-forest-prediction" class="title-slide slide level1 center">
+<h1>LIME: Explain One Forest Prediction</h1>
+<p>Imagine asking the forest many questions about alternative input rows:</p>
+<ul>
+<li>What does it predict for another hour of the day?</li>
+<li>What does it predict with a different temperature or working-day flag?</li>
+</ul>
+<p>LIME samples many such rows and records the <strong>forest’s answers</strong>.</p>
+<ul>
+<li>It then teaches a small linear model to imitate those answers, giving greater weight to rows similar to the observation we are explaining.</li>
+<li>This small model is the <strong>surrogate</strong>: a stand-in for the forest around one observation.</li>
+<li>We read its few coefficients to see which conditions support or oppose a high-demand prediction.</li>
+</ul>
+<p><strong>Local</strong> means that agreement matters most around this observation.</p>
+<ul>
+<li>The same surrogate may work poorly elsewhere.</li>
+</ul>
+</section>
+
+<section id="lime-agreement-plus-simplicity" class="title-slide slide level1 center">
+<h1>LIME: Agreement Plus Simplicity</h1>
+<p>Choose a simple model that closely imitates the forest around the observation we want to explain <span class="citation" data-cites="ribeiro2016should">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>)</span>.</p>
+<p><span class="math display">\[g_x=\arg\min_{g\in G}\left[L(f,g,\pi_x)+\Omega(g)\right].\]</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(x\)</span></td>
+<td>The one observation being explained</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(f\)</span></td>
+<td>The trained forest’s high-demand probability function</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(g\in G\)</span></td>
+<td>One candidate surrogate from the family <span class="math inline">\(G\)</span> of allowed simple models</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\pi_x\)</span></td>
+<td>Weights expressing how similar sampled observations are to <span class="math inline">\(x\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(L(f,g,\pi_x)\)</span></td>
+<td>How much the surrogate disagrees with the forest, emphasizing similar observations</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\Omega(g)\)</span></td>
+<td>A penalty or restriction keeping the surrogate small</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\arg\min\)</span>, <span class="math inline">\(g_x\)</span></td>
+<td>Select the model with the smallest total; call that fitted model <span class="math inline">\(g_x\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section id="lime-the-formula-used-by-tabular-surrogate" class="title-slide slide level1 center">
+<h1>LIME: The Formula Used by Tabular Surrogate</h1>
+<p><span class="math display">\[\min_{b_0,b}\underbrace{\sum_{i=1}^{M}w_i\left[y_i-(b_0+b^\top z_i')\right]^2}_{\text{imitate forest answers nearby}}+\underbrace{\lambda\sum_j b_j^2}_{\text{shrink coefficients}}.\]</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Plain meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(M\)</span>, <span class="math inline">\(i\)</span></td>
+<td>Number of sampled rows; <span class="math inline">\(i\)</span> identifies one sampled row</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(z_i\)</span>, <span class="math inline">\(y_i=f(z_i)\)</span></td>
+<td>A sampled raw row and the forest’s answer for it</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(z_i'=h_x(z_i)\)</span></td>
+<td>Standardized numeric inputs and yes/no category matches; only selected terms enter the fit</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(b_0\)</span>, <span class="math inline">\(b\)</span>, <span class="math inline">\(b^\top z_i'\)</span></td>
+<td>Surrogate intercept, coefficients, and the sum of coefficient × encoded-input terms</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(w_i=\exp[-d_i^2/(2\sigma^2)]\)</span></td>
+<td>How strongly row <span class="math inline">\(i\)</span> influences the fit</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(d_i\)</span></td>
+<td>Distance in standardized inputs and category matches</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\lambda\)</span></td>
+<td>Strength of coefficient shrinkage</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(y_i\)</span></td>
+<td>Forest probabilities</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section id="lime-the-approach-in-our-bike-example" class="title-slide slide level1 center">
+<h1>LIME: The Approach in Our Bike Example</h1>
 <ol type="1">
-<li>Generate perturbed tabular rows; query the forest on them.</li>
-<li>Weight rows by proximity to the observation.</li>
-<li>Fit a small linear model to approximate the forest’s outputs.</li>
+<li><strong>Choose the observation:</strong> 14:00 on 5 August 2012, 34.30°C, 42% humidity, non-working day.</li>
+<li><strong>Sample 5,000 alternative rows</strong> around its numeric inputs. Include the original observation.</li>
+<li><strong>Ask the forest for a probability</strong> on every sampled row..</li>
+<li><strong>Encode inputs:</strong> standardize numeric fields; encode whether working-day and adverse-weather flags match the observation.</li>
+<li><strong>Weight similar rows more strongly</strong> using kernel width 0.5, select four terms, and fit the small linear surrogate.</li>
+<li><strong>Read its coefficients and check its fit.</strong> Repeat with another seed to check stability.</li>
 </ol>
-<p><span class="math display">\[g_x=\arg\min_{g\in G}L(f,g,\pi_x)+\Omega(g)\]</span></p>
-<p><span class="math inline">\(L\)</span> penalizes local disagreement; <span class="math inline">\(\Omega\)</span> limits explanation complexity.</p>
-<p>The surrogate approximates <strong>model predictions</strong>, not observed labels <span class="citation" data-cites="ribeiro2016should">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>)</span>.</p>
-<aside class="notes">
-<p>3–6 min. Source: https://christophm.github.io/interpretable-ml-book/lime.html . The sparse surrogate trades fidelity for simplicity; the predictive forest is fixed.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p><code>num_features=4</code> keeps the explanation short. Numeric fields remain continuous here; they are not converted into temperature intervals.</p>
+<div id="ee4eb295" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:54.546038Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:54.545829Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:54.611734Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:54.610652Z&quot;}}" data-execution_count="15">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="kw">def</span> make_lime_explainer(seed<span class="op">=</span><span class="dv">42</span>, kernel_width<span class="op">=</span><span class="fl">0.5</span>):</span>
+<span id="cb1-2"><a href="" aria-label="2"></a>    <span class="cf">return</span> LimeTabularExplainer(</span>
+<span id="cb1-3"><a href="" aria-label="3"></a>        X_train.to_numpy(), feature_names<span class="op">=</span>feature_names,</span>
+<span id="cb1-4"><a href="" aria-label="4"></a>        class_names<span class="op">=</span>[<span class="st">"low demand"</span>, <span class="st">"high demand"</span>], categorical_features<span class="op">=</span>category_positions,</span>
+<span id="cb1-5"><a href="" aria-label="5"></a>        mode<span class="op">=</span><span class="st">"classification"</span>, discretize_continuous<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-6"><a href="" aria-label="6"></a>        sample_around_instance<span class="op">=</span><span class="va">True</span>, kernel_width<span class="op">=</span>kernel_width, random_state<span class="op">=</span>seed)</span>
+<span id="cb1-7"><a href="" aria-label="7"></a></span>
+<span id="cb1-8"><a href="" aria-label="8"></a><span class="kw">def</span> explain_lime(row, seed<span class="op">=</span><span class="dv">42</span>, num_features<span class="op">=</span><span class="dv">4</span>, num_samples<span class="op">=</span><span class="dv">5000</span>,</span>
+<span id="cb1-9"><a href="" aria-label="9"></a>                 kernel_width<span class="op">=</span><span class="fl">0.5</span>, model_regressor<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb1-10"><a href="" aria-label="10"></a>    <span class="cf">return</span> make_lime_explainer(seed, kernel_width).explain_instance(</span>
+<span id="cb1-11"><a href="" aria-label="11"></a>        row.iloc[<span class="dv">0</span>].to_numpy(), forest_proba, labels<span class="op">=</span>(<span class="dv">1</span>,), num_features<span class="op">=</span>num_features,</span>
+<span id="cb1-12"><a href="" aria-label="12"></a>        num_samples<span class="op">=</span>num_samples, model_regressor<span class="op">=</span>model_regressor)</span>
+<span id="cb1-13"><a href="" aria-label="13"></a></span>
+<span id="cb1-14"><a href="" aria-label="14"></a>lime_exp <span class="op">=</span> explain_lime(x)</span></code></pre></div>
+</details>
+</div>
 </section>
 
-<section id="a-neighborhood-for-tabular-data" class="title-slide slide level1 center">
-<h1>A neighborhood for tabular data</h1>
-<p>What counts as “near” this hour?</p>
-<ul>
-<li>Mark hour and binary inputs as categorical for perturbation.</li>
-<li>Scale continuous inputs internally when calculating proximity.</li>
-<li>Choose a kernel width, sample budget, seed, and number of explanation terms.</li>
-<li>Individual feature sampling can create implausible combinations of hour, weather, and working-day status.</li>
-</ul>
-<p>A different neighborhood can lead to a different explanation.</p>
-<aside class="notes">
-<p>6–8 min. Source: Molnar LIME and https://lime-ml.readthedocs.io/en/latest/lime.html . Here hour is treated categorically by the explainer although the forest splits it numerically. This makes the explanation encoding explicit.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="lime-raw-inputs-become-surrogate-inputs" class="title-slide slide level1 center">
+<h1>LIME: Raw Inputs Become Surrogate Inputs</h1>
+<p>The forest receives raw values. The local surrogate uses training-standardized numeric values and yes/no matches for categorical flags.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Input to the surrogate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hour, temperature, humidity, windspeed</td>
+<td><span class="math inline">\((\text{value}-\text{training mean})/\text{training standard deviation}\)</span></td>
+</tr>
+<tr class="even">
+<td>Working-day flag</td>
+<td>1 when it matches this observation’s non-working-day flag; 0 otherwise</td>
+</tr>
+<tr class="odd">
+<td>Adverse-weather flag</td>
+<td>1 when it matches this observation’s weather flag; 0 otherwise</td>
+</tr>
+</tbody>
+</table>
 </section>
 
-<section id="inside-lime-sampling-weighting-and-fitting" class="title-slide slide level1 center">
-<h1>Inside LIME: sampling, weighting, and fitting</h1>
-<p>Left: sampled rows that differ from the hour receive less weight. Right: compare the forest outputs with the fitted surrogate on those rows.</p>
-<p>Left marker size shows the number of sampled rows at each distance; right marker size shows local weight. The red cross is the explained hour. This teaching trace keeps all six conditions so the full interpretable distance remains visible. The earlier sparse explanation keeps four.</p>
-<aside class="notes">
-<p>Theory 2: use during the neighborhood and fit explanation, 6–12 min. This records the actual arrays passed by LIME to its public model_regressor, rather than drawing a fabricated neighborhood. The six-term trace is separate from the four-term lime_exp. Distance is Euclidean in the discretized match indicators. Source: https://lime-ml.readthedocs.io/en/latest/lime.html</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-16-output-1.png" class="r-stretch"></section>
-
-<section id="read-a-lime-explanation" class="title-slide slide level1 center">
-<h1>Read a LIME explanation</h1>
-<p>The bars are surrogate coefficients for conditions, such as an hour category or a temperature interval.</p>
-<ul>
-<li>Positive weights increase the surrogate’s high-demand score.</li>
-<li>The coefficients are not causal effects or effects per degree Celsius.</li>
-<li>Only four terms are shown: the explanation is deliberately sparse.</li>
-</ul>
-<p>Which conditions support this prediction? Which oppose it?</p>
-<aside class="notes">
-<p>8–10 min. Show all four terms. Do not compare raw LIME condition coefficients directly with SHAP values as equivalent estimands.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="sampling-weighting-and-fitting" class="title-slide slide level1 center">
+<h1>Sampling, Weighting, and Fitting</h1>
+<p>Distance from the explained observation determines each sampled row’s weight.</p>
+<p>The red cross is the explained observation.</p>
 
 <img data-src="lab-06-explainability_files/figure-revealjs/cell-17-output-1.png" class="r-stretch"></section>
+
+<section id="read-a-lime-explanation" class="title-slide slide level1 center">
+<h1>Read a LIME Explanation</h1>
+<p>The bars are coefficients of the small local surrogate:</p>
+<ul>
+<li>Positive numeric coefficients mean increasing that standardized input raises the surrogate output; negative coefficients mean it lowers it.</li>
+<li><code>workingday=0</code> describes matching this observation’s non-working-day flag.</li>
+</ul>
+<p>These are not causal effects.</p>
+
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-18-output-1.png" class="r-stretch"></section>
+
+<section id="reading-this-lime-result" class="title-slide slide level1 center">
+<h1>Reading This LIME Result</h1>
+<p>At <strong>14:00 on 5 August 2012</strong>, the forest predicts <strong>78.73%</strong> high-demand probability.</p>
+<ul>
+<li>Use the actual encoded values to read the four terms:</li>
+</ul>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Term</th>
+<th style="text-align: right;">Coefficient</th>
+<th style="text-align: right;">Encoded value</th>
+<th style="text-align: right;">Contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>workingday</code></td>
+<td style="text-align: right;"><span class="math inline">\(+0.186\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(+1.000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(+0.186\)</span></td>
+</tr>
+<tr class="even">
+<td><code>hour</code></td>
+<td style="text-align: right;"><span class="math inline">\(+0.150\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(+0.354\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(+0.053\)</span></td>
+</tr>
+<tr class="odd">
+<td><code>humidity_pct</code></td>
+<td style="text-align: right;"><span class="math inline">\(-0.043\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-1.019\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(+0.044\)</span></td>
+</tr>
+<tr class="even">
+<td><code>windspeed_kmh</code></td>
+<td style="text-align: right;"><span class="math inline">\(-0.035\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(+2.146\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.075\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The intercept is <strong>0.577</strong>. Add it to the contributions to obtain the surrogate’s <strong>78.43%</strong> prediction.</p>
+<ul>
+<li>A negative humidity coefficient means increasing humidity lowers the local output.</li>
+</ul>
+</section>
 
 <section id="does-the-surrogate-fit-the-forest" class="title-slide slide level1 center">
 <h1>Does the surrogate fit the forest?</h1>
@@ -1179,22 +1183,7 @@ Show the solution
 <li><strong>Point discrepancy:</strong> surrogate prediction versus forest probability at this hour.</li>
 <li><strong>Weighted <span class="math inline">\(R^2\)</span>:</strong> agreement on LIME’s sampled neighborhood.</li>
 </ul>
-<p>These are surrogate diagnostics, not held-out classification accuracy. A small point discrepancy can coexist with poor neighborhood fit.</p>
-<p>What should an operator do when local fit is poor?</p>
-<aside class="notes">
-<p>10–12 min. Neither diagnostic alone validates the explanation. The surrogate is linear in its interpretable inputs and can produce values outside [0,1].</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<div id="a6b1744b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-10T06:24:03.489092Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-10T06:24:03.488896Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-10T06:24:03.502686Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-10T06:24:03.501961Z&quot;}}" data-execution_count="17">
+<div id="a6b1744b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:55.125039Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:55.124856Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:55.139295Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:55.138502Z&quot;}}" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1224,10 +1213,10 @@ Show the solution
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>0.041</td>
-<td>0.179</td>
-<td>0.139</td>
-<td>0.144</td>
+<td>0.787</td>
+<td>0.784</td>
+<td>0.003</td>
+<td>0.628</td>
 </tr>
 </tbody>
 </table>
@@ -1241,185 +1230,698 @@ Show the solution
 <h1>LIME stability</h1>
 <p>Repeat the explanation of the <strong>same model and hour</strong> with different random seeds.</p>
 <ul>
-<li>Do the strongest conditions and their signs change?</li>
+<li>Do the strongest terms and their signs change?</li>
 <li>Do local fit and point discrepancy change?</li>
 <li>Would the explanation support the same operator decision?</li>
 </ul>
-<p>Seed stability tests sampling variability only; it does not test model retraining or population shift.</p>
-<aside class="notes">
-<p>12–14 min. Invite students to predict whether a fixed random_state guarantees a correct explanation. It guarantees reproducibility of that sampling run.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-19-output-1.png" class="r-stretch"></section>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-20-output-1.png" class="r-stretch"></section>
 
-<section id="shap-allocate-a-prediction-difference" class="title-slide slide level1 center">
-<h1>SHAP: allocate a prediction difference</h1>
-<p><span class="math display">\[f(x)=\phi_0+\sum_j\phi_j(x)\]</span></p>
+<section id="lime-limitations-and-the-next-question" class="title-slide slide level1 center">
+<h1>LIME: Limitations and the Next Question</h1>
+<p>LIME provides a short local summary, with several limitations <span class="citation" data-cites="ribeiro2016should">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>)</span>:</p>
 <ul>
-<li>Feature values act as players; contributions average marginal changes over coalition contexts.</li>
-<li><span class="math inline">\(\phi_0\)</span> is the reference model output.</li>
-<li>Here we explain <strong>high-demand probability</strong>, so contributions are in probability units.</li>
-<li>TreeSHAP computes attributions for this tree ensemble <span class="citation" data-cites="lundberg2017unified lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>; <a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</li>
+<li><strong>Approximation:</strong> a small linear surrogate can miss nonlinear behavior and interactions.</li>
+<li><strong>Dependence on choices:</strong> sampling, random seed, feature encoding, neighborhood width and explanation length can change the result.</li>
+<li><strong>Unrealistic perturbations:</strong> sampled combinations may not resemble real bike-sharing observations.</li>
+<li><strong>Local scope:</strong> good agreement here does not guarantee agreement elsewhere; the coefficients are model associations rather than causal effects.</li>
 </ul>
-<p>The chosen background and dependence assumptions define the attribution question.</p>
-<aside class="notes">
-<p>14–17 min. Source: https://christophm.github.io/interpretable-ml-book/shap.html . Distinguish the additive attribution representation from LIME’s neighborhood regression.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p>Can we allocate the model’s actual prediction using an explicit rule for sharing credit?</p>
 </section>
 
-<section id="what-does-an-absent-feature-mean" class="title-slide slide level1 center">
-<h1>What does an absent feature mean?</h1>
-<p>For this interventional explanation, combine observed features with background rows:</p>
-<p><span class="math display">\[v_x(S)=\frac{1}{|B|}\sum_{z\in B}f(x_S,z_{\bar S})\]</span></p>
-<ul>
-<li>Features in <span class="math inline">\(S\)</span> take this hour’s values; remaining values come from a background row.</li>
-<li><span class="math inline">\(v_x(\varnothing)\)</span> is the mean model output on the background, not the observed positive rate.</li>
-<li>Absent does not mean zero. Correlated inputs can produce unrealistic mixed rows.</li>
-</ul>
-<aside class="notes">
-<p>17–19 min. Source: https://shap.readthedocs.io/en/latest/generated/shap.TreeExplainer.html . The word interventional is an algorithmic setting, not evidence that this observational model identifies causal effects.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="shap" class="title-slide slide level1 center">
+<h1>SHAP</h1>
+
 </section>
 
-<section id="a-two-feature-shapley-example" class="title-slide slide level1 center">
-<h1>A two-feature Shapley example</h1>
-<p><strong>Illustrative values</strong>, not fitted Bike Sharing outputs:</p>
+<section id="the-problem-share-a-prediction-difference" class="title-slide slide level1 center">
+<h1>The Problem: Share a Prediction Difference</h1>
+<blockquote>
+<p>For <strong>14:00 on 5 August 2012</strong>, the forest predicts <strong>78.73%</strong> high-demand probability. Its mean prediction over 100 reference training observations is <strong>31.35%</strong>.</p>
+<p>How should the input features share the <strong>47.38-percentage-point difference</strong> between that reference and this prediction?</p>
+</blockquote>
+<p>LIME gave us a small model that behaves similarly nearby.</p>
+<p>What is the real <strong>feature contribution</strong>?</p>
+<ul>
+<li>Problem: features interact. The information supplied by temperature can depend on whether hour is already known <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</li>
+</ul>
+</section>
+
+<section id="intuition-reveal-values-keep-the-model-fixed" class="title-slide slide level1 center">
+<h1>Intuition: Reveal Values, Keep the Model Fixed</h1>
+<p><strong>The target is the 14:00 observation we want to explain.</strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Row</th>
+<th style="text-align: right;">Hour</th>
+<th style="text-align: right;">Work</th>
+<th style="text-align: right;">Adverse</th>
+<th style="text-align: right;">Temp (°C)</th>
+<th style="text-align: right;">Humidity (%)</th>
+<th style="text-align: right;">Wind (km/h)</th>
+<th style="text-align: right;">P(high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Target</strong></td>
+<td style="text-align: right;"><strong>14</strong></td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td style="text-align: right;"><strong>34.30</strong></td>
+<td style="text-align: right;"><strong>42</strong></td>
+<td style="text-align: right;"><strong>31.00</strong></td>
+<td style="text-align: right;"><strong>78.73%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>B1–B3 are the first three of our 100 reference training rows.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Row</th>
+<th style="text-align: right;">Hour</th>
+<th style="text-align: right;">Work</th>
+<th style="text-align: right;">Adverse</th>
+<th style="text-align: right;">Temp (°C)</th>
+<th style="text-align: right;">Humidity (%)</th>
+<th style="text-align: right;">Wind (km/h)</th>
+<th style="text-align: right;">P(high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>B1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">20.20</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">13.00</td>
+<td style="text-align: right;">0.92%</td>
+</tr>
+<tr class="even">
+<td>B2</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">23.96</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">11.00</td>
+<td style="text-align: right;">81.69%</td>
+</tr>
+<tr class="odd">
+<td>B3</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">32.42</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: right;">45.83%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Nothing revealed:</strong> query the already fitted forest on the reference rows.</p>
+<ul>
+<li>Their 100 prediction probabilities average <strong>31.35%</strong>.</li>
+<li>“Missing” means the target’s value is <strong>unrevealed for the explanation</strong>.
+<ul>
+<li>The model still receives all six columns, filled with original values</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="reveal-hour-first-replace-its-values-then-predict" class="title-slide slide level1 center">
+<h1>Reveal Hour First: Replace Its Values, Then Predict</h1>
+<p>To <strong>reveal a feature</strong>, copy its value from the target observation into every reference row.</p>
+<ul>
+<li>“Adding a feature” means copying one more target value into these query rows.</li>
+<li>Leave unrevealed columns at their original values, predict on the resulting rows, and average the probabilities.</li>
+</ul>
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Row</th>
+<th style="text-align: right;">Hour</th>
+<th style="text-align: right;">Work</th>
+<th style="text-align: right;">Adverse</th>
+<th style="text-align: right;">Temp (°C)</th>
+<th style="text-align: right;">Humidity (%)</th>
+<th style="text-align: right;">Wind (km/h)</th>
+<th style="text-align: right;">P(high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Target</strong></td>
+<td style="text-align: right;"><strong>14</strong></td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td style="text-align: right;"><strong>34.30</strong></td>
+<td style="text-align: right;"><strong>42</strong></td>
+<td style="text-align: right;"><strong>31.00</strong></td>
+<td style="text-align: right;"><strong>78.73%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Reveal hour. Fix <strong>hour = 14</strong> in every reference row and Keep its other five values unchanged.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Row</th>
+<th style="text-align: right;">Hour</th>
+<th style="text-align: right;">Work</th>
+<th style="text-align: right;">Adverse</th>
+<th style="text-align: right;">Temp (°C)</th>
+<th style="text-align: right;">Humidity (%)</th>
+<th style="text-align: right;">Wind (km/h)</th>
+<th style="text-align: right;">P(high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>B1</td>
+<td style="text-align: right;"><strong>14</strong></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">20.20</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">13.00</td>
+<td style="text-align: right;">57.55%</td>
+</tr>
+<tr class="even">
+<td>B2</td>
+<td style="text-align: right;"><strong>14</strong></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">23.96</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">11.00</td>
+<td style="text-align: right;">62.27%</td>
+</tr>
+<tr class="odd">
+<td>B3</td>
+<td style="text-align: right;"><strong>14</strong></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">32.42</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: right;">46.08%</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>mixed <span class="op">=</span> background.copy()</span>
+<span id="cb2-2"><a href="" aria-label="2"></a>mixed[<span class="st">"hour"</span>] <span class="op">=</span> x.iloc[<span class="dv">0</span>][<span class="st">"hour"</span>]</span>
+<span id="cb2-3"><a href="" aria-label="3"></a>probabilities <span class="op">=</span> forest.predict_proba(mixed)[:, <span class="dv">1</span>]</span></code></pre></div>
+<p>Across all 100 mixed rows, the mean is <strong>40.59%</strong>, versus <strong>31.35%</strong> with nothing revealed: <strong>+9.24 percentage points</strong>.</p>
+</section>
+
+<section id="reveal-temperature-first-a-different-context" class="title-slide slide level1 center">
+<h1>Reveal Temperature First: A Different Context</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Row</th>
+<th style="text-align: right;">Hour</th>
+<th style="text-align: right;">Work</th>
+<th style="text-align: right;">Adverse</th>
+<th style="text-align: right;">Temp (°C)</th>
+<th style="text-align: right;">Humidity (%)</th>
+<th style="text-align: right;">Wind (km/h)</th>
+<th style="text-align: right;">P(high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Target</strong></td>
+<td style="text-align: right;"><strong>14</strong></td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td style="text-align: right;"><strong>34.30</strong></td>
+<td style="text-align: right;"><strong>42</strong></td>
+<td style="text-align: right;"><strong>31.00</strong></td>
+<td style="text-align: right;"><strong>78.73%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Reveal temperature: start again from the original reference rows and fix only <strong>temperature = 34.30°C</strong>.</p>
+<ul>
+<li>Hour is missing, so its reference values remain.</li>
+</ul>
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Row</th>
+<th style="text-align: right;">Hour</th>
+<th style="text-align: right;">Work</th>
+<th style="text-align: right;">Adverse</th>
+<th style="text-align: right;">Temp (°C)</th>
+<th style="text-align: right;">Humidity (%)</th>
+<th style="text-align: right;">Wind (km/h)</th>
+<th style="text-align: right;">P(high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>B1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;"><strong>34.30</strong></td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">13.00</td>
+<td style="text-align: right;">3.34%</td>
+</tr>
+<tr class="even">
+<td>B2</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;"><strong>34.30</strong></td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">11.00</td>
+<td style="text-align: right;">80.12%</td>
+</tr>
+<tr class="odd">
+<td>B3</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;"><strong>34.30</strong></td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: right;">45.47%</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>mixed <span class="op">=</span> background.copy()</span>
+<span id="cb3-2"><a href="" aria-label="2"></a>mixed[<span class="st">"temperature_C"</span>] <span class="op">=</span> x.iloc[<span class="dv">0</span>][<span class="st">"temperature_C"</span>]</span>
+<span id="cb3-3"><a href="" aria-label="3"></a>probabilities <span class="op">=</span> forest.predict_proba(mixed)[:, <span class="dv">1</span>]</span></code></pre></div>
+<p>The same forest (no retraining!) now gives a mean of <strong>39.60%</strong>.</p>
+</section>
+
+<section id="reveal-hour-and-temperature" class="title-slide slide level1 center">
+<h1>Reveal Hour and Temperature</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Row</th>
+<th style="text-align: right;">Hour</th>
+<th style="text-align: right;">Work</th>
+<th style="text-align: right;">Adverse</th>
+<th style="text-align: right;">Temp (°C)</th>
+<th style="text-align: right;">Humidity (%)</th>
+<th style="text-align: right;">Wind (km/h)</th>
+<th style="text-align: right;">P(high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Target</strong></td>
+<td style="text-align: right;"><strong>14</strong></td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td style="text-align: right;"><strong>0</strong></td>
+<td style="text-align: right;"><strong>34.30</strong></td>
+<td style="text-align: right;"><strong>42</strong></td>
+<td style="text-align: right;"><strong>31.00</strong></td>
+<td style="text-align: right;"><strong>78.73%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Reveal temperature and hour.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Row</th>
+<th style="text-align: right;">Hour</th>
+<th style="text-align: right;">Work</th>
+<th style="text-align: right;">Adverse</th>
+<th style="text-align: right;">Temp (°C)</th>
+<th style="text-align: right;">Humidity (%)</th>
+<th style="text-align: right;">Wind (km/h)</th>
+<th style="text-align: right;">P(high)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>B1</td>
+<td style="text-align: right;"><strong>14</strong></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;"><strong>34.30</strong></td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">13.00</td>
+<td style="text-align: right;">47.52%</td>
+</tr>
+<tr class="even">
+<td>B2</td>
+<td style="text-align: right;"><strong>14</strong></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;"><strong>34.30</strong></td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">11.00</td>
+<td style="text-align: right;">45.66%</td>
+</tr>
+<tr class="odd">
+<td>B3</td>
+<td style="text-align: right;"><strong>14</strong></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;"><strong>34.30</strong></td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: right;">45.71%</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>mixed <span class="op">=</span> background.copy()</span>
+<span id="cb4-2"><a href="" aria-label="2"></a>mixed[[<span class="st">"hour"</span>, <span class="st">"temperature_C"</span>]] <span class="op">=</span> x.iloc[<span class="dv">0</span>][[<span class="st">"hour"</span>, <span class="st">"temperature_C"</span>]].to_numpy()</span>
+<span id="cb4-3"><a href="" aria-label="3"></a>probabilities <span class="op">=</span> forest.predict_proba(mixed)[:, <span class="dv">1</span>]</span></code></pre></div>
+<p>The mean becomes <strong>52.06%</strong>. Adding hour after temperature changes it by <strong>+12.46 points</strong>, compared with <strong>+9.24 points</strong> when hour is revealed first.</p>
+</section>
+
+<section id="a-worked-example-with-real-forest-outputs" class="title-slide slide level1 center">
+<h1>A Worked Example with Real Forest Outputs</h1>
+<p><strong>Shapley’s idea</strong> is then to average each feature’s prediction increment across different reveal orders <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th>Features revealed</th>
-<th style="text-align: right;">Model output <span class="math inline">\(v(S)\)</span></th>
+<th>Values revealed</th>
+<th style="text-align: right;">Mean forest probability</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>None</td>
-<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">31.35%</td>
 </tr>
 <tr class="even">
-<td>Hour only (<span class="math inline">\(H\)</span>)</td>
-<td style="text-align: right;">0.50</td>
+<td>Hour = 14 only</td>
+<td style="text-align: right;">40.59%</td>
 </tr>
 <tr class="odd">
-<td>Temperature only (<span class="math inline">\(T\)</span>)</td>
-<td style="text-align: right;">0.40</td>
+<td>Actual temperature only</td>
+<td style="text-align: right;">39.60%</td>
 </tr>
 <tr class="even">
 <td>Both</td>
-<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">52.06%</td>
 </tr>
 </tbody>
 </table>
-<p><span class="math display">\[\phi_H=\tfrac12[(0.50-0.30)+(0.70-0.40)]=0.25\]</span> <span class="math display">\[\phi_T=\tfrac12[(0.40-0.30)+(0.70-0.50)]=0.15\]</span></p>
-<p>Reconstruction: <span class="math inline">\(0.30+0.25+0.15=0.70\)</span>.</p>
-<aside class="notes">
-<p>19–22 min. Have students compute the temperature contribution before revealing the equation. This original pedagogical example averages both feature orders; the fitted forest below uses all six inputs.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+</div><div class="column" style="width:50%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Reveal order</th>
+<th style="text-align: right;">Hour’s increment</th>
+<th style="text-align: right;">Temperature’s increment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hour, then temperature</td>
+<td style="text-align: right;">+9.24 points</td>
+<td style="text-align: right;">+11.47 points</td>
+</tr>
+<tr class="even">
+<td>Temperature, then hour</td>
+<td style="text-align: right;">+12.46 points</td>
+<td style="text-align: right;">+8.25 points</td>
+</tr>
+<tr class="odd">
+<td><strong>Average share</strong></td>
+<td style="text-align: right;"><strong>+10.85 points</strong></td>
+<td style="text-align: right;"><strong>+9.86 points</strong></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-21-output-1.png" class="r-stretch"></section>
+
+<section id="formalize-a-partly-revealed-observation" class="title-slide slide level1 center">
+<h1>Formalize a Partly Revealed Observation</h1>
+<p><span class="math display">\[v_x(S)=\frac{1}{|B|}\sum_{z\in B}f(x_S,z_{\bar S}).\]</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Meaning in this lab</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(x\)</span>, <span class="math inline">\(f\)</span></td>
+<td>The chosen observation and the fixed forest’s high-demand probability function</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(F\)</span>, <span class="math inline">\(S\subseteq F\)</span></td>
+<td>All input features, and the subset whose values have been revealed</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(B\)</span>, <span class="math inline">\(z\)</span>, <span class="math inline">\(|B|\)</span></td>
+<td>The 100 reference training rows, one such row, and the number of rows</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x_S\)</span></td>
+<td>This observation’s values for the revealed features</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\bar S=F\setminus S\)</span>, <span class="math inline">\(z_{\bar S}\)</span></td>
+<td>Unrevealed features, filled using values from reference row <span class="math inline">\(z\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(v_x(S)\)</span></td>
+<td>Average forest prediction for these mixed rows</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Only the query inputs change; the function <span class="math inline">\(f\)</span> and its learned parameters stay fixed.</strong></p>
+<ul>
+<li><span class="math inline">\(v_x(\varnothing)\)</span> is the reference mean and <span class="math inline">\(v_x(F)=f(x)\)</span> is the actual prediction.</li>
+</ul>
 </section>
 
-<section id="shapley-values-average-the-feature-orders" class="title-slide slide level1 center">
-<h1>Shapley values average the feature orders</h1>
-<p>Reveal hour first, then temperature; reverse the order. Each order reaches 0.70, but assigns different marginal contributions.</p>
-<p>Average the allocations: hour receives 0.25 and temperature 0.15. These are the illustrative values from the preceding table, not fitted Bike Sharing results.</p>
-<aside class="notes">
-<p>Theory 2: use with the coalition arithmetic, 19–22 min. Two players give two equally weighted orders. The third bar averages the per-feature allocations, not the intermediate cumulative positions. Each complete bar reconstructs 0.70.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-20-output-1.png" class="r-stretch"></section>
-
-<section id="treeshap-for-the-fitted-forest" class="title-slide slide level1 center">
-<h1>TreeSHAP for the fitted forest</h1>
-<p>Use 100 training hours as the background.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>shap.TreeExplainer(</span>
-<span id="cb4-2"><a href="" aria-label="2"></a>    forest, data<span class="op">=</span>background,</span>
-<span id="cb4-3"><a href="" aria-label="3"></a>    feature_perturbation<span class="op">=</span><span class="st">"interventional"</span>,</span>
-<span id="cb4-4"><a href="" aria-label="4"></a>    model_output<span class="op">=</span><span class="st">"probability"</span>,</span>
-<span id="cb4-5"><a href="" aria-label="5"></a>)</span></code></pre></div>
-<p>Select <strong>class 1</strong> explicitly. The model’s raw output scale depends on its implementation; here the requested scale is probability.</p>
-<aside class="notes">
-<p>22–24 min. API: https://shap.readthedocs.io/en/latest/generated/shap.TreeExplainer.html . This lab requires SHAP &gt;= 0.45 and checks the returned class axis and additivity.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="compute-each-features-share" class="title-slide slide level1 center">
+<h1>Compute Each Feature’s Share</h1>
+<p>For feature <span class="math inline">\(j\)</span> among <span class="math inline">\(p=|F|\)</span> features:</p>
+<p><span class="math display">\[\phi_j(x)=\sum_{S\subseteq F\setminus\{j\}}\frac{|S|!(p-|S|-1)!}{p!}\left[v_x(S\cup\{j\})-v_x(S)\right].\]</span></p>
+<ul>
+<li><span class="math inline">\(S\)</span> contains features revealed <strong>before</strong> <span class="math inline">\(j\)</span>; <span class="math inline">\(S\cup\{j\}\)</span> fixes one more input column to the target value; the model itself is unchanged.</li>
+<li><span class="math inline">\(|S|\)</span> counts features in <span class="math inline">\(S\)</span>;</li>
+<li>The weight is the fraction of feature orders in which exactly <span class="math inline">\(S\)</span> precedes <span class="math inline">\(j\)</span>.</li>
+<li>Summing these weighted changes gives <span class="math inline">\(\phi_j(x)\)</span>: feature <span class="math inline">\(j\)</span>’s average share across reveal orders.</li>
+</ul>
+<p>The reference and contributions reconstruct the prediction: <span class="math inline">\(\underbrace{\phi_0}_{v_x(\varnothing)}+\sum_{j\in F}\phi_j(x)=f(x).\)</span></p>
+<p>Here <span class="math inline">\(\phi_0\)</span> is the reference probability, and signed <span class="math inline">\(\phi_j\)</span> values are in probability units <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</p>
 </section>
 
-<section id="shap-explain-the-same-hour" class="title-slide slide level1 center">
-<h1>SHAP: explain the same hour</h1>
-<p>The waterfall starts at the background mean prediction. Signed contributions lead to the forest probability.</p>
-<p><strong>Check:</strong> baseline + all contributions = predicted probability.</p>
-<p>Which features move this prediction most? Does a large contribution mean the feature is actionable?</p>
-<aside class="notes">
-<p>24–27 min. Explain the signs and output units. A complete feature allocation does not establish causal recourse.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<div id="8704e4f4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-10T06:24:04.415952Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-10T06:24:04.415779Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-10T06:24:04.746977Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-10T06:24:04.746113Z&quot;}}" data-execution_count="21">
+<section id="the-algorithm-average-reveal-increments" class="title-slide slide level1 center">
+<h1>The Algorithm: Average Reveal Increments</h1>
+<ol type="1">
+<li>Choose a feature order and start with the reference prediction.</li>
+<li>Reveal features one at a time, recording each change in the model’s prediction.</li>
+<li>Credit each change to the feature just revealed.</li>
+<li>Repeat for other orders, then average each feature’s credits.</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource text number-lines"><code class="sourceCode"><span id="cb5-1"><a href="" aria-label="1"></a>For each feature order:</span>
+<span id="cb5-2"><a href="" aria-label="2"></a>    revealed = empty set</span>
+<span id="cb5-3"><a href="" aria-label="3"></a>    previous = prediction with no features revealed</span>
+<span id="cb5-4"><a href="" aria-label="4"></a>    For feature j in that order:</span>
+<span id="cb5-5"><a href="" aria-label="5"></a>        current = prediction after also revealing j</span>
+<span id="cb5-6"><a href="" aria-label="6"></a>        credit[j] += current - previous</span>
+<span id="cb5-7"><a href="" aria-label="7"></a>        add j to revealed; previous = current</span>
+<span id="cb5-8"><a href="" aria-label="8"></a>Divide each feature's credit by the number of orders used.</span></code></pre></div>
+<p>All orders give exact Shapley values.</p>
+<ul>
+<li>With six features, there are 720 orders but only <strong>64 distinct revealed subsets</strong>, whose predictions can be cached <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</li>
+</ul>
+</section>
+
+<section id="computing-the-shares-efficiently" class="title-slide slide level1 center">
+<h1>Computing the Shares Efficiently</h1>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>How it computes the same kind of allocation</th>
+<th>Model access</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Feature-order estimator</td>
+<td>Average prediction increments over sampled orders</td>
+<td>Query predictions</td>
+</tr>
+<tr class="even">
+<td>KernelSHAP</td>
+<td>Sample revealed subsets and fit a specially weighted additive regression</td>
+<td>Query predictions</td>
+</tr>
+<tr class="odd">
+<td>TreeSHAP</td>
+<td>Use tree structure to compute contributions efficiently</td>
+<td>Inspect tree paths</td>
+</tr>
+</tbody>
+</table>
+<p>Listing every order is expensive. <strong>Our forest is a tree ensemble, so we use TreeSHAP</strong> <span class="citation" data-cites="lundberg2017unified lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>; <a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</p>
+</section>
+
+<section id="treeshap-lundberg2020local-many-subsets-share-a-path-outcome" class="title-slide slide level1 center">
+<h1>TreeSHAP <span class="citation" data-cites="lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>: Many Subsets Share a Path Outcome</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/explainability/treeshap-subset-reuse.png" height="430"></p>
+<figcaption>Tree path and revealed subsets with the same leaf outcome</figcaption>
+</figure>
+</div>
+<blockquote>
+<p>If a path tests only hour and temperature, revealing humidity cannot change whether a mixed row reaches that particular leaf. Its many subset cases can be combined.</p>
+</blockquote>
+</section>
+
+<section id="how-treeshap-works" class="title-slide slide level1 center">
+<h1>How TreeSHAP Works</h1>
+<p>TreeSHAP computes the feature shares defined earlier by exploiting the <strong>already trained tree structure</strong> <span class="citation" data-cites="lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</p>
+<ol type="1">
+<li><strong>Read the trees:</strong> use their split features, thresholds and leaf outputs.</li>
+<li><strong>Account for revealed and unrevealed values:</strong> a revealed split feature uses the target’s value; an unrevealed one uses a reference row’s value.</li>
+<li><strong>Combine many subsets at once:</strong> a leaf depends only on the features tested along its root-to-leaf path
+<ul>
+<li>Many revealed subsets therefore have the same effect on reaching that leaf.</li>
+<li>TreeSHAP uses dynamic programming to accumulate their combined Shapley weights instead of evaluating each subset separately.</li>
+</ul></li>
+<li><strong>Combine the results:</strong> average over the reference rows and combine the trees’ contributions using the forest’s averaging rule.</li>
+</ol>
+<p>The <strong>baseline prediction</strong> is the same forest’s mean prediction on the reference rows: <strong>31.35%</strong> here.</p>
+<ul>
+<li>TreeSHAP returns contributions satisfying <strong>baseline + feature shares = target prediction</strong>: here <strong>78.73%</strong>.</li>
+<li>It computes this allocation directly from the trees rather than fitting a local surrogate <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</li>
+</ul>
+</section>
+
+<section id="apply-treeshap-to-the-bike-forest" class="title-slide slide level1 center">
+<h1>Apply TreeSHAP to the Bike Forest</h1>
+<p>Explain the <strong>same 14:00 observation</strong></p>
+<ol type="1">
+<li>Choose 100 training observations as the reference.</li>
+<li>Use this observation’s known values for revealed inputs and reference rows for unrevealed ones.</li>
+<li>Ask TreeSHAP for contributions to <strong>class 1: high-demand probability</strong>.</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>shap.TreeExplainer(</span>
+<span id="cb6-2"><a href="" aria-label="2"></a>    forest, data<span class="op">=</span>background,</span>
+<span id="cb6-3"><a href="" aria-label="3"></a>    feature_perturbation<span class="op">=</span><span class="st">"interventional"</span>,</span>
+<span id="cb6-4"><a href="" aria-label="4"></a>    model_output<span class="op">=</span><span class="st">"probability"</span>,</span>
+<span id="cb6-5"><a href="" aria-label="5"></a>)</span></code></pre></div>
+</section>
+
+<section id="understanding-the-contributions" class="title-slide slide level1 center">
+<h1>Understanding the contributions</h1>
+<blockquote>
+<p>Start from the reference probability <strong>31.35%</strong>.</p>
+<p>Hour and temperature contribute the largest upward shares. Non-working-day status and low humidity also raise this prediction relative to the reference; windspeed contributes a small downward share.</p>
+<p>The contributions sum to <strong>47.38 points</strong>. Adding the <strong>31.35%</strong> reference gives the actual <strong>78.73%</strong> forest probability.</p>
+</blockquote>
+<p>Positive contributions raise the prediction relative to the reference; negative contributions lower it.</p>
+<div id="8704e4f4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:55.889560Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:55.889353Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:56.267012Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:56.266115Z&quot;}}" data-execution_count="22">
 
 <div class="cell-output cell-output-display">
 <div>
@@ -1451,9 +1953,9 @@ Show the solution
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
 <td>0.3135</td>
-<td>-0.2729</td>
-<td>0.0406</td>
-<td>0.0406</td>
+<td>0.4738</td>
+<td>0.7873</td>
+<td>0.7873</td>
 </tr>
 </tbody>
 </table>
@@ -1461,60 +1963,74 @@ Show the solution
 </div>
 </div>
 </div>
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-22-output-1.png" class="r-stretch"></section>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-23-output-1.png" class="r-stretch"></section>
 
-<section id="lime-versus-shap" class="title-slide slide level1 center">
-<h1>LIME versus SHAP</h1>
+<section id="shap-from-one-prediction-to-global-model-interpretation" class="title-slide slide level1 center">
+<h1>SHAP: From One Prediction to Global Model Interpretation</h1>
+<p><strong>Local question:</strong> why does this observation differ from the reference?</p>
+<p><strong>Global question:</strong> which inputs move predictions most across many observations?</p>
+</section>
+
+<section id="shap-beeswarm-direction-magnitude-and-variation" class="title-slide slide level1 center">
+<h1>SHAP Beeswarm: Direction, Magnitude, and Variation</h1>
+<p>Start with the distribution of local contributions across the sampled observations <span class="citation" data-cites="lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</p>
+<ul>
+<li>Features are ordered by mean absolute SHAP value.</li>
+<li><strong>Each dot:</strong> one validation observation for that feature.</li>
+<li><strong>Horizontal position:</strong> its signed SHAP contribution. Right raises high-demand probability relative to the reference; left lowers it. A value of <span class="math inline">\(+0.1\)</span> means <strong>+10 percentage points</strong>.</li>
+<li><strong>Vertical spread:</strong> dots stack to show density; it is not another feature value.</li>
+</ul>
+
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-25-output-1.png" class="r-stretch"></section>
+
+<section id="shap-from-one-prediction-to-global-model-interpretation-1" class="title-slide slide level1 center">
+<h1>SHAP: From One Prediction to Global Model Interpretation</h1>
+<p>Explain <strong><span class="math inline">\(n\)</span> sampled rows</strong>, using the same fitted forest, and 100 reference training rows.</p>
+<p><span class="math display">\[I_j=\frac{1}{n}\sum_{i=1}^{n}|\phi_j(x_i)|.\]</span></p>
+<ul>
+<li><span class="math inline">\(x_i\)</span> is explained observation, <span class="math inline">\(\phi_j(x_i)\)</span> is feature <span class="math inline">\(j\)</span>’s signed contribution, and <span class="math inline">\(I_j\)</span> measures its <strong>average contribution magnitude</strong> <span class="citation" data-cites="lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</li>
+</ul>
+
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-26-output-1.png" class="r-stretch"><p>For these <strong>60 validation observations</strong>: <em>hour</em> dominates and its contributions vary widely and can raise or lower predictions.</p>
+<div class="fragment">
+<p><em>These are not causal effects</em>.</p>
+</div>
+</section>
+
+<section id="making-shap-computation-practical" class="title-slide slide level1 center">
+<h1>Making SHAP Computation Practical</h1>
+<p>Explicitly evaluating all <span class="math inline">\(2^p\)</span> revealed subsets works for our six features (<strong>64 subsets</strong>), but 30 features already imply over <strong>one billion</strong> subsets.</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th></th>
-<th>LIME</th>
-<th>SHAP in this notebook</th>
+<th>Optimization</th>
+<th>Practical implication</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Question</td>
-<td>Which simple model approximates this neighborhood?</td>
-<td>Which contributions allocate this prediction minus its baseline?</td>
+<td><strong>Use model structure</strong></td>
+<td>TreeSHAP exploits trained tree paths instead of explicitly listing every subset <span class="citation" data-cites="lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>.</td>
 </tr>
 <tr class="even">
-<td>Choices</td>
-<td>Neighborhood, sampling, feature budget</td>
-<td>Background, dependence game, output scale</td>
+<td><strong>Use a reference sample</strong></td>
+<td>Our 100 training rows represent the background. Interventional TreeSHAP runtime grows linearly with reference size.</td>
 </tr>
 <tr class="odd">
-<td>Diagnostic</td>
-<td>Local fit and point discrepancy</td>
-<td>Probability reconstruction</td>
+<td><strong>Explain selected observations</strong></td>
+<td>Inspect individual cases or a representative sample for global summaries, rather than automatically explaining every row.</td>
 </tr>
 <tr class="even">
-<td>Limitation</td>
-<td>Sampling can change the explanation</td>
-<td>Attribution depends on the reference game</td>
+<td><strong>For black-box models, sample</strong></td>
+<td>Sample feature orders or use KernelSHAP instead of exhaustive enumeration; check estimates as the evaluation budget increases <span class="citation" data-cites="lundberg2017unified">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</td>
 </tr>
 </tbody>
 </table>
-<p>Rankings need not match. Additivity does not certify causality or usefulness.</p>
-<aside class="notes">
-<p>27–30 min. Sources: Molnar LIME and SHAP chapters. Have students explain why a disagreement is not automatically a software bug.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p>The main costs are the number of observations explained, reference size, and model complexity.</p>
 </section>
 
 <section id="coding-break-2-exercises-34-15-minutes" class="title-slide slide level1 center">
@@ -1528,87 +2044,8 @@ Show the solution
 <p>Deliver the explanations, diagnostics, and one reason their rankings may differ.</p>
 </section>
 
-<section id="exercise-3-fit-and-inspect-a-local-surrogate" class="title-slide slide level1 center">
-<h1>Exercise 3: fit and inspect a local surrogate</h1>
-<p><a id="coding-exercises-2" href=""></a></p>
-<p>Use <code>explain_lime</code> on validation row position 24.</p>
-<ol type="1">
-<li>Show its four conditions and weights.</li>
-<li>Show <code>lime_diagnostics</code> and interpret the weighted <span class="math inline">\(R^2\)</span> and point discrepancy.</li>
-<li>Repeat with seed 7; compare the two strongest terms.</li>
-</ol>
-<p>Keep the forest and observation fixed.</p>
-<div id="2ee805ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-10T06:24:04.749049Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-10T06:24:04.748858Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-10T06:24:04.751726Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-10T06:24:04.751053Z&quot;}}" data-execution_count="22">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="co"># student_x = X_valid.iloc[[...]]  # Position 24.</span></span>
-<span id="cb5-2"><a href="" aria-label="2"></a><span class="co"># student_lime = explain_lime(..., seed=42)</span></span>
-<span id="cb5-3"><a href="" aria-label="3"></a><span class="co"># student_lime_repeat = explain_lime(..., seed=7)</span></span>
-<span id="cb5-4"><a href="" aria-label="4"></a><span class="co"># display(pd.DataFrame(student_lime.as_list(label=1), columns=["condition", "weight"]))</span></span>
-<span id="cb5-5"><a href="" aria-label="5"></a><span class="co"># display(pd.DataFrame([</span></span>
-<span id="cb5-6"><a href="" aria-label="6"></a><span class="co">#     lime_diagnostics(student_lime, ...),</span></span>
-<span id="cb5-7"><a href="" aria-label="7"></a><span class="co">#     lime_diagnostics(student_lime_repeat, ...),</span></span>
-<span id="cb5-8"><a href="" aria-label="8"></a><span class="co"># ]).round(3))</span></span>
-<span id="cb5-9"><a href="" aria-label="9"></a><span class="co"># print(student_lime.as_list(label=1)[:2])</span></span>
-<span id="cb5-10"><a href="" aria-label="10"></a><span class="co"># print(student_lime_repeat.as_list(label=1)[:2])</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="exercise-4-shap-and-the-output-scale" class="title-slide slide level1 center">
-<h1>Exercise 4: SHAP and the output scale</h1>
-<p>Explain the same row with <code>explain_shap</code>.</p>
-<ol type="1">
-<li>Draw a waterfall and identify the two largest absolute contributions.</li>
-<li>Add the baseline to the signed contribution sum.</li>
-<li>Compare with the forest’s class-1 probability using <code>assert_allclose</code>.</li>
-</ol>
-<p>Is a positive contribution evidence that changing the feature would increase real demand? Why might LIME rank a different condition first?</p>
-<div id="9923fad1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-10T06:24:04.753720Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-10T06:24:04.753526Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-10T06:24:04.756069Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-10T06:24:04.755329Z&quot;}}" data-execution_count="23">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="co"># student_shap = explain_shap(...)</span></span>
-<span id="cb6-2"><a href="" aria-label="2"></a><span class="co"># shap.plots.waterfall(student_shap[0], max_display=len(feature_names))</span></span>
-<span id="cb6-3"><a href="" aria-label="3"></a><span class="co"># student_reconstructed = ... + ...  # base_values plus values.sum(axis=1)</span></span>
-<span id="cb6-4"><a href="" aria-label="4"></a><span class="co"># np.testing.assert_allclose(student_reconstructed,</span></span>
-<span id="cb6-5"><a href="" aria-label="5"></a><span class="co">#     forest.predict_proba(student_x)[:, ...], atol=1e-6)</span></span>
-<span id="cb6-6"><a href="" aria-label="6"></a><span class="co"># print(sorted(zip(feature_names, student_shap.values[0]),</span></span>
-<span id="cb6-7"><a href="" aria-label="7"></a><span class="co">#              key=lambda pair: abs(pair[1]), reverse=True)[:2])</span></span></code></pre></div>
-</details>
-</div>
-</section>
-
-<section id="coding-session-2-solution" class="title-slide slide level1 scrollable center">
-<h1>Coding session 2 solution</h1>
-<details>
-<summary>
-Show the solution
-</summary>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>student_x <span class="op">=</span> X_valid.iloc[[<span class="dv">24</span>]]</span>
-<span id="cb7-2"><a href="" aria-label="2"></a>student_lime <span class="op">=</span> explain_lime(student_x, seed<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb7-3"><a href="" aria-label="3"></a>student_lime_repeat <span class="op">=</span> explain_lime(student_x, seed<span class="op">=</span><span class="dv">7</span>)</span>
-<span id="cb7-4"><a href="" aria-label="4"></a>display(pd.DataFrame(student_lime.as_list(label<span class="op">=</span><span class="dv">1</span>), columns<span class="op">=</span>[<span class="st">"condition"</span>, <span class="st">"weight"</span>]))</span>
-<span id="cb7-5"><a href="" aria-label="5"></a>display(pd.DataFrame([</span>
-<span id="cb7-6"><a href="" aria-label="6"></a>    lime_diagnostics(student_lime, student_x),</span>
-<span id="cb7-7"><a href="" aria-label="7"></a>    lime_diagnostics(student_lime_repeat, student_x),</span>
-<span id="cb7-8"><a href="" aria-label="8"></a>]).<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb7-9"><a href="" aria-label="9"></a><span class="bu">print</span>(student_lime.as_list(label<span class="op">=</span><span class="dv">1</span>)[:<span class="dv">2</span>])</span>
-<span id="cb7-10"><a href="" aria-label="10"></a><span class="bu">print</span>(student_lime_repeat.as_list(label<span class="op">=</span><span class="dv">1</span>)[:<span class="dv">2</span>])</span>
-<span id="cb7-11"><a href="" aria-label="11"></a>student_shap <span class="op">=</span> explain_shap(student_x)</span>
-<span id="cb7-12"><a href="" aria-label="12"></a>shap.plots.waterfall(student_shap[<span class="dv">0</span>], max_display<span class="op">=</span><span class="bu">len</span>(feature_names))</span>
-<span id="cb7-13"><a href="" aria-label="13"></a>student_reconstructed <span class="op">=</span> student_shap.base_values <span class="op">+</span> student_shap.values.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb7-14"><a href="" aria-label="14"></a>np.testing.assert_allclose(student_reconstructed,</span>
-<span id="cb7-15"><a href="" aria-label="15"></a>    forest.predict_proba(student_x)[:, <span class="dv">1</span>], atol<span class="op">=</span><span class="fl">1e-6</span>)</span>
-<span id="cb7-16"><a href="" aria-label="16"></a><span class="bu">print</span>(<span class="bu">sorted</span>(<span class="bu">zip</span>(feature_names, student_shap.values[<span class="dv">0</span>]),</span>
-<span id="cb7-17"><a href="" aria-label="17"></a>             key<span class="op">=</span><span class="kw">lambda</span> pair: <span class="bu">abs</span>(pair[<span class="dv">1</span>]), reverse<span class="op">=</span><span class="va">True</span>)[:<span class="dv">2</span>])</span></code></pre></div>
-<p>LIME fits a neighborhood surrogate; SHAP allocates a difference from a background output. Different rankings are possible. Neither is a causal effect estimate, and matching the prediction does not establish usefulness.</p>
-</details>
-</section>
-
-<section id="explanation-quality" class="title-slide slide level1 center">
-<h1>Explanation quality</h1>
-<p><a id="theory-block-3" href=""></a></p>
-<p>We can now produce explanations. How should we judge them?</p>
+<section id="no-single-scalar-certifies-interpretability." class="title-slide slide level1 center">
+<h1>No single scalar certifies interpretability.</h1>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -1617,126 +2054,75 @@ Show the solution
 </colgroup>
 <thead>
 <tr class="header">
-<th>Property</th>
-<th>Workshop check</th>
-<th>What remains untested?</th>
+<th>Quantity</th>
+<th>Scope and question</th>
+<th>Units</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Local fidelity</td>
-<td>LIME neighborhood fit and point discrepancy</td>
-<td>Behavior on a different neighborhood</td>
+<td>Logistic coefficient</td>
+<td>How sensitive is fitted log-odds to this encoded input?</td>
+<td>Log-odds per input unit</td>
 </tr>
 <tr class="even">
-<td>Attribution consistency</td>
-<td>SHAP reconstruction</td>
-<td>Causality and usefulness</td>
+<td>LIME coefficient</td>
+<td>Which conditions support a local surrogate?</td>
+<td>Surrogate output units</td>
 </tr>
 <tr class="odd">
-<td>Stability</td>
-<td>Repeat seeds or change background</td>
-<td>Retraining and future populations</td>
+<td>Local TreeSHAP value</td>
+<td>How is one prediction minus its baseline allocated?</td>
+<td>Here: probability</td>
 </tr>
 <tr class="even">
-<td>Human usefulness</td>
-<td>Operator can read and act appropriately</td>
-<td>Requires evaluation with users</td>
+<td>Mean absolute TreeSHAP</td>
+<td>Which features move predictions most across these hours?</td>
+<td>Here: probability</td>
 </tr>
 </tbody>
 </table>
-<p>No single scalar certifies interpretability.</p>
-<aside class="notes">
-<p>Theory 3, 0–3 min. Workshop evaluation rubric. Compare with Molnar evaluation chapter: https://christophm.github.io/interpretable-ml-book/evaluation.html .</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-
-<section id="local-versus-aggregated-explanations" class="title-slide slide level1 center">
-<h1>Local versus aggregated explanations</h1>
-<p>One explanation describes one hour. Summaries describe the <strong>set of explained hours</strong>.</p>
-<p>Mean absolute SHAP values show how much each feature moves probabilities across that set.</p>
-<ul>
-<li>They lose the sign of contributions.</li>
-<li>They depend on which hours are explained and which background is used.</li>
-<li>They measure attribution magnitude, not the drop in prediction quality after removing a feature.</li>
-</ul>
-<aside class="notes">
-<p>3–5 min. Source: https://christophm.github.io/interpretable-ml-book/shap.html . Use a small fixed sample of validation hours, not the test period.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-25-output-1.png" class="r-stretch"></section>
 
 <section id="dependence-and-unrealistic-combinations" class="title-slide slide level1 center">
 <h1>Dependence and unrealistic combinations</h1>
+<p>We want to know whether a conclusion is supported by the model, by a particular comparison population, or by sampling variability.</p>
+<blockquote>
 <p>Imagine holding hour and working-day status fixed while borrowing weather from unrelated hours.</p>
 <ul>
 <li>The resulting row may be uncommon or implausible.</li>
 <li>A predictor can behave unexpectedly away from its training distribution.</li>
-<li>Correlated or redundant features can share attributions differently under different value functions.</li>
 </ul>
-<p><strong>Question:</strong> would adding apparent temperature make the explanation more informative, or mostly add a correlated measurement?</p>
-<aside class="notes">
-<p>5–7 min. This is why atemp is omitted in the small example. Interventional and conditional attribution questions differ; do not assume either answers a causal question.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+</blockquote>
 </section>
 
-<section id="background-sensitivity" class="title-slide slide level1 center">
-<h1>Background sensitivity</h1>
-<p>Explain the same hour using two training backgrounds:</p>
+<section id="reference-sensitivity-what-are-we-comparing-against" class="title-slide slide level1 center">
+<h1>Reference Sensitivity: What Are We Comparing Against?</h1>
+<p>Keep the <strong>same forest and the same afternoon observation</strong>, but change the SHAP reference:</p>
 <ul>
-<li>A random sample of <strong>all training hours</strong>.</li>
-<li>A sample of <strong>training morning hours (7–9)</strong>.</li>
+<li><strong>All training hours:</strong> why does this prediction differ from a typical hour in the training reference?</li>
+<li><strong>Training morning hours (7–9):</strong> why does it differ from a typical morning in that reference?</li>
 </ul>
-<p>The second asks for a comparison against a different reference population. Prediction stays fixed; baseline and feature contributions can change.</p>
-<p>This is a sensitivity analysis, not a search for the most persuasive explanation.</p>
-<aside class="notes">
-<p>7–10 min, including the computed table. TreeExplainer reference: https://shap.readthedocs.io/en/latest/generated/shap.TreeExplainer.html .</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p>The reference mean and feature shares can change because <strong>we changed the comparison question</strong>.</p>
 
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-26-output-1.png" class="r-stretch"></section>
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-27-output-1.png" class="r-stretch"></section>
 
-<section id="stability-has-several-meanings" class="title-slide slide level1 center">
-<h1>Stability has several meanings</h1>
+<section id="recall-lab-04-accuracy-vs-model-simplicity" class="title-slide slide level1 center">
+<h1>Recall Lab 04: Accuracy vs Model Simplicity</h1>
+<p>Reuse the multi-objective idea from the fairness lab, now for candidate <strong>decision trees</strong>:</p>
+<p><span class="math display">\[\min_h\left(1-\mathrm{BA}_{\mathrm{valid}}(h),\;\#\mathrm{leaves}(h)\right).\]</span></p>
+<ul>
+<li><strong>Prediction objective:</strong> lower validation error, where <span class="math inline">\(\mathrm{BA}\)</span> is balanced accuracy.</li>
+<li><strong>Complexity objective:</strong> fewer leaves to inspect; this is a readability proxy, not a human evaluation.</li>
+</ul>
+<p><strong>Question:</strong> how much predictive performance would you exchange for a smaller tree?</p>
+
+<img data-src="lab-06-explainability_files/figure-revealjs/cell-29-output-1.png" class="r-stretch"></section>
+
+<section id="neural-networks-what-can-we-inspect" class="title-slide slide level1 center">
+<h1>Neural Networks: What Can We Inspect?</h1>
+<p>A neural network combines learned transformations, for example:</p>
+<p><span class="math display">\[F(x)=\sigma\!\left(W_2\,\mathrm{ReLU}(W_1z(x)+b_1)+b_2\right).\]</span></p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -1745,236 +2131,66 @@ Show the solution
 </colgroup>
 <thead>
 <tr class="header">
-<th>What changes?</th>
-<th>What stays fixed?</th>
-<th>What is being tested?</th>
+<th>Structural proxy</th>
+<th>What it counts</th>
+<th>Limitation</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>LIME seed</td>
-<td>Model, hour, sampling settings</td>
-<td>Sampling variability</td>
+<td>Trainable parameters</td>
+<td>Weights and biases</td>
+<td>Does not reveal which inputs drive a prediction</td>
 </tr>
 <tr class="even">
-<td>SHAP background</td>
-<td>Model and hour</td>
-<td>Reference sensitivity</td>
+<td>Depth and width</td>
+<td>Layers and hidden units</td>
+<td>Small networks can still be difficult to understand</td>
 </tr>
 <tr class="odd">
-<td>Training sample</td>
-<td>Model family and protocol</td>
-<td>Model and explanation stability</td>
-</tr>
-<tr class="even">
-<td>Time period</td>
-<td>Deployed model</td>
-<td>Population shift</td>
+<td>Nonzero parameters</td>
+<td>Connections remaining after sparsification</td>
+<td>Sparse weights do not guarantee meaningful hidden features</td>
 </tr>
 </tbody>
 </table>
-<p>The first two checks in this workshop do not establish the last two.</p>
-<aside class="notes">
-<p>10–12 min. Ask students which kind of stability matters to the operator and which additional experiment they would run.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p>Use these as <strong>complexity proxies</strong>.</p>
 </section>
 
-<section id="is-this-another-multi-objective-problem" class="title-slide slide level1 center">
-<h1>Is this another multi-objective problem?</h1>
-<p>Often yes: predictive error, explanation complexity, stability, and explanation time can compete.</p>
-<p>For candidate <strong>decision trees</strong>, consider:</p>
-<p><span class="math display">\[\min_h\left(1-\mathrm{BA}_{valid}(h),\;\#\mathrm{leaves}(h)\right)\]</span></p>
-<p>Leaf count is a structural proxy for readability, not a universal interpretability score.</p>
-<p>A performance–interpretability tradeoff is possible; it is not inevitable.</p>
-<aside class="notes">
-<p>12–14 min. Original workshop formulation connected to lab 04. Restrict the plot to trees so complexity has a common definition. Do not compare leaf counts and logistic coefficient counts on a supposedly universal axis.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="dominance-and-the-pareto-frontier" class="title-slide slide level1 center">
-<h1>Dominance and the Pareto frontier</h1>
-<p>Candidate A dominates B if A is no worse on both objectives and strictly better on at least one.</p>
-<p><strong>Illustrative costs:</strong></p>
+<section id="neural-networks-simple-prediction-explanations" class="title-slide slide level1 center">
+<h1>Neural Networks: Simple Prediction Explanations</h1>
+<p>Keep the trained network fixed and explain a chosen output <span class="math inline">\(F(x)\)</span>, such as the predicted probability of high bike demand.</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Tree</th>
-<th style="text-align: right;">1 − balanced accuracy</th>
-<th style="text-align: right;">Leaves</th>
+<th>Method</th>
+<th>Question</th>
+<th>Scope</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>A</td>
-<td style="text-align: right;">0.20</td>
-<td style="text-align: right;">4</td>
+<td>Permutation importance</td>
+<td>How much does validation performance drop when an input is shuffled?</td>
+<td>Global, score-dependent</td>
 </tr>
 <tr class="even">
-<td>B</td>
-<td style="text-align: right;">0.22</td>
-<td style="text-align: right;">8</td>
+<td>Input gradients</td>
+<td>Which numeric inputs affect this output under tiny changes?</td>
+<td>Local sensitivity <span class="citation" data-cites="simonyan2013deep">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Simonyan et al. 2013</a>)</span></td>
 </tr>
 <tr class="odd">
-<td>C</td>
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">12</td>
+<td>Integrated Gradients</td>
+<td>How is the output difference from a chosen baseline allocated to inputs?</td>
+<td>Local attribution <span class="citation" data-cites="sundararajan2017axiomatic">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Sundararajan et al. 2017</a>)</span></td>
 </tr>
 </tbody>
 </table>
-<p>A dominates B. Neither A nor C dominates the other. Which one would an operator choose?</p>
-<aside class="notes">
-<p>14–16 min. These numbers are explicitly illustrative; the next plot uses fitted UCI results. Have students explain both inequalities.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="tree-complexity-and-predictive-performance" class="title-slide slide level1 center">
-<h1>Tree complexity and predictive performance</h1>
-<p>Each point is a fitted tree evaluated on the same validation period. Circled points are non-dominated <strong>among these candidates</strong>.</p>
-<p>Would a small loss of balanced accuracy be acceptable in exchange for fewer rules?</p>
-<aside class="notes">
-<p>16–19 min, including the plot. Inspect measured results rather than assuming a monotonic accuracy improvement. The frontier depends on the candidate set and validation sample.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-28-output-1.png" class="r-stretch"></section>
-
-<section id="turn-preferences-into-a-selection-rule" class="title-slide slide level1 center">
-<h1>Turn preferences into a selection rule</h1>
-<p>For the exercise, set a tolerance of <strong>0.02 absolute balanced accuracy</strong> below the best candidate.</p>
-<ol type="1">
-<li>Keep trees within this tolerance on validation data.</li>
-<li>Choose the feasible tree with the fewest leaves.</li>
-<li>Break a leaf-count tie using lower validation error.</li>
-<li>Evaluate the chosen model once on the untouched test period.</li>
-</ol>
-<p>The tolerance is a stakeholder preference for this exercise, not a universal rule.</p>
-<aside class="notes">
-<p>19–21 min. Constraints are an alternative to assigning a weighted sum. Test results must not be used to revise this selection.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="explanation-complexity-is-another-choice" class="title-slide slide level1 center">
-<h1>Explanation complexity is another choice</h1>
-<p>For a fixed forest and observation, change LIME’s term budget.</p>
-<ul>
-<li>Two terms may be easier to read but omit model behavior.</li>
-<li>Six terms may fit better but demand more attention.</li>
-<li>Measure fit and elapsed time; a larger budget does not guarantee a better explanation for a person.</li>
-</ul>
-<p>This is a different optimization problem from choosing a predictive model.</p>
-<aside class="notes">
-<p>21–24 min, including results. LIME optimizes a local surrogate under a specified feature budget. Measured elapsed times are machine-dependent and not an algorithmic benchmark.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-29-output-1.png" class="r-stretch"></section>
-
-<section id="what-the-objectives-leave-out" class="title-slide slide level1 center">
-<h1>What the objectives leave out</h1>
-<p>Leaf count and local fit do not measure everything an operator needs.</p>
-<ul>
-<li>Are the feature names and units understandable?</li>
-<li>Are the reference population and output class clear?</li>
-<li>Does the explanation remain useful when the prediction is wrong?</li>
-<li>Does it support the intended decision without encouraging causal overinterpretation?</li>
-</ul>
-<p>Test comprehension with the intended audience. A Pareto frontier does not decide what is acceptable.</p>
-<aside class="notes">
-<p>24–27 min. Use an operator role-play: ask a student to interpret one rule or attribution. Interpretability depends on task, user, and representation.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-
-<section id="checkpoint-recommend-with-evidence" class="title-slide slide level1 center">
-<h1>Checkpoint: recommend with evidence</h1>
-<p>Choose a candidate and an explanation strategy.</p>
-<ol type="1">
-<li>State the stakeholder’s question.</li>
-<li>Report validation performance and the relevant complexity measure.</li>
-<li>Include one explanation quality or sensitivity check.</li>
-<li>State a limitation and an additional check you would run.</li>
-</ol>
-<p><strong>Discuss:</strong> would your recommendation change for a researcher rather than a bike operator?</p>
-<aside class="notes">
-<p>27–30 min. Prepare the short final recommendation. Emphasize remaining seasonal shift and retrospective observed weather limitations.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 
 <section id="coding-break-3-exercises-56-15-minutes" class="title-slide slide level1 center">
@@ -1988,6 +2204,169 @@ Show the solution
 <p>Deliver the candidate table, sensitivity check, and a two-sentence recommendation. Evaluate the selected tree on the test period only after selection.</p>
 </section>
 
+<section id="exercises-guided-practice-on-bike-sharing" class="title-slide slide level1 center">
+<h1>Exercises: Guided Practice on Bike Sharing</h1>
+
+</section>
+
+<section id="exercise-1-compare-interpretable-models" class="title-slide slide level1 center">
+<h1>Exercise 1: compare interpretable models</h1>
+<p><a id="coding-exercises-1" href=""></a></p>
+<p>Reuse the fitted <code>logistic</code> pipeline. Fit a depth-4 tree on training rows with <code>min_samples_leaf=40</code> and seed 42.</p>
+<p>Compare validation balanced accuracy and high-demand recall. Does extra depth help here?</p>
+<p>Keep the test period unused.</p>
+<div id="78aa4663" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.053963Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.053778Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.056762Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.055927Z&quot;}}" data-execution_count="29">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># student_tree = DecisionTreeClassifier(</span></span>
+<span id="cb7-2"><a href="" aria-label="2"></a><span class="co">#     max_depth=..., min_samples_leaf=40, random_state=RANDOM_STATE,</span></span>
+<span id="cb7-3"><a href="" aria-label="3"></a><span class="co"># ).fit(......)</span></span>
+<span id="cb7-4"><a href="" aria-label="4"></a><span class="co"># student_scores = pd.DataFrame({</span></span>
+<span id="cb7-5"><a href="" aria-label="5"></a><span class="co">#     "logistic": evaluate(logistic......),</span></span>
+<span id="cb7-6"><a href="" aria-label="6"></a><span class="co">#     "tree depth 4": evaluate(student_tree......),</span></span>
+<span id="cb7-7"><a href="" aria-label="7"></a><span class="co"># }).T</span></span>
+<span id="cb7-8"><a href="" aria-label="8"></a><span class="co"># display(student_scores.round(3))</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="exercise-2-explain-a-coefficient-and-a-path" class="title-slide slide level1 center">
+<h1>Exercise 2: explain a coefficient and a path</h1>
+<p>Use validation row position 24 throughout the exercise.</p>
+<ol type="1">
+<li>Convert the temperature coefficient into an odds multiplier. What is its unit?</li>
+<li>Use <code>decision_path</code> to list the tree’s visited split conditions.</li>
+<li>Show the tree’s predicted probability and observed class for this hour.</li>
+</ol>
+<p>How does this local path differ from the tree’s global impurity importance? Why does neither account establish what would happen if we changed the real weather?</p>
+<div id="f66f020c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.058868Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.058695Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.061732Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.060863Z&quot;}}" data-execution_count="30">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># student_x = X_valid.iloc[[...]]  # Position 24, not row label 24.</span></span>
+<span id="cb8-2"><a href="" aria-label="2"></a><span class="co"># student_odds_multiplier = np.exp(coefs[...])  # Use "temperature_C".</span></span>
+<span id="cb8-3"><a href="" aria-label="3"></a><span class="co"># print(student_odds_multiplier)</span></span>
+<span id="cb8-4"><a href="" aria-label="4"></a><span class="co"># student_nodes = student_tree.decision_path(student_x).indices</span></span>
+<span id="cb8-5"><a href="" aria-label="5"></a><span class="co"># for node in student_nodes:</span></span>
+<span id="cb8-6"><a href="" aria-label="6"></a><span class="co">#     feature = student_tree.tree_.feature[node]</span></span>
+<span id="cb8-7"><a href="" aria-label="7"></a><span class="co">#     if feature &gt;= 0:  # Leaves have a negative feature index.</span></span>
+<span id="cb8-8"><a href="" aria-label="8"></a><span class="co">#         name = X.columns[feature]</span></span>
+<span id="cb8-9"><a href="" aria-label="9"></a><span class="co">#         threshold = student_tree.tree_.threshold[node]</span></span>
+<span id="cb8-10"><a href="" aria-label="10"></a><span class="co">#         direction = "&lt;=" if student_x.iloc[0, feature] &lt;= threshold else "&gt;"</span></span>
+<span id="cb8-11"><a href="" aria-label="11"></a><span class="co">#         print(name, direction, round(threshold, 2))</span></span>
+<span id="cb8-12"><a href="" aria-label="12"></a><span class="co"># print("P(high):", student_tree.predict_proba(student_x)[0, 1])</span></span>
+<span id="cb8-13"><a href="" aria-label="13"></a><span class="co"># print("Observed:", y_valid.iloc[...])</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="coding-session-1-solution" class="title-slide slide level1 scrollable center">
+<h1>Coding session 1 solution</h1>
+<details>
+<summary>
+Show the solution
+</summary>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>student_tree <span class="op">=</span> DecisionTreeClassifier(</span>
+<span id="cb9-2"><a href="" aria-label="2"></a>    max_depth<span class="op">=</span><span class="dv">4</span>, min_samples_leaf<span class="op">=</span><span class="dv">40</span>, random_state<span class="op">=</span>RANDOM_STATE,</span>
+<span id="cb9-3"><a href="" aria-label="3"></a>).fit(X_train, y_train)</span>
+<span id="cb9-4"><a href="" aria-label="4"></a>student_scores <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb9-5"><a href="" aria-label="5"></a>    <span class="st">"logistic"</span>: evaluate(logistic, X_valid, y_valid),</span>
+<span id="cb9-6"><a href="" aria-label="6"></a>    <span class="st">"tree depth 4"</span>: evaluate(student_tree, X_valid, y_valid),</span>
+<span id="cb9-7"><a href="" aria-label="7"></a>}).T</span>
+<span id="cb9-8"><a href="" aria-label="8"></a>display(student_scores.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb9-9"><a href="" aria-label="9"></a>student_x <span class="op">=</span> X_valid.iloc[[<span class="dv">24</span>]]</span>
+<span id="cb9-10"><a href="" aria-label="10"></a>student_odds_multiplier <span class="op">=</span> np.exp(coefs[<span class="st">"temperature_C"</span>])</span>
+<span id="cb9-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="st">"Odds multiplier per training SD:"</span>, student_odds_multiplier)</span>
+<span id="cb9-12"><a href="" aria-label="12"></a>student_nodes <span class="op">=</span> student_tree.decision_path(student_x).indices</span>
+<span id="cb9-13"><a href="" aria-label="13"></a><span class="cf">for</span> node <span class="kw">in</span> student_nodes:</span>
+<span id="cb9-14"><a href="" aria-label="14"></a>    feature <span class="op">=</span> student_tree.tree_.feature[node]</span>
+<span id="cb9-15"><a href="" aria-label="15"></a>    <span class="cf">if</span> feature <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
+<span id="cb9-16"><a href="" aria-label="16"></a>        name <span class="op">=</span> X.columns[feature]</span>
+<span id="cb9-17"><a href="" aria-label="17"></a>        threshold <span class="op">=</span> student_tree.tree_.threshold[node]</span>
+<span id="cb9-18"><a href="" aria-label="18"></a>        direction <span class="op">=</span> <span class="st">"&lt;="</span> <span class="cf">if</span> student_x.iloc[<span class="dv">0</span>, feature] <span class="op">&lt;=</span> threshold <span class="cf">else</span> <span class="st">"&gt;"</span></span>
+<span id="cb9-19"><a href="" aria-label="19"></a>        <span class="bu">print</span>(name, direction, <span class="bu">round</span>(threshold, <span class="dv">2</span>))</span>
+<span id="cb9-20"><a href="" aria-label="20"></a><span class="bu">print</span>(<span class="st">"P(high):"</span>, student_tree.predict_proba(student_x)[<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb9-21"><a href="" aria-label="21"></a><span class="bu">print</span>(<span class="st">"Observed:"</span>, y_valid.iloc[<span class="dv">24</span>])</span></code></pre></div>
+<p>The odds multiplier refers to one training standard deviation, holding other inputs fixed. A path describes one route through the fitted tree, whereas impurity importance sums training credits over all splits; neither explanation identifies a causal weather effect.</p>
+</details>
+</section>
+
+<section id="exercise-3-fit-and-inspect-a-local-surrogate" class="title-slide slide level1 center">
+<h1>Exercise 3: fit and inspect a local surrogate</h1>
+<p><a id="coding-exercises-2" href=""></a></p>
+<p>Use <code>explain_lime</code> on validation row position 24.</p>
+<ol type="1">
+<li>Show its four conditions and weights.</li>
+<li>Show <code>lime_diagnostics</code> and interpret the weighted <span class="math inline">\(R^2\)</span> and point discrepancy.</li>
+<li>Repeat with seed 7; compare the two strongest terms.</li>
+</ol>
+<p>Keep the forest and observation fixed.</p>
+<div id="2ee805ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.063545Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.063367Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.066291Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.065389Z&quot;}}" data-execution_count="31">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># student_x = X_valid.iloc[[...]]  # Position 24.</span></span>
+<span id="cb10-2"><a href="" aria-label="2"></a><span class="co"># student_lime = explain_lime(..., seed=42)</span></span>
+<span id="cb10-3"><a href="" aria-label="3"></a><span class="co"># student_lime_repeat = explain_lime(..., seed=7)</span></span>
+<span id="cb10-4"><a href="" aria-label="4"></a><span class="co"># display(pd.DataFrame(student_lime.as_list(label=1), columns=["condition", "weight"]))</span></span>
+<span id="cb10-5"><a href="" aria-label="5"></a><span class="co"># display(pd.DataFrame([</span></span>
+<span id="cb10-6"><a href="" aria-label="6"></a><span class="co">#     lime_diagnostics(student_lime...),</span></span>
+<span id="cb10-7"><a href="" aria-label="7"></a><span class="co">#     lime_diagnostics(student_lime_repeat...),</span></span>
+<span id="cb10-8"><a href="" aria-label="8"></a><span class="co"># ]).round(3))</span></span>
+<span id="cb10-9"><a href="" aria-label="9"></a><span class="co"># print(student_lime.as_list(label=1)[:2])</span></span>
+<span id="cb10-10"><a href="" aria-label="10"></a><span class="co"># print(student_lime_repeat.as_list(label=1)[:2])</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="exercise-4-shap-and-the-output-scale" class="title-slide slide level1 center">
+<h1>Exercise 4: SHAP and the output scale</h1>
+<p>Explain the same row with <code>explain_shap</code>.</p>
+<ol type="1">
+<li>Draw a waterfall and identify the two largest absolute contributions.</li>
+<li>Add the baseline to the signed contribution sum.</li>
+<li>Compare with the forest’s class-1 probability using <code>assert_allclose</code>.</li>
+</ol>
+<p>What does agreement with exact coalition enumeration check beyond reconstruction? Is a positive contribution evidence that changing the feature would increase real demand? Why might LIME rank a different condition first?</p>
+<div id="9923fad1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.068157Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.067980Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.070899Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.069958Z&quot;}}" data-execution_count="32">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># student_shap = explain_shap(...)</span></span>
+<span id="cb11-2"><a href="" aria-label="2"></a><span class="co"># shap.plots.waterfall(student_shap[0], max_display=len(feature_names))</span></span>
+<span id="cb11-3"><a href="" aria-label="3"></a><span class="co"># student_reconstructed = ... + ...  # base_values plus values.sum(axis=1)</span></span>
+<span id="cb11-4"><a href="" aria-label="4"></a><span class="co"># np.testing.assert_allclose(student_reconstructed,</span></span>
+<span id="cb11-5"><a href="" aria-label="5"></a><span class="co">#     forest.predict_proba(student_x)[:...], atol=1e-6)</span></span>
+<span id="cb11-6"><a href="" aria-label="6"></a><span class="co"># print(sorted(zip(feature_names, student_shap.values[0]),</span></span>
+<span id="cb11-7"><a href="" aria-label="7"></a><span class="co">#              key=lambda pair: abs(pair[1]), reverse=True)[:2])</span></span></code></pre></div>
+</details>
+</div>
+</section>
+
+<section id="coding-session-2-solution" class="title-slide slide level1 scrollable center">
+<h1>Coding session 2 solution</h1>
+<details>
+<summary>
+Show the solution
+</summary>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>student_x <span class="op">=</span> X_valid.iloc[[<span class="dv">24</span>]]</span>
+<span id="cb12-2"><a href="" aria-label="2"></a>student_lime <span class="op">=</span> explain_lime(student_x, seed<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb12-3"><a href="" aria-label="3"></a>student_lime_repeat <span class="op">=</span> explain_lime(student_x, seed<span class="op">=</span><span class="dv">7</span>)</span>
+<span id="cb12-4"><a href="" aria-label="4"></a>display(pd.DataFrame(student_lime.as_list(label<span class="op">=</span><span class="dv">1</span>), columns<span class="op">=</span>[<span class="st">"condition"</span>, <span class="st">"weight"</span>]))</span>
+<span id="cb12-5"><a href="" aria-label="5"></a>display(pd.DataFrame([</span>
+<span id="cb12-6"><a href="" aria-label="6"></a>    lime_diagnostics(student_lime, student_x),</span>
+<span id="cb12-7"><a href="" aria-label="7"></a>    lime_diagnostics(student_lime_repeat, student_x),</span>
+<span id="cb12-8"><a href="" aria-label="8"></a>]).<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb12-9"><a href="" aria-label="9"></a><span class="bu">print</span>(student_lime.as_list(label<span class="op">=</span><span class="dv">1</span>)[:<span class="dv">2</span>])</span>
+<span id="cb12-10"><a href="" aria-label="10"></a><span class="bu">print</span>(student_lime_repeat.as_list(label<span class="op">=</span><span class="dv">1</span>)[:<span class="dv">2</span>])</span>
+<span id="cb12-11"><a href="" aria-label="11"></a>student_shap <span class="op">=</span> explain_shap(student_x)</span>
+<span id="cb12-12"><a href="" aria-label="12"></a>shap.plots.waterfall(student_shap[<span class="dv">0</span>], max_display<span class="op">=</span><span class="bu">len</span>(feature_names))</span>
+<span id="cb12-13"><a href="" aria-label="13"></a>student_reconstructed <span class="op">=</span> student_shap.base_values <span class="op">+</span> student_shap.values.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-14"><a href="" aria-label="14"></a>np.testing.assert_allclose(student_reconstructed,</span>
+<span id="cb12-15"><a href="" aria-label="15"></a>    forest.predict_proba(student_x)[:, <span class="dv">1</span>], atol<span class="op">=</span><span class="fl">1e-6</span>)</span>
+<span id="cb12-16"><a href="" aria-label="16"></a><span class="bu">print</span>(<span class="bu">sorted</span>(<span class="bu">zip</span>(feature_names, student_shap.values[<span class="dv">0</span>]),</span>
+<span id="cb12-17"><a href="" aria-label="17"></a>             key<span class="op">=</span><span class="kw">lambda</span> pair: <span class="bu">abs</span>(pair[<span class="dv">1</span>]), reverse<span class="op">=</span><span class="va">True</span>)[:<span class="dv">2</span>])</span></code></pre></div>
+<p>LIME fits a neighborhood surrogate; SHAP allocates a difference from a background output. Different rankings are possible. Coalition enumeration checks each attribution, while reconstruction checks only their sum. Neither is a causal effect estimate, and matching the prediction does not establish usefulness.</p>
+</details>
+</section>
+
 <section id="exercise-5-make-a-multi-objective-choice" class="title-slide slide level1 center">
 <h1>Exercise 5: make a multi-objective choice</h1>
 <p><a id="coding-exercises-3" href=""></a></p>
@@ -1998,20 +2377,20 @@ Show the solution
 <li>Select the feasible candidate with the fewest leaves, then lowest error.</li>
 <li>Report the chosen depth, score, and leaf count. What does leaf count miss?</li>
 </ol>
-<div id="f8203721" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-10T06:24:06.506430Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-10T06:24:06.506234Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-10T06:24:06.509081Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-10T06:24:06.508377Z&quot;}}" data-execution_count="29">
+<div id="f8203721" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.072751Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.072544Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.075365Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.074524Z&quot;}}" data-execution_count="33">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># student_tradeoffs = tradeoffs.copy()</span></span>
-<span id="cb8-2"><a href="" aria-label="2"></a><span class="co"># student_tradeoffs["pareto"] = pareto_mask(student_tradeoffs[[..., ...]])</span></span>
-<span id="cb8-3"><a href="" aria-label="3"></a><span class="co"># display(student_tradeoffs.loc[student_tradeoffs.pareto].round(3))</span></span>
-<span id="cb8-4"><a href="" aria-label="4"></a><span class="co"># student_best = student_tradeoffs.balanced_accuracy.max()</span></span>
-<span id="cb8-5"><a href="" aria-label="5"></a><span class="co"># student_feasible = student_tradeoffs.loc[</span></span>
-<span id="cb8-6"><a href="" aria-label="6"></a><span class="co">#     student_tradeoffs.balanced_accuracy &gt;= student_best - ...</span></span>
-<span id="cb8-7"><a href="" aria-label="7"></a><span class="co"># ]</span></span>
-<span id="cb8-8"><a href="" aria-label="8"></a><span class="co"># student_choice = student_feasible.sort_values(</span></span>
-<span id="cb8-9"><a href="" aria-label="9"></a><span class="co">#     ["leaves", "error"], ascending=[True, True]</span></span>
-<span id="cb8-10"><a href="" aria-label="10"></a><span class="co"># ).iloc[0]</span></span>
-<span id="cb8-11"><a href="" aria-label="11"></a><span class="co"># display(student_choice)</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># student_tradeoffs = tradeoffs.copy()</span></span>
+<span id="cb13-2"><a href="" aria-label="2"></a><span class="co"># student_tradeoffs["pareto"] = pareto_mask(student_tradeoffs[[......]])</span></span>
+<span id="cb13-3"><a href="" aria-label="3"></a><span class="co"># display(student_tradeoffs.loc[student_tradeoffs.pareto].round(3))</span></span>
+<span id="cb13-4"><a href="" aria-label="4"></a><span class="co"># student_best = student_tradeoffs.balanced_accuracy.max()</span></span>
+<span id="cb13-5"><a href="" aria-label="5"></a><span class="co"># student_feasible = student_tradeoffs.loc[</span></span>
+<span id="cb13-6"><a href="" aria-label="6"></a><span class="co">#     student_tradeoffs.balanced_accuracy &gt;= student_best - ...</span></span>
+<span id="cb13-7"><a href="" aria-label="7"></a><span class="co"># ]</span></span>
+<span id="cb13-8"><a href="" aria-label="8"></a><span class="co"># student_choice = student_feasible.sort_values(</span></span>
+<span id="cb13-9"><a href="" aria-label="9"></a><span class="co">#     ["leaves", "error"], ascending=[True, True]</span></span>
+<span id="cb13-10"><a href="" aria-label="10"></a><span class="co"># ).iloc[0]</span></span>
+<span id="cb13-11"><a href="" aria-label="11"></a><span class="co"># display(student_choice)</span></span></code></pre></div>
 </details>
 </div>
 </section>
@@ -2022,28 +2401,28 @@ Show the solution
 <ul>
 <li>Show both baseline probabilities and the signed contribution differences.</li>
 <li>Check that both explanations reconstruct the <strong>same forest probability</strong>.</li>
-<li>Recommend a predictive model using Exercise 5, and explain one limitation of the forest explanations.</li>
+<li>Recommend a model using Exercise 5; contrast the local SHAP ranking with global importance.</li>
 <li>Once the tree choice is fixed, evaluate it on the final test period.</li>
 </ul>
 <p>Do not choose a background because it produces a more appealing story.</p>
-<div id="33dd9a3a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-10T06:24:06.511108Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-10T06:24:06.510941Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-10T06:24:06.513739Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-10T06:24:06.512994Z&quot;}}" data-execution_count="30">
+<div id="33dd9a3a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-11T09:52:58.077366Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-11T09:52:58.077192Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-11T09:52:58.080151Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-11T09:52:58.079411Z&quot;}}" data-execution_count="34">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="co"># student_x = X_valid.iloc[[24]]</span></span>
-<span id="cb9-2"><a href="" aria-label="2"></a><span class="co"># student_all = explain_shap(student_x, ...)</span></span>
-<span id="cb9-3"><a href="" aria-label="3"></a><span class="co"># student_morning = explain_shap(student_x, ...)</span></span>
-<span id="cb9-4"><a href="" aria-label="4"></a><span class="co"># display(pd.DataFrame({</span></span>
-<span id="cb9-5"><a href="" aria-label="5"></a><span class="co">#     "all_hours": student_all.values[0],</span></span>
-<span id="cb9-6"><a href="" aria-label="6"></a><span class="co">#     "morning_hours": student_morning.values[0],</span></span>
-<span id="cb9-7"><a href="" aria-label="7"></a><span class="co"># }, index=feature_names).round(4))</span></span>
-<span id="cb9-8"><a href="" aria-label="8"></a><span class="co"># print("Bases:", student_all.base_values, student_morning.base_values)</span></span>
-<span id="cb9-9"><a href="" aria-label="9"></a><span class="co"># for attribution in [student_all, student_morning]:</span></span>
-<span id="cb9-10"><a href="" aria-label="10"></a><span class="co">#     np.testing.assert_allclose(</span></span>
-<span id="cb9-11"><a href="" aria-label="11"></a><span class="co">#         attribution.base_values + attribution.values.sum(axis=1),</span></span>
-<span id="cb9-12"><a href="" aria-label="12"></a><span class="co">#         forest.predict_proba(student_x)[:, 1], atol=1e-6)</span></span>
-<span id="cb9-13"><a href="" aria-label="13"></a><span class="co"># chosen_model = tree_candidates[int(student_choice.max_depth)]</span></span>
-<span id="cb9-14"><a href="" aria-label="14"></a><span class="co"># display(pd.DataFrame([evaluate(chosen_model, ..., ...)], index=["final test"]))</span></span>
-<span id="cb9-15"><a href="" aria-label="15"></a><span class="co"># Write two sentences: your choice with evidence, then an explanation limitation.</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="co"># student_x = X_valid.iloc[[24]]</span></span>
+<span id="cb14-2"><a href="" aria-label="2"></a><span class="co"># student_all = explain_shap(student_x...)</span></span>
+<span id="cb14-3"><a href="" aria-label="3"></a><span class="co"># student_morning = explain_shap(student_x...)</span></span>
+<span id="cb14-4"><a href="" aria-label="4"></a><span class="co"># display(pd.DataFrame({</span></span>
+<span id="cb14-5"><a href="" aria-label="5"></a><span class="co">#     "all_hours": student_all.values[0],</span></span>
+<span id="cb14-6"><a href="" aria-label="6"></a><span class="co">#     "morning_hours": student_morning.values[0],</span></span>
+<span id="cb14-7"><a href="" aria-label="7"></a><span class="co"># }, index=feature_names).round(4))</span></span>
+<span id="cb14-8"><a href="" aria-label="8"></a><span class="co"># print("Bases:", student_all.base_values, student_morning.base_values)</span></span>
+<span id="cb14-9"><a href="" aria-label="9"></a><span class="co"># for attribution in [student_all, student_morning]:</span></span>
+<span id="cb14-10"><a href="" aria-label="10"></a><span class="co">#     np.testing.assert_allclose(</span></span>
+<span id="cb14-11"><a href="" aria-label="11"></a><span class="co">#         attribution.base_values + attribution.values.sum(axis=1),</span></span>
+<span id="cb14-12"><a href="" aria-label="12"></a><span class="co">#         forest.predict_proba(student_x)[:, 1], atol=1e-6)</span></span>
+<span id="cb14-13"><a href="" aria-label="13"></a><span class="co"># chosen_model = tree_candidates[int(student_choice.max_depth)]</span></span>
+<span id="cb14-14"><a href="" aria-label="14"></a><span class="co"># display(pd.DataFrame([evaluate(chosen_model......)], index=["final test"]))</span></span>
+<span id="cb14-15"><a href="" aria-label="15"></a><span class="co"># Write two sentences: your choice with evidence, then an explanation limitation.</span></span></code></pre></div>
 </details>
 </div>
 </section>
@@ -2054,29 +2433,29 @@ Show the solution
 <summary>
 Show the solution
 </summary>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>student_tradeoffs <span class="op">=</span> tradeoffs.copy()</span>
-<span id="cb10-2"><a href="" aria-label="2"></a>student_tradeoffs[<span class="st">"pareto"</span>] <span class="op">=</span> pareto_mask(student_tradeoffs[[<span class="st">"error"</span>, <span class="st">"leaves"</span>]])</span>
-<span id="cb10-3"><a href="" aria-label="3"></a>display(student_tradeoffs.loc[student_tradeoffs.pareto].<span class="bu">round</span>(<span class="dv">3</span>))</span>
-<span id="cb10-4"><a href="" aria-label="4"></a>student_best <span class="op">=</span> student_tradeoffs.balanced_accuracy.<span class="bu">max</span>()</span>
-<span id="cb10-5"><a href="" aria-label="5"></a>student_feasible <span class="op">=</span> student_tradeoffs.loc[</span>
-<span id="cb10-6"><a href="" aria-label="6"></a>    student_tradeoffs.balanced_accuracy <span class="op">&gt;=</span> student_best <span class="op">-</span> <span class="fl">0.02</span></span>
-<span id="cb10-7"><a href="" aria-label="7"></a>]</span>
-<span id="cb10-8"><a href="" aria-label="8"></a>student_choice <span class="op">=</span> student_feasible.sort_values(</span>
-<span id="cb10-9"><a href="" aria-label="9"></a>    [<span class="st">"leaves"</span>, <span class="st">"error"</span>], ascending<span class="op">=</span>[<span class="va">True</span>, <span class="va">True</span>]</span>
-<span id="cb10-10"><a href="" aria-label="10"></a>).iloc[<span class="dv">0</span>]</span>
-<span id="cb10-11"><a href="" aria-label="11"></a>display(student_choice)</span>
-<span id="cb10-12"><a href="" aria-label="12"></a>student_x <span class="op">=</span> X_valid.iloc[[<span class="dv">24</span>]]</span>
-<span id="cb10-13"><a href="" aria-label="13"></a>student_all <span class="op">=</span> explain_shap(student_x, shap_explainer)</span>
-<span id="cb10-14"><a href="" aria-label="14"></a>student_morning <span class="op">=</span> explain_shap(student_x, morning_explainer)</span>
-<span id="cb10-15"><a href="" aria-label="15"></a>display(pd.DataFrame({<span class="st">"all_hours"</span>: student_all.values[<span class="dv">0</span>],</span>
-<span id="cb10-16"><a href="" aria-label="16"></a>    <span class="st">"morning_hours"</span>: student_morning.values[<span class="dv">0</span>]}, index<span class="op">=</span>feature_names).<span class="bu">round</span>(<span class="dv">4</span>))</span>
-<span id="cb10-17"><a href="" aria-label="17"></a><span class="bu">print</span>(<span class="st">"Bases:"</span>, student_all.base_values, student_morning.base_values)</span>
-<span id="cb10-18"><a href="" aria-label="18"></a><span class="cf">for</span> attribution <span class="kw">in</span> [student_all, student_morning]:</span>
-<span id="cb10-19"><a href="" aria-label="19"></a>    np.testing.assert_allclose(attribution.base_values <span class="op">+</span> attribution.values.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb10-20"><a href="" aria-label="20"></a>        forest.predict_proba(student_x)[:, <span class="dv">1</span>], atol<span class="op">=</span><span class="fl">1e-6</span>)</span>
-<span id="cb10-21"><a href="" aria-label="21"></a>chosen_model <span class="op">=</span> tree_candidates[<span class="bu">int</span>(student_choice.max_depth)]</span>
-<span id="cb10-22"><a href="" aria-label="22"></a>display(pd.DataFrame([evaluate(chosen_model, X_test, y_test)], index<span class="op">=</span>[<span class="st">"final test"</span>]))</span></code></pre></div>
-<p>The rule selects the smallest feasible tree among these candidates. Leaf count omits feature meaning, rule length, comprehension, and stability. Both SHAP references reconstruct the same forest prediction while answering different comparison questions. If final performance is lower, investigate seasonal shift with new evaluation data; do not tune on this test period.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a>student_tradeoffs <span class="op">=</span> tradeoffs.copy()</span>
+<span id="cb15-2"><a href="" aria-label="2"></a>student_tradeoffs[<span class="st">"pareto"</span>] <span class="op">=</span> pareto_mask(student_tradeoffs[[<span class="st">"error"</span>, <span class="st">"leaves"</span>]])</span>
+<span id="cb15-3"><a href="" aria-label="3"></a>display(student_tradeoffs.loc[student_tradeoffs.pareto].<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb15-4"><a href="" aria-label="4"></a>student_best <span class="op">=</span> student_tradeoffs.balanced_accuracy.<span class="bu">max</span>()</span>
+<span id="cb15-5"><a href="" aria-label="5"></a>student_feasible <span class="op">=</span> student_tradeoffs.loc[</span>
+<span id="cb15-6"><a href="" aria-label="6"></a>    student_tradeoffs.balanced_accuracy <span class="op">&gt;=</span> student_best <span class="op">-</span> <span class="fl">0.02</span></span>
+<span id="cb15-7"><a href="" aria-label="7"></a>]</span>
+<span id="cb15-8"><a href="" aria-label="8"></a>student_choice <span class="op">=</span> student_feasible.sort_values(</span>
+<span id="cb15-9"><a href="" aria-label="9"></a>    [<span class="st">"leaves"</span>, <span class="st">"error"</span>], ascending<span class="op">=</span>[<span class="va">True</span>, <span class="va">True</span>]</span>
+<span id="cb15-10"><a href="" aria-label="10"></a>).iloc[<span class="dv">0</span>]</span>
+<span id="cb15-11"><a href="" aria-label="11"></a>display(student_choice)</span>
+<span id="cb15-12"><a href="" aria-label="12"></a>student_x <span class="op">=</span> X_valid.iloc[[<span class="dv">24</span>]]</span>
+<span id="cb15-13"><a href="" aria-label="13"></a>student_all <span class="op">=</span> explain_shap(student_x, shap_explainer)</span>
+<span id="cb15-14"><a href="" aria-label="14"></a>student_morning <span class="op">=</span> explain_shap(student_x, morning_explainer)</span>
+<span id="cb15-15"><a href="" aria-label="15"></a>display(pd.DataFrame({<span class="st">"all_hours"</span>: student_all.values[<span class="dv">0</span>],</span>
+<span id="cb15-16"><a href="" aria-label="16"></a>    <span class="st">"morning_hours"</span>: student_morning.values[<span class="dv">0</span>]}, index<span class="op">=</span>feature_names).<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb15-17"><a href="" aria-label="17"></a><span class="bu">print</span>(<span class="st">"Bases:"</span>, student_all.base_values, student_morning.base_values)</span>
+<span id="cb15-18"><a href="" aria-label="18"></a><span class="cf">for</span> attribution <span class="kw">in</span> [student_all, student_morning]:</span>
+<span id="cb15-19"><a href="" aria-label="19"></a>    np.testing.assert_allclose(attribution.base_values <span class="op">+</span> attribution.values.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb15-20"><a href="" aria-label="20"></a>        forest.predict_proba(student_x)[:, <span class="dv">1</span>], atol<span class="op">=</span><span class="fl">1e-6</span>)</span>
+<span id="cb15-21"><a href="" aria-label="21"></a>chosen_model <span class="op">=</span> tree_candidates[<span class="bu">int</span>(student_choice.max_depth)]</span>
+<span id="cb15-22"><a href="" aria-label="22"></a>display(pd.DataFrame([evaluate(chosen_model, X_test, y_test)], index<span class="op">=</span>[<span class="st">"final test"</span>]))</span></code></pre></div>
+<p>The rule selects the smallest feasible tree among these candidates. Leaf count omits feature meaning, rule length, comprehension, and stability. A mean absolute global ranking summarizes many hours and can differ from any one hour’s ranking. Both SHAP references reconstruct the same forest prediction while answering different comparison questions. If final performance is lower, investigate seasonal shift with new evaluation data; do not tune on this test period.</p>
 </details>
 </section>
 
@@ -2088,11 +2467,24 @@ Show the solution
 <li><a href="https://christophm.github.io/interpretable-ml-book/logistic.html">Logistic regression</a>, <a href="https://christophm.github.io/interpretable-ml-book/tree.html">decision trees</a></li>
 <li><a href="https://christophm.github.io/interpretable-ml-book/lime.html">LIME</a>, <a href="https://christophm.github.io/interpretable-ml-book/shapley.html">Shapley values</a>, <a href="https://christophm.github.io/interpretable-ml-book/shap.html">SHAP</a></li>
 </ul>
+<p>Interpretability evaluation and complexity measures:</p>
+<ul>
+<li>Lipton, <em>The Mythos of Model Interpretability</em>: model size versus per-prediction computation <span class="citation" data-cites="lipton2018mythos">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lipton 2018</a>)</span>.</li>
+<li>Doshi-Velez and Kim, <em>Towards A Rigorous Science of Interpretable Machine Learning</em>: proxy, human-grounded, and application-grounded evaluation <span class="citation" data-cites="doshivelez2017towards">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Doshi-Velez and Kim 2017</a>)</span>.</li>
+<li>Poursabzi-Sangdeh et al., <em>Manipulating and Measuring Model Interpretability</em>: human experiments varying feature count and transparency <span class="citation" data-cites="poursabzi2021manipulating">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Poursabzi-Sangdeh et al. 2021</a>)</span>.</li>
+</ul>
+<p>Neural-network explanations: input-gradient saliency <span class="citation" data-cites="simonyan2013deep">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Simonyan et al. 2013</a>)</span> and Integrated Gradients <span class="citation" data-cites="sundararajan2017axiomatic">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Sundararajan et al. 2017</a>)</span>.</p>
 <p>Original methods: <span class="citation" data-cites="ribeiro2016should lundberg2017unified lundberg2020local">(<a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>; <a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>; <a href="#/further-reading-and-references" role="doc-biblioref" onclick="">Lundberg et al. 2020</a>)</span>. Implementation: <a href="https://lime-ml.readthedocs.io/en/latest/lime.html">LIME</a>, <a href="https://shap.readthedocs.io/en/latest/generated/shap.TreeExplainer.html">TreeExplainer</a>.</p>
 <p>Concepts adapted with attribution from Molnar’s <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> online book. Bike examples, code, and exercises are written for this workshop.</p>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-doshivelez2017towards" class="csl-entry" role="listitem">
+Doshi-Velez, Finale, and Been Kim. 2017. <em>Towards a Rigorous Science of Interpretable Machine Learning</em>. <a href="https://arxiv.org/abs/1702.08608">https://arxiv.org/abs/1702.08608</a>.
+</div>
 <div id="ref-fanaeet2013bike" class="csl-entry" role="listitem">
 Fanaee-T, Hadi. 2013. <em>Bike Sharing</em>. UCI Machine Learning Repository. <a href="https://doi.org/10.24432/C5W894">https://doi.org/10.24432/C5W894</a>.
+</div>
+<div id="ref-lipton2018mythos" class="csl-entry" role="listitem">
+Lipton, Zachary C. 2018. <span>“The Mythos of Model Interpretability.”</span> <em>Communications of the ACM</em> 61 (10): 36–43.
 </div>
 <div id="ref-lundberg2020local" class="csl-entry" role="listitem">
 Lundberg, Scott M., Gabriel Erion, Hugh Chen, et al. 2020. <span>“From Local Explanations to Global Understanding with Explainable <span>AI</span> for Trees.”</span> <em>Nature Machine Intelligence</em> 2 (1): 56–67.
@@ -2100,11 +2492,17 @@ Lundberg, Scott M., Gabriel Erion, Hugh Chen, et al. 2020. <span>“From Local E
 <div id="ref-lundberg2017unified" class="csl-entry" role="listitem">
 Lundberg, Scott M., and Su-In Lee. 2017. <span>“A Unified Approach to Interpreting Model Predictions.”</span> <em>Advances in Neural Information Processing Systems</em> 30.
 </div>
-<div id="ref-molnarIMLonline" class="csl-entry" role="listitem">
-Molnar, Christoph. n.d. <em>Interpretable Machine Learning: A Guide for Making Black Box Models Explainable</em>. Accessed November 2, 2026. <a href="https://christophm.github.io/interpretable-ml-book/">https://christophm.github.io/interpretable-ml-book/</a>.
+<div id="ref-poursabzi2021manipulating" class="csl-entry" role="listitem">
+Poursabzi-Sangdeh, Forough, Daniel G. Goldstein, Jake M. Hofman, Jennifer Wortman Vaughan, and Hanna Wallach. 2021. <span>“Manipulating and Measuring Model Interpretability.”</span> <em>Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems</em>. <a href="https://www.microsoft.com/en-us/research/publication/manipulating-and-measuring-model-interpretability/">https://www.microsoft.com/en-us/research/publication/manipulating-and-measuring-model-interpretability/</a>.
 </div>
 <div id="ref-ribeiro2016should" class="csl-entry" role="listitem">
 Ribeiro, Marco Tulio, Sameer Singh, and Carlos Guestrin. 2016. <span>“<span>‘Why Should <span>I</span> Trust You?’</span>: Explaining the Predictions of Any Classifier.”</span> <em>Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining</em>, 1135–44.
+</div>
+<div id="ref-simonyan2013deep" class="csl-entry" role="listitem">
+Simonyan, Karen, Andrea Vedaldi, and Andrew Zisserman. 2013. <em>Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps</em>. <a href="https://arxiv.org/abs/1312.6034">https://arxiv.org/abs/1312.6034</a>.
+</div>
+<div id="ref-sundararajan2017axiomatic" class="csl-entry" role="listitem">
+Sundararajan, Mukund, Ankur Taly, and Qiqi Yan. 2017. <span>“Axiomatic Attribution for Deep Networks.”</span> <em>Proceedings of the 34th International Conference on Machine Learning</em>, Proceedings of machine learning research, vol. 70: 3319–28. <a href="https://proceedings.mlr.press/v70/sundararajan17a.html">https://proceedings.mlr.press/v70/sundararajan17a.html</a>.
 </div>
 </div>
 
