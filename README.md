@@ -28,3 +28,7 @@ Notebook:
 |Graph RAG| 5 |
 |Applications: recommender systems | 5 |
 |Total| 20 |
+
+Notebook:
+
+- [RAG: Improving LLM Applications Through Data](slides/lab-07-rag.ipynb) — text and graph retrieval, evidence quality, and guided exercises requiring no LLM or API key.
