@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.2...1.2.3) (2026-11-13)
+
+### Bug Fixes
+
+* coding sessions ([77a68db](https://github.com/w4bo/AA2627-unibo-dcai/commit/77a68db707e80cd94b225f368794a2b014cddda7))
+* remove rag typos ([94cc32a](https://github.com/w4bo/AA2627-unibo-dcai/commit/94cc32ae1e58d6bc7293e9aba817e2a7d4c97801))
+
 ## [1.2.2](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.1...1.2.2) (2026-11-13)
 
 ### Bug Fixes
