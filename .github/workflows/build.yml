@@ -15,9 +15,27 @@ jobs:
       - name: Configuring the environment
         run: |
           bash utils/init.sh
-      - name: Running the notebooks (if any)
+      - name: Start Ollama for the RAG exercises
         run: |
-          docker compose run --rm build
+          docker compose -f docker-compose.yml -f compose.ollama.yml up -d --wait ollama
+          docker compose -f docker-compose.yml -f compose.ollama.yml run --rm ollama-pull
+      - name: Running the notebooks (if any)
+        run: >-
+          docker compose -f docker-compose.yml -f compose.ollama.yml run --rm
+          -e OLLAMA_URL=http://ollama:11434 -e OLLAMA_MODEL=qwen2.5:0.5b
+          build python /data/execute-notebooks.py
+      - name: Save executed RAG notebook
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rag-notebook
+          path: slides/lab-07-rag.ipynb
+      - name: Ollama diagnostics
+        if: failure()
+        run: docker compose -f docker-compose.yml -f compose.ollama.yml logs ollama
+      - name: Stop Ollama
+        if: always()
+        run: docker compose -f docker-compose.yml -f compose.ollama.yml stop ollama
       - name: Generate the slides
         run: |
           docker compose run --rm publish
