@@ -1,3 +1,13 @@
+## [1.2.0](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.32...1.2.0) (2026-11-13)
+
+### Features
+
+* add Ollama RAG exercises and notebook CI ([4acbfad](https://github.com/w4bo/AA2627-unibo-dcai/commit/4acbfad8d8437f03a441de4fe6482d4c3abf61df))
+
+### General maintenance
+
+* save RAG lab work in progress ([97472b7](https://github.com/w4bo/AA2627-unibo-dcai/commit/97472b75d000919d20176f996b3c5a226e8cf8dd))
+
 ## [1.1.32](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.31...1.1.32) (2026-11-11)
 
 ### Bug Fixes
