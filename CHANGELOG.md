@@ -1,3 +1,13 @@
+## [1.2.1](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.0...1.2.1) (2026-11-13)
+
+### Documentation
+
+* clarify graph RAG flows and reorder hybrid examples ([223d739](https://github.com/w4bo/AA2627-unibo-dcai/commit/223d739cec0bc555b211e3e44a050d9322f87384))
+
+### General maintenance
+
+* standardize coding break cards ([3bfb342](https://github.com/w4bo/AA2627-unibo-dcai/commit/3bfb342237f061125243521cac505db95e33445a))
+
 ## [1.2.0](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.1.32...1.2.0) (2026-11-13)
 
 ### Features
