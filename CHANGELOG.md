@@ -1,3 +1,16 @@
+## [1.2.2](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.1...1.2.2) (2026-11-13)
+
+### Bug Fixes
+
+* add rag slides ([931deb5](https://github.com/w4bo/AA2627-unibo-dcai/commit/931deb51df083f652aa4f9e54e6f7d8e90070b10))
+* publish resources through Quarto to avoid CI permissions errors ([3994be5](https://github.com/w4bo/AA2627-unibo-dcai/commit/3994be5e9c7411583dd265379dc9476551e5f958))
+* restore classic notebook build workflow ([b93d001](https://github.com/w4bo/AA2627-unibo-dcai/commit/b93d0018a3878789f4e2179019972aa58f4a7e86))
+
+### General maintenance
+
+* remove unused images ([89bf168](https://github.com/w4bo/AA2627-unibo-dcai/commit/89bf1680aae58ab449ac3344f905ba1dccf299c8))
+* remove useless content ([758a781](https://github.com/w4bo/AA2627-unibo-dcai/commit/758a78168f3e3f22aa396b03f71d1de5e2194e6b))
+
 ## [1.2.1](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.0...1.2.1) (2026-11-13)
 
 ### Documentation
