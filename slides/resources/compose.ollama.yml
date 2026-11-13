@@ -4,7 +4,7 @@ name: lab-07-rag
 
 services:
   ollama:
-    image: ollama/ollama:0.40.6
+    image: ollama/ollama:0.40.16
     ports:
       - "127.0.0.1:11434:11434"
     environment:
@@ -20,7 +20,7 @@ services:
       retries: 40
 
   ollama-pull:
-    image: ollama/ollama:0.40.6
+    image: ollama/ollama:0.40.16
     environment:
       OLLAMA_HOST: http://ollama:11434
     entrypoint: ["ollama", "pull", "${OLLAMA_MODEL:-qwen2.5:0.5b}"]
