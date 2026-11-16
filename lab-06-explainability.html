@@ -393,7 +393,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <ul>
 <li><code>cnt = casual + registered</code>: exclude all three from predictors.</li>
 </ul>
-<div id="c0dfbd2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:02.560310Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:02.560004Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:03.290494Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:03.289687Z&quot;}}" data-execution_count="2">
+<div id="c0dfbd2d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:49.088474Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:49.088236Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:49.338386Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:49.337710Z&quot;}}" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -578,7 +578,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <section id="the-same-fitted-coefficient-different-probability-changes" class="title-slide slide level1 center">
 <h1>The Same Fitted Coefficient, Different Probability Changes</h1>
 <p>The fitted temperature coefficient is <span class="math inline">\(\beta_T=1.011\)</span>. One training standard deviation is <strong>8.99°C</strong>; the training mean is <strong>14.64°C</strong>.</p>
-<p>Since <span class="math inline">\(z_T=(T-14.64)/8.99\)</span>, raising temperature by 8.99°C raises <span class="math inline">\(z_T\)</span> by 1 and adds <strong>1.011</strong> to the score.</p>
+<p>Since <span class="math inline">\(z_T=\frac{T-14.64}{8.99}\)</span>, raising temperature by 8.99°C raises <span class="math inline">\(z_T\)</span> by 1 and adds <strong>1.011</strong> to the score.</p>
 <p>Start from the actual 00:00 and 17:00 validation observations on 2012-07-01, raise temperature by one training standard deviation:</p>
 <table class="caption-top">
 <colgroup>
@@ -617,44 +617,11 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </ul>
 </section>
 
-<section id="one-prediction-two-scales-score-and-probability" class="title-slide slide level1 center">
-<h1>One Prediction, Two Scales: Score and Probability</h1>
-<p>These panels show the <strong>same fitted model</strong> while temperature varies and other conditions stay fixed.</p>
-<ul>
-<li><strong>Left: add contributions.</strong> The temperature term is <span class="math inline">\(\beta_T z_T\)</span>. A fixed temperature increase adds a fixed amount to the score: each hour’s line is straight.</li>
-<li><strong>Right: apply sigmoid.</strong> Each left-hand score becomes <span class="math inline">\(p=1/(1+e^{-s})\)</span>. This bends the response and keeps it between 0 and 1.</li>
-<li>Hour 17 and hour 0 have different score offsets but the same temperature slope: this model has no hour-by-temperature interaction.</li>
-</ul>
-<p>The dotted score line <span class="math inline">\(s=0\)</span> corresponds to the dotted probability line <span class="math inline">\(p=0.5\)</span>.</p>
-<ul>
-<li>Near probability 0 or 1, the same score change has a smaller probability effect.</li>
-</ul>
 
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"></section>
 
-<section id="coefficients-become-contributions-when-inputs-are-known" class="title-slide slide level1 center">
-<h1>Coefficients Become Contributions When Inputs Are Known</h1>
-<p>A <strong>coefficient</strong> <span class="math inline">\(\beta_j\)</span> is a learned multiplier. Its <strong>contribution</strong> also depends on the encoded value for the observation being explained.</p>
-<p>To compare one hour with the training population, let <span class="math inline">\(\mu_j\)</span> be the training mean of encoded input <span class="math inline">\(j\)</span>:</p>
-<p><span class="math display">\[c_j(x)=\beta_j\bigl(z_j(x)-\mu_j\bigr),\qquad s_{\mathrm{ref}}=\beta_0+\sum_j\beta_j\mu_j.\]</span></p>
-<ul>
-<li><p><span class="math inline">\(c_j(x)\)</span> measures how far this input moves the score from that reference.</p></li>
-<li><p>Add the reference score and all contributions to reconstruct the score, then apply sigmoid <strong>once</strong>:</p>
-<p><span class="math display">\[s(x)=s_{\mathrm{ref}}+\sum_j c_j(x),\qquad p(x)=\sigma\!\left(s_{\mathrm{ref}}+\sum_j c_j(x)\right).\]</span></p></li>
-</ul>
-</section>
 
-<section id="logistic-regression-local-terms-and-a-global-summary" class="title-slide slide level1 center">
-<h1>Logistic Regression: Local Terms and a Global Summary</h1>
-<ul>
-<li><strong>Left:</strong> signed contributions for one validation observation, relative to the training mean. Positive bars raise its score; negative bars lower it.</li>
-<li><strong>Right:</strong> average absolute contribution over validation observations.
-<ul>
-<li>For <strong>hour</strong>, sum its OHE contributions before taking the absolute value.</li>
-</ul></li>
-</ul>
 
-<img data-src="lab-06-explainability_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
+
 
 <section id="decision-tree" class="title-slide slide level1 center">
 <h1>Decision tree</h1>
@@ -764,15 +731,14 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <img data-src="lab-06-explainability_files/figure-revealjs/cell-12-output-1.png" class="r-stretch"></section>
 
-<section id="predictive-performance-and-structural-complexity" class="title-slide slide level1 center">
-<h1>Predictive Performance and Structural Complexity</h1>
-<p>Does improved prediction quality justify a model that takes more work to simulate?</p>
+<section id="does-improved-prediction-quality-justify-a-model-harder-to-simulate" class="title-slide slide level1 center">
+<h1>Does improved prediction quality justify a model harder to simulate?</h1>
 <ul>
 <li><strong>Prediction quality:</strong> balanced accuracy and high-demand recall compare predictions with observed labels.</li>
 <li><strong>Structural complexity:</strong> global coefficients, rules and leaves; local terms or split checks needed for one prediction <span class="citation" data-cites="lipton2018mythos">(<a href="#/references" role="doc-biblioref" onclick="">Lipton 2018</a>)</span>.</li>
 <li><strong>Human simulatability:</strong> measure how accurately and quickly people reproduce model predictions. The counts below are proxies, not a human evaluation <span class="citation" data-cites="doshivelez2017towards poursabzi2021manipulating">(<a href="#/references" role="doc-biblioref" onclick="">Doshi-Velez and Kim 2017</a>; <a href="#/references" role="doc-biblioref" onclick="">Poursabzi-Sangdeh et al. 2021</a>)</span>.</li>
 </ul>
-<div id="5f124a70" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:05.782547Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:05.782363Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:05.842913Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:05.841746Z&quot;}}" data-execution_count="12">
+<div id="5f124a70" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:50.896240Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:50.896072Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:50.934857Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:50.934219Z&quot;}}" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -863,7 +829,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>LIME fits a simple surrogate near this observation.</li>
 <li>SHAP allocates the prediction minus a reference output among features.</li>
 </ul>
-<div id="16cb7082" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:05.844876Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:05.844651Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:05.859846Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:05.858891Z&quot;}}" data-execution_count="13">
+<div id="16cb7082" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:50.936568Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:50.936408Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:50.945142Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:50.944548Z&quot;}}" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -923,8 +889,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Explain One Forest Prediction</h1>
 <p><strong>LIME</strong> learns a small explanatory model for one observation <span class="citation" data-cites="ribeiro2016should">(<a href="#/references" role="doc-biblioref" onclick="">Ribeiro et al. 2016</a>)</span>.</p>
 <blockquote>
-<p>Our forest combines 100 trees. For <strong>14:00 on 5 August 2012</strong>, its inputs include hour 14, temperature <strong>34.30°C</strong>, humidity <strong>42%</strong>, and a non-working-day flag.</p>
-<p>Which input conditions help explain the forest’s high-demand probability for this observation?</p>
+<p>A forest combines 100 trees. For <strong>14:00 on 5 August 2012</strong>, its inputs include hour 14, temperature <strong>34.30°C</strong>, humidity <strong>42%</strong>, and a non-working-day flag. Which input conditions help explain the forest’s high-demand probability for this observation?</p>
 </blockquote>
 <p>We want a short explanation of this one prediction that an operator can inspect.</p>
 </section>
@@ -1028,7 +993,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <td>Surrogate intercept, coefficients, and the sum of coefficient × encoded-input terms</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(w_i=\exp[-d_i^2/(2\sigma^2)]\)</span></td>
+<td><span class="math inline">\(w_i=\exp[-\frac{d_i^2}{2\sigma^2}]\)</span></td>
 <td>How strongly row <span class="math inline">\(i\)</span> influences the fit</td>
 </tr>
 <tr class="even">
@@ -1058,7 +1023,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><strong>Read its coefficients and check its fit.</strong> Repeat with another seed to check stability.</li>
 </ol>
 <p><code>num_features=4</code> keeps the explanation short. Numeric fields remain continuous here; they are not converted into temperature intervals.</p>
-<div id="ee4eb295" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:05.867204Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:05.867026Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:05.930863Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:05.929740Z&quot;}}" data-execution_count="15">
+<div id="ee4eb295" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:50.950541Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:50.950396Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:50.994201Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:50.993671Z&quot;}}" data-execution_count="15">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="kw">def</span> make_lime_explainer(seed<span class="op">=</span><span class="dv">42</span>, kernel_width<span class="op">=</span><span class="fl">0.5</span>):</span>
@@ -1096,7 +1061,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <tbody>
 <tr class="odd">
 <td>Hour, temperature, humidity, windspeed</td>
-<td><span class="math inline">\((\text{value}-\text{training mean})/\text{training standard deviation}\)</span></td>
+<td><span class="math inline">\(\frac{\text{value}-\text{training mean}}{\text{training standard deviation}}\)</span></td>
 </tr>
 <tr class="even">
 <td>Working-day flag</td>
@@ -1183,7 +1148,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li><strong>Point discrepancy:</strong> surrogate prediction versus forest probability at this hour.</li>
 <li><strong>Weighted <span class="math inline">\(R^2\)</span>:</strong> agreement on LIME’s sampled neighborhood.</li>
 </ul>
-<div id="a6b1744b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:06.449109Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:06.448919Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:06.463333Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:06.462358Z&quot;}}" data-execution_count="18">
+<div id="a6b1744b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:51.307171Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:51.307025Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:51.315965Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:51.315418Z&quot;}}" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div>
 <style scoped="">
@@ -1256,14 +1221,14 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="the-problem-share-a-prediction-difference" class="title-slide slide level1 center">
 <h1>The Problem: Share a Prediction Difference</h1>
-<blockquote>
-<p>For <strong>14:00 on 5 August 2012</strong>, the forest predicts <strong>78.73%</strong> high-demand probability. Its mean prediction over 100 reference training observations is <strong>31.35%</strong>.</p>
-<p>How should the input features share the <strong>47.38-percentage-point difference</strong> between that reference and this prediction?</p>
-</blockquote>
 <p>LIME gave us a small model that behaves similarly nearby.</p>
-<p>How should we allocate the prediction difference?</p>
+<blockquote>
+<p>For <strong>14:00 on 5 August 2012</strong>, the forest predicts <strong>78.73%</strong> high-demand probability. How do input features contribute to this prediction?</p>
+</blockquote>
+<p>How should we allocate the prediction contribution?</p>
 <ul>
-<li>Problem: features interact. The information supplied by temperature can depend on whether hour is already known <span class="citation" data-cites="lundberg2017unified">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</li>
+<li>Problem: features interact.</li>
+<li>The information supplied by temperature can depend on whether hour is already known <span class="citation" data-cites="lundberg2017unified">(<a href="#/references" role="doc-biblioref" onclick="">Lundberg and Lee 2017</a>)</span>.</li>
 </ul>
 </section>
 
@@ -1873,9 +1838,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <figcaption>Tree path and revealed subsets with the same leaf outcome</figcaption>
 </figure>
 </div>
-<blockquote>
-<p>If a path tests only hour and temperature, revealing humidity cannot change whether a mixed row reaches that particular leaf. Its many subset cases can be combined.</p>
-</blockquote>
 </section>
 
 <section id="how-treeshap-works" class="title-slide slide level1 center">
@@ -1921,7 +1883,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <p>The contributions sum to <strong>47.38 points</strong>. Adding the <strong>31.35%</strong> reference gives the actual <strong>78.73%</strong> forest probability.</p>
 </blockquote>
 <p>Positive contributions raise the prediction relative to the reference; negative contributions lower it.</p>
-<div id="8704e4f4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:07.194271Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:07.194084Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:07.569169Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:07.568235Z&quot;}}" data-execution_count="22">
+<div id="8704e4f4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:51.757441Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:51.757277Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:51.983673Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:51.982920Z&quot;}}" data-execution_count="22">
 
 <div class="cell-output cell-output-display">
 <div>
@@ -2197,7 +2159,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <section id="exercises-short-guided-tasks" class="title-slide slide level1 center">
 <h1>Exercises: Short Guided Tasks</h1>
-<p>Each 15-minute block contains <strong>two small coding tasks plus discussion</strong>. Fill the marked expressions; the data preparation, plotting calls and helpers are provided.</p>
 <p>Run the setup and theory cells first. Use <code>exercise_x</code> (validation position 854), <code>reference_probability</code>, and <code>exercise_shap</code>.</p>
 <table class="caption-top">
 <colgroup>
@@ -2233,7 +2194,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </tr>
 </tbody>
 </table>
-<p>Uncomment each template, fill its blanks, then interpret the result. The solutions are short worked answers. Keep the test period unused.</p>
 </section>
 
 <section id="exercise-1-is-a-deeper-tree-worth-it" class="title-slide slide level1 center">
@@ -2245,7 +2205,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Compare the depth-2 and depth-4 trees’ leaf counts.</li>
 <li><strong>Discuss:</strong> is the measured gain worth the larger tree? Use the existing structural-complexity slide for the logistic model.</li>
 </ul>
-<div id="78aa4663" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:09.301829Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:09.301618Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:09.304670Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:09.303749Z&quot;}}" data-execution_count="30">
+<div id="78aa4663" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:53.274675Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:53.274533Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:53.276728Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:53.276169Z&quot;}}" data-execution_count="30">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># student_tree = DecisionTreeClassifier(</span></span>
@@ -2271,7 +2231,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>Call <code>tree_path_table</code> to inspect your depth-4 tree’s route.</li>
 </ol>
 <p><strong>Discuss:</strong> which prediction is easier to reproduce by hand? Why do score terms not represent fixed probability increments?</p>
-<div id="f66f020c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:09.306404Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:09.306229Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:09.309049Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:09.308240Z&quot;}}" data-execution_count="31">
+<div id="f66f020c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:53.277986Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:53.277838Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:53.280082Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:53.279446Z&quot;}}" data-execution_count="31">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="co"># student_z = logistic["preprocess"].transform(exercise_x)[0]</span></span>
@@ -2321,7 +2281,7 @@ Show the solution
 <li>Use the existing <code>lime_seed_results</code> table: do the runs tell a similar story?</li>
 </ul>
 <p>Distinguish numeric slopes from categorical matches.</p>
-<div id="2ee805ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:09.338654Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:09.338455Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:09.341613Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:09.340729Z&quot;}}" data-execution_count="33">
+<div id="2ee805ca" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:53.303383Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:53.303262Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:53.305303Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:53.304786Z&quot;}}" data-execution_count="33">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="co"># student_lime = explain_lime(..., seed=42)  # Hint: explain exercise_x.</span></span>
@@ -2342,7 +2302,7 @@ Show the solution
 <li>Add the baseline and signed contributions; compare the result with the forest probability.</li>
 </ol>
 <p><strong>Discuss:</strong> why can the first-reveal hour increment differ from the full SHAP hour contribution? All six columns remain present; the forest is not retrained.</p>
-<div id="9923fad1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:09.343455Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:09.343271Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:09.346451Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:09.345533Z&quot;}}" data-execution_count="34">
+<div id="9923fad1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:53.306788Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:53.306652Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:53.308901Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:53.308351Z&quot;}}" data-execution_count="34">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="co"># student_mixed = background.copy()</span></span>
@@ -2391,7 +2351,7 @@ Show the solution
 <li>Name the most influential feature globally and one visible feature-value pattern.</li>
 </ol>
 <p>Explain why this population summary may differ from one local explanation.</p>
-<div id="f8203721" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:09.348268Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:09.348085Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:09.351187Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:09.350212Z&quot;}}" data-execution_count="35">
+<div id="f8203721" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:53.310355Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:53.310235Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:53.312284Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:53.311733Z&quot;}}" data-execution_count="35">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="co"># student_importance = pd.Series(</span></span>
@@ -2412,7 +2372,7 @@ Show the solution
 <li><strong>Discuss:</strong> which reference answers an afternoon-versus-morning question? Give a two-sentence recommendation and one limitation.</li>
 </ul>
 <p>Only the reference changes.</p>
-<div id="33dd9a3a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T10:21:09.352956Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T10:21:09.352764Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T10:21:09.355696Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T10:21:09.354748Z&quot;}}" data-execution_count="36">
+<div id="33dd9a3a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-16T19:56:53.313479Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-11-16T19:56:53.313269Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-11-16T19:56:53.315428Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-16T19:56:53.314914Z&quot;}}" data-execution_count="36">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a><span class="co"># student_morning = explain_shap(exercise_x, ...)  # Hint: use morning_explainer.</span></span>
