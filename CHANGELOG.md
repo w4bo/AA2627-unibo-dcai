@@ -1,3 +1,13 @@
+## [1.2.5](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.4...1.2.5) (2026-11-16)
+
+### Dependency updates
+
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.159 ([#32](https://github.com/w4bo/AA2627-unibo-dcai/issues/32)) ([93c0d97](https://github.com/w4bo/AA2627-unibo-dcai/commit/93c0d978d33589fecad751a23cc51529cdf5bfd9))
+
+### Bug Fixes
+
+* fix sentence ([64e7f8c](https://github.com/w4bo/AA2627-unibo-dcai/commit/64e7f8c3800b4694f4bedccfdd51ede94bf68973))
+
 ## [1.2.4](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.3...1.2.4) (2026-11-13)
 
 ### Bug Fixes
