@@ -1,3 +1,9 @@
+## [1.2.7](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.6...1.2.7) (2026-11-16)
+
+### Bug Fixes
+
+* fix typos ([24ac341](https://github.com/w4bo/AA2627-unibo-dcai/commit/24ac341cba7ab80cd6f72e3aa64c81dd9cb20c07))
+
 ## [1.2.6](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.5...1.2.6) (2026-11-16)
 
 ### Bug Fixes
