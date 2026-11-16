@@ -1,3 +1,9 @@
+## [1.2.8](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.7...1.2.8) (2026-11-16)
+
+### Bug Fixes
+
+* simplify the storyline ([0ab5e14](https://github.com/w4bo/AA2627-unibo-dcai/commit/0ab5e1408e73f1b46fcab8962e4647867cdfe6bc))
+
 ## [1.2.7](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.6...1.2.7) (2026-11-16)
 
 ### Bug Fixes
