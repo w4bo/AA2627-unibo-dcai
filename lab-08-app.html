@@ -167,7 +167,7 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 </section>
 <section class="slide level2">
 
-<p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-08-business-data-understanding.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
+<p><a href="https://colab.research.google.com/github/w4bo/AA2627-unibo-dcai/blob/main/slides/lab-08-app.ipynb" target="_parent"><img src="img/colab-badge.svg" alt="Open In Colab"></a></p>
 </section>
 <section id="section" class="title-slide slide level1 center">
 <h1></h1>
@@ -428,7 +428,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <h1>Outcome</h1>
 <ul>
 <li>This project was missing a proper plan (business+data understanding), and turned out to be a failure for the company.</li>
-<li>Even if we apply ML techniques to the data, the results we would get are not statistically relevant.</li>
+<li>With only 100 observations and around 100 features, ML models face substantial risks of overfitting and highly uncertain performance estimates.</li>
+<li>Meaningful analysis may still be possible, but requires careful control of model complexity and appropriate validation.</li>
 </ul>
 </section>
 
@@ -580,40 +581,6 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <li>The company we work for already has a data collection process that we can use</li>
 </ul>
 </section>
-
-<section id="public-datasets-1" class="title-slide slide level1 center">
-<h1>Public Datasets</h1>
-<p>Many universities publicly release their datasets:</p>
-<ul>
-<li>There are no requirements related to profit or non-disclosure agreement (NDA)</li>
-<li>It is the basis of the scientific method, in particular for the reproducibility of the results obtained</li>
-<li>I release my data so that others can conduct my experiments and verify my results</li>
-<li>Examples: <a href="https://www.image-net.org/">https://www.image-net.org/</a></li>
-</ul>
-<p>Some platforms make datasets available for competitions, such as <a href="https://www.kaggle.com/datasets">Kaggle</a> and <a href="https://medium.datadriveninvestor.com/kaggle-data-science-platform-alternatives-for-competitions-and-research-cbe051596e62">others</a></p>
-</section>
-
-<section id="example-of-a-public-dataset-the-iris-dataset" class="title-slide slide level1 center">
-<h1>Example of a public dataset: the Iris dataset</h1>
-
-<img data-src="./removed-img/dataunderstanding/iris.jpg" class="r-stretch"><p>The <a href="https://www.kaggle.com/datasets/uciml/iris">Iris dataset</a> is public data that was used in R.A. Fisher’s classic 1936 paper <span class="citation" data-cites="fisher1936use">(<a href="#/references" role="doc-biblioref" onclick="">Fisher 1936</a>)</span></p>
-<ul>
-<li>It can also be found on the <a href="http://archive.ics.uci.edu/ml/">UCI Machine Learning Repository</a>.</li>
-<li>It includes 3 iris species (Setosa, Virginica, and Versicolor) with 50 samples each</li>
-<li>It characterizes flowers with some properties of each flower
-<ol type="1">
-<li><code>SepalLengthCm</code></li>
-<li><code>SepalWidthCm</code></li>
-<li><code>PetalLengthCm</code></li>
-<li><code>PetalWidthCm</code></li>
-<li><code>Species</code></li>
-</ol></li>
-</ul>
-</section>
-
-
-
-
 
 
 
@@ -836,17 +803,22 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 
 <img data-src="./img/trajectory/CASE4-SocialHabitsAnalysis_19.png" class="r-stretch quarto-figure-center"><p class="caption">Heatmap</p></section>
 
-<section id="defining-attractiveness-dblpjournalseswafranciagg24" class="title-slide slide level1 center">
-<h1>Defining attractiveness <span class="citation" data-cites="DBLP:journals/eswa/FranciaGG24">(<a href="#/references" role="doc-biblioref" onclick="">Francia et al. 2024</a>)</span></h1>
+<section id="visitor-to-resident-ratio-and-neighborhood-reach-dblpjournalseswafranciagg24" class="title-slide slide level1 center">
+<h1>Visitor-to-resident ratio and neighborhood reach <span class="citation" data-cites="DBLP:journals/eswa/FranciaGG24">(<a href="#/references" role="doc-biblioref" onclick="">Francia et al. 2024</a>)</span></h1>
 <p>The previous figures provide <em>qualitative</em> results.</p>
 <ul>
-<li>How can we <em>quantitatively</em> measure the attractiveness of neighborhood?</li>
+<li>How can we <em>quantitatively</em> measure the visitor-to-resident ratio and neighborhood reach?</li>
 </ul>
 <div class="fragment">
 <ul>
-<li><span class="math inline">\(Attractiveness(n) = \frac{LiveIn_n + WorkIn_n + Frequent_n}{LiveIn_n}\)</span></li>
-<li><span class="math inline">\(Attractiveness'(n) = \frac{MovementPattern_n}{\sum_i (MovementPattern_i)}\)</span></li>
+<li><span class="math inline">\(\text{Visitor-to-resident ratio}(n) = \frac{WorkIn_n + Frequent_n}{LiveIn_n}\)</span></li>
+<li><span class="math inline">\(\text{Neighborhood reach}(n) = \frac{|\{p \in \mathcal{P} : p \text{ passes through } n\}|}{|\mathcal{P}|} \times 100\%\)</span>
+<ul>
+<li>Neighborhood reach is the percentage of co-movement patterns passing through neighborhood <span class="math inline">\(n\)</span>.</li>
+<li><span class="math inline">\(\mathcal{P}\)</span> is the set of all co-movement patterns.</li>
+</ul></li>
 </ul>
+<p>A pattern can pass through multiple neighborhoods, so these percentages need not sum to 100% across neighborhoods.</p>
 </div>
 <div class="fragment">
 <table class="caption-top">
@@ -864,8 +836,8 @@ Matteo Francia <br> DISI — University of Bologna <br> m.francia@unibo.it
 <th>Distinct users</th>
 <th>WorkIn + Frequent</th>
 <th>LiveIn</th>
-<th><span class="math inline">\(Attractiveness\)</span></th>
-<th><span class="math inline">\(Attractiveness'\)</span></th>
+<th>Visitor-to-resident ratio</th>
+<th>Neighborhood reach</th>
 </tr>
 </thead>
 <tbody>
@@ -1054,9 +1026,6 @@ Batini, Carlo, Cinzia Cappiello, Chiara Francalanci, and Andrea Maurino. 2009. <
 </div>
 <div id="ref-chowdhury2020variable" class="csl-entry" role="listitem">
 Chowdhury, Mohammad Ziaul Islam, and Tanvir C Turin. 2020. <span>“Variable Selection Strategies and Its Importance in Clinical Prediction Modelling.”</span> <em>Family Medicine and Community Health</em> 8 (1).
-</div>
-<div id="ref-fisher1936use" class="csl-entry" role="listitem">
-Fisher, Ronald A. 1936. <span>“The Use of Multiple Measurements in Taxonomic Problems.”</span> <em>Annals of Eugenics</em> 7 (2): 179–88.
 </div>
 <div id="ref-DBLP:journals/eswa/FranciaGG24" class="csl-entry" role="listitem">
 Francia, Matteo, Enrico Gallinucci, and Matteo Golfarelli. 2024. <span>“Colossal Trajectory Mining: <span>A</span> Unifying Approach to Mine Behavioral Mobility Patterns.”</span> <em>Expert Syst. Appl.</em> 238 (Part <span>E</span>): 122055. <a href="https://doi.org/10.1016/J.ESWA.2023.122055">https://doi.org/10.1016/J.ESWA.2023.122055</a>.
