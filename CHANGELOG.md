@@ -1,3 +1,14 @@
+## [1.2.12](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.11...1.2.12) (2026-11-18)
+
+### Bug Fixes
+
+* add ollama and mcp ([24500fe](https://github.com/w4bo/AA2627-unibo-dcai/commit/24500fe7560c1075962bcc36ca7babbb71613a18))
+* add ollama and mcp ([54a2b65](https://github.com/w4bo/AA2627-unibo-dcai/commit/54a2b658de7bfc4a544e930e1e04011dd317ef61))
+* add refs ([89e1f55](https://github.com/w4bo/AA2627-unibo-dcai/commit/89e1f55177160264feb1aa7ba1aa5ba167d5b6f5))
+* change title ([ff8ec4e](https://github.com/w4bo/AA2627-unibo-dcai/commit/ff8ec4edc674483fc777918185730fe1827d84b7))
+* working on lab 08 ([efbc83d](https://github.com/w4bo/AA2627-unibo-dcai/commit/efbc83dc6e779a35504a2dcb10a39ada2805a420))
+* working on lab 08 ([5265ccd](https://github.com/w4bo/AA2627-unibo-dcai/commit/5265ccda2c5abb4c21e85f6c2bd45eb95af4cb96))
+
 ## [1.2.11](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.10...1.2.11) (2026-11-18)
 
 ### Bug Fixes
