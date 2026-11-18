@@ -72,7 +72,7 @@ How can we collect the data?
 
 > The company prepares a questionnaire on paper with around 100 questions, and one of the employees moves across Emilia-Romagna to ask questions to the farmers and collect their answers.
 
-![Emilia Romagna, Italy](https://github.com/user-attachments/assets/ad66fa16-fa65-450b-955e-37ab3bd67113)
+![Emilia Romagna, Italy](./img/remote/brownspot-emilia-romagna.png)
 
 What are the pros/cons of this solution?
 

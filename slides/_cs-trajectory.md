@@ -122,18 +122,15 @@ Staypoints vs Trajectories
 
 # Visitor-to-resident ratio and neighborhood reach [@DBLP:journals/eswa/FranciaGG24]
 
-The previous figures provide *qualitative* results.
-
-- How can we *quantitatively* measure the visitor-to-resident ratio and neighborhood reach?
+The previous figures provide *qualitative* results. How can we *quantitatively* measure attractiveness?
 
 :::{.fragment}
 
 - $\text{Visitor-to-resident ratio}(n) = \frac{WorkIn_n + Frequent_n}{LiveIn_n}$
 - $\text{Neighborhood reach}(n) = \frac{|\{p \in \mathcal{P} : p \text{ passes through } n\}|}{|\mathcal{P}|} \times 100\%$
   - Neighborhood reach is the percentage of co-movement patterns passing through neighborhood $n$.
+  - A pattern can pass through multiple neighborhoods, so percentages need not sum to 100% across neighborhoods.
   - $\mathcal{P}$ is the set of all co-movement patterns.
-
-A pattern can pass through multiple neighborhoods, so these percentages need not sum to 100% across neighborhoods.
 
 :::
 
