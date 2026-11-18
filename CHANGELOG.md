@@ -1,3 +1,9 @@
+## [1.2.11](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.10...1.2.11) (2026-11-18)
+
+### Bug Fixes
+
+* add ollama and mcp ([75b39d8](https://github.com/w4bo/AA2627-unibo-dcai/commit/75b39d8d6cb8aba3a9b4121d713bb94a456002cb))
+
 ## [1.2.10](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.9...1.2.10) (2026-11-18)
 
 ### Bug Fixes
