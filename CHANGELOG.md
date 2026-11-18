@@ -1,3 +1,13 @@
+## [1.2.9](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.8...1.2.9) (2026-11-18)
+
+### Dependency updates
+
+* **deps:** update slides/refs digest to 495ce48 ([#27](https://github.com/w4bo/AA2627-unibo-dcai/issues/27)) ([d91727c](https://github.com/w4bo/AA2627-unibo-dcai/commit/d91727c436210a374b6493f24d878f94d91b3d29))
+
+### Bug Fixes
+
+* add definition of interpretability ([0405b17](https://github.com/w4bo/AA2627-unibo-dcai/commit/0405b17416a1ad286928d0d498e4e27d5c0c24e4))
+
 ## [1.2.8](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.7...1.2.8) (2026-11-16)
 
 ### Bug Fixes
