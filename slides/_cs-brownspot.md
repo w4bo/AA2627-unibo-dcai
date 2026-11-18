@@ -101,4 +101,5 @@ If you were the analyst, what would you do?
 # Outcome
 
 - This project was missing a proper plan (business+data understanding), and turned out to be a failure for the company.
-- Even if we apply ML techniques to the data, the results we would get are not statistically relevant.
+- With only 100 observations and around 100 features, ML models face substantial risks of overfitting and highly uncertain performance estimates.
+- Meaningful analysis may still be possible, but requires careful control of model complexity and appropriate validation.

@@ -120,22 +120,26 @@ Staypoints vs Trajectories
 
 ![Heatmap](./img/trajectory/CASE4-SocialHabitsAnalysis_19.png)
 
-# Defining attractiveness [@DBLP:journals/eswa/FranciaGG24]
+# Visitor-to-resident ratio and neighborhood reach [@DBLP:journals/eswa/FranciaGG24]
 
 The previous figures provide *qualitative* results.
 
-- How can we *quantitatively* measure the attractiveness of neighborhood?
+- How can we *quantitatively* measure the visitor-to-resident ratio and neighborhood reach?
 
 :::{.fragment}
 
-- $Attractiveness(n) = \frac{LiveIn_n + WorkIn_n + Frequent_n}{LiveIn_n}$
-- $Attractiveness'(n) = \frac{MovementPattern_n}{\sum_i (MovementPattern_i)}$
+- $\text{Visitor-to-resident ratio}(n) = \frac{WorkIn_n + Frequent_n}{LiveIn_n}$
+- $\text{Neighborhood reach}(n) = \frac{|\{p \in \mathcal{P} : p \text{ passes through } n\}|}{|\mathcal{P}|} \times 100\%$
+  - Neighborhood reach is the percentage of co-movement patterns passing through neighborhood $n$.
+  - $\mathcal{P}$ is the set of all co-movement patterns.
+
+A pattern can pass through multiple neighborhoods, so these percentages need not sum to 100% across neighborhoods.
 
 :::
 
 :::{.fragment}
 
-|Neighborhood           | Distinct users  | WorkIn + Frequent | LiveIn  | $Attractiveness$  |$Attractiveness'$|
+|Neighborhood           | Distinct users  | WorkIn + Frequent | LiveIn  | Visitor-to-resident ratio  |Neighborhood reach|
 |-----------------------|-----------------|-------------------|---------|-------------------|-----------------|
 |Brera                  | 2779            | 2396              | 440     | 545%              | 83%             |
 |Duomo                  | 4607            | 4203              | 464     | 906%              | 83%             |
