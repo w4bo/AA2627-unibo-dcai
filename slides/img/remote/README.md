@@ -18,4 +18,4 @@ Repeated uses share the same file. Images are unchanged.
 The MNIST figure is Figure 9 in *Deep Learning: Basics and Convolutional Neural Networks (CNNs)*,
 by Maria Vakalopoulou, Stergios Christodoulidis, Ninon Burgos, Olivier Colliot, and Vincent Lepetit (2023).
 Downloaded from Springer’s open-access edition under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-The original ResearchGate image URL blocked downloads; the same figure is used here without modification.
+The original ResearchGate image URL blocked downloads; the same figure is used without modification.
