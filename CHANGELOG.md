@@ -1,3 +1,9 @@
+## [1.2.13](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.12...1.2.13) (2026-11-18)
+
+### Bug Fixes
+
+* restore Lab 08 images and localize case study assets ([d9b6015](https://github.com/w4bo/AA2627-unibo-dcai/commit/d9b6015049203478737a009ee7eb027aeed7f1f6))
+
 ## [1.2.12](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.11...1.2.12) (2026-11-18)
 
 ### Bug Fixes
