@@ -1,3 +1,9 @@
+## [1.2.14](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.13...1.2.14) (2026-11-19)
+
+### Bug Fixes
+
+* add example ([4f6a254](https://github.com/w4bo/AA2627-unibo-dcai/commit/4f6a2549a6cda66d45c1ad173a93b8aa7271a38c))
+
 ## [1.2.13](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.12...1.2.13) (2026-11-18)
 
 ### Bug Fixes
