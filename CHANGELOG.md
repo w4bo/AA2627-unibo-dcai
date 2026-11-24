@@ -1,3 +1,11 @@
+## [1.2.16](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.15...1.2.16) (2026-11-24)
+
+### Bug Fixes
+
+* add privacy paper ([42f0b0c](https://github.com/w4bo/AA2627-unibo-dcai/commit/42f0b0cb8f9d7770ef8c4536b56ee2c91083322b))
+* add privacy paper ([04ef514](https://github.com/w4bo/AA2627-unibo-dcai/commit/04ef5148dcc289afa3bbe72dd9d698dbb2004ebf))
+* add privacy paper ([82e2d8f](https://github.com/w4bo/AA2627-unibo-dcai/commit/82e2d8f96801b9d514d0a1fd6ec535f018f5f2ef))
+
 ## [1.2.15](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.14...1.2.15) (2026-11-24)
 
 ### Dependency updates
