@@ -37,6 +37,20 @@ _Location Intelligence_ is a set of tools that allow  __a geographic dimension__
 :::
 ::::
 
+::::{.columns}
+:::{.column width="33%"}
+![[PEMS](http://pems.dot.ca.gov/)](./img/trajectory/cars.png)
+:::
+
+:::{.column width="33%"}
+![[Vessel finder](https://www.vesselfinder.com/)](./img/trajectory/vessel.png)
+:::
+
+:::{.column width="33%"}
+![[Flight Radar 24](https://www.flightradar24.com/39.18,16.95/5)](./img/trajectory/flights.png)
+:::
+::::
+
 # Google Timeline
 
 ::::{.columns}
@@ -191,6 +205,15 @@ In a dataset of **1.5 million mobile-phone users**, **four randomly selected spa
 | **French aircraft carrier (March 2026)** | AP reported that *Le Monde* located the *Charles de Gaulle* using a naval officer's public run and same-day satellite imagery. The deployment itself was already public. [AP](https://apnews.com/article/acbd3595a2317c2b8068dc42082c3d51) |
 
 > Can the *absence* of activity reveal something too?
+
+::::{.columns}
+::: {.column width="50%"}
+![Flight Radar 24 (2019)](./img/trajectory/flights2019.png)
+:::
+::: {.column width="50%"}
+![Flight Radar 24 (2026)](./img/trajectory/flights2026.png)
+:::
+::::
 
 # Mobility privacy in the news: sensitive inferences
 
