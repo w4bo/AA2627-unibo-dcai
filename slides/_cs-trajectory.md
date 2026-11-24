@@ -23,7 +23,7 @@ _More than 80% of companies_ take decisions on the basis of information characte
     * Apps collecting data from GPS
     * Telco that trace connection to Base Transceiver Stations
     * Fleets of trucks, cars and ships
-    * …
+    * ...
 
 _Location Intelligence_ is a set of tools that allow  __a geographic dimension__ to be integrated within a  __BI platform__.
 
@@ -108,7 +108,7 @@ Staypoints vs Trajectories
 
 ![Colors are assigned according to the LiveIn semantic](./img/trajectory/CASE4-SocialHabitsAnalysis_16.png)
 
-# Social Habits: LiveIn vs Attend
+# Social Habits: LiveIn vs Attend {visibility="hidden"}
 
 ![Colors are assigned according to the LiveIn semantic](./img/trajectory/CASE4-SocialHabitsAnalysis_17.png)
 
@@ -150,6 +150,54 @@ The previous figures provide *qualitative* results. How can we *quantitatively* 
 
 :::
 
+# Discussion: explainability in mobility data
+
+> The dashboard labels someone as a resident and ranks one neighborhood as more attractive than another. How would you explain those results?
+
+- Which observations led to the **home** label? How much evidence was required?
+- How would results change with a different nighttime window or minimum stay duration?
+- Does a high **visitor-to-resident ratio** reflect many visitors, few residents, or both?
+- Are *attractiveness* and *visiting frequency* interchangeable?
+- How should uncertain labels and incomplete coverage appear in the dashboard?
+
+# Discussion: fairness in mobility data
+
+> A neighborhood has fewer observed visits. Should it receive less investment?
+
+- **Coverage:** who might be missing from the dataset? Consider children, older people, and people without the tracked apps.
+- **Measurement:** does low recorded activity mean low activity, or low data coverage?
+- **Inference:** who is misclassified by "home between 1-5" and "work between 9-17"? Consider night workers, remote workers, and people with multiple jobs.
+- **Consequences:** what additional evidence would you require before using these results to allocate public resources?
+
+# Discussion: privacy in mobility data
+
+> We remove names and replace user IDs with random identifiers. Can we safely publish the trajectories?
+
+- Could someone recognize a person from their home and workplace?
+- What might visits to a clinic, place of worship, or political meeting reveal?
+- For neighborhood monitoring, do we need individual trajectories, or would aggregate counts suffice?
+- What do we lose by using larger spatial cells, weekly summaries, or noisy counts?
+
+# Mobility privacy in the news: Strava
+
+| Case | Reported disclosure |
+| --- | --- |
+| **Military bases (2018)** | Strava's aggregate activity heatmap highlighted military sites and exercise routes, especially where surrounding civilian activity was sparse. [Le Monde](https://www.lemonde.fr/pixels/article/2018/01/29/la-securite-des-bases-militaires-menacee-par-une-application-de-jogging_5248885_4408996.html) |
+| **French submarine patrols (reported 2025)** | *Le Monde* inferred likely patrol periods from public workouts at Île Longue and synchronized gaps in crew members' activity. This did not reveal submarines' positions at sea. [Le Monde](https://www.lemonde.fr/en/videos/article/2025/01/13/stravaleaks-dates-of-french-nuclear-submarine-patrols-revealed-by-careless-crew-members_6737005_108.html) |
+| **French aircraft carrier (March 2026)** | AP reported that *Le Monde* located the *Charles de Gaulle* using a naval officer's public run and same-day satellite imagery. The deployment itself was already public. [AP](https://apnews.com/article/acbd3595a2317c2b8068dc42082c3d51) |
+
+> Can the *absence* of activity reveal something too?
+
+# Mobility privacy in the news: sensitive inferences
+
+The Federal Trade Commission (FTC) is an independent agency of the United States federal government that enforces consumer protection and antitrust laws.
+
+| Case | Alleged practice or documented risk |
+| --- | --- |
+| **Religion:** | Sale of audience segments based on inferred religious beliefs. It described geofencing churches and sharing device IDs, visit dates, and attendance frequency with a customer. [FTC complaint, §53 and §79](https://www.ftc.gov/system/files/ftc_gov/pdf/2123035gravyanalyticscomplaint.pdf) |
+| **Health** | Sale of precise location data that could track visits to medical and reproductive health clinics. [FTC](https://www.ftc.gov/news-events/news/press-releases/2024/04/ftc-finalizes-order-x-mode-successor-outlogic-prohibiting-it-sharing-or-selling-sensitive-location) |
+| **Protests: Mobilewalla (2020 report; 2024 complaint)** | Profile George Floyd protesters in June 2020, including inferred racial backgrounds and whether they lived locally. [FTC](https://www.ftc.gov/news-events/news/press-releases/2024/12/ftc-takes-action-against-mobilewalla-collecting-selling-sensitive-location-data) |
+
 # Exploitation of Trajectory Data
 
 ::::{.columns}
@@ -166,14 +214,14 @@ The previous figures provide *qualitative* results. How can we *quantitatively* 
 - **Reverse geocoding** it is the process by which an address or the name of a place is associated with a spatial datum \(latitude, longitude\)
 - **Layer integration** it is the process by which several information layers are superimposed and interrogated
 * **Proximity marketing \(indoor\)**
-* … and many others
+* ... and many others
 :::
 ::: {.column width="50%"}
 ![](./img/trajectory/CASE4-SocialHabitsAnalysis_9.jpg)
 :::
 ::::
 
-# Proximity marketing
+# Exploitation of Trajectory Data: Proximity marketing
 
 ::::{.columns}
 ::: {.column width="50%"}
@@ -184,36 +232,13 @@ The previous figures provide *qualitative* results. How can we *quantitatively* 
 :::
 ::::
 
-# Social habits and behaviors: Ubiquitous User Profiling – Reality Mining
-
-Create a **synthetic profile** of the community that transits at a point / place starting  **from anonymous trajectory data**
-
-_Who are the customers of the shopping center?_
-
-* 50% live within 5km from the shopping center
-* 20% attend the shopping center X too
-* On Saturday, 20% of customers go to the cinema after being at the shopping center
-* On Saturday, 30% of customers go to restaurant Y after being at the shopping center
-
-_Who comes on vacation to Cesenatico?_
-
-* In July 70% of the customers come from Emilia Romagna
-* 27% of customers live in neighborhoods with an average income above 30K €
-* In August, 25% of customers come from Milan
-* 40% of the tourists have children
-
-_How do the people who use the Freccia Rossa Milan-Rome behave?_
-
-* 30%, once in Rome, moves less than 10km from the station
-* 20%, once in Rome, take the subway
-
-# Urban mobility optimization: traffic flows
+# Exploitation of Trajectory Data: Urban mobility optimization: traffic flows
 
 **Flow**: is defined by a sequence of overlapping trajectories that are not necessarily end-to-end compact
 
 ![Top flows](./img/trajectory/CASE4-SocialHabitsAnalysis_20.png)
 
-# Urban mobility optimization: traffic flows
+# Exploitation of Trajectory Data: Urban mobility optimization: traffic flows
 
 **Flow**: is defined by a sequence of overlapping trajectories that are not necessarily end-to-end compact
 
@@ -228,11 +253,11 @@ USE CASE: identify crowded routes
 :::
 ::::
 
-# Urban mobility optimization: garbage collection paths for HERA
+# Exploitation of Trajectory Data: Mobility optimization @ garbage collection paths for HERA
 
 ![Overall statistics](./img/trajectory/CASE4-SocialHabitsAnalysis_23.png)
 
-# Urban mobility optimization: garbage collection paths for HERA
+# Exploitation of Trajectory Data: Mobility optimization @ garbage collection paths for HERA
 
 ![Trips of a single truck](./img/trajectory/CASE4-SocialHabitsAnalysis_24.png)
 
