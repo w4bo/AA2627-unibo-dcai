@@ -13,17 +13,14 @@ _Lacittàintorno_ is a programme for urban regeneration promoted by Fondazione C
 # Location Intelligence and Mobility Data
 
 ::::{.columns}
-::: {.column width="75%"}
+::: {.column width="85%"}
 
-_More than 80% of companies_ take decisions on the basis of information characterized by a spatial component.
+Take decisions on the basis of information characterized by a spatial component.
 
 * **Geo-referenced data**: are data that contain a spatial position, they are typically static
 * **Trajectory data**: describe objects moving in the environment
 * The main providers of trajectory data are:
-    * Apps collecting data from GPS
-    * Telco that trace connection to Base Transceiver Stations
-    * Fleets of trucks, cars and ships
-    * ...
+    * Apps collecting data from GPS; Telco that trace connection to Base Transceiver Stations; Fleets of trucks, cars and ships
 
 _Location Intelligence_ is a set of tools that allow  __a geographic dimension__ to be integrated within a  __BI platform__.
 
@@ -31,7 +28,7 @@ _Location Intelligence_ is a set of tools that allow  __a geographic dimension__
 - Location intelligence supports  __data visualization and interaction with maps__ in  __BI contexts__.
 
 :::
-::: {.column width="15%"}
+::: {.column width="10%"}
 ![](./img/trajectory/CASE4-SocialHabitsAnalysis_1.png)
 ![](./img/trajectory/CASE4-SocialHabitsAnalysis_2.jpg)
 :::
