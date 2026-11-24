@@ -1,3 +1,14 @@
+## [1.2.15](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.14...1.2.15) (2026-11-24)
+
+### Dependency updates
+
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.160 ([#41](https://github.com/w4bo/AA2627-unibo-dcai/issues/41)) ([60bab57](https://github.com/w4bo/AA2627-unibo-dcai/commit/60bab57d14eac81be10d49d7b68a88543163b44d))
+* **deps:** update ollama/ollama docker tag to v0.40.17 ([#28](https://github.com/w4bo/AA2627-unibo-dcai/issues/28)) ([4b7e6f1](https://github.com/w4bo/AA2627-unibo-dcai/commit/4b7e6f105840401d188e8e578d22c1fdc4ecab24))
+
+### Bug Fixes
+
+* update lab 08 ([bc7847a](https://github.com/w4bo/AA2627-unibo-dcai/commit/bc7847af0e8c77d53e8db77a6f8fe621bbbc78f6))
+
 ## [1.2.14](https://github.com/w4bo/AA2627-unibo-dcai/compare/1.2.13...1.2.14) (2026-11-19)
 
 ### Bug Fixes
