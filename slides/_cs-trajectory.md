@@ -178,6 +178,10 @@ The previous figures provide *qualitative* results. How can we *quantitatively* 
 - For neighborhood monitoring, do we need individual trajectories, or would aggregate counts suffice?
 - What do we lose by using larger spatial cells, weekly summaries, or noisy counts?
 
+In a dataset of **1.5 million mobile-phone users**, **four randomly selected space–time points** uniquely characterized **95% of mobility traces**, at hourly and cell-tower spatial resolution [@demontjoye2013unique].
+
+- Uniqueness enables linkage; it does not by itself attach a person's name to a trace.
+
 # Mobility privacy in the news: Strava
 
 | Case | Reported disclosure |
